@@ -25,8 +25,8 @@ int main(void)
 	cout << "Server Socket connection created..." << endl;
 
 	server_addr.sin_family = AF_INET;
-	server.addr.sin_addr.s_addr = htons(INNADDER_ANY);
-	server.addr.sin_port = htons(portNum);
+	server_addr.sin_addr.s_addr = htons(INADDR_ANY);
+	server_addr.sin_port = htons(portNum);
 
 	if ( bind(client, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
 	{
@@ -69,7 +69,7 @@ int main(void)
 		do {
 			cout << "\nSever: ";
 			do {
-				cin << buffer;
+				cin >> buffer;
 				send(server, buffer, bufsize, 0);
 				if (*buffer == '#')
 				{
@@ -77,7 +77,7 @@ int main(void)
 					*buffer = '*';
 					isExit = true;
 				}
-			} while (buffer != '*');
+			} while (*buffer != '*');
 			cout << "Client: ";
 			do {
 				recv(server, buffer, bufsize, 0);
