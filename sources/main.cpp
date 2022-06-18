@@ -5,7 +5,7 @@ using namespace std;
 int main(void)
 {
 	int client, server;
-	int portNum = 1500;
+	int portNum = 6667; // default port for irc
 	bool isExit = false;
 	int bufsize = 1024;
 	char buffer[bufsize];
