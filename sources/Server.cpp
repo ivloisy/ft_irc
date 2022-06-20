@@ -31,7 +31,7 @@ void Server::createServerAddr(int portNum)
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-void	Server::bindServer(Client client)
+void	Server::bindServer(Client const & client)
 {
 	if (bind(client.getFdClient(), (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
@@ -40,12 +40,12 @@ void	Server::bindServer(Client client)
 	}
 }
 
-void Server::listenClient(Client client)
+void Server::listenClient(Client const & client)
 {
 	listen(client.getFdClient(), 1);
 }
 
-void Server::acceptClient(Client client, int size)
+void Server::acceptClient(Client const & client, int size)
 {
 	this->_fdServer = accept(client.getFdClient(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -57,16 +57,17 @@ void Server::acceptClient(Client client, int size)
 	}
 }
 
-void Server::closeClient(Client client)
+void Server::closeClient(Client const & client)
 {
 	close(client.getFdClient());
 }
 
-int Server::getFdServer(void) {
+int Server::getFdServer(void) const
+{
 	return (this->_fdServer);
 }
 
-struct sockaddr_in Server::getServerAddr()
+struct sockaddr_in Server::getServerAddr() const
 {
 	return (this->_serverAddr);
 }

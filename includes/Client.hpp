@@ -7,11 +7,14 @@
 
 
 class Client {
+
 private:
-	static int			_nbClient;
-	int					_idClient;
-	int 				_fdClient;
+	static int				_nbClient;
+	int						_idClient;
+	int 					_fdClient;
 	//struct sockaddr_in 	_serverAddr;
+
+	//if client send a cap command, ignore it
 
 public:
 	Client();
@@ -20,8 +23,8 @@ public:
 	Client &operator=(Client const &rhs);
 
 	void		establishConnection(void);
-	int 		getFdClient(void);
-	int 		getIdClient(void);
+	int 		getFdClient(void) const;
+	int 		getIdClient(void) const;
 };
 
 

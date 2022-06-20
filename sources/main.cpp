@@ -5,7 +5,7 @@ using namespace std;
 int main(void)
 {
 	//int client, server;
-	int portNum = 6667; // default port for irc
+	int portNum = 6697; // default port for irc
 	bool isExit = false;
 	int bufsize = 1024;
 	char buffer[bufsize];
@@ -75,7 +75,7 @@ int main(void)
 		isExit = false;
 		exit(1);
 	}
-	close(cli.getFdClient());
+	serv.closeClient(cli);
 
 	cout << "ft_irc" << endl;
 	return 0;

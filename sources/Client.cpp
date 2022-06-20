@@ -9,23 +9,27 @@
 
 /**************************** CONSTRUCTORS ****************************/
 
-Client::Client() {
+Client::Client()
+{
 
 }
 
-Client::Client(Client const &src) {
+Client::Client(Client const &src)
+{
 	;
 }
 
 /***************************** DESTRUCTORS ****************************/
 
-Client::~Client() {
+Client::~Client()
+{
 
 }
 
 /************************* ASSIGNMENT OPERATOR ************************/
 
-Client &Client::operator=(Client const &rhs) {
+Client &Client::operator=(Client const &rhs)
+		{
 	return (*this);
 }
 
@@ -44,10 +48,12 @@ void Client::establishConnection(void)
 
 /******************************* GETTERS *******************************/
 
-int 		Client::getFdClient(void) {
+int 		Client::getFdClient(void) const
+{
 	return (this->_fdClient);
 }
 
-int 		Client::getIdClient(void) {
+int 		Client::getIdClient(void) const
+{
 	return (this->_idClient);
 }

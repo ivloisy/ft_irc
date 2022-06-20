@@ -14,9 +14,9 @@ class Server {
 	int _fdServer;
     //int nbClients; (client class, static variable)
     //int channels; //(instantiation channels)
-    int portNum;
+    //int portNum;
 	struct sockaddr_in _serverAddr;
-	//Client client;
+	//MAP Client client;
 	socklen_t size;
 
 public:
@@ -27,14 +27,14 @@ public:
     Server operator=(Server const & src);
 
 
-    void				bindServer(Client client);
+    void				bindServer(Client const & client);
 	void				createServerAddr(int portNum);
-	void				listenClient(Client client);
-	void				acceptClient(Client client, int size);
-	void				closeClient(Client client);
+	void				listenClient(Client const & client);
+	void				acceptClient(Client const & client, int size);
+	void				closeClient(Client const & client);
 
-	int 				getFdServer();
-	struct sockaddr_in	getServerAddr();
+	int 				getFdServer() const;
+	struct sockaddr_in	getServerAddr() const;
 };
 
 
