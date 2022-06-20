@@ -4,60 +4,41 @@ using namespace std;
 
 int main(void)
 {
-	int client, server;
+	//int client, server;
 	int portNum = 6667; // default port for irc
 	bool isExit = false;
 	int bufsize = 1024;
 	char buffer[bufsize];
 
-	struct sockaddr_in server_addr;
+	//struct sockaddr_in server_addr;
 	socklen_t size;
 
+	Server serv;
+	Client cli;
 
+	cli.establishConnection();
 
-	client = socket(AF_INET, SOCK_STREAM, 0);
-	if ( client < 0)
-	{
-		cout << "Error etablishing connection." << endl;
-		exit(1);
-	}
+	serv.createServerAddr(portNum);
+	serv.bindServer(cli);
 
-	cout << "Server Socket connection created..." << endl;
-
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_addr.s_addr = htons(INADDR_ANY);
-	server_addr.sin_port = htons(portNum);
-
-	if ( bind(client, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
-	{
-		cout << "Erro binding socket..." << endl;
-		exit(1);
-	}
-
-	size = sizeof(server_addr);
+	size = sizeof(serv.getServerAddr());
 	cout << "Looking for clients..." << endl;
 
-	listen(client, 1);
+	serv.listenClient(cli);
 
-	server = accept(client, (struct sockaddr*)&server_addr, &size);
+	serv.acceptClient(cli, size);
 
-	if (server < 0)
-	{
-		cout << "Error on accepting..." << endl;
-		exit(1);
-	}
-
-	while (server > 0)
+	while (serv.getFdServer() > 0)
 	{
 		strcpy(buffer, "Server connected...\n");
-		send(server, buffer, bufsize, 0);
+		send(serv.getFdServer(), buffer, bufsize, 0);
 
 		cout << "Conected with client..." << endl;
 		cout << "Enter # to end the connection" << endl;
 
 		cout << "Client" << endl;
 		do {
-			recv(server, buffer, bufsize, 0);
+			recv(serv.getFdServer(), buffer, bufsize, 0);
 			cout << "buffer" << " ";
 			if (*buffer == '#')
 			{
@@ -70,17 +51,17 @@ int main(void)
 			cout << "\nSever: ";
 			do {
 				cin >> buffer;
-				send(server, buffer, bufsize, 0);
+				send(serv.getFdServer(), buffer, bufsize, 0);
 				if (*buffer == '#')
 				{
-					send(server, buffer, bufsize, 0);
+					send(serv.getFdServer(), buffer, bufsize, 0);
 					*buffer = '*';
 					isExit = true;
 				}
 			} while (*buffer != '*');
 			cout << "Client: ";
 			do {
-				recv(server, buffer, bufsize, 0);
+				recv(serv.getFdServer(), buffer, bufsize, 0);
 				cout << buffer << " ";
 				if (*buffer == '#')
 				{
@@ -94,7 +75,7 @@ int main(void)
 		isExit = false;
 		exit(1);
 	}
-	close(client);
+	close(cli.getFdClient());
 
 	cout << "ft_irc" << endl;
 	return 0;

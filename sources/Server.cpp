@@ -3,7 +3,11 @@
 //
 
 #include "../includes/Server.hpp"
+#include "../includes/Client.hpp"
 #include <iostream>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 
 Server::Server()
 {
@@ -20,52 +24,49 @@ Server::~Server()
 
 }
 
-Client Server::establishConnection(void)
+void Server::createServerAddr(int portNum)
 {
-	Client client;
-
-	client.sockaddr = socket(AF_INET, SOCK_STREAM, 0);
-	if (client < 0)
-	{
-		std::cout << "Error establishing connection..." << std::endl;
-		exit(1);
-	}
-	return (client);
+	this->_serverAddr.sin_family = AF_INET;
+	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
+	this->_serverAddr.sin_port = htons(portNum);
 }
 
-serverAddress Server::createServerAddr()
+void	Server::bindServer(Client client)
 {
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_addr.s_addr = htons(INADDR_ANY);
-	server_addr.sin_port = htons(portNum);
-}
-
-void	Server::bind(int client, int server_addr, int size)
-{
-	if ( bind(client, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0 )
+	if (bind(client.getFdClient(), (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
-		std::cout << "Erro binding socket..." << std::endl;
+		std::cout << "Error binding socket..." << std::endl;
 		exit(1);
 	}
 }
 
-Server Server::listenClient(int client)
+void Server::listenClient(Client client)
 {
-	listen(client, 1);
+	listen(client.getFdClient(), 1);
 }
 
-Server Server::acceptClient(int client, server_addr, size)
+void Server::acceptClient(Client client, int size)
 {
-	server = accept(client, (struct sockaddr*)&server_addr, &size);
+	this->_fdServer = accept(client.getFdClient(), (struct sockaddr*)&this->_serverAddr,
+						  reinterpret_cast<socklen_t *>(&size));
 
-	if (server < 0)
+	if (this->_fdServer < 0)
 	{
 		std::cout << "Error on accepting..." << std::endl;
 		exit(1);
 	}
 }
 
-void Server::closeClient(int client)
+void Server::closeClient(Client client)
 {
-	close(client);
+	close(client.getFdClient());
+}
+
+int Server::getFdServer(void) {
+	return (this->_fdServer);
+}
+
+struct sockaddr_in Server::getServerAddr()
+{
+	return (this->_serverAddr);
 }

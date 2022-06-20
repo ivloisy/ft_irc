@@ -7,14 +7,16 @@
 
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include "Client.hpp"
 
 class Server {
-    int client; //(instantiation client)
-    int server;
+    //int client; //(instantiation client)
+	int _fdServer;
     //int nbClients; (client class, static variable)
-    int channels; //(instantiation channels)
+    //int channels; //(instantiation channels)
     int portNum;
-	struct sockaddr_in server_addr;
+	struct sockaddr_in _serverAddr;
+	//Client client;
 	socklen_t size;
 
 public:
@@ -24,11 +26,15 @@ public:
 
     Server operator=(Server const & src);
 
-    //Client	establishConnection(void);
-    //void		bind(client, server_addr, size < 0);
-	//Server	listenClient(client, n);
-	//Server	acceptClient(client, server_addr, size);
-	//void		closeClient(client);
+
+    void				bindServer(Client client);
+	void				createServerAddr(int portNum);
+	void				listenClient(Client client);
+	void				acceptClient(Client client, int size);
+	void				closeClient(Client client);
+
+	int 				getFdServer();
+	struct sockaddr_in	getServerAddr();
 };
 
 

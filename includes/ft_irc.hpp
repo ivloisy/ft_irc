@@ -10,4 +10,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+#include "Server.hpp"
+#include "Client.hpp"
+
 #endif
