@@ -1,6 +1,7 @@
 //
 // Created by blyzance on 18/06/22.
 //
+#include <ft_irc.hpp>
 
 #include "../includes/Server.hpp"
 #include "../includes/Client.hpp"
@@ -47,6 +48,10 @@ void Server::listenClient(Client const & client)
 
 void Server::acceptClient(Client const & client, int size)
 {
+	char	buffer[1024];
+	recv(this->getFdServer(), buffer, 1024, 0);
+	cout << buffer << " ";
+
 	this->_fdServer = accept(client.getFdClient(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
 

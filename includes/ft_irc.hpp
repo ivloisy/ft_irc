@@ -10,7 +10,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#include "Server.hpp"
-#include "Client.hpp"
+# include "Server.hpp"
+# include "Client.hpp"
+
+using namespace std;
 
 #endif
