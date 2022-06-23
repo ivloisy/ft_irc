@@ -1,14 +1,15 @@
 //
 // Created by blyzance on 18/06/22.
 //
-#include <ft_irc.hpp>
-
-#include "../includes/Server.hpp"
-#include "../includes/Client.hpp"
-#include <iostream>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <sys/types.h>
+// #include <ft_irc.hpp>
+//
+// #include "../includes/Server.hpp"
+// #include "../includes/Client.hpp"
+// #include <iostream>
+// #include <unistd.h>
+// #include <sys/socket.h>
+// #include <sys/types.h>
+#include <Server.hpp>
 
 Server::Server()
 {
@@ -53,7 +54,7 @@ void Server::acceptClient(Client const & client, int size)
 	cout << buffer << " ";
 
 	this->_fdServer = accept(client.getFdClient(), (struct sockaddr*)&this->_serverAddr,
-						  reinterpret_cast<socklen_t *>(&size));
+			reinterpret_cast<socklen_t *>(&size));
 
 	if (this->_fdServer < 0)
 	{

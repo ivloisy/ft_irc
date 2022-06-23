@@ -5,9 +5,10 @@
 #ifndef FT_IRC_SERVER_HPP
 #define FT_IRC_SERVER_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
+// #include <netinet/in.h>
+// #include <sys/socket.h>
 #include "Client.hpp"
+#include <ft_irc.hpp>
 
 class Server {
     //int client; //(instantiation client)

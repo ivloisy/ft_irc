@@ -2,10 +2,11 @@
 // Created by antoine on 20/06/22.
 //
 
-#include "../includes/Client.hpp"
-#include <sys/socket.h>
-#include <iostream>
-#include <stdlib.h>
+// #include <sys/socket.h>
+// #include <iostream>
+// #include <stdlib.h>
+
+#include <Client.hpp>
 
 /**************************** CONSTRUCTORS ****************************/
 
@@ -29,7 +30,7 @@ Client::~Client()
 /************************* ASSIGNMENT OPERATOR ************************/
 
 Client &Client::operator=(Client const &rhs)
-		{
+{
 	return (*this);
 }
 
@@ -44,6 +45,13 @@ void Client::establishConnection(void)
 		exit(1);
 	}
 	std::cout << "Server Socket connection created..." << std::endl;
+}
+
+void Client::sendMessage(std::string str) const
+{
+	std::cout << str << std::endl;
+	// send(this->_fdClient, (str + "\r\n").c_str(), (str + "\r\n").length(), 0);
+	return ;
 }
 
 /******************************* GETTERS *******************************/

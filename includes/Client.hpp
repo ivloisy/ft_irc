@@ -2,9 +2,15 @@
 // Created by antoine on 20/06/22.
 //
 
-#ifndef FT_IRC_CLIENT_HPP
-#define FT_IRC_CLIENT_HPP
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
 
+// # include <ft_irc.hpp>
+#include <iostream>
+// using namespace std;
+#include <sys/socket.h>
+#include <iostream>
+#include <stdlib.h>
 
 class Client {
 
@@ -23,9 +29,11 @@ public:
 	Client &operator=(Client const &rhs);
 
 	void		establishConnection(void);
+	void		sendMessage(std::string str) const;
+
 	int 		getFdClient(void) const;
 	int 		getIdClient(void) const;
 };
 
 
-#endif //FT_IRC_CLIENT_HPP
+#endif //CLIENT_HPP

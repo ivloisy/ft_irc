@@ -75,6 +75,7 @@ int main(void)
 					isExit = true;
 				}
 			} while (*buffer != '*');
+			cli.sendMessage(":server 001 ivloisy :Welcome to the ircserv Network, ivloisy");
 		} while (!isExit);
 		// if (isExit)
 		// {
