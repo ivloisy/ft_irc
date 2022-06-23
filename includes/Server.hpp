@@ -2,15 +2,21 @@
 // Created by blyzance on 18/06/22.
 //
 
-#ifndef FT_IRC_SERVER_HPP
-#define FT_IRC_SERVER_HPP
+#ifndef SERVER_HPP
+#define SERVER_HPP
 
 // #include <netinet/in.h>
 // #include <sys/socket.h>
-#include "Client.hpp"
 #include <ft_irc.hpp>
+#include "Client.hpp"
 
-class Server {
+class Server
+{
+	Server();
+	Server(Server const & src);
+	Server operator=(Server const & src);
+	int		_port;
+	string	_password;
     //int client; //(instantiation client)
 	int _fdServer;
     //int nbClients; (client class, static variable)
@@ -21,14 +27,9 @@ class Server {
 	socklen_t size;
 
 public:
-    Server();
-    Server(Server const & src);
-    virtual ~Server();
-
-    Server operator=(Server const & src);
-
-
-    void				bindServer(Client const & client);
+	virtual ~Server();
+	Server(string port, string password);
+	void				bindServer(Client const & client);
 	void				createServerAddr(int portNum);
 	void				listenClient(Client const & client);
 	void				acceptClient(Client const & client, int size);
@@ -39,4 +40,4 @@ public:
 };
 
 
-#endif //FT_IRC_SERVER_HPP
+#endif //SERVER_HPP

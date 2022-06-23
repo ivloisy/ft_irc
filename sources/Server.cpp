@@ -21,6 +21,12 @@ Server::Server(Server const & src)
 
 }
 
+Server::Server(string port, string password) : _port(atoi(port.c_str())), _password(password)
+{
+	cout << "IRC SERVER:\nport:\t\t" << this->_port << endl
+	<< "password:\t" << this->_password << endl;
+}
+
 Server::~Server()
 {
 
