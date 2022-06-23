@@ -11,6 +11,8 @@
 # include <unistd.h>
 
 #include "Server.hpp"
-#include "Client.hpp"
+#include "User.hpp"
+#include "Command.hpp"
+#include "Config.hpp"
 
 #endif

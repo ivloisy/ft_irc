@@ -2,6 +2,8 @@
 
 using namespace std;
 
+
+
 int main(void)
 {
 	//int client, server;
@@ -13,33 +15,35 @@ int main(void)
 	//struct sockaddr_in server_addr;
 	socklen_t size;
 
-	Server serv;
-	Client cli;
+	irc::Server serv;
+	irc::User user;
 
-	cli.establishConnection();
+	user.establishConnection();
 
 	serv.createServerAddr(portNum);
-	serv.bindServer(cli);
+	serv.bindServer(user);
 
 	size = sizeof(serv.getServerAddr());
 	cout << "Looking for clients..." << endl;
 
-	serv.listenClient(cli);
+	serv.listenUser(user);
 
-	serv.acceptClient(cli, size);
+	serv.acceptUser(user, size);
 
 	while (serv.getFdServer() > 0)
 	{
 		strcpy(buffer, "Server connected...\n");
 		send(serv.getFdServer(), buffer, bufsize, 0);
+		//example
+		user.post_registration();
 
-		cout << "Conected with client..." << endl;
+		cout << "Connected with client..." << endl;
 		cout << "Enter # to end the connection" << endl;
 
 		cout << "Client" << endl;
 		do {
 			recv(serv.getFdServer(), buffer, bufsize, 0);
-			cout << "buffer" << " ";
+			cout << "buff3r" << " ";
 			if (*buffer == '#')
 			{
 				*buffer = '*';
@@ -75,7 +79,7 @@ int main(void)
 		isExit = false;
 		exit(1);
 	}
-	serv.closeClient(cli);
+	serv.closeUser(user);
 
 	cout << "ft_irc" << endl;
 	return 0;

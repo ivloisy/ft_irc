@@ -3,51 +3,61 @@
 //
 
 #include "../includes/Server.hpp"
-#include "../includes/Client.hpp"
+#include "../includes/User.hpp"
 #include <iostream>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 
-Server::Server()
+irc::Server::Server()
 {
 
 }
 
-Server::Server(Server const & src)
+irc::Server::Server(Server const & src)
 {
 
 }
 
-Server::~Server()
+irc::Server::~Server()
 {
 
 }
 
-void Server::createServerAddr(int portNum)
+irc::Config &irc::Server::getConfig()
+{
+	return (_config);
+}
+
+std::string irc::Server::getUpTime()
+{
+	return (_upTime);
+}
+
+void irc::Server::createServerAddr(int portNum)
 {
 	this->_serverAddr.sin_family = AF_INET;
 	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-void	Server::bindServer(Client const & client)
+void irc::Server::bindServer(User const & user)
 {
-	if (bind(client.getFdClient(), (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
+	if (bind(user.getFdUser(), (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
 		std::cout << "Error binding socket..." << std::endl;
 		exit(1);
 	}
 }
 
-void Server::listenClient(Client const & client)
+void irc::Server::listenUser(User const & user)
 {
-	listen(client.getFdClient(), 1);
+	listen(user.getFdUser(), 1);
 }
 
-void Server::acceptClient(Client const & client, int size)
+void irc::Server::acceptUser(User const & user, int size)
 {
-	this->_fdServer = accept(client.getFdClient(), (struct sockaddr*)&this->_serverAddr,
+	this->_fdServer = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
 
 	if (this->_fdServer < 0)
@@ -57,17 +67,17 @@ void Server::acceptClient(Client const & client, int size)
 	}
 }
 
-void Server::closeClient(Client const & client)
+void irc::Server::closeUser(User const & user)
 {
-	close(client.getFdClient());
+	close(user.getFdUser());
 }
 
-int Server::getFdServer(void) const
+int irc::Server::getFdServer(void) const
 {
 	return (this->_fdServer);
 }
 
-struct sockaddr_in Server::getServerAddr() const
+struct sockaddr_in irc::Server::getServerAddr() const
 {
 	return (this->_serverAddr);
 }
