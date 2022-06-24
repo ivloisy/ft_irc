@@ -35,7 +35,7 @@ int main(void)
 		strcpy(buffer, "Server connected...\n");
 		send(serv.getFdServer(), buffer, bufsize, 0);
 		//example
-		user.post_registration();
+		//user.post_registration();
 
 		cout << "Connected with client..." << endl;
 		cout << "Enter # to end the connection" << endl;

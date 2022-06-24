@@ -58,7 +58,7 @@ void irc::Command::reply(unsigned short code, std::string arg1, std::string arg2
 	reply(*user, code, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
-std::string	getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
+std::string	irc::Command::getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
 {
 	std::string target = "salut";
 
@@ -76,3 +76,4 @@ std::string	getReplies(unsigned short code, std::string arg1, std::string arg2, 
 			return (std::string());
 	}
 }
+

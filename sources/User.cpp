@@ -104,10 +104,10 @@ void irc::User::sendTo(irc::User &toUser, std::string message)
 
 void irc::User::post_registration()
 {
-	_commands->reply(1, _commands->getUser().getPrefix());
-	_commands->reply(2, _commands->getUser().getHostname(), _commands->getServer().getConfig().get("version"));
-	_commands->reply(3, _commands->getServer().getUpTime());
-	_commands->reply(4, _commands->getServer().getConfig().get("name"), _commands->getServer().getConfig().get("version"), _commands->getServer().getConfig().get("user_mode"), _commands->getServer().getConfig().get("channel_givemode") + _commands->getServer().getConfig().get("channel_togglemode") + _commands->getServer().getConfig().get("channel_setmode"));
+	_commands.Command::reply(1, _commands.Command::getUser().getPrefix());
+	_commands.Command::reply(2, _commands.Command::getUser().getHostname(), _commands.Command::getServer().getConfig().get("version"));
+	_commands.Command::reply(3, _commands.Command::getServer().getUpTime());
+	_commands.Command::reply(4, _commands.Command::getServer().getConfig().get("name"), _commands.Command::getServer().getConfig().get("version"), _commands.Command::getServer().getConfig().get("user_mode"), _commands.Command::getServer().getConfig().get("channel_givemode") + _commands.Command::getServer().getConfig().get("channel_togglemode") + _commands.Command::getServer().getConfig().get("channel_setmode"));
 
 	//LUSERS(command);
 	//MOTD(command);
