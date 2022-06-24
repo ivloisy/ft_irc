@@ -2,8 +2,6 @@
 
 using namespace std;
 
-
-
 int main(void)
 {
 	//int client, server;
@@ -35,7 +33,13 @@ int main(void)
 		strcpy(buffer, "Server connected...\n");
 		send(serv.getFdServer(), buffer, bufsize, 0);
 		//example
-		//user.post_registration();
+		//std::vector<irc::Command *> commands;
+		//std::string message = buffer;
+		//commands.push_back(new irc::Command(user, serv, message));
+		//user.post_registration(*commands.begin());
+		//std::string message("Welcome to the Internet Relay Network"
+		//					" <antoine!user42@127.0.0.1\n");
+		//send(serv.getFdServer(), message, message.length(), 0);
 
 		cout << "Connected with client..." << endl;
 		cout << "Enter # to end the connection" << endl;

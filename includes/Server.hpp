@@ -247,6 +247,8 @@ enum Reply
 		Config 				&getConfig();
 		std::string 		getUpTime();
 
+		void				add_user(User user);
+
 		void				bindServer(User const & user);
 		void				createServerAddr(int portNum);
 		void				listenUser(User const & user);

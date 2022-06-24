@@ -14,5 +14,6 @@
 #include "User.hpp"
 #include "Command.hpp"
 #include "Config.hpp"
+#include "Message.hpp"
 
 #endif

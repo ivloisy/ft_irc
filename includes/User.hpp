@@ -18,8 +18,8 @@ namespace irc
 	class Command;
 	class Server;
 
-	class User {
-
+	class User
+	{
 		friend class Server;
 
 	private:
@@ -31,6 +31,7 @@ namespace irc
 		std::vector<std::string>	_waitingToSend;
 		std::vector<Command *>		_commands;
 		//std::string				_prefix;
+		std::string 				buffer;
 
 		//if client send a cap command, ignore it
 
@@ -45,13 +46,13 @@ namespace irc
 		int 						getFdUser(void) const;
 		int 						getIdUser(void) const;
 
-		void 						sendTo(User &toUser, std::string message);
-		void						write(std::string message);
+		ssize_t 					send_buf(User &user, std::string const &msg);
+		void						write_buf(User &user, std::string const &msg);
 
 		std::string 				getPrefix();
 		std::string 				getHostname();
 
-		void						post_registration();
+		void						post_registration(Command *command);
 	};
 }
 

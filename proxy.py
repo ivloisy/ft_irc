@@ -3,6 +3,7 @@ import os
 from threading import Thread
 import parser as parser
 import sys
+from importlib import reload
 
 class Proxy2Server(Thread):
 
@@ -73,7 +74,7 @@ class Proxy(Thread):
             print("[Awaiting connection on port {}]".format(self.port_proxy))
             self.g2p = Game2Proxy(self.from_host, self.port_proxy) # waiting for a client
             self.p2s = Proxy2Server(self.to_host, self.port_server)
-            print("[Connection established with " + self.to_host + " on port " + str(self.port_server))
+            print("[Connection established with " + self.to_host + " on port " + str(self.port_server) + "]")
             self.g2p.server = self.p2s.server
             self.p2s.game = self.g2p.game
 

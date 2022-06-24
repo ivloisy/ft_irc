@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include "User.hpp"
+#include "Server.hpp"
 
 namespace irc
 {
@@ -16,15 +17,15 @@ namespace irc
 	class Command {
 
 	private:
-		User		*user;
-		Server		*server;
+		User		user;
+		Server		server;
 
 		std::string query;
 
 		std::string	getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7);
 
 	public:
-		Command(User *user, Server *server, std::string message);
+		Command(User user, Server server, std::string message);
 		~Command();
 
 		User		&getUser();

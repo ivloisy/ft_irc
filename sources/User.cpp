@@ -3,6 +3,8 @@
 //
 
 #include "../includes/User.hpp"
+#include "../includes/Command.hpp"
+#include "../includes/Server.hpp"
 //#include <sys/socket.h>
 
 //#include <netinet/in.h>
@@ -34,6 +36,16 @@ irc::User::User(int fd, struct sockaddr_in address) :
 		_waitingToSend(),
 		_commands()
 {
+	//fcntl(_fdUser, F_SETFL, O_NONBLOCK);
+	//this->_hostaddr = inet_ntoa(addr.sin_addr);
+
+	/*{
+		char tmp[NI_MAXHOST];
+		if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
+			error("getnameinfo");
+		else
+			this->_hostname = tmp;
+	}*/
 	;
 }
 
@@ -92,22 +104,32 @@ std::string irc::User::getHostname()
 	return (this->_hostname);
 }
 
-void irc::User::write(std::string message)
+void irc::User::write_buf(User &user, std::string const &msg)
 {
-	_waitingToSend.push_back(message);
+	//_waitingToSend.push_back(message);
+	this->buffer += ":" + this->getPrefix() + " " + msg + "\r\n";
 }
 
-void irc::User::sendTo(irc::User &toUser, std::string message)
+ssize_t irc::User::send_buf(irc::User &user, std::string const &msg)
 {
-	toUser.write(":" + this->getPrefix() + " " + message);
+	//user.write(":" + this->getPrefix() + " " + message);
+	ssize_t res;
+
+	res = send(this->_fdUser, this->buffer.c_str(), this->buffer.length(), 0);
+	if (res == -1)
+		return (res);
+
+	//this->buffer.clear();
+	//this->lastping = std::time(NULL);
+	return (res);
 }
 
-void irc::User::post_registration()
+void irc::User::post_registration(irc::Command *command)
 {
-	_commands.Command::reply(1, _commands.Command::getUser().getPrefix());
-	_commands.Command::reply(2, _commands.Command::getUser().getHostname(), _commands.Command::getServer().getConfig().get("version"));
-	_commands.Command::reply(3, _commands.Command::getServer().getUpTime());
-	_commands.Command::reply(4, _commands.Command::getServer().getConfig().get("name"), _commands.Command::getServer().getConfig().get("version"), _commands.Command::getServer().getConfig().get("user_mode"), _commands.Command::getServer().getConfig().get("channel_givemode") + _commands.Command::getServer().getConfig().get("channel_togglemode") + _commands.Command::getServer().getConfig().get("channel_setmode"));
+	command->reply(1, command->getUser().getPrefix());
+	command->reply(2, command->getUser().getHostname(), command->getServer().getConfig().get("version"));
+	command->reply(3, command->getServer().getUpTime());
+	command->reply(4, command->getServer().getConfig().get("name"), command->getServer().getConfig().get("version"), command->getServer().getConfig().get("user_mode"), command->getServer().getConfig().get("channel_givemode") + command->getServer().getConfig().get("channel_togglemode") + command->getServer().getConfig().get("channel_setmode"));
 
 	//LUSERS(command);
 	//MOTD(command);
