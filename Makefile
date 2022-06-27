@@ -2,7 +2,13 @@ NAME = ircserv
 
 SRCDIR = ./sources
 
-SRCS = $(shell find $(SRCDIR) -name *.cpp -or -name *.c -or -name *.s)
+#SRCS = $(shell find $(SRCDIR) -name *.cpp -or -name *.c -or -name *.s)
+SRCS = 	sources/main.cpp \
+		sources/Command.cpp \
+		sources/Config.cpp \
+		sources/Message.cpp \
+		sources/Server.cpp \
+		sources/User.cpp
 
 INCDIR = ./includes
 

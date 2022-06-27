@@ -12,6 +12,7 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <ostream>
+#include "Message.hpp"
 
 namespace irc
 {

@@ -1,11 +1,12 @@
 #include <ft_irc.hpp>
 
-using namespace std;
+//using namespace std;
+using namespace irc;
 
 int main(void)
 {
 	//int client, server;
-	int portNum = 6697; // default port for irc
+	int portNum = 6667; // default port for irc
 	bool isExit = false;
 	int bufsize = 1024;
 	char buffer[bufsize];
@@ -22,13 +23,13 @@ int main(void)
 	serv.bindServer(user);
 
 	size = sizeof(serv.getServerAddr());
-	cout << "Looking for clients..." << endl;
+	std::cout << "Looking for clients..." << std::endl;
 
 	serv.listenUser(user);
 
-	serv.acceptUser(user, size);
+	//serv.acceptUser(user, size);
 
-	while (serv.getFdServer() > 0)
+	while (1)
 	{
 		strcpy(buffer, "Connect to server...");
 		send(serv.getFdServer(), buffer, bufsize, 0);
@@ -48,6 +49,7 @@ int main(void)
 		if (select_ret < 0)
 		{
 			perror("Select failed :");
+            break ;
 		}
 
 		if ((select_ret > 0) && (FD_ISSET(user.getFdUser(), &read_set)) && (!FD_ISSET(user.getFdUser(), &err_set)))
@@ -55,46 +57,50 @@ int main(void)
 			if ((serv.acceptUser(user, size)) < 0)
 			{
 				perror("Accept failed: ");
+                break ;
 			}
 			else
 			{
 				if (recv(serv.getFdServer(), buffer, 255, 0) >= 1)
 				{
-					cout << "MESSAGE: " << buffer << std::endl;
+					std::cout << "MESSAGE: " << buffer << std::endl;
+                    //break ;
 				}
 				else
 				{
 					perror("recv failure: ");
+                    break ;
 				}
 			}
 		}
 		else
 		{
 			perror("There were select failures: ");
+            break ;
 		}
 
 		//example
 		//std::vector<irc::Command *> commands;
-		std::string message(":toto!antoine@127.0.0.1 001 :Welcome to the Internet Relay Network baba!antoine@127.0.0.1");
+		std::string message(":irc.sample.com 001 yoka :Welcome to the Internet Relay Network yoka");
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
-		message = ":toto!antoine@127.0.0.1 002 :Your host is localhost, running version 12";
+		message = ":irc.sample.com 002 yoka :Your host is irc.sample.com, running version 12";
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
-		message = ":toto!antoine@127.0.0.1 003 :This server was created today";
+		message = ":irc.sample.com 003 yoka :This server was created today";
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
-		message = ":toto!antoine@127.0.0.1 004 :localhost 12 2i1j4oi jwer";
+		message = ":irc.sample.com 004 yoka :localhost 12 2i1j4oi jwer";
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
 
-		cout << "Connected with client..." << endl;
-		cout << "Enter # to end the connection" << endl;
+		std::cout << "Connected with client..." << std::endl;
+		std::cout << "Enter # to end the connection" << std::endl;
 
-		cout << "Client" << endl;
+		std::cout << "Client" << std::endl;
 		do {
 			recv(serv.getFdServer(), buffer, bufsize, 0);
-			cout << "buff3r" << " ";
+			std::cout << "buff3r" << " ";
 			if (*buffer == '#')
 			{
 				*buffer = '*';
@@ -103,9 +109,9 @@ int main(void)
 		} while (*buffer != '*');
 
 		do {
-			cout << "\nSever: ";
+			std::cout << "\nSever: ";
 			do {
-				cin >> buffer;
+				std::cin >> buffer;
 				send(serv.getFdServer(), buffer, bufsize, 0);
 				if (*buffer == '#')
 				{
@@ -114,10 +120,10 @@ int main(void)
 					isExit = true;
 				}
 			} while (*buffer != '*');
-			cout << "Client: ";
+			std::cout << "Client: ";
 			do {
 				recv(serv.getFdServer(), buffer, bufsize, 0);
-				cout << buffer << " ";
+				std::cout << buffer << " ";
 				if (*buffer == '#')
 				{
 					*buffer = '*';
@@ -125,13 +131,13 @@ int main(void)
 				}
 			} while (*buffer != '*');
 		} while (!isExit);
-		cout << "Connection terminated..." << endl;
-		cout << "Goodbye..." << endl;
+		std::cout << "Connection terminated..." << std::endl;
+		std::cout << "Goodbye..." << std::endl;
 		isExit = false;
 		exit(1);
 	}
 	serv.closeUser(user);
 
-	cout << "ft_irc" << endl;
+	std::cout << "ft_irc" << std::endl;
 	return 0;
 }
