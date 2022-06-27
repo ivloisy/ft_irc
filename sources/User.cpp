@@ -11,7 +11,7 @@
 //#include <netinet/ip.h>
 
 //#include <iostream>
-//#include <stdlib.h>
+#include <stdlib.h> //exit
 
 //#include <fcntl.h>
 //#include <iostream>

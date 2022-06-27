@@ -252,7 +252,7 @@ enum Reply
 		void				bindServer(User const & user);
 		void				createServerAddr(int portNum);
 		void				listenUser(User const & user);
-		void				acceptUser(User const & user, int size);
+		int 				acceptUser(User const & user, int size);
 		void				closeUser(User const & user);
 
 		int 				getFdServer() const;

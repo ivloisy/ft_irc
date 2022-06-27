@@ -30,16 +30,63 @@ int main(void)
 
 	while (serv.getFdServer() > 0)
 	{
-		strcpy(buffer, "Server connected...\n");
+		strcpy(buffer, "Connect to server...");
 		send(serv.getFdServer(), buffer, bufsize, 0);
+
+		fd_set read_set, err_set;
+		struct timeval timeout;
+
+		FD_ZERO(&read_set);
+		FD_SET(user.getFdUser(), &read_set);
+		FD_ZERO(&err_set);
+		FD_SET(user.getFdUser(), &err_set);
+		timeout.tv_sec = 10;
+		timeout.tv_usec = 0;
+
+		int select_ret = select(user.getFdUser() + 1, &read_set, NULL, &err_set, &timeout);
+
+		if (select_ret < 0)
+		{
+			perror("Select failed :");
+		}
+
+		if ((select_ret > 0) && (FD_ISSET(user.getFdUser(), &read_set)) && (!FD_ISSET(user.getFdUser(), &err_set)))
+		{
+			if ((serv.acceptUser(user, size)) < 0)
+			{
+				perror("Accept failed: ");
+			}
+			else
+			{
+				if (recv(serv.getFdServer(), buffer, 255, 0) >= 1)
+				{
+					cout << "MESSAGE: " << buffer << std::endl;
+				}
+				else
+				{
+					perror("recv failure: ");
+				}
+			}
+		}
+		else
+		{
+			perror("There were select failures: ");
+		}
+
 		//example
 		//std::vector<irc::Command *> commands;
-		//std::string message = buffer;
-		//commands.push_back(new irc::Command(user, serv, message));
-		//user.post_registration(*commands.begin());
-		//std::string message("Welcome to the Internet Relay Network"
-		//					" <antoine!user42@127.0.0.1\n");
-		//send(serv.getFdServer(), message, message.length(), 0);
+		std::string message(":toto!antoine@127.0.0.1 001 :Welcome to the Internet Relay Network baba!antoine@127.0.0.1");
+		send(serv.getFdServer(), message.c_str(), message.length(), 0);
+		message.clear();
+		message = ":toto!antoine@127.0.0.1 002 :Your host is localhost, running version 12";
+		send(serv.getFdServer(), message.c_str(), message.length(), 0);
+		message.clear();
+		message = ":toto!antoine@127.0.0.1 003 :This server was created today";
+		send(serv.getFdServer(), message.c_str(), message.length(), 0);
+		message.clear();
+		message = ":toto!antoine@127.0.0.1 004 :localhost 12 2i1j4oi jwer";
+		send(serv.getFdServer(), message.c_str(), message.length(), 0);
+		message.clear();
 
 		cout << "Connected with client..." << endl;
 		cout << "Enter # to end the connection" << endl;

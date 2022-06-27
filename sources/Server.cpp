@@ -55,7 +55,7 @@ void irc::Server::listenUser(User const & user)
 	listen(user.getFdUser(), 1);
 }
 
-void irc::Server::acceptUser(User const & user, int size)
+int irc::Server::acceptUser(User const & user, int size)
 {
 	this->_fdServer = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -63,8 +63,9 @@ void irc::Server::acceptUser(User const & user, int size)
 	if (this->_fdServer < 0)
 	{
 		std::cout << "Error on accepting..." << std::endl;
-		exit(1);
+		return (-1);
 	}
+	return (1);
 }
 
 void irc::Server::closeUser(User const & user)
