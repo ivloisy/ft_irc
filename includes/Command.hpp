@@ -6,8 +6,12 @@
 #define FT_IRC_COMMAND_HPP
 
 #include <sstream>
-#include "User.hpp"
-#include "Server.hpp"
+#include <string>
+#include <vector>
+//#include "User.hpp"
+//#include "Server.hpp"
+
+//using namespace irc;
 
 namespace irc
 {
@@ -17,15 +21,15 @@ namespace irc
 	class Command {
 
 	private:
-		User		user;
-		Server		server;
+		User		*user;
+		Server		*server;
 
-		std::string query;
+		std::string	query;
 
 		std::string	getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7);
 
 	public:
-		Command(User user, Server server, std::string message);
+		Command(User *user, Server *server, std::string message);
 		~Command();
 
 		User		&getUser();
@@ -35,7 +39,5 @@ namespace irc
 		void		reply(unsigned short code, std::string arg1 = "", std::string arg2 = "", std::string arg3 = "", std::string arg4 = "", std::string arg5 = "", std::string arg6 = "", std::string arg7 = "");
 	};
 }
-
-
 
 #endif //FT_IRC_COMMAND_HPP

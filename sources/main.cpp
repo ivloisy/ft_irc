@@ -6,7 +6,7 @@ using namespace irc;
 int main(void)
 {
 	//int client, server;
-	int portNum = 6667; // default port for irc
+	int portNum = 6697; // default port for irc
 	bool isExit = false;
 	int bufsize = 1024;
 	char buffer[bufsize];

@@ -7,26 +7,33 @@
 
 #include "Command.hpp"
 
-class Message {
-	//sender, receiver, payload, command called
-	//variable PASS, 1 if nick and password defined, 0 if not
+namespace irc
+{
+	//class Command;
 
-    std::string                 _prefix;
-    Command                     _command;
-    std::vector<std::string>    _parameters;
+	class Message
+	{
+		//sender, receiver, payload, command called
+		//variable PASS, 1 if nick and password defined, 0 if not
 
-public:
-	Message();
-	virtual ~Message();
-	Message(Message const &src);
-	Message &operator=(Message const &rhs);
+		std::string                 _prefix;
+		Command                     _command;
+		std::vector<std::string>    _parameters;
 
-    void                        send_message(std::string prefix, Command command, std::vector<std::string> parameters);
+	public:
+		//Message();
+		//virtual ~Message();
+		//Message(Message const &src);
+		//Message &operator=(Message const &rhs);
 
-    std::string                 getPrefix();
-    Command                     getCommand();
-    std::vector<std::string>    getParameters()
-};
+		void                        send_message(std::string prefix, Command command, std::vector<std::string> parameters);
+
+		std::string                 getPrefix();
+		Command                     getCommand();
+		std::vector<std::string>    getParameters();
+	};
+}
+
 
 
 #endif //FT_IRC_MESSAGE_HPP

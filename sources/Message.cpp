@@ -4,52 +4,53 @@
 
 #include "../includes/Message.hpp"
 
+
 /************** CONSTRUCTORS **************/
-
-Message::Message()
+/*
+irc::Message::Message()
 {
     ;
 }
 
-Message::Message(Message const & src)
+irc::Message::Message(Message const & src)
 {
     ;
 }
-
+*/
 /*************** DESTRUCTOR ***************/
-
-Message::~Message()
+/*
+irc::Message::~Message()
 {
     ;
 }
-
+*/
 /********** ASSIGNMENT OPERATOR ***********/
-
-Message &Message::operator=(Message const &rhs)
+/*
+irc::Message &irc::Message::operator=(Message const &rhs)
 {
-    ;
+    return (*this);
 }
-
+*/
 /**************** GETTERS *****************/
 
-std::string                 Message::getPrefix()
+std::string                 irc::Message::getPrefix()
 {
     return (this->_prefix);
 }
 
-std::vector<std::string>    Message::getCommand()
+irc::Command			    irc::Message::getCommand()
 {
     return (this->_command);
 }
 
-Command                     Message::getParameters()
+std::vector<std::string>    irc::Message::getParameters()
 {
     return (this->_parameters);
 }
 
 /*************** FUNCTIONS ****************/
 
-void                        Message::send_message(std::string prefix, std::vector<std::string> commands, std::string parameters)
+void                       	irc::Message::send_message(std::string prefix, irc::Command command, std::vector<std::string> parameters)
 {
-
+	;
 }
