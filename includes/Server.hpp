@@ -22,9 +22,13 @@ namespace irc
 		//int portNum;
 		struct sockaddr_in	_serverAddr;
 		//std::map<int, Client *> client;
-		socklen_t 			_size;
+		socklen_t 			size;
 		Config 				_config;
 		std::string 		_upTime;
+		irc::User 			*user;
+		int 				bufsize;
+		char				buffer[bufsize];
+		int					portNum;
 
 	public:
 		Server();
@@ -46,6 +50,11 @@ namespace irc
 
 		int 				getFdServer() const;
 		struct sockaddr_in	getServerAddr() const;
+		irc::User			getUser() const;
+		socklen_t			getSize() const;
+		int 				getPortNum() const;
+		char 				*getBuffer() const;
+		int 				getBufsize() const;
 	};
 }
 

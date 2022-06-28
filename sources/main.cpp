@@ -8,46 +8,26 @@ int main(void)
 
 	/*************** INITIALIZING SERVER ****************/
 
-	//int client, server;
-	int portNum = 6697; // default port for irc
-	bool isExit = false;
-	int bufsize = 1024;
-	char buffer[bufsize];
-
-	//struct sockaddr_in server_addr;
-	socklen_t size;
-
 	irc::Server serv;
-	irc::User user;
-
-	user.establishConnection();
-
-	serv.createServerAddr(portNum);
-	serv.bindServer(user);
-
-	size = sizeof(serv.getServerAddr());
-	std::cout << "Looking for clients..." << std::endl;
-
-	serv.listenUser(user);
 
 	//serv.acceptUser(user, size);
 
 	while (1)
 	{
-		strcpy(buffer, "Connect to server...");
-		send(serv.getFdServer(), buffer, bufsize, 0);
+		strcpy(serv.getBuffer(), "Connect to server...");
+		send(serv.getFdServer(), serv.getBuffer(), serv.getBufsize(), 0);
 
 		fd_set read_set, err_set;
 		struct timeval timeout;
 
 		FD_ZERO(&read_set);
-		FD_SET(user.getFdUser(), &read_set);
+		FD_SET(serv.getUser().getFdUser(), &read_set);
 		FD_ZERO(&err_set);
-		FD_SET(user.getFdUser(), &err_set);
+		FD_SET(serv.getUser().getFdUser(), &err_set);
 		timeout.tv_sec = 10;
 		timeout.tv_usec = 0;
 
-		int select_ret = select(user.getFdUser() + 1, &read_set, NULL, &err_set, &timeout);
+		int select_ret = select(serv.getUser().getFdUser() + 1, &read_set, NULL, &err_set, &timeout);
 
 		if (select_ret < 0)
 		{
@@ -55,18 +35,18 @@ int main(void)
             break ;
 		}
 
-		if ((select_ret > 0) && (FD_ISSET(user.getFdUser(), &read_set)) && (!FD_ISSET(user.getFdUser(), &err_set)))
+		if ((select_ret > 0) && (FD_ISSET(serv.getUser().getFdUser(), &read_set)) && (!FD_ISSET(serv.getUser().getFdUser(), &err_set)))
 		{
-			if ((serv.acceptUser(user, size)) < 0)
+			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
 			{
 				perror("Accept failed: ");
                 break ;
 			}
 			else
 			{
-				if (recv(serv.getFdServer(), buffer, 255, 0) >= 1)
+				if (recv(serv.getFdServer(), serv.getBuffer(), 255, 0) >= 1)
 				{
-					std::cout << "MESSAGE: " << buffer << std::endl;
+					std::cout << "MESSAGE: " << serv.getBuffer() << std::endl;
                     //break ;
 				}
 				else
@@ -98,10 +78,10 @@ int main(void)
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
 		*/
-		user.send_message(001, serv);
-		user.send_message(002, serv);
-		user.send_message(003, serv);
-		user.send_message(004, serv);
+		serv.getUser().send_message(001, serv);
+		serv.getUser().send_message(002, serv);
+		serv.getUser().send_message(003, serv);
+		serv.getUser().send_message(004, serv);
 
 		std::cout << "Connected with client..." << std::endl;
 		std::cout << "Enter # to end the connection" << std::endl;
@@ -147,7 +127,7 @@ int main(void)
 		exit(1);
 		 */
 	}
-	serv.closeUser(user);
+	serv.closeUser(serv.getUser());
 
 	std::cout << "ft_irc" << std::endl;
 	return 0;

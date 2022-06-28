@@ -33,7 +33,7 @@ namespace irc
 		std::vector<Command *>		_commands;
 		//std::string				_prefix;
 		std::string 				buffer;
-		//Command						_command;
+		//Command					_command;
 
 		//if client send a cap command, ignore it
 

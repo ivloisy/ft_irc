@@ -9,9 +9,25 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-irc::Server::Server()
+irc::Server::Server() :
+	portNum(6697),
+	bufsize(1024),
 {
+//int client, server;
+	 // default port for irc
+	//bool isExit = false;
+	//struct sockaddr_in server_addr;
+	socklen_t size;
 
+	user.establishConnection();
+
+	this->createServerAddr(portNum);
+	this->bindServer(user);
+
+	this->size = sizeof(this->getServerAddr());
+	std::cout << "Looking for clients..." << std::endl;
+
+	this->listenUser(user);
 }
 
 irc::Server::Server(Server const & src)
@@ -81,4 +97,27 @@ int irc::Server::getFdServer(void) const
 struct sockaddr_in irc::Server::getServerAddr() const
 {
 	return (this->_serverAddr);
+}
+
+irc::User			getUser() const
+{
+	return (this->user);
+}
+
+socklen_t			getSize() const
+{
+	return (this->size);
+}
+
+int 				getPortNum() const
+{
+	return (this->portNum);
+}
+char 				*getBuffer() const
+{
+	return (this->buffer);
+}
+int 				getBufsize() const
+{
+	return (this->bufsize);
 }
