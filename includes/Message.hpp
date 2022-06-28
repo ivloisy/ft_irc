@@ -2,6 +2,8 @@
 // Created by antoine on 20/06/22.
 //
 
+//************************* USELESS FOR THE MOMENT *******************************
+
 #ifndef FT_IRC_MESSAGE_HPP
 #define FT_IRC_MESSAGE_HPP
 

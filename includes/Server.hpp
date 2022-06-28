@@ -18,10 +18,10 @@ namespace irc
 		//int client; //(instantiation client)
 		int 				_fdServer;
 		//int nbClients; (client class, static variable)
-		//int channels; //(instantiation channels)
+		//std::map<int, Channel> channels; (instantiation channels)
 		//int portNum;
 		struct sockaddr_in	_serverAddr;
-		//MAP Client client;
+		//std::map<int, Client *> client;
 		socklen_t 			_size;
 		Config 				_config;
 		std::string 		_upTime;

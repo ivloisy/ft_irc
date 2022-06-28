@@ -2,8 +2,9 @@
 // Created by antoine on 20/06/22.
 //
 
-#include "../includes/Message.hpp"
+//************************* USELESS FOR THE MOMENT *******************************
 
+#include "../includes/Message.hpp"
 
 /************** CONSTRUCTORS **************/
 /*

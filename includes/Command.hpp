@@ -26,7 +26,7 @@ namespace irc
 
 		std::string	query;
 
-		std::string	getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7);
+		std::string	get_reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7);
 
 	public:
 		Command(User *user, Server *server, std::string message);

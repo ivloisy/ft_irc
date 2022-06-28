@@ -16,8 +16,8 @@
 
 namespace irc
 {
-	class Command;
-	class Server;
+	//class Command;
+	//class Server;
 
 	class User
 	{
@@ -33,15 +33,16 @@ namespace irc
 		std::vector<Command *>		_commands;
 		//std::string				_prefix;
 		std::string 				buffer;
+		//Command						_command;
 
 		//if client send a cap command, ignore it
 
 	public:
 		User();
-		User(int fd, struct sockaddr_in address);
-		virtual ~User();
-		User(User const &src);
-		User &operator=(User const &rhs);
+		//User(int fd, struct sockaddr_in address);
+		//virtual ~User();
+		//User(User const &src);
+		//User &operator=(User const &rhs);
 
 		void						establishConnection(void);
 		int 						getFdUser(void) const;
@@ -53,7 +54,9 @@ namespace irc
 		std::string 				getPrefix();
 		std::string 				getHostname();
 
-		void						post_registration(Command *command);
+		void						send_message(int nb_command, Server serv);
+
+		//void						connection_replies(Command *command);
 	};
 }
 

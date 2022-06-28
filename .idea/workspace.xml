@@ -17,8 +17,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/Command.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Command.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/Message.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Message.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/Reply.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Reply.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Command.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Command.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Message.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Message.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Reply.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Reply.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

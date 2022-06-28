@@ -52,28 +52,33 @@ void irc::Command::reply(User &user, unsigned short code, std::string arg1, std:
 	while (scode.length() < 3)
 		scode = "0" + scode;
 
-	user.send_buf(user, scode + " " + getReplies(code, arg1, arg2, arg3, arg4, arg5, arg6, arg7));
+	user.send_buf(user, scode + " " + get_reply(code, arg1, arg2, arg3, arg4, arg5, arg6, arg7));
 }
+
 
 void irc::Command::reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
 {
 	reply(*user, code, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 
-std::string	irc::Command::getReplies(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
+std::string	irc::Command::get_reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
 {
 	std::string target = "salut";
 
 	switch (code)
 	{
 		case 001:
-			return (target + RPL_WELCOME(arg1));
+			reply(code, arg1);
+			//return (target + RPL_WELCOME(arg1));
 		case 002:
-			return (target + RPL_YOURHOST(arg1, arg2));
+			reply(code, arg1, arg2);
+			//return (target + RPL_YOURHOST(arg1, arg2));
 		case 003:
-			return (target + RPL_CREATED(arg1));
+			reply(code, arg1);
+			//return (target + RPL_CREATED(arg1));
 		case 004:
-			return (target + RPL_MYINFO(arg1, arg2, arg3, arg4));
+			reply(code, arg1, arg2, arg3, arg4);
+			//return (target + RPL_MYINFO(arg1, arg2, arg3, arg4));
 		default:
 			return (std::string());
 	}

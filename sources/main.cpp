@@ -5,6 +5,9 @@ using namespace irc;
 
 int main(void)
 {
+
+	/*************** INITIALIZING SERVER ****************/
+
 	//int client, server;
 	int portNum = 6697; // default port for irc
 	bool isExit = false;
@@ -81,6 +84,7 @@ int main(void)
 
 		//example
 		//std::vector<irc::Command *> commands;
+		/*
 		std::string message(":irc.sample.com 001 yoka :Welcome to the Internet Relay Network yoka");
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
@@ -93,11 +97,17 @@ int main(void)
 		message = ":irc.sample.com 004 yoka :localhost 12 2i1j4oi jwer";
 		send(serv.getFdServer(), message.c_str(), message.length(), 0);
 		message.clear();
+		*/
+		user.send_message(001, serv);
+		user.send_message(002, serv);
+		user.send_message(003, serv);
+		user.send_message(004, serv);
 
 		std::cout << "Connected with client..." << std::endl;
 		std::cout << "Enter # to end the connection" << std::endl;
 
 		std::cout << "Client" << std::endl;
+		/*
 		do {
 			recv(serv.getFdServer(), buffer, bufsize, 0);
 			std::cout << "buff3r" << " ";
@@ -135,6 +145,7 @@ int main(void)
 		std::cout << "Goodbye..." << std::endl;
 		isExit = false;
 		exit(1);
+		 */
 	}
 	serv.closeUser(user);
 
