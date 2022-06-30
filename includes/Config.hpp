@@ -25,6 +25,4 @@ namespace irc
 	};
 }
 
-
-
 #endif //FT_IRC_CONFIG_HPP

@@ -9,19 +9,17 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-irc::Server::Server() :
+using namespace irc;
+
+Server::Server() :
 	_serverName("irc.sample.com"),
 	_portNum(6667)
 {
-	//int client, server;
-	// default port for irc
-	//bool isExit = false;
-	//struct sockaddr_in server_addr;
 	socklen_t size;
-	//this->buffer = new char[bufsize];
-	//user = new irc::User;
 
 	this->establishConnection();
+
+	this->_fdMax = this->_fd;
 
 	this->createServerAddr(this->_portNum);
 
@@ -30,37 +28,38 @@ irc::Server::Server() :
 	this->_size = sizeof(this->getServerAddr());
 	std::cout << "Looking for clients..." << std::endl;
 
-	//std::cout << "is it here??? fd = " << &(this->getUser()) << "\n";
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
+	{
+		//error
 		;
-	//this->listenUser(this->getUser());
+	}
 
 }
 
-irc::Server::Server(Server const & src)
+Server::Server(Server const & src)
 {
-	;
+	return;
 }
 
-irc::Server::~Server()
+Server::~Server()
 {
-	;
+	return;
 }
 
 /*
-irc::Config &irc::Server::getConfig()
+Config &Server::getConfig()
 {
 	return (_config);
 }
 */
 /*
-std::string irc::Server::getUpTime()
+std::string Server::getUpTime()
 {
 	return (_upTime);
 }
 */
 
-void				 irc::Server::establishConnection(void)
+void				 Server::establishConnection(void)
 {
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
@@ -72,14 +71,14 @@ void				 irc::Server::establishConnection(void)
 	std::cout << "Server Socket connection created..." << std::endl;
 }
 
-void				irc::Server::createServerAddr(int portNum)
+void				Server::createServerAddr(int portNum)
 {
 	this->_serverAddr.sin_family = AF_INET;
 	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-void				irc::Server::bindServer()
+void				Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
@@ -88,61 +87,82 @@ void				irc::Server::bindServer()
 	}
 }
 
-void				irc::Server::listenUser()
+void				Server::listenUser()
 {
 	std::cout << "fd = " << this->_user.at(0).getFdUser() << std::endl;
 	listen(this->_user.at(0).getFdUser(), 1);
 
 }
 
-int					irc::Server::acceptUser(User & user, socklen_t  size)
+int					Server::acceptUser(User & user, socklen_t  size)
 {
-	int fd = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
+	std::cout << "1acceptUser function" << std::endl;
+	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
-
+	std::cout << "2acceptUser function" << std::endl;
 	if (fd < 0)
 	{
 		std::cout << "Error on accepting..." << std::endl;
 		return (-1);
 	}
+	std::cout << "3acceptUser function" << std::endl;
 	_user.push_back(User(fd, this->_serverAddr));
+	_user[0].setFdUser(fd);
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
 	//std::cout << "after" << std::endl;
-	return (1);
+	return (fd);
 }
 
-void				irc::Server::closeUser(User & user)
+void				Server::closeUser(User & user)
 {
 	close(user.getFdUser());
 }
 
-int					&irc::Server::getFdServer(void)
+int 				Server::getFdMax() const
+{
+	return this->_fdMax;
+}
+
+
+void 				Server::setUpFdMax(int fdCurrent)
+{
+	if (fdCurrent > this->_fdMax)
+		this->_fdMax = fdCurrent;
+}
+//
+// void 				Server::setDownFdMax(int fdCurrent)
+// {
+
+// }
+
+
+int					&Server::getFdServer(void)
 {
 	return (this->_fd);
 }
 
-struct sockaddr_in	irc::Server::getServerAddr() const
+struct sockaddr_in	Server::getServerAddr() const
 {
 	return (this->_serverAddr);
 }
 
-irc::User 			&irc::Server::getUser()
+User 			&Server::getUser()
 {
 	return (this->_user[0]);
 }
 
-socklen_t			irc::Server::getSize() const
+socklen_t			Server::getSize() const
 {
 	return (this->_size);
 }
 
-int 				irc::Server::getPortNum() const
+int 				Server::getPortNum() const
 {
 	return (this->_portNum);
 }
 
-std::string 		irc::Server::getServerName() const
+std::string 		Server::getServerName() const
 {
 	return (this->_serverName);
 }

@@ -36,6 +36,4 @@ namespace irc
 	};
 }
 
-
-
 #endif //FT_IRC_MESSAGE_HPP

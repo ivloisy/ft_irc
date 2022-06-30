@@ -1,4 +1,4 @@
-//#include "../includes/ft_irc.hpp"
+#include "../includes/ft_irc.hpp"
 
 # include <iostream>
 # include <cstring>
@@ -22,7 +22,9 @@
 //#include "../includes/Message.hpp"
 
 //using namespace std;
-//using namespace irc;
+using namespace irc;
+
+
 
 void copy_buffer(std::string &dest, std::string const &src)
 {
@@ -33,11 +35,20 @@ void copy_buffer(std::string &dest, std::string const &src)
 int main(void)
 {
 
-	/*************** INITIALIZING SERVER ****************/
 
-	irc::Server serv;
+	/*************** INITIALIZING SERVER ****************/
+	// typedef Server::getUser()  &cUser;
+
+	Server serv;
 
 	//serv.acceptUser(user, size);
+	fd_set read_set, err_set, write_set, save_read_set;
+	FD_ZERO(&read_set);
+	FD_ZERO(&write_set);
+	FD_ZERO(&err_set);
+	FD_SET(serv.getFdServer(), &read_set);
+	FD_SET(serv.getFdServer(), &write_set);
+	FD_SET(serv.getFdServer(), &err_set);
 
 	while (1)
 	{
@@ -50,17 +61,13 @@ int main(void)
 		std::cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << std::endl;
 		//send(serv.getFdServer(), buf.c_str(), 512, 0);
 
-		fd_set read_set, err_set;
 		struct timeval timeout;
 
-		FD_ZERO(&read_set);
-		FD_SET(serv.getFdServer(), &read_set);
-		FD_ZERO(&err_set);
-		FD_SET(serv.getFdServer(), &err_set);
-		timeout.tv_sec = 10;
+		timeout.tv_sec = 15;
 		timeout.tv_usec = 0;
 
-		int select_ret = select(serv.getFdServer() + 1, &read_set, NULL, &err_set, &timeout);
+
+		int select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
 
 		std::cout << "glouglou = " << select_ret << std::endl;
 		if (select_ret < 0)
@@ -70,8 +77,8 @@ int main(void)
 		}
 
 		std::cout << "glagla" << std::endl;
-		if ((select_ret > 0) && (FD_ISSET(serv.getUser().getFdUser(), &read_set)) &&
-			(!FD_ISSET(serv.getUser().getFdUser(), &err_set)))
+		if ((select_ret > 0) && (FD_ISSET(serv.getFdServer(), &read_set)) &&
+			(!FD_ISSET(serv.getFdServer(), &err_set)))
 		{
 			std::cout << "gloglo" << std::endl;
 			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
@@ -82,11 +89,13 @@ int main(void)
 			else
 			{
 				//we're gonna to have to change this buffer thing
-				//serv.listenUser();
+				FD_SET(serv.getUser().getFdUser(), &read_set);
+				serv.listenUser();
 				char buffer[512];
-				if (recv(serv.getFdServer(), &buffer, 255, 0) >= 1)
+				if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 				{
 					std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
+					serv.setUpFdMax(serv.getUser().getFdUser());
                     //break ;
 				}
 				else
@@ -99,30 +108,10 @@ int main(void)
 		else
 		{
 			perror("There were select failures: ");
-            break ;
+            // break ;
 		}
 
-		//example
-		//std::vector<irc::Command *> commands;
-		/*
-		std::string message(":irc.sample.com 001 yoka :Welcome to the Internet Relay Network yoka");
-		send(serv.getFdServer(), message.c_str(), message.length(), 0);
-		message.clear();
-		message = ":irc.sample.com 002 yoka :Your host is irc.sample.com, running version 12";
-		send(serv.getFdServer(), message.c_str(), message.length(), 0);
-		message.clear();
-		message = ":irc.sample.com 003 yoka :This server was created today";
-		send(serv.getFdServer(), message.c_str(), message.length(), 0);
-		message.clear();
-		message = ":irc.sample.com 004 yoka :localhost 12 2i1j4oi jwer";
-		send(serv.getFdServer(), message.c_str(), message.length(), 0);
-		message.clear();
-		*/
-		//serv.getUser().send_message(001, serv);
-		//serv.getUser().send_message(002, serv);
-		//serv.getUser().send_message(003, serv);
-		//serv.getUser().send_message(004, serv);
-		serv.getUser().connection_replies(serv);
+		// serv.getUser().connection_replies(serv);
 
 		std::cout << "Connected with client..." << std::endl;
 		std::cout << "Enter # to end the connection" << std::endl;
@@ -168,7 +157,8 @@ int main(void)
 		exit(1);
 		 */
 	}
-	serv.closeUser(serv.getUser());
+	std::cout << "sortie" << std::endl;
+	// serv.closeUser(serv.getUser());
 
 	std::cout << "ft_irc" << std::endl;
 	return 0;

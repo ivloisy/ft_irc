@@ -2,56 +2,59 @@
 // Created by antoine on 20/06/22.
 //
 
+
 //************************* USELESS FOR THE MOMENT *******************************
 
 #include "../includes/Message.hpp"
 
+using namespace irc;
+
 /************** CONSTRUCTORS **************/
 /*
-irc::Message::Message()
+Message::Message()
 {
     ;
 }
 
-irc::Message::Message(Message const & src)
+Message::Message(Message const & src)
 {
     ;
 }
 */
 /*************** DESTRUCTOR ***************/
 /*
-irc::Message::~Message()
+Message::~Message()
 {
     ;
 }
 */
 /********** ASSIGNMENT OPERATOR ***********/
 /*
-irc::Message &irc::Message::operator=(Message const &rhs)
+Message &Message::operator=(Message const &rhs)
 {
     return (*this);
 }
 */
 /**************** GETTERS *****************/
 
-std::string                 irc::Message::getPrefix()
+std::string                 Message::getPrefix()
 {
     return (this->_prefix);
 }
 
-//irc::Command			    irc::Message::getCommand()
+//Command			    Message::getCommand()
 //{
 //   return (this->_command);
 //}
 
-std::vector<std::string>    irc::Message::getParameters()
+std::vector<std::string>    Message::getParameters()
 {
     return (this->_parameters);
 }
 
 /*************** FUNCTIONS ****************/
 
-void                       	irc::Message::send_message(std::string prefix, irc::Command command, std::vector<std::string> parameters)
+void                       	Message::send_message(std::string prefix, Command command, std::vector<std::string> parameters)
 {
 	;
 }

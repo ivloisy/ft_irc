@@ -2,6 +2,7 @@
 // Created by alangloi on 6/23/22.
 //
 
+
 #ifndef FT_IRC_COMMAND_HPP
 #define FT_IRC_COMMAND_HPP
 
@@ -21,8 +22,8 @@ namespace irc
 	class Command {
 
 	private:
-		irc::User			*user;
-		//irc::Server		server;
+		User			*user;
+		//Server		server;
 
 		std::string			query;
 
@@ -32,10 +33,10 @@ namespace irc
 		//Command(User *user, Server *server, std::string message);
 		//~Command();
 
-		//irc::User			getUser();
-		//irc::Server		getServer();
+		//User			getUser();
+		//Server		getServer();
 
-		void				reply(irc::User &user, unsigned short code, std::string servername, std::string nickname);
+		void				reply(User &user, unsigned short code, std::string servername, std::string nickname);
 	};
 }
 

@@ -2,9 +2,12 @@
 // Created by alangloi on 6/23/22.
 //
 
+
 #include "../includes/Command.hpp"
 #include "../includes/Server.hpp"
 #include "../includes/User.hpp"
+
+using namespace irc;
 
 std::string RPL_WELCOME(std::string servername, std::string nickname)
 {
@@ -32,7 +35,7 @@ std::string RPL_MYINFO(std::string servername, std::string nickname)
 //--------------------------
 
 /*
-irc::Command::Command(User *user, Server *server, std::string message) :
+Command::Command(User *user, Server *server, std::string message) :
 	user(user),
 	server(server),
 	query(message)
@@ -41,17 +44,17 @@ irc::Command::Command(User *user, Server *server, std::string message) :
 }
 */
 
-//irc::User			irc::Command::getUser()
+//User			Command::getUser()
 //{
 //	return (user);
 //}
 
-//irc::Server			irc::Command::getServer()
+//Server			Command::getServer()
 //{
 //	return (server);
 //}
 
-void				irc::Command::reply(User &user, unsigned short code, std::string servername, std::string nickname)
+void				Command::reply(User &user, unsigned short code, std::string servername, std::string nickname)
 {
 	std::stringstream sscode;
 	sscode << code;
@@ -63,13 +66,13 @@ void				irc::Command::reply(User &user, unsigned short code, std::string servern
 }
 
 /*
-void irc::Command::reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
+void Command::reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
 {
 	reply(*user, code, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 */
 
-std::string			irc::Command::get_reply(unsigned short code, std::string servername, std::string nickname) {
+std::string			Command::get_reply(unsigned short code, std::string servername, std::string nickname) {
 	//std::string target;
 	//if (user->getStatus() == PASSWORD || user->getStatus() == REGISTER)
 	//	target = "*";

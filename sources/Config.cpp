@@ -6,17 +6,19 @@
 
 #include "../includes/Config.hpp"
 
-irc::Config::Config()
+using namespace irc;
+
+Config::Config()
 {
 	;
 }
 
-irc::Config::Config(std::string config)
+Config::Config(std::string config)
 {
 	;
 }
 
-std::string irc::Config::get(std::string key)
+std::string Config::get(std::string key)
 {
 	return (values[key]);
 }

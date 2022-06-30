@@ -22,16 +22,16 @@
 //#include <unistd.h>
 //#include <ctime>
 
+using namespace irc;
 
 /**************************** CONSTRUCTORS ****************************/
 
-irc::User::User() :
-	_nickname("yoka")
+User::User() : _nickname("yoka")
 {
 	;
 }
 
-irc::User::User(int fd, struct sockaddr_in address) :
+User::User(int fd, struct sockaddr_in address) :
 		_fd(fd),
 		_hostname(),
 		_waitingToSend(),
@@ -54,21 +54,21 @@ irc::User::User(int fd, struct sockaddr_in address) :
 }
 
 /*
-irc::User::User(User const &src)
+User::User(User const &src)
 {
 	;
 }
 */
 /***************************** DESTRUCTORS ****************************/
 /*
-irc::User::~User()
+User::~User()
 {
 	;
 }
 */
 /************************* ASSIGNMENT OPERATOR ************************/
 
-irc::User &irc::User::operator=(User const &rhs)
+User &User::operator=(User const &rhs)
 {
 	if (this != &rhs)
 	{
@@ -84,41 +84,41 @@ irc::User &irc::User::operator=(User const &rhs)
 
 /******************************* GETTERS *******************************/
 
-int 				irc::User::getFdUser(void) const
+int 				User::getFdUser(void) const
 {
 	return (this->_fd);
 }
 
 /*
-int 				irc::User::getIdUser(void) const
+int 				User::getIdUser(void) const
 {
 	return (this->_idUser);
 }
 */
 
-std::string 		irc::User::getPrefix() const
+std::string 		User::getPrefix() const
 {
 	std::string prefix = "prefix";
 	return (prefix);
 }
 
-std::string 		irc::User::getHostname() const
+std::string 		User::getHostname() const
 {
 	return (this->_hostname);
 }
 
-std::string 		irc::User::getNickName() const
+std::string 		User::getNickName() const
 {
 	return (this->_nickname);
 }
 
-void 				irc::User::write_buf(User &user, std::string const &msg)
+void 				User::write_buf(User &user, std::string const &msg)
 {
 	//_waitingToSend.push_back(message);
 	this->buffer =  msg + "\n";
 }
 
-ssize_t 			irc::User::send_buf(irc::User &user, std::string const &msg)
+ssize_t 			User::send_buf(User &user, std::string const &msg)
 {
 	//user.write(":" + this->getPrefix() + " " + message);
 	ssize_t res;
@@ -132,7 +132,7 @@ ssize_t 			irc::User::send_buf(irc::User &user, std::string const &msg)
 	return (res);
 }
 
-void 				irc::User::connection_replies(irc::Server serv)
+void 				User::connection_replies(Server serv)
 {
 	this->_command->reply(*this, 1, serv.getServerName(),
 						 serv.getUser().getNickName());
@@ -147,7 +147,7 @@ void 				irc::User::connection_replies(irc::Server serv)
 	//MOTD(command);
 }
 /*
-void					irc::User::send_message(int nb_command, irc::Server serv)
+void					User::send_message(int nb_command, Server serv)
 {
 	//std::string message;
 
@@ -184,13 +184,18 @@ void					irc::User::send_message(int nb_command, irc::Server serv)
 */
 
 
-std::string 		&irc::User::getBuffer()
+std::string 		&User::getBuffer()
 {
 	return (this->buffer);
 }
 
 
-int 				irc::User::getBufsize() const
+int 				User::getBufsize() const
 {
 	return (this->bufsize);
+}
+
+void 				User::setFdUser(int & fd)
+{
+		this->_fd = fd;
 }

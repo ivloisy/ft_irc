@@ -37,8 +37,8 @@ namespace irc
 		//std::string				_prefix;
 		std::string 				buffer;
 		int 						bufsize;
-		irc::Command				*_command;
-		irc::Server					*server;
+		Command						*_command;
+		Server						*server;
 
 		//if client send a cap command, ignore it
 
@@ -53,6 +53,7 @@ namespace irc
 		int 						getFdUser(void) const;
 		int 						getIdUser(void) const;
 
+
 		ssize_t 					send_buf(User &user, std::string const &msg);
 		void						write_buf(User &user, std::string const &msg);
 
@@ -63,9 +64,11 @@ namespace irc
 		std::string					&getBuffer();
 		int 						getBufsize() const;
 
-		//void						send_message(int nb_command, irc::Server server);
+		void 						setFdUser(int & fd);
 
-		void						connection_replies(irc::Server server);
+		//void						send_message(int nb_command, Server server);
+
+		void						connection_replies(Server server);
 	};
 }
 
