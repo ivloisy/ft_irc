@@ -60,7 +60,7 @@ namespace irc
 		std::string 				getHostname() const;
 		std::string 				getNickName() const;
 
-		std::string 				&getBuffer();
+		std::string					&getBuffer();
 		int 						getBufsize() const;
 
 		//void						send_message(int nb_command, irc::Server server);

@@ -23,14 +23,18 @@ irc::Server::Server() :
 
 	this->establishConnection();
 
-	this->createServerAddr(_portNum);
+	this->createServerAddr(this->_portNum);
 
 	this->bindServer();
 
 	this->_size = sizeof(this->getServerAddr());
 	std::cout << "Looking for clients..." << std::endl;
 
-	this->listenUser(this->getUser());
+	//std::cout << "is it here??? fd = " << &(this->getUser()) << "\n";
+	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
+		;
+	//this->listenUser(this->getUser());
+
 }
 
 irc::Server::Server(Server const & src)
@@ -84,12 +88,14 @@ void				irc::Server::bindServer()
 	}
 }
 
-void				irc::Server::listenUser(User & user)
+void				irc::Server::listenUser()
 {
-	listen(user.getFdUser(), 1);
+	std::cout << "fd = " << this->_user.at(0).getFdUser() << std::endl;
+	listen(this->_user.at(0).getFdUser(), 1);
+
 }
 
-int					irc::Server::acceptUser(User & user, int size)
+int					irc::Server::acceptUser(User & user, socklen_t  size)
 {
 	int fd = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -100,6 +106,9 @@ int					irc::Server::acceptUser(User & user, int size)
 		return (-1);
 	}
 	_user.push_back(User(fd, this->_serverAddr));
+	//std::cout << "before" << std::endl;
+	//std::cout << &(_user.at(0)) << std::endl;
+	//std::cout << "after" << std::endl;
 	return (1);
 }
 
@@ -108,7 +117,7 @@ void				irc::Server::closeUser(User & user)
 	close(user.getFdUser());
 }
 
-int					irc::Server::getFdServer(void) const
+int					&irc::Server::getFdServer(void)
 {
 	return (this->_fd);
 }

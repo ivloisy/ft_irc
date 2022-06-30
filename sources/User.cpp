@@ -41,6 +41,8 @@ irc::User::User(int fd, struct sockaddr_in address) :
 	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
+	//buffer = new char[512];
+
 	//{
 	//	char tmp[NI_MAXHOST];
 	//	if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
@@ -113,7 +115,7 @@ std::string 		irc::User::getNickName() const
 void 				irc::User::write_buf(User &user, std::string const &msg)
 {
 	//_waitingToSend.push_back(message);
-	this->buffer += ":" + this->getPrefix() + " " + msg + "\r\n";
+	this->buffer =  msg + "\n";
 }
 
 ssize_t 			irc::User::send_buf(irc::User &user, std::string const &msg)

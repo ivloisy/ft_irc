@@ -17,7 +17,7 @@ namespace irc
 
 	class Server {
 		//int client; //(instantiation client)
-		int 				_fd;
+		int 					_fd;
 		//int nbClients; (client class, static variable)
 		//std::map<int, Channel> channels; (instantiation channels)
 		//int portNum;
@@ -47,11 +47,11 @@ namespace irc
 		void				establishConnection(void);
 		void				bindServer(void);
 		void				createServerAddr(int portNum);
-		void				listenUser(irc::User & user);
-		int 				acceptUser(irc::User & user, int size);
+		void				listenUser(void);
+		int 				acceptUser(irc::User & user, socklen_t size);
 		void				closeUser(irc::User & user);
 
-		int 				getFdServer() const;
+		int 				&getFdServer();
 		struct sockaddr_in	getServerAddr() const;
 		irc::User 			&getUser();
 		socklen_t			getSize() const;
