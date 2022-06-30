@@ -25,30 +25,32 @@
 
 /**************************** CONSTRUCTORS ****************************/
 
-irc::User::User()
+irc::User::User() :
+	_nickname("yoka")
 {
 	;
 }
-/*
+
 irc::User::User(int fd, struct sockaddr_in address) :
-		_fdUser(fd),
+		_fd(fd),
 		_hostname(),
 		_waitingToSend(),
-		_commands()
+		_command()
 {
-	//fcntl(_fdUser, F_SETFL, O_NONBLOCK);
+	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
-	//{
-	//	char tmp[NI_MAXHOST];
-	//	if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
-	//		error("getnameinfo");
-	//	else
-	//		this->_hostname = tmp;
-	//}
+	{
+		char tmp[NI_MAXHOST];
+		if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
+			error("getnameinfo");
+		else
+			this->_hostname = tmp;
+	}
 	;
 }
 
+/*
 irc::User::User(User const &src)
 {
 	;
@@ -70,28 +72,21 @@ irc::User &irc::User::operator=(User const &rhs)
 */
 /*************************** MEMBER FUNCTIONS **************************/
 
-void				 irc::User::establishConnection(void)
-{
-	this->_fdUser = socket(AF_INET, SOCK_STREAM, 0);
-	if (this->_fdUser < 0)
-	{
-		std::cout << "Error establishing connection..." << std::endl;
-		exit(1);
-	}
-	std::cout << "Server Socket connection created..." << std::endl;
-}
+
 
 /******************************* GETTERS *******************************/
 
 int 				irc::User::getFdUser(void) const
 {
-	return (this->_fdUser);
+	return (this->_fd);
 }
 
+/*
 int 				irc::User::getIdUser(void) const
 {
 	return (this->_idUser);
 }
+*/
 
 std::string 		irc::User::getPrefix() const
 {
@@ -120,7 +115,7 @@ ssize_t 			irc::User::send_buf(irc::User &user, std::string const &msg)
 	//user.write(":" + this->getPrefix() + " " + message);
 	ssize_t res;
 
-	res = send(this->_fdUser, this->buffer.c_str(), this->buffer.length(), 0);
+	res = send(this->_fd, this->buffer.c_str(), this->buffer.length(), 0);
 	if (res == -1)
 		return (res);
 
@@ -131,14 +126,14 @@ ssize_t 			irc::User::send_buf(irc::User &user, std::string const &msg)
 
 void 				irc::User::connection_replies(irc::Server serv)
 {
-	this->_command.reply(*this, 1, serv.getServerName(),
-						 serv.getUser()->getNickName());
-	this->_command.reply(*this, 2, serv.getServerName(),
-						 serv.getUser()->getNickName());
-	this->_command.reply(*this, 3, serv.getServerName(),
-						 serv.getUser()->getNickName());
-	this->_command.reply(*this, 4, serv.getServerName(),
-						 serv.getUser()->getNickName());
+	this->_command->reply(*this, 1, serv.getServerName(),
+						 serv.getUser().getNickName());
+	this->_command->reply(*this, 2, serv.getServerName(),
+						 serv.getUser().getNickName());
+	this->_command->reply(*this, 3, serv.getServerName(),
+						 serv.getUser().getNickName());
+	this->_command->reply(*this, 4, serv.getServerName(),
+						 serv.getUser().getNickName());
 
 	//LUSERS(command);
 	//MOTD(command);

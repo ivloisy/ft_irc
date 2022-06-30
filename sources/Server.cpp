@@ -10,9 +10,8 @@
 #include <sys/types.h>
 
 irc::Server::Server() :
-	_servername("irc.sample.com"),
-	portNum(6667)
-	//bufsize(1024)
+	_serverName("irc.sample.com"),
+	_portNum(6667)
 {
 	//int client, server;
 	// default port for irc
@@ -20,17 +19,17 @@ irc::Server::Server() :
 	//struct sockaddr_in server_addr;
 	socklen_t size;
 	//this->buffer = new char[bufsize];
-	//irc::User *user = new irc::User;
+	//user = new irc::User;
 
-	user.establishConnection();
+	_user.establishConnection();
 
-	this->createServerAddr(portNum);
-	this->bindServer(user);
+	this->createServerAddr(_portNum);
+	this->bindServer(_user);
 
-	this->size = sizeof(this->getServerAddr());
+	this->_size = sizeof(this->getServerAddr());
 	std::cout << "Looking for clients..." << std::endl;
 
-	this->listenUser(user);
+	this->listenUser(_user);
 }
 
 irc::Server::Server(Server const & src)
@@ -43,14 +42,29 @@ irc::Server::~Server()
 	;
 }
 
+/*
 irc::Config &irc::Server::getConfig()
 {
 	return (_config);
 }
-
+*/
+/*
 std::string irc::Server::getUpTime()
 {
 	return (_upTime);
+}
+*/
+
+void				 irc::Server::establishConnection(void)
+{
+	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (this->_fd < 0)
+	{
+		std::cout << "Error establishing connection..." << std::endl;
+		//exit(1);
+		return ;
+	}
+	std::cout << "Server Socket connection created..." << std::endl;
 }
 
 void irc::Server::createServerAddr(int portNum)
@@ -76,14 +90,15 @@ void irc::Server::listenUser(User const & user)
 
 int irc::Server::acceptUser(User const & user, int size)
 {
-	this->_fdServer = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
+	int fd = accept(user.getFdUser(), (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
 
-	if (this->_fdServer < 0)
+	if (fd < 0)
 	{
 		std::cout << "Error on accepting..." << std::endl;
 		return (-1);
 	}
+	_user[fd] = new User(fd, this->_serverAddr);
 	return (1);
 }
 
@@ -94,7 +109,7 @@ void irc::Server::closeUser(User const & user)
 
 int irc::Server::getFdServer(void) const
 {
-	return (this->_fdServer);
+	return (this->_fd);
 }
 
 struct sockaddr_in irc::Server::getServerAddr() const
@@ -102,25 +117,27 @@ struct sockaddr_in irc::Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-irc::User			*irc::Server::getUser() const
-{
-	return (this->user);
-}
+//irc::User			irc::Server::getUser() const
+//{
+//	return (this->user);
+//}
 
 socklen_t			irc::Server::getSize() const
 {
-	return (this->size);
+	return (this->_size);
 }
 
 int 				irc::Server::getPortNum() const
 {
-	return (this->portNum);
+	return (this->_portNum);
 }
 
+/*
 std::string 		irc::Server::getBuffer() const
 {
 	return (this->buffer);
 }
+*/
 
 /*
 int 				irc::Server::getBufsize() const
@@ -131,5 +148,5 @@ int 				irc::Server::getBufsize() const
 
 std::string 		irc::Server::getServerName() const
 {
-	return (this->_servername);
+	return (this->_serverName);
 }

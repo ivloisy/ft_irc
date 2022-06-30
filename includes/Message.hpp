@@ -31,7 +31,7 @@ namespace irc
 		void                        send_message(std::string prefix, Command command, std::vector<std::string> parameters);
 
 		std::string                 getPrefix();
-		//Command                     getCommand();
+		//Command                   getCommand();
 		std::vector<std::string>    getParameters();
 	};
 }

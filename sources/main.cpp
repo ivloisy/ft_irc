@@ -43,13 +43,13 @@ int main(void)
 		struct timeval timeout;
 
 		FD_ZERO(&read_set);
-		FD_SET(serv.getUser()->getFdUser(), &read_set);
+		FD_SET(serv.getUser().getFdUser(), &read_set);
 		FD_ZERO(&err_set);
-		FD_SET(serv.getUser()->getFdUser(), &err_set);
+		FD_SET(serv.getUser().getFdUser(), &err_set);
 		timeout.tv_sec = 10;
 		timeout.tv_usec = 0;
 
-		int select_ret = select(serv.getUser()->getFdUser() + 1, &read_set, NULL, &err_set, &timeout);
+		int select_ret = select(serv.getUser().getFdUser() + 1, &read_set, NULL, &err_set, &timeout);
 
 		if (select_ret < 0)
 		{
@@ -57,8 +57,8 @@ int main(void)
             break ;
 		}
 
-		if ((select_ret > 0) && (FD_ISSET(serv.getUser()->getFdUser(), &read_set)) &&
-			(!FD_ISSET(serv.getUser()->getFdUser(), &err_set)))
+		if ((select_ret > 0) && (FD_ISSET(serv.getUser().getFdUser(), &read_set)) &&
+			(!FD_ISSET(serv.getUser().getFdUser(), &err_set)))
 		{
 			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
 			{

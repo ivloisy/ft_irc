@@ -17,21 +17,20 @@ namespace irc
 
 	class Server {
 		//int client; //(instantiation client)
-		int 				_fdServer;
+		int 				_fd;
 		//int nbClients; (client class, static variable)
 		//std::map<int, Channel> channels; (instantiation channels)
 		//int portNum;
 		struct sockaddr_in	_serverAddr;
-		std::string			_servername; //identify the server, has a max length of 63 chars. servername = hostname
-		//std::map<int, User *> user;
-		socklen_t 			size;
-		Config 				_config;
-		std::string 		_upTime;
-		irc::User 			*user;
-		//int 				bufsize;
-		//char				*buffer;
-		std::string 		buffer;
-		int					portNum;
+		std::string			_serverName; //identify the server, has a max length of 63 chars. servername = hostname
+		//std::set<User *>  user; *Store the different users
+		socklen_t 			_size;
+		//Config 			_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
+		//std::string 		_upTime;
+		irc::User 			*_user; //we're going to delete it for the instanciation with set
+		//int 				bufsize; //is 512
+		//std::string 		buffer;//we're going to instanciate it in user, but server is gonna send message too so mayke keep it
+		int					_portNum; //default port 6667
 
 	public:
 		Server();
@@ -43,17 +42,18 @@ namespace irc
 		Config 				&getConfig();
 		std::string 		getUpTime();
 
-		void				add_user(User user);
+		void				add_user(irc::User user);
 
-		void				bindServer(User const & user);
+		void				establishConnection(void);
+		void				bindServer(irc::User const & user);
 		void				createServerAddr(int portNum);
-		void				listenUser(User const & user);
-		int 				acceptUser(User const & user, int size);
-		void				closeUser(User const & user);
+		void				listenUser(irc::User const & user);
+		int 				acceptUser(irc::User const & user, int size);
+		void				closeUser(irc::User const & user);
 
 		int 				getFdServer() const;
 		struct sockaddr_in	getServerAddr() const;
-		irc::User			*getUser() const;
+		irc::User			getUser() const;
 		socklen_t			getSize() const;
 		int 				getPortNum() const;
 		std::string 		getBuffer() const;
