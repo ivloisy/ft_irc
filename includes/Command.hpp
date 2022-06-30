@@ -21,21 +21,21 @@ namespace irc
 	class Command {
 
 	private:
-		irc::User		*user;
-		//irc::Server	server;
+		irc::User			*user;
+		//irc::Server		server;
 
-		std::string		query;
+		std::string			query;
 
-		std::string		get_reply(unsigned short code, std::string servername, std::string nickname);
+		std::string			get_reply(unsigned short code, std::string servername, std::string nickname);
 
 	public:
 		//Command(User *user, Server *server, std::string message);
 		//~Command();
 
 		//irc::User			getUser();
-		//irc::Server			getServer();
+		//irc::Server		getServer();
 
-		void			reply(irc::User &user, unsigned short code, std::string servername, std::string nickname);
+		void				reply(irc::User &user, unsigned short code, std::string servername, std::string nickname);
 	};
 }
 

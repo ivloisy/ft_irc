@@ -36,8 +36,8 @@ int main(void)
 	while (1)
 	{
 		//will need to change strcpy because it just takes a const string buf we want to access the buffer of user
-		strcpy(const_cast<char *>(serv.getBuffer().c_str()), "Connect to server...");
-		send(serv.getFdServer(), serv.getBuffer().c_str(), serv.getBufsize(), 0);
+		strcpy(const_cast<char *>(serv.getUser().getBuffer().c_str()), "Connect to server...");
+		send(serv.getFdServer(), serv.getUser().getBuffer().c_str(), serv.getUser().getBufsize(), 0);
 
 		fd_set read_set, err_set;
 		struct timeval timeout;
@@ -68,9 +68,9 @@ int main(void)
 			else
 			{
 				//we're gonna to have to change this buffer thing
-				if (recv(serv.getFdServer(), const_cast<char *>(serv.getBuffer().c_str()), 255, 0) >= 1)
+				if (recv(serv.getFdServer(), const_cast<char *>(serv.getUser().getBuffer().c_str()), 255, 0) >= 1)
 				{
-					std::cout << "MESSAGE: " << serv.getBuffer() << std::endl;
+					std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
                     //break ;
 				}
 				else

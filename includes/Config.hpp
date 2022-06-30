@@ -2,6 +2,8 @@
 // Created by alangloi on 6/23/22.
 //
 
+/****************************** USELESS FOR THE MOMENT ************************************/
+
 #ifndef FT_IRC_CONFIG_HPP
 #define FT_IRC_CONFIG_HPP
 

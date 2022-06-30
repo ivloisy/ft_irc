@@ -35,20 +35,21 @@ namespace irc
 		std::vector<std::string>	_waitingToSend;
 		//std::map<std::string, Command *>	_commands;
 		//std::string				_prefix;
-		std::string 				buffer; //maybe we're gonna have to declare buffer in our user class
+		std::string 				buffer;
+		int 						bufsize;
 		irc::Command				*_command;
 		irc::Server					*server;
 
 		//if client send a cap command, ignore it
 
 	public:
-		//User();
+		User();
 		User(int fd, struct sockaddr_in address);
 		//virtual ~User();
 		//User(User const &src);
-		//User &operator=(User const &rhs);
+		User &operator=(User const &rhs);
 
-		void						establishConnection(void);
+		//void						establishConnection(void);
 		int 						getFdUser(void) const;
 		int 						getIdUser(void) const;
 
@@ -58,6 +59,9 @@ namespace irc
 		std::string 				getPrefix() const;
 		std::string 				getHostname() const;
 		std::string 				getNickName() const;
+
+		std::string 				&getBuffer();
+		int 						getBufsize() const;
 
 		//void						send_message(int nb_command, irc::Server server);
 

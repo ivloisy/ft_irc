@@ -35,18 +35,19 @@ irc::User::User(int fd, struct sockaddr_in address) :
 		_fd(fd),
 		_hostname(),
 		_waitingToSend(),
-		_command()
+		_command(),
+		bufsize(512)
 {
 	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
-	{
-		char tmp[NI_MAXHOST];
-		if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
-			error("getnameinfo");
-		else
-			this->_hostname = tmp;
-	}
+	//{
+	//	char tmp[NI_MAXHOST];
+	//	if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST, NULL, 0, NI_NUMERICSERV))
+	//		error("getnameinfo");
+	//	else
+	//		this->_hostname = tmp;
+	//}
 	;
 }
 
@@ -64,12 +65,17 @@ irc::User::~User()
 }
 */
 /************************* ASSIGNMENT OPERATOR ************************/
-/*
+
 irc::User &irc::User::operator=(User const &rhs)
 {
+	if (this != &rhs)
+	{
+		this->_fd = rhs._fd;
+		//this->_serverAddr = rhs._serverAddr;
+	}
 	return (*this);
 }
-*/
+
 /*************************** MEMBER FUNCTIONS **************************/
 
 
@@ -174,3 +180,15 @@ void					irc::User::send_message(int nb_command, irc::Server serv)
 	}
 }
 */
+
+
+std::string 		&irc::User::getBuffer()
+{
+	return (this->buffer);
+}
+
+
+int 				irc::User::getBufsize() const
+{
+	return (this->bufsize);
+}

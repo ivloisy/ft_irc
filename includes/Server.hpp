@@ -21,16 +21,16 @@ namespace irc
 		//int nbClients; (client class, static variable)
 		//std::map<int, Channel> channels; (instantiation channels)
 		//int portNum;
-		struct sockaddr_in	_serverAddr;
-		std::string			_serverName; //identify the server, has a max length of 63 chars. servername = hostname
-		//std::set<User *>  user; *Store the different users
-		socklen_t 			_size;
-		//Config 			_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//std::string 		_upTime;
-		irc::User 			*_user; //we're going to delete it for the instanciation with set
-		//int 				bufsize; //is 512
-		//std::string 		buffer;//we're going to instanciate it in user, but server is gonna send message too so mayke keep it
-		int					_portNum; //default port 6667
+		struct sockaddr_in		_serverAddr;
+		std::string				_serverName; //identify the server, has a max length of 63 chars. servername = hostname
+		//std::set<User *> 		user; *Store the different users
+		socklen_t 				_size;
+		//Config 				_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
+		//std::string 			_upTime;
+		std::vector<irc::User>	_user; //we're going to delete it for the instanciation with set
+		//int 					bufsize; //is 512
+		//std::string 			buffer;//we're going to instanciate it in user, but server is gonna send message too so mayke keep it
+		int						_portNum; //default port 6667
 
 	public:
 		Server();
@@ -45,19 +45,18 @@ namespace irc
 		void				add_user(irc::User user);
 
 		void				establishConnection(void);
-		void				bindServer(irc::User const & user);
+		void				bindServer(void);
 		void				createServerAddr(int portNum);
-		void				listenUser(irc::User const & user);
-		int 				acceptUser(irc::User const & user, int size);
-		void				closeUser(irc::User const & user);
+		void				listenUser(irc::User & user);
+		int 				acceptUser(irc::User & user, int size);
+		void				closeUser(irc::User & user);
 
 		int 				getFdServer() const;
 		struct sockaddr_in	getServerAddr() const;
-		irc::User			getUser() const;
+		irc::User 			&getUser();
 		socklen_t			getSize() const;
 		int 				getPortNum() const;
-		std::string 		getBuffer() const;
-		int 				getBufsize() const;
+
 		std::string 		getServerName() const;
 	};
 }
