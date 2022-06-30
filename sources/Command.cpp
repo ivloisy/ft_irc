@@ -6,26 +6,32 @@
 #include "../includes/Server.hpp"
 #include "../includes/User.hpp"
 
-std::string RPL_WELCOME(std::string prefix)
+std::string RPL_WELCOME(std::string servername, std::string nickname)
 {
-	return (":Welcome to the Internet Relay Network" + prefix);
+	return (":" + servername + " 001 " + nickname + " :Welcome to the Internet Relay Network" + nickname);
 }
 
-std::string RPL_YOURHOST(std::string servername, std::string ver)
+std::string RPL_YOURHOST(std::string servername, std::string nickname)
 {
-	return (":Your host is " + servername + ", running version " + ver);
+	std::string ver("1.0");
+	return (":" + servername + " 002 " + nickname + " :Your host is " + servername + ", running version " + ver);
 }
 
-std::string RPL_CREATED(std::string date)
+std::string RPL_CREATED(std::string servername, std::string nickname)
 {
-	return (":This server was created " + date);
+	std::string date("today");
+	return (":" + servername + " 003 " + nickname + " :This server was created " + date);
 }
 
-std::string RPL_MYINFO(std::string servername, std::string version, std::string umodes, std::string cmodes)
+std::string RPL_MYINFO(std::string servername, std::string nickname)
 {
-	return (servername + " " + version + " " + umodes + " " + cmodes);
+	std::string version("1.0");
+	return (":" + servername + " 004 " + nickname + " " + servername + " " + version);// + " " + umodes + " " + cmodes);
 }
 
+//--------------------------
+
+/*
 irc::Command::Command(User *user, Server *server, std::string message) :
 	user(user),
 	server(server),
@@ -33,18 +39,19 @@ irc::Command::Command(User *user, Server *server, std::string message) :
 {
 	;
 }
+*/
 
-irc::User &irc::Command::getUser()
-{
-	return (*user);
-}
+//irc::User			irc::Command::getUser()
+//{
+//	return (user);
+//}
 
-irc::Server &irc::Command::getServer()
-{
-	return (*server);
-}
+//irc::Server			irc::Command::getServer()
+//{
+//	return (server);
+//}
 
-void irc::Command::reply(User &user, unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
+void				irc::Command::reply(User &user, unsigned short code, std::string servername, std::string nickname)
 {
 	std::stringstream sscode;
 	sscode << code;
@@ -52,35 +59,34 @@ void irc::Command::reply(User &user, unsigned short code, std::string arg1, std:
 	while (scode.length() < 3)
 		scode = "0" + scode;
 
-	user.send_buf(user, scode + " " + get_reply(code, arg1, arg2, arg3, arg4, arg5, arg6, arg7));
+	user.send_buf(user, scode + " " + get_reply(code, servername, nickname));
 }
 
-
+/*
 void irc::Command::reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
 {
 	reply(*user, code, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
+*/
 
-std::string	irc::Command::get_reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
-{
-	std::string target = "salut";
+std::string			irc::Command::get_reply(unsigned short code, std::string servername, std::string nickname) {
+	//std::string target;
+	//if (user->getStatus() == PASSWORD || user->getStatus() == REGISTER)
+	//	target = "*";
+	//else
+	//	target = user->getNickname();
+	//target += " ";
 
-	switch (code)
-	{
+	switch (code) {
 		case 001:
-			reply(code, arg1);
-			//return (target + RPL_WELCOME(arg1));
+			return (RPL_WELCOME(servername, nickname));
 		case 002:
-			reply(code, arg1, arg2);
-			//return (target + RPL_YOURHOST(arg1, arg2));
+			return (RPL_YOURHOST(servername, nickname));
 		case 003:
-			reply(code, arg1);
-			//return (target + RPL_CREATED(arg1));
+			return (RPL_CREATED(servername, nickname));
 		case 004:
-			reply(code, arg1, arg2, arg3, arg4);
-			//return (target + RPL_MYINFO(arg1, arg2, arg3, arg4));
+			return (RPL_MYINFO(servername, nickname));
 		default:
-			return (std::string());
+			return std::string();
 	}
 }
-

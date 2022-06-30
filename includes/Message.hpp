@@ -11,7 +11,7 @@
 
 namespace irc
 {
-	//class Command;
+	class Command;
 
 	class Message
 	{
@@ -19,7 +19,7 @@ namespace irc
 		//variable PASS, 1 if nick and password defined, 0 if not
 
 		std::string                 _prefix;
-		Command                     _command;
+		irc::Command                *_command;
 		std::vector<std::string>    _parameters;
 
 	public:
@@ -31,7 +31,7 @@ namespace irc
 		void                        send_message(std::string prefix, Command command, std::vector<std::string> parameters);
 
 		std::string                 getPrefix();
-		Command                     getCommand();
+		//Command                     getCommand();
 		std::vector<std::string>    getParameters();
 	};
 }

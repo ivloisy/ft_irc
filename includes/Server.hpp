@@ -13,6 +13,7 @@
 
 namespace irc
 {
+	class User;
 
 	class Server {
 		//int client; //(instantiation client)
@@ -21,13 +22,15 @@ namespace irc
 		//std::map<int, Channel> channels; (instantiation channels)
 		//int portNum;
 		struct sockaddr_in	_serverAddr;
-		//std::map<int, Client *> client;
+		std::string			_servername; //identify the server, has a max length of 63 chars. servername = hostname
+		//std::map<int, User *> user;
 		socklen_t 			size;
 		Config 				_config;
 		std::string 		_upTime;
 		irc::User 			*user;
-		int 				bufsize;
-		char				buffer[bufsize];
+		//int 				bufsize;
+		//char				*buffer;
+		std::string 		buffer;
 		int					portNum;
 
 	public:
@@ -50,11 +53,12 @@ namespace irc
 
 		int 				getFdServer() const;
 		struct sockaddr_in	getServerAddr() const;
-		irc::User			getUser() const;
+		irc::User			*getUser() const;
 		socklen_t			getSize() const;
 		int 				getPortNum() const;
-		char 				*getBuffer() const;
+		std::string 		getBuffer() const;
 		int 				getBufsize() const;
+		std::string 		getServerName() const;
 	};
 }
 

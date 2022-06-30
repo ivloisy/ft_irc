@@ -39,10 +39,10 @@ std::string                 irc::Message::getPrefix()
     return (this->_prefix);
 }
 
-irc::Command			    irc::Message::getCommand()
-{
-    return (this->_command);
-}
+//irc::Command			    irc::Message::getCommand()
+//{
+//   return (this->_command);
+//}
 
 std::vector<std::string>    irc::Message::getParameters()
 {

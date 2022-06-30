@@ -8,35 +8,34 @@
 #include <sstream>
 #include <string>
 #include <vector>
-//#include "User.hpp"
-//#include "Server.hpp"
+#include "User.hpp"
+#include "Server.hpp"
 
 //using namespace irc;
 
 namespace irc
 {
 	class User;
-	class Server;
+	//class Server;
 
 	class Command {
 
 	private:
-		User		*user;
-		Server		*server;
+		irc::User		*user;
+		//irc::Server	server;
 
-		std::string	query;
+		std::string		query;
 
-		std::string	get_reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7);
+		std::string		get_reply(unsigned short code, std::string servername, std::string nickname);
 
 	public:
-		Command(User *user, Server *server, std::string message);
-		~Command();
+		//Command(User *user, Server *server, std::string message);
+		//~Command();
 
-		User		&getUser();
-		Server		&getServer();
+		//irc::User			getUser();
+		//irc::Server			getServer();
 
-		void		reply(User &user, unsigned short code, std::string arg1 = "", std::string arg2 = "", std::string arg3 = "", std::string arg4 = "", std::string arg5 = "", std::string arg6 = "", std::string arg7 = "");
-		void		reply(unsigned short code, std::string arg1 = "", std::string arg2 = "", std::string arg3 = "", std::string arg4 = "", std::string arg5 = "", std::string arg6 = "", std::string arg7 = "");
+		void			reply(irc::User &user, unsigned short code, std::string servername, std::string nickname);
 	};
 }
 

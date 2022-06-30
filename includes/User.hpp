@@ -13,15 +13,17 @@
 #include <iostream>
 #include <ostream>
 #include "Message.hpp"
+#include "Command.hpp"
+#include "Server.hpp"
 
 namespace irc
 {
 	//class Command;
-	//class Server;
+	class Server;
 
 	class User
 	{
-		friend class Server;
+		//friend class Server;
 
 	private:
 		static int					_nbUser;
@@ -29,11 +31,13 @@ namespace irc
 		int 						_fdUser;
 		//struct sockaddr_in 		_serverAddr;
 		std::string					_hostname;
+		std::string 				_nickname;
 		std::vector<std::string>	_waitingToSend;
-		std::vector<Command *>		_commands;
+		//std::vector<Command *>	_commands;
 		//std::string				_prefix;
-		std::string 				buffer;
-		//Command					_command;
+		std::string 				buffer; //maybe we're gonna have to declare buffer in our user class
+		Command						_command;
+		irc::Server					*server;
 
 		//if client send a cap command, ignore it
 
@@ -51,12 +55,13 @@ namespace irc
 		ssize_t 					send_buf(User &user, std::string const &msg);
 		void						write_buf(User &user, std::string const &msg);
 
-		std::string 				getPrefix();
-		std::string 				getHostname();
+		std::string 				getPrefix() const;
+		std::string 				getHostname() const;
+		std::string 				getNickName() const;
 
-		void						send_message(int nb_command, Server serv);
+		void						send_message(int nb_command, irc::Server server);
 
-		//void						connection_replies(Command *command);
+		void						connection_replies(irc::Server server);
 	};
 }
 
