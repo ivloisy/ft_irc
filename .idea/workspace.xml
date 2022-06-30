@@ -16,12 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,12 +73,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1656620842823</updated>
-      <workItem from="1656620844464" duration="2808000" />
+      <workItem from="1656620844464" duration="4453000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

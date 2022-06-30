@@ -60,19 +60,20 @@ int main(void)
 		timeout.tv_sec = 10;
 		timeout.tv_usec = 0;
 
-
 		int select_ret = select(serv.getFdServer() + 1, &read_set, NULL, &err_set, &timeout);
 
-		std::cout << "glouglou" << std::endl;
+		std::cout << "glouglou = " << select_ret << std::endl;
 		if (select_ret < 0)
 		{
 			perror("Select failed :");
             break ;
 		}
 
+		std::cout << "glagla" << std::endl;
 		if ((select_ret > 0) && (FD_ISSET(serv.getUser().getFdUser(), &read_set)) &&
 			(!FD_ISSET(serv.getUser().getFdUser(), &err_set)))
 		{
+			std::cout << "gloglo" << std::endl;
 			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
 			{
 				perror("Accept failed: ");

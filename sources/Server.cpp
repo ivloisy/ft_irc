@@ -142,8 +142,6 @@ int 				irc::Server::getPortNum() const
 	return (this->_portNum);
 }
 
-
-
 std::string 		irc::Server::getServerName() const
 {
 	return (this->_serverName);
