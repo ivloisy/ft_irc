@@ -46,9 +46,9 @@ int main(void)
 	FD_ZERO(&read_set);
 	FD_ZERO(&write_set);
 	FD_ZERO(&err_set);
-	//FD_SET(serv.getFdServer(), &read_set);
-	//FD_SET(serv.getFdServer(), &write_set);
-	//FD_SET(serv.getFdServer(), &err_set);
+	FD_SET(serv.getFdServer(), &read_set);
+	FD_SET(serv.getFdServer(), &write_set);
+	FD_SET(serv.getFdServer(), &err_set);
 
 	while (1)
 	{
