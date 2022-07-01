@@ -1,38 +1,42 @@
 //
-// Created by antoine on 20/06/22.
+// Created by alangloi on 6/23/22.
 //
 
-//************************* USELESS FOR THE MOMENT *******************************
 
 #ifndef FT_IRC_MESSAGE_HPP
 #define FT_IRC_MESSAGE_HPP
 
-#include "Command.hpp"
+#include <sstream>
+#include <string>
+#include <vector>
+#include "User.hpp"
+#include "Server.hpp"
+
+//using namespace irc;
 
 namespace irc
 {
-	class Command;
+	class User;
+	class Server;
 
-	class Message
-	{
-		//sender, receiver, payload, command called
-		//variable PASS, 1 if nick and password defined, 0 if not
+	class Message {
 
-		std::string                 _prefix;
-		irc::Command                *_command;
-		std::vector<std::string>    _parameters;
+	private:
+		User			*user;
+		//Server		server;
+
+		std::string			query;
+
+		std::string			get_reply(unsigned short code, std::string servername, std::string nickname);
 
 	public:
-		//Message();
-		//virtual ~Message();
-		//Message(Message const &src);
-		//Message &operator=(Message const &rhs);
+		//Message(User *user, Server *server, std::string message);
+		//~Message();
 
-		void                        send_message(std::string prefix, Command command, std::vector<std::string> parameters);
+		//User			getUser();
+		//Server		getServer();
 
-		std::string                 getPrefix();
-		//Command                   getCommand();
-		std::vector<std::string>    getParameters();
+		void				reply(Server & serv, User &user, unsigned short code, std::string nickname);
 	};
 }
 

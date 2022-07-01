@@ -13,12 +13,12 @@
 #include <iostream>
 #include <ostream>
 #include "Message.hpp"
-#include "Command.hpp"
+#include "Message.hpp"
 #include "Server.hpp"
 
 namespace irc
 {
-	class Command;
+	class Message;
 	class Server;
 
 	class User
@@ -33,11 +33,11 @@ namespace irc
 		std::string					_hostname;
 		std::string 				_nickname;
 		std::vector<std::string>	_waitingToSend;
-		//std::map<std::string, Command *>	_commands;
+		//std::map<std::string, Message *>	_commands;
 		//std::string				_prefix;
 		std::string 				buffer;
 		int 						bufsize;
-		Command						*_command;
+		Message						*_command;
 		Server						*server;
 
 		//if client send a cap command, ignore it
@@ -65,6 +65,7 @@ namespace irc
 		int 						getBufsize() const;
 
 		void 						setFdUser(int & fd);
+		void						setBuffer(std::string & buffer);
 
 		//void						send_message(int nb_command, Server server);
 

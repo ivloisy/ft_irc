@@ -89,25 +89,24 @@ void				Server::bindServer()
 
 void				Server::listenUser()
 {
-	std::cout << "fd = " << this->_user.at(0).getFdUser() << std::endl;
+	std::cout << "fduser = " << this->_user.at(0).getFdUser() << std::endl;
 	listen(this->_user.at(0).getFdUser(), 1);
+
 
 }
 
 int					Server::acceptUser(User & user, socklen_t  size)
 {
-	std::cout << "1acceptUser function" << std::endl;
 	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
-	std::cout << "2acceptUser function" << std::endl;
 	if (fd < 0)
 	{
 		std::cout << "Error on accepting..." << std::endl;
 		return (-1);
 	}
-	std::cout << "3acceptUser function" << std::endl;
 	_user.push_back(User(fd, this->_serverAddr));
 	_user[0].setFdUser(fd);
+	std::cout << "FDDDDDD = " << fd << std::endl;
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
 	//std::cout << "after" << std::endl;

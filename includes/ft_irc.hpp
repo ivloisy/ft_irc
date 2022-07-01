@@ -15,7 +15,7 @@
 
 # include "Server.hpp"
 # include "User.hpp"
-# include "Command.hpp"
+# include "Message.hpp"
 # include "Config.hpp"
 # include "Message.hpp"
 

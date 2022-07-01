@@ -1,43 +1,26 @@
 //
-// Created by alangloi on 6/23/22.
+// Created by antoine on 01/07/22.
 //
-
 
 #ifndef FT_IRC_COMMAND_HPP
 #define FT_IRC_COMMAND_HPP
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "User.hpp"
-#include "Server.hpp"
 
-//using namespace irc;
 
-namespace irc
+using namespace irc;
+
+class Command
 {
-	class User;
-	class Server;
+public:
+	Command();
+	virtual ~Command();
 
-	class Command {
+	void	pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	void	cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	void	user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+};
 
-	private:
-		User			*user;
-		//Server		server;
-
-		std::string			query;
-
-		std::string			get_reply(unsigned short code, std::string servername, std::string nickname);
-
-	public:
-		//Command(User *user, Server *server, std::string message);
-		//~Command();
-
-		//User			getUser();
-		//Server		getServer();
-
-		void				reply(Server & serv, User &user, unsigned short code, std::string nickname);
-	};
-}
 
 #endif //FT_IRC_COMMAND_HPP

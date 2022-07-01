@@ -3,7 +3,7 @@
 //
 
 #include "../includes/User.hpp"
-#include "../includes/Command.hpp"
+#include "../includes/Message.hpp"
 #include "../includes/Server.hpp"
 //#include <sys/socket.h>
 
@@ -195,7 +195,14 @@ int 				User::getBufsize() const
 	return (this->bufsize);
 }
 
+/********************** SETTERS ***********************/
+
 void 				User::setFdUser(int & fd)
 {
-		this->_fd = fd;
+	this->_fd = fd;
+}
+
+void				User::setBuffer(std::string & buffer)
+{
+	this->buffer = buffer;
 }

@@ -11,20 +11,51 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string>
+# include <list>
+# include <fcntl.h>
 
 #include <sys/select.h>
 #include <sys/time.h>
 
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
-#include "./includes/Command.hpp"
+#include "./includes/Message.hpp"
 #include "./includes/Config.hpp"
+#include "./includes/Command.hpp"
 //#include "../includes/Message.hpp"
 
 //using namespace std;
 using namespace irc;
+/*
+typedef void (*func_cmd)(void); //
+
+std::map<std::string, func_cmd> init_map()
+{
+	std::map<std::string, func_cmd> result;
+
+	result.push_back()
+}*/
+/*
+typedef struct	s_commands
+{
+	std::string	command;
+	void	(*func_cmd)(std::string &buf, std::list<User>::iterator it_user);
+}				t_commands;*/
+/*
+typedef std::map<std::string, void (*)(std::string &buf, User *it_user, Server &serv)> map_cmd;
+
+map_cmd init_map_cmd(void)
+{
+	map_cmd cmd;
+
+	//cmd["CAP"] = cap_cmd();
+	//cmd["NICK"] = nick_cmd();
+	//cmd["PONG"] = pong_cmd();
+	//cmd["USER"] = user_cmd();
 
 
+	return (cmd);
+}*/
 
 void copy_buffer(std::string &dest, std::string const &src)
 {
@@ -34,7 +65,11 @@ void copy_buffer(std::string &dest, std::string const &src)
 
 int main(void)
 {
-
+	//std::map<std::string, func_cmd> com;
+	//com = init_map();
+	//map_cmd cmap;
+	//init_map_cmd();
+	//cmap.push_back(pong_cmd);
 
 	/*************** INITIALIZING SERVER ****************/
 	// typedef Server::getUser()  &cUser;
@@ -42,13 +77,7 @@ int main(void)
 	Server serv;
 
 	//serv.acceptUser(user, size);
-	fd_set read_set, err_set, write_set, save_read_set;
-	FD_ZERO(&read_set);
-	FD_ZERO(&write_set);
-	FD_ZERO(&err_set);
-	FD_SET(serv.getFdServer(), &read_set);
-	FD_SET(serv.getFdServer(), &write_set);
-	FD_SET(serv.getFdServer(), &err_set);
+
 
 	while (1)
 	{
@@ -63,9 +92,17 @@ int main(void)
 
 		struct timeval timeout;
 
+		//read_set = save_read_set;
+		fd_set read_set, err_set, write_set, save_read_set;
+		FD_ZERO(&read_set);
+		FD_ZERO(&write_set);
+		FD_ZERO(&err_set);
+		FD_SET(serv.getFdServer(), &read_set);
+		FD_SET(serv.getFdServer(), &write_set);
+		FD_SET(serv.getFdServer(), &err_set);
 		timeout.tv_sec = 15;
 		timeout.tv_usec = 0;
-
+		//save_read_set = read_set;
 
 		int select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
 
@@ -74,6 +111,8 @@ int main(void)
 			perror("Select failed :");
             // break ;
 		}
+		char buffer[512];
+
 
 		if ((select_ret > 0) && (FD_ISSET(serv.getFdServer(), &read_set)) &&
 			(!FD_ISSET(serv.getFdServer(), &err_set)))
@@ -87,10 +126,14 @@ int main(void)
 			{
 				//we're gonna to have to change this buffer thing
 				// FD_SET(serv.getUser().getFdUser(), &read_set);
-				serv.listenUser();
-				char buffer[512];
+				serv.listenUser(); //put into an if condition
+				//fcntl(serv.getUser().getFdUser(), F_SETFL, O_NONBLOCK);
+				//std::cout << "FDUSER = " << serv.getUser().getFdUser() << std::endl;
 				if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 				{
+
+					//std::cout << "buffer "
+					//com.find(buffer);
 					std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
 					serv.setUpFdMax(serv.getUser().getFdUser());
                     //break ;
@@ -109,11 +152,16 @@ int main(void)
 		}
 
 		serv.getUser().connection_replies(serv);
+		//if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
+		//{
+	//		std::cout << "BUFFER = " << serv.getUser().getBuffer() << std::endl;
+	//	}
 
-		std::cout << "Connected with client..." << std::endl;
-		std::cout << "Enter # to end the connection" << std::endl;
 
-		std::cout << "Client" << std::endl;
+		//std::cout << "Connected with client..." << std::endl;
+		//std::cout << "Enter # to end the connection" << std::endl;
+
+		//std::cout << "Client" << std::endl;
 		/*
 		do {
 			recv(serv.getFdServer(), buffer, bufsize, 0);
