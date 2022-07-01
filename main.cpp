@@ -72,7 +72,7 @@ int main(void)
 		if (select_ret < 0)
 		{
 			perror("Select failed :");
-            break ;
+            // break ;
 		}
 
 		if ((select_ret > 0) && (FD_ISSET(serv.getFdServer(), &read_set)) &&
@@ -81,12 +81,12 @@ int main(void)
 			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
 			{
 				perror("Accept failed: ");
-                break ;
+                // break ;
 			}
 			else
 			{
 				//we're gonna to have to change this buffer thing
-				FD_SET(serv.getUser().getFdUser(), &read_set);
+				// FD_SET(serv.getUser().getFdUser(), &read_set);
 				serv.listenUser();
 				char buffer[512];
 				if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
@@ -98,7 +98,7 @@ int main(void)
 				else
 				{
 					perror("recv failure: ");
-                    break ;
+                    // break ;
 				}
 			}
 		}
