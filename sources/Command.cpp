@@ -54,15 +54,15 @@ Command::Command(User *user, Server *server, std::string message) :
 //	return (server);
 //}
 
-void				Command::reply(User &user, unsigned short code, std::string servername, std::string nickname)
+void				Command::reply(Server & serv, User &user, unsigned short code, std::string nickname)
 {
-	std::stringstream sscode;
-	sscode << code;
-	std::string scode = sscode.str();
-	while (scode.length() < 3)
-		scode = "0" + scode;
+	// std::stringstream sscode;
+	// sscode << code;
+	// std::string scode = sscode.str();
+	// while (scode.length() < 3)
+	// 	scode = "0" + scode;
 
-	user.send_buf(user, scode + " " + get_reply(code, servername, nickname));
+	user.send_buf(serv, get_reply(code, serv.getServerName(), nickname));
 }
 
 /*

@@ -54,7 +54,7 @@ namespace irc
 		int 						getIdUser(void) const;
 
 
-		ssize_t 					send_buf(User &user, std::string const &msg);
+		ssize_t 					send_buf(Server &serv, std::string const &msg);
 		void						write_buf(User &user, std::string const &msg);
 
 		std::string 				getPrefix() const;
@@ -68,7 +68,7 @@ namespace irc
 
 		//void						send_message(int nb_command, Server server);
 
-		void						connection_replies(Server server);
+		void						connection_replies(Server & server);
 	};
 }
 

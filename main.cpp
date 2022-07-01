@@ -46,9 +46,9 @@ int main(void)
 	FD_ZERO(&read_set);
 	FD_ZERO(&write_set);
 	FD_ZERO(&err_set);
-	FD_SET(serv.getFdServer(), &read_set);
-	FD_SET(serv.getFdServer(), &write_set);
-	FD_SET(serv.getFdServer(), &err_set);
+	//FD_SET(serv.getFdServer(), &read_set);
+	//FD_SET(serv.getFdServer(), &write_set);
+	//FD_SET(serv.getFdServer(), &err_set);
 
 	while (1)
 	{
@@ -69,18 +69,15 @@ int main(void)
 
 		int select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
 
-		std::cout << "glouglou = " << select_ret << std::endl;
 		if (select_ret < 0)
 		{
 			perror("Select failed :");
             break ;
 		}
 
-		std::cout << "glagla" << std::endl;
 		if ((select_ret > 0) && (FD_ISSET(serv.getFdServer(), &read_set)) &&
 			(!FD_ISSET(serv.getFdServer(), &err_set)))
 		{
-			std::cout << "gloglo" << std::endl;
 			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
 			{
 				perror("Accept failed: ");
@@ -111,7 +108,7 @@ int main(void)
             // break ;
 		}
 
-		// serv.getUser().connection_replies(serv);
+		serv.getUser().connection_replies(serv);
 
 		std::cout << "Connected with client..." << std::endl;
 		std::cout << "Enter # to end the connection" << std::endl;

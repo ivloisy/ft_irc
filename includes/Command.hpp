@@ -17,7 +17,7 @@
 namespace irc
 {
 	class User;
-	//class Server;
+	class Server;
 
 	class Command {
 
@@ -36,7 +36,7 @@ namespace irc
 		//User			getUser();
 		//Server		getServer();
 
-		void				reply(User &user, unsigned short code, std::string servername, std::string nickname);
+		void				reply(Server & serv, User &user, unsigned short code, std::string nickname);
 	};
 }
 

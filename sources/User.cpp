@@ -118,30 +118,29 @@ void 				User::write_buf(User &user, std::string const &msg)
 	this->buffer =  msg + "\n";
 }
 
-ssize_t 			User::send_buf(User &user, std::string const &msg)
+ssize_t 			User::send_buf(Server & serv, std::string const &msg)
 {
 	//user.write(":" + this->getPrefix() + " " + message);
 	ssize_t res;
 
-	res = send(this->_fd, this->buffer.c_str(), this->buffer.length(), 0);
+	res = send(serv.getUser().getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
 	if (res == -1)
+	{
 		return (res);
+	}
+
 
 	//this->buffer.clear();
 	//this->lastping = std::time(NULL);
 	return (res);
 }
 
-void 				User::connection_replies(Server serv)
+void 				User::connection_replies(Server & serv)
 {
-	this->_command->reply(*this, 1, serv.getServerName(),
-						 serv.getUser().getNickName());
-	this->_command->reply(*this, 2, serv.getServerName(),
-						 serv.getUser().getNickName());
-	this->_command->reply(*this, 3, serv.getServerName(),
-						 serv.getUser().getNickName());
-	this->_command->reply(*this, 4, serv.getServerName(),
-						 serv.getUser().getNickName());
+	this->_command->reply(serv, *this, 1, serv.getUser().getNickName());
+	this->_command->reply(serv, *this, 2, serv.getUser().getNickName());
+	this->_command->reply(serv, *this, 3, serv.getUser().getNickName());
+	this->_command->reply(serv, *this, 4, serv.getUser().getNickName());
 
 	//LUSERS(command);
 	//MOTD(command);
