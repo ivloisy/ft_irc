@@ -63,30 +63,43 @@ void copy_buffer(std::string &dest, std::string const &src)
 		dest.push_back(src.at(i));
 }
 
-void save_sets(fd_set src, fd_set *dst)
-{
-	int x = 0;
-	FD_ZERO(dst);
-	while (src.fds_bits[x] > 0)
-	{
-		FD_SET(src.fds_bits[x], dst);
-		x++;
-	}
-}
+// void save_sets(fd_set src, fd_set &dst)
+// {
+// 	int x = 0;
+// 	// FD_ZERO(dst);
+// 	while (src.fds_bits[x] > 0)
+// 	{
+// 		std::cout << "oooo : " << src.fds_bits[x] << std::endl;
+// 		FD_SET(src.fds_bits[x], &dst);
+// 		std::cout << "oooo : " << dst.fds_bits[x] << std::endl;
+// 		x++;
+// 	}
+// }
 
-void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set tmp)
+void reinit_set(fd_set *read, fd_set *write, fd_set *err, fd_set tmp)
 {
 	int x = 0;
 	while (tmp.fds_bits[x] > 0)
 	{
-		if (!FD_ISSET(tmp.fds_bits[x], &read))
-			FD_SET(tmp.fds_bits[x], &read);
-		if (!FD_ISSET(tmp.fds_bits[x], &write))
-			FD_SET(tmp.fds_bits[x], &write);
-		if (!FD_ISSET(tmp.fds_bits[x], &err))
-			FD_SET(tmp.fds_bits[x], &err);
+		if (!FD_ISSET(tmp.fds_bits[x], read))
+			FD_SET(tmp.fds_bits[x], read);
+		if (!FD_ISSET(tmp.fds_bits[x], write))
+			FD_SET(tmp.fds_bits[x], write);
+		if (!FD_ISSET(tmp.fds_bits[x], err))
+			FD_SET(tmp.fds_bits[x], err);
 		x++;
 	}
+}
+
+void print_fds(fd_set to_print)
+{
+	int x = 0;
+	while (to_print.fds_bits[x] > 0)
+	{
+		std::cout << "fds : " << x << "   : " << to_print.fds_bits[x] << ", ";
+		x++;
+	}
+	std::cout << std::endl;
 }
 
 int main(void)
@@ -102,12 +115,6 @@ int main(void)
 
 	Server serv;
 	fd_set read_set, err_set, write_set, tmp_set;
-	FD_ZERO(&read_set);
-	FD_ZERO(&write_set);
-	FD_ZERO(&err_set);
-	FD_SET(serv.getFdServer(), &read_set);
-	FD_SET(serv.getFdServer(), &write_set);
-	FD_SET(serv.getFdServer(), &err_set);
 	//serv.acceptUser(user, size);
 
 
@@ -124,12 +131,22 @@ int main(void)
 
 		struct timeval timeout;
 
+		FD_ZERO(&tmp_set);
+		FD_ZERO(&read_set);
+		FD_ZERO(&write_set);
+		FD_ZERO(&err_set);
+		FD_SET(serv.getFdServer(), &read_set);
+		FD_SET(serv.getFdServer(), &write_set);
+		FD_SET(serv.getFdServer(), &err_set);
 		//read_set = save_read_set;
 
 		timeout.tv_sec = 15;
 		timeout.tv_usec = 0;
 
-		save_sets(read_set, &tmp_set);
+		print_fds(read_set);
+		print_fds(write_set);
+		FD_SET(read_set.fds_bits[0], &tmp_set);
+		print_fds(tmp_set);
 		int select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
 
 		if (select_ret < 0)
@@ -229,7 +246,7 @@ int main(void)
 		isExit = false;
 		exit(1);
 		 */
-	 reinit_set(read_set, write_set, err_set, tmp_set);
+	 reinit_set(&read_set, &write_set, &err_set, tmp_set);
 
 	}
 	std::cout << "sortie" << std::endl;
