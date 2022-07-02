@@ -26,7 +26,7 @@ Server::Server() :
 	this->bindServer();
 
 	this->_size = sizeof(this->getServerAddr());
-	std::cout << "Looking for clients..." << std::endl;
+	// std::cout << "Looking for clients..." << std::endl;
 
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
