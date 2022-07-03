@@ -10,4 +10,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# include <sys/select.h>
+# include <sys/time.h>
+
+# include "Server.hpp"
+# include "User.hpp"
+# include "Message.hpp"
+# include "Config.hpp"
+# include "Message.hpp"
+
 #endif

@@ -36,3 +36,9 @@
 
 
 ircserv
+
+# Clion antoine
+venv
+CMakeLists.txt
+cmake-build-debug
+.idea

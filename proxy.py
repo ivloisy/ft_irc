@@ -3,6 +3,7 @@ import os
 from threading import Thread
 import parser as parser
 import sys
+from importlib import reload
 
 class Proxy2Server(Thread):
 
@@ -25,7 +26,7 @@ class Proxy2Server(Thread):
                     reload(parser)
                     parser.parse(data, self.port, 'server')
                 except Exception as e:
-                    print 'server[{}]'.format(self.port), e
+                    print('server[{}]'.format(self.port), e)
                 # forward to client
                 self.game.sendall(data)
 
@@ -54,7 +55,7 @@ class Game2Proxy(Thread):
                     reload(parser)        
                     parser.parse(data, self.port, 'client')
                 except Exception as e:
-                    print 'client[{}]'.format(self.port), e
+                    print('client[{}]'.format(self.port), e)
                 # forward to server
                 self.server.sendall(data)
 
@@ -70,17 +71,17 @@ class Proxy(Thread):
 
     def run(self):
         while True:
-            print "[Awaiting connection on port {}]".format(self.port_proxy)
+            print("[Awaiting connection on port {}]".format(self.port_proxy))
             self.g2p = Game2Proxy(self.from_host, self.port_proxy) # waiting for a client
             self.p2s = Proxy2Server(self.to_host, self.port_server)
-            print "[Connection established with " + self.to_host + " on port " + str(self.port_server)
+            print("[Connection established with " + self.to_host + " on port " + str(self.port_server) + "]")
             self.g2p.server = self.p2s.server
             self.p2s.game = self.g2p.game
 
             self.g2p.start()
             self.p2s.start()
 
-if len(sys.argv) is not 4:
+if len(sys.argv) != 4:
     print("---------------------------------------------------\nUsage: python proxy.py <ip> <port> <port_to_listen>\n---------------------------------------------------")
     sys.exit(1)
 else:
