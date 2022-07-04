@@ -6,11 +6,23 @@
 #define FT_IRC_COMMAND_HPP
 
 #include "User.hpp"
+#include <map>
+#include <string>
 
-using namespace irc;
+//using namespace irc;
 
 class Command
 {
+	//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
+
+private:
+	//typedef void (*pointer_function)(void);
+	//typedef std::map<std::string, pointer_function> map_cmd;
+
+
+
+
+
 public:
 	Command();
 	virtual ~Command();
@@ -20,11 +32,8 @@ public:
 	//void	user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
 	//void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
 
+
 };
 
-void	cap_cmd();
-void	pong_cmd();
-void	user_cmd();
-void	nick_cmd();
 
 #endif //FT_IRC_COMMAND_HPP

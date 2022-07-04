@@ -16,47 +16,57 @@ namespace irc
 	class User;
 
 	class Server {
-		int 					_fd;
-		int						_fdMax;
-		struct sockaddr_in		_serverAddr;
-		std::string				_serverName; //identify the server, has a max length of 63 chars. servername = hostname
-		socklen_t 				_size;
-		std::vector<User>		_user; //we're going to delete it for the instanciation with set
-		int						_portNum; //default port 6667
-		//std::map<int, Channel> channels; (instantiation channels)
-		//std::set<User *> 		user; *Store the different users
-		//Config 				_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//std::string 			_upTime;
+
+	public:
+		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
+		//typedef void (*pointer_function)(void);
+		//typedef std::map<std::string, pointer_function>		map_cmd;
+
+	private:
+		int 												_fd;
+		int													_fdMax;
+		struct sockaddr_in									_serverAddr;
+		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
+		socklen_t 											_size;
+		std::vector<User>									_user; //we're going to delete it for the instanciation with set
+		int													_portNum; //default port 6667
+		//Command											_commands;
+		//std::map<int, Channel>							channels; (instantiation channels)
+		//std::set<User *>									user; *Store the different users
+		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
+		//std::string										_upTime;
 
 	public:
 		Server();
 		Server(Server const & src);
 		virtual ~Server();
 
-		Server operator=(Server const & src);
+		//Server operator=(Server const & src);
 
-		Config 				&getConfig();
-		std::string 		getUpTime();
+		//Config											&getConfig();
+		//std::string										getUpTime();
 
-		void				add_user(User user);
+		//void												add_user(User user);
 
-		void				establishConnection(void);
-		void				bindServer(void);
-		void				createServerAddr(int portNum);
-		void				listenUser(void);
-		int 				acceptUser(User & user, socklen_t size);
-		void				closeUser(User & user);
-		int 				getFdMax( void ) const;
-		void 				setUpFdMax(int fdCurrent);
-		// void 				setDownFdMax(int fdCurrent);
+		void												establishConnection(void);
+		void												bindServer(void);
+		void												createServerAddr(int portNum);
+		void												listenUser(void);
+		int													acceptUser(User & user, socklen_t size);
+		void												closeUser(User & user);
+		int													getFdMax( void ) const;
+		void												setUpFdMax(int fdCurrent);
+		// void												setDownFdMax(int fdCurrent);
 
-		int 				&getFdServer();
-		struct sockaddr_in	getServerAddr() const;
-		User 			&getUser();
-		socklen_t			getSize() const;
-		int 				getPortNum() const;
 
-		std::string 		getServerName() const;
+
+		int													&getFdServer();
+		struct sockaddr_in									getServerAddr() const;
+		User												&getUser();
+		socklen_t											getSize() const;
+		int													getPortNum() const;
+
+		std::string											getServerName() const;
 	};
 }
 

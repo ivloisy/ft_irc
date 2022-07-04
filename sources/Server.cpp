@@ -89,7 +89,7 @@ void				Server::bindServer()
 
 void				Server::listenUser()
 {
-	std::cout << "fduser = " << this->_user.at(0).getFdUser() << std::endl;
+	//std::cout << "fduser = " << this->_user.at(0).getFdUser() << std::endl;
 	listen(this->_user.at(0).getFdUser(), 1);
 
 
@@ -106,7 +106,7 @@ int					Server::acceptUser(User & user, socklen_t  size)
 	}
 	_user.push_back(User(fd, this->_serverAddr));
 	_user[0].setFdUser(fd);
-	std::cout << "FDDDDDD = " << fd << std::endl;
+	//std::cout << "FDDDDDD = " << fd << std::endl;
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
 	//std::cout << "after" << std::endl;
@@ -129,12 +129,11 @@ void 				Server::setUpFdMax(int fdCurrent)
 	if (fdCurrent > this->_fdMax)
 		this->_fdMax = fdCurrent;
 }
-//
+
 // void 				Server::setDownFdMax(int fdCurrent)
 // {
 
 // }
-
 
 int					&Server::getFdServer(void)
 {
@@ -146,7 +145,7 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-User 			&Server::getUser()
+User 				&Server::getUser()
 {
 	return (this->_user[0]);
 }

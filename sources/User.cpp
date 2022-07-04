@@ -22,20 +22,26 @@
 //#include <unistd.h>
 //#include <ctime>
 
+void	pong_cmd();
+void	cap_cmd();
+void	user_cmd();
+void	nick_cmd();
+
 using namespace irc;
 
 /**************************** CONSTRUCTORS ****************************/
 
-User::User() : _nickname("yoka")
+User::User() : _nickname("yoka"), cmap(init_map_cmd())
 {
 	;
 }
 
 User::User(int fd, struct sockaddr_in address) :
+		_nickname("yoka"),
 		_fd(fd),
 		_hostname(),
-		_waitingToSend(),
-		_command(),
+		_msg(),
+		cmap(init_map_cmd()),
 		bufsize(512)
 {
 	//fcntl(_fd, F_SETFL, O_NONBLOCK);
@@ -138,10 +144,10 @@ ssize_t 			User::send_buf(Server & serv, std::string const &msg)
 
 void 				User::connection_replies(Server & serv)
 {
-	this->_command->reply(serv, *this, 1, serv.getUser().getNickName());
-	this->_command->reply(serv, *this, 2, serv.getUser().getNickName());
-	this->_command->reply(serv, *this, 3, serv.getUser().getNickName());
-	this->_command->reply(serv, *this, 4, serv.getUser().getNickName());
+	this->_msg->reply(serv, *this, 1, serv.getUser().getNickName());
+	this->_msg->reply(serv, *this, 2, serv.getUser().getNickName());
+	this->_msg->reply(serv, *this, 3, serv.getUser().getNickName());
+	this->_msg->reply(serv, *this, 4, serv.getUser().getNickName());
 
 	//LUSERS(command);
 	//MOTD(command);
@@ -195,6 +201,11 @@ int 				User::getBufsize() const
 	return (this->bufsize);
 }
 
+User::map_cmd		User::getCommand() const
+{
+	return (this->cmap);
+}
+
 /********************** SETTERS ***********************/
 
 void 				User::setFdUser(int & fd)
@@ -205,4 +216,54 @@ void 				User::setFdUser(int & fd)
 void				User::setBuffer(std::string & buffer)
 {
 	this->buffer = buffer;
+}
+
+User::map_cmd		User::init_map_cmd()//Server & serv, User & user)
+{
+	//std::string buf("Salut les amis");
+	map_cmd cmd;
+	//cmd.insert(pair<string, pointer_function>("CAP", com.cap_cmd()));
+
+	cmd["CAP"] = cap_cmd;
+	cmd["NICK"] = nick_cmd;
+	cmd["PONG"] = pong_cmd;
+	cmd["USER"] = user_cmd;
+	// cmd["PASS"] = pass_cmd();
+	// cmd["MODE"] = mode_cmd();
+	// cmd["WHO"] = who_cmd();
+	// cmd["JOIN"] = join_cmd();
+	// cmd["PART"] = part_cmd();
+	// cmd["QUIT"] = quit_cmd();
+
+	return (cmd);
+}
+
+void				User::tokenize(std::string const &str, const char delim, std::vector<std::string> &out)
+{
+	std::stringstream ss(str);
+
+	std::string s;
+
+	while (std::getline(ss, s, delim))
+	{
+		out.push_back(s);
+	}
+}
+
+void				User::parse_buffer_command(std::string & buf)
+{
+	const char delim = ' ';
+	std::vector<std::string> out;
+
+	tokenize(buf, delim, out); //this splits the buffer into a vector
+
+	std::cout << "calling command ... ";
+	cmap.find(*out.begin())->second();
+
+	/* Uncomment this for displaying all the vector content
+	std::vector<std::string>::iterator it = out.begin();
+	std::vector<std::string>::iterator ite = out.end();
+	for (std::vector<std::string>::iterator i = it; i != ite; i++)
+		std::cout << *i << std::endl;
+	*/
 }

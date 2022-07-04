@@ -6,15 +6,24 @@
 #include <list>
 #include "../includes/Server.hpp"
 
-Command::Command() {
-	;
-}
-
-Command::~Command() {
-	;
-}
-
 //void	Command::pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
 //void	Command::cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
 //void	Command::user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
 //void	Command::nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+
+//void	pong_cmd();
+//void	cap_cmd();
+//void	user_cmd();
+//void	nick_cmd();
+
+Command::Command()
+{
+	return ;
+}
+
+Command::~Command()
+{
+	return ;
+}
+
+
