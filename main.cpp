@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 		ft_run();
 		cout << "sortie propre" << endl;
 	}
-	// else if (argc == 3)
+	// else if (argc == 3) //with password
 	// {
 	//
 	// }
