@@ -12,7 +12,25 @@ SRCS = 	main.cpp \
 		sources/Commands/CAP.cpp \
 		sources/Commands/NICK.cpp \
 		sources/Commands/PONG.cpp \
-		sources/Commands/USER.cpp
+		sources/Commands/USER.cpp \
+		sources/Commands/DIE.cpp \
+		sources/Commands/JOIN.cpp \
+		sources/Commands/LIST.cpp \
+		sources/Commands/PONG.cpp \
+		sources/Commands/MODE.cpp \
+		sources/Commands/MSG.cpp \
+		sources/Commands/NAMES.cpp \
+		sources/Commands/NOTICE.cpp \
+		sources/Commands/OPER.cpp \
+		sources/Commands/PART.cpp \
+		sources/Commands/PASS.cpp \
+		sources/Commands/PING.cpp \
+		sources/Commands/PRIVMSG.cpp \
+		sources/Commands/QUIT.cpp \
+		sources/Commands/REHASH.cpp \
+		sources/Commands/RESTART.cpp \
+		sources/Commands/SQUIT.cpp \
+		sources/Commands/WALLOPS.cpp
 
 INCDIR = ./includes
 
