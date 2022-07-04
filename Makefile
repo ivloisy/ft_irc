@@ -7,7 +7,12 @@ SRCS = 	main.cpp \
 		sources/Config.cpp \
 		sources/Message.cpp \
 		sources/Server.cpp \
-		sources/User.cpp
+		sources/User.cpp \
+		sources/Command.cpp \
+		sources/Commands/CAP.cpp \
+		sources/Commands/NICK.cpp \
+		sources/Commands/PONG.cpp \
+		sources/Commands/USER.cpp
 
 INCDIR = ./includes
 
@@ -21,7 +26,7 @@ DEPS = $(OBJS:.o=.d)
 
 CXX = c++
 
-CXXFLAGS = -I $(INCDIR) -MMD -MP
+CXXFLAGS = -I $(INCDIR) -MMD -MP -std=c++98
 
 all: $(NAME)
 

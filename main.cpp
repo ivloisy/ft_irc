@@ -16,6 +16,9 @@
 
 #include <sys/select.h>
 #include <sys/time.h>
+#include <map>
+#include <string>
+#include <vector>
 
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
@@ -27,17 +30,21 @@
 using namespace std;
 using namespace irc;
 
-typedef map<string, void (*)(string &buf, User *it_user, Server &serv)> map_cmd;
+//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
+typedef void (*pointer_function)(void);
+typedef map<string, pointer_function> map_cmd;
 
-map_cmd init_map_cmd(void)
+map_cmd init_map_cmd()//Server & serv, User & user)
 {
+	//std::string buf("Salut les amis");
 	map_cmd cmd;
+	//cmd.insert(pair<string, pointer_function>("CAP", com.cap_cmd()));
 
-	// cmd["CAP"] = cap_cmd();
+	cmd["CAP"] = cap_cmd;
+	cmd["NICK"] = nick_cmd;
+	cmd["PONG"] = pong_cmd;
+	cmd["USER"] = user_cmd;
 	// cmd["PASS"] = pass_cmd();
-	// cmd["NICK"] = nick_cmd();
-	// cmd["PONG"] = pong_cmd();
-	// cmd["USER"] = user_cmd();
 	// cmd["MODE"] = mode_cmd();
 	// cmd["WHO"] = who_cmd();
 	// cmd["JOIN"] = join_cmd();
@@ -47,12 +54,12 @@ map_cmd init_map_cmd(void)
 
 	return (cmd);
 }
-
+/*
 void copy_buffer(string &dest, string const &src)
 {
 	for (int i = 0; i < src.length(); i++)
 		dest.push_back(src.at(i));
-}
+}*/
 
 void save_sets(fd_set *src, fd_set *dst, int fdMax)
 {
@@ -83,6 +90,36 @@ void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax
 	}
 }
 
+void	tokenize(std::string const &str, const char delim, std::vector<std::string> &out)
+{
+	std::stringstream ss(str);
+
+	std::string s;
+
+	while (std::getline(ss, s, delim))
+	{
+		out.push_back(s);
+	}
+}
+
+void parse_buffer_command(std::string &buffer, map_cmd cmap)
+{
+	const char delim = ' ';
+	std::vector<std::string> out;
+
+	tokenize(buffer, delim, out); //this splits the buffer into a vector
+
+	std::cout << "calling command ... ";
+	cmap.find(*out.begin())->second();
+
+	/* Uncomment this for displaying all the vector content
+	std::vector<std::string>::iterator it = out.begin();
+	std::vector<std::string>::iterator ite = out.end();
+	for (std::vector<std::string>::iterator i = it; i != ite; i++)
+		std::cout << *i << std::endl;
+	*/
+}
+
 // void print_fds(fd_set &to_print, int fdMax)
 // {
 // 	int x = 0;
@@ -95,7 +132,7 @@ void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax
 // 	cout << endl;
 // }
 
-int adding_user(Server *serv)
+int adding_user(Server *serv, map_cmd cmap)
 {
 	char buffer[512];
 	if ((serv->acceptUser(serv->getUser(), serv->getSize())) < 0)
@@ -104,7 +141,12 @@ int adding_user(Server *serv)
 	{
 		if (recv(serv->getUser().getFdUser(), &buffer, 255, 0) >= 1)
 		{
-			cout << "MESSAGE: " << serv->getUser().getBuffer() << endl;
+			//change the bufbuf string for testing the parser
+			std::string bufbuf("USER machinmachin truc much push lululu");
+			//launch parser
+			parse_buffer_command(bufbuf, cmap);
+			//change for buffer for testing with the real buffer
+			cout << "MESSAGE: " << bufbuf << endl;
 			serv->setUpFdMax(serv->getUser().getFdUser());
 		}
 		else
@@ -117,7 +159,7 @@ int adding_user(Server *serv)
 	return (0);
 }
 
-void ft_run()
+void ft_run(map_cmd cmap)
 {
 	Server serv;
 	fd_set read_set, err_set, write_set, tmp_set;
@@ -136,9 +178,9 @@ void ft_run()
 	while (1)
 	{
 		timeout.tv_sec = 15;
-		str = "Connect to server...";
-		copy_buffer(buf, str);
-		cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << endl;
+		//str = "Connect to server...";
+		//copy_buffer(buf, str);
+		//cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << endl;
 
 		save_sets(&read_set, &tmp_set, serv.getFdMax());
 		select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
@@ -151,7 +193,7 @@ void ft_run()
 		if ((select_ret > 0))
 			for (x = 0; x <= serv.getFdMax(); x++)
 				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
-					if (adding_user(&serv))
+					if (adding_user(&serv, cmap))
 						break;
 		else
 			perror("There were select failures: ");
@@ -166,7 +208,7 @@ int main(int argc, char **argv)
 	{
 		map_cmd cmap;
 		cmap = init_map_cmd();
-		ft_run();
+		ft_run(cmap);
 		cout << "sortie propre" << endl;
 	}
 	// else if (argc == 3) //with password
@@ -175,7 +217,7 @@ int main(int argc, char **argv)
 	// }
 	else
 	{
-		cout << "error" << endl;
+		cout << "error wrong number arguments" << endl;
 	}
 	return 0;
 }

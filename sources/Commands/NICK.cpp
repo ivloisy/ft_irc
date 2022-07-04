@@ -7,7 +7,12 @@
 #include "../../includes/Server.hpp"
 #include <list>
 
-void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
+//void	Command::nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
+//{
+//	std::cout << "nick command called" << std::endl;
+//}
+
+void	nick_cmd()
 {
 	std::cout << "nick command called" << std::endl;
 }

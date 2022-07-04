@@ -7,7 +7,12 @@
 #include "../../includes/Server.hpp"
 #include <list>
 
-void	cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
+//void	Command::cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
+//{
+//	std::cout << "cap command called" << std::endl;
+//}
+
+void	cap_cmd()
 {
 	std::cout << "cap command called" << std::endl;
 }

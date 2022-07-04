@@ -7,7 +7,6 @@
 
 #include "User.hpp"
 
-
 using namespace irc;
 
 class Command
@@ -16,11 +15,16 @@ public:
 	Command();
 	virtual ~Command();
 
-	void	pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	void	cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	void	user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	//void	pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	//void	cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	//void	user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+	//void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+
 };
 
+void	cap_cmd();
+void	pong_cmd();
+void	user_cmd();
+void	nick_cmd();
 
 #endif //FT_IRC_COMMAND_HPP
