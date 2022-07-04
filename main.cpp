@@ -17,8 +17,6 @@
 #include <sys/select.h>
 #include <sys/time.h>
 
-# include <cmath>
-
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
 #include "./includes/Message.hpp"
