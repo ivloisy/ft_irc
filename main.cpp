@@ -41,21 +41,27 @@ typedef struct	s_commands
 	std::string	command;
 	void	(*func_cmd)(std::string &buf, std::list<User>::iterator it_user);
 }				t_commands;*/
-/*
+
 typedef std::map<std::string, void (*)(std::string &buf, User *it_user, Server &serv)> map_cmd;
 
 map_cmd init_map_cmd(void)
 {
 	map_cmd cmd;
 
-	//cmd["CAP"] = cap_cmd();
-	//cmd["NICK"] = nick_cmd();
-	//cmd["PONG"] = pong_cmd();
-	//cmd["USER"] = user_cmd();
+	// cmd["CAP"] = cap_cmd();
+	// cmd["PASS"] = pass_cmd();
+	// cmd["NICK"] = nick_cmd();
+	// cmd["PONG"] = pong_cmd();
+	// cmd["USER"] = user_cmd();
+	// cmd["MODE"] = mode_cmd();
+	// cmd["WHO"] = who_cmd();
+	// cmd["JOIN"] = join_cmd();
+	// cmd["PART"] = part_cmd();
+	// cmd["QUIT"] = quit_cmd();
 
 
 	return (cmd);
-}*/
+}
 
 void copy_buffer(std::string &dest, std::string const &src)
 {
@@ -125,7 +131,7 @@ int main(void)
 	FD_SET(serv.getFdServer(), &write_set);
 	FD_SET(serv.getFdServer(), &err_set);
 	//serv.acceptUser(user, size);
-
+	int x;
 
 	while (1)
 	{
@@ -154,35 +160,51 @@ int main(void)
 			perror("Select failed :");
             break ;
 		}
-		std::cout << "arrrr" << std::endl;
 		char buffer[512];
 
 
-		if ((select_ret > 0) && (FD_ISSET(serv.getFdServer(), &read_set)) &&
-			(!FD_ISSET(serv.getFdServer(), &err_set)))
+		if ((select_ret > 0))
 		{
-			if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
+			std::cout << "WTFFF" << std::endl;
+			x = 0;
+			while (x <= serv.getFdMax())
 			{
-				perror("Accept failed: ");
-                // break ;
+				if (FD_ISSET(x, &read_set))
+					std::cout << "//////////// : " << x << std::endl;
+				x++;
 			}
-			else
+			x = 0;
+			while (x <= serv.getFdMax())
 			{
-				//we're gonna to have to change this buffer thing
-				// FD_SET(serv.getUser().getFdUser(), &read_set);
-				serv.listenUser(); //put into an if condition
-				if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
+				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
 				{
+					if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
+					{
+						perror("Accept failed: ");
+						// break ;
+					}
+					else
+					{
+						//we're gonna to have to change this buffer thing
+						FD_SET(serv.getUser().getFdUser(), &read_set);
+						serv.listenUser(); //put into an if condition
+						if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
+						{
 
-					std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
-					serv.setUpFdMax(serv.getUser().getFdUser());
-                    //break ;
+							std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
+							serv.setUpFdMax(serv.getUser().getFdUser());
+							//break ;
+						}
+						else
+						{
+							perror("recv failure: ");
+							break ;
+						}
+					}
+					serv.getUser().connection_replies(serv);
+
 				}
-				else
-				{
-					perror("recv failure: ");
-                    break ;
-				}
+				x++;
 			}
 		}
 		else
@@ -191,8 +213,7 @@ int main(void)
             // break ;
 		}
 
-		if (select_ret > 0) //pansement
-			serv.getUser().connection_replies(serv);
+		// if (select_ret > 0) //pansement
 		//if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 		//{
 	//		std::cout << "BUFFER = " << serv.getUser().getBuffer() << std::endl;
