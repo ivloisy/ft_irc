@@ -2,6 +2,8 @@
 // Created by alangloi on 6/24/22.
 //
 
+/********************* USER COMMAND **********************/
+
 #include "../../includes/Command.hpp"
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
@@ -23,5 +25,5 @@ void	user_cmd()
  * Parameters:	<user> <mode> <unused> <realname>
  * The USER command is used at the beginning of connection to specify
  * the username, hostname and realname of a new user.
- * The <mode> parameter
+ *  ERR_NEEDMOREPARAMS      ERR_ALREADYREGISTRED
  */

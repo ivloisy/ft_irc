@@ -2,6 +2,8 @@
 // Created by alangloi on 6/24/22.
 //
 
+/********************* USER COMMAND **********************/
+
 #include "../../includes/Command.hpp"
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"

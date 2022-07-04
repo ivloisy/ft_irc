@@ -90,7 +90,7 @@ int adding_user(Server *serv)
 		if (recv(serv->getUser().getFdUser(), &buffer, 255, 0) >= 1)
 		{
 			//change the bufbuf string for testing the parser
-			std::string bufbuf("NICK machinmachin truc much push lululu");
+			std::string bufbuf("CAP machinmachin truc much push lululu");
 			//launch parser
 			serv->getUser().parse_buffer_command(bufbuf);
 			//change for buffer for testing with the real buffer
@@ -139,10 +139,16 @@ void ft_run()
 			break ;
 		}
 		if ((select_ret > 0))
+		{
 			for (x = 0; x <= serv.getFdMax(); x++)
+			{
 				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
+				{
 					if (adding_user(&serv))
 						break;
+				}
+			}
+		}
 		else
 			perror("There were select failures: ");
 		reinit_set(read_set, write_set, err_set, tmp_set, serv.getFdMax());
