@@ -112,14 +112,15 @@ void print_fds(fd_set &to_print, int fdMax)
 
 int main(void)
 {
-	//std::map<std::string, func_cmd> com;
-	//com = init_map();
-	//map_cmd cmap;
-	//init_map_cmd();
+	// std::map<std::string, func_cmd> com;
+	// com = init_map();
+	map_cmd cmap;
+	cmap = init_map_cmd();
 	//cmap.push_back(pong_cmd);
 
 	/*************** INITIALIZING SERVER ****************/
 	// typedef Server::getUser()  &cUser;
+	//serv.acceptUser(user, size);
 
 	Server serv;
 	fd_set read_set, err_set, write_set, tmp_set;
@@ -130,19 +131,14 @@ int main(void)
 	FD_SET(serv.getFdServer(), &read_set);
 	FD_SET(serv.getFdServer(), &write_set);
 	FD_SET(serv.getFdServer(), &err_set);
-	//serv.acceptUser(user, size);
 	int x;
 
 	while (1)
 	{
-		//will need to change strcpy because it just takes a const string buf we want to access the buffer of user
-		//strcpy(const_cast<char *>(serv.getUser().getBuffer().c_str()), "Connect to server...");
 		std::string str("Connect to server...");
-		//str.copy(serv.getUser().getBuffer(), str.length(), 0);
 		std::string buf;
 		copy_buffer(buf, str);
 		std::cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << std::endl;
-		//send(serv.getFdServer(), buf.c_str(), 512, 0);
 
 		struct timeval timeout;
 
@@ -165,35 +161,19 @@ int main(void)
 
 		if ((select_ret > 0))
 		{
-			std::cout << "WTFFF" << std::endl;
-			x = 0;
-			while (x <= serv.getFdMax())
-			{
-				if (FD_ISSET(x, &read_set))
-					std::cout << "//////////// : " << x << std::endl;
-				x++;
-			}
 			x = 0;
 			while (x <= serv.getFdMax())
 			{
 				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
 				{
 					if ((serv.acceptUser(serv.getUser(), serv.getSize())) < 0)
-					{
 						perror("Accept failed: ");
-						// break ;
-					}
 					else
 					{
-						//we're gonna to have to change this buffer thing
-						FD_SET(serv.getUser().getFdUser(), &read_set);
-						serv.listenUser(); //put into an if condition
 						if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 						{
-
 							std::cout << "MESSAGE: " << serv.getUser().getBuffer() << std::endl;
 							serv.setUpFdMax(serv.getUser().getFdUser());
-							//break ;
 						}
 						else
 						{
@@ -202,17 +182,15 @@ int main(void)
 						}
 					}
 					serv.getUser().connection_replies(serv);
-
 				}
 				x++;
 			}
 		}
 		else
-		{
 			perror("There were select failures: ");
-            // break ;
-		}
 
+		reinit_set(read_set, write_set, err_set, tmp_set, serv.getFdMax());
+	}
 		// if (select_ret > 0) //pansement
 		//if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 		//{
@@ -263,9 +241,11 @@ int main(void)
 		isExit = false;
 		exit(1);
 		 */
-	 reinit_set(read_set, write_set, err_set, tmp_set, serv.getFdMax());
+		 //will need to change strcpy because it just takes a const string buf we want to access the buffer of user
+		 //strcpy(const_cast<char *>(serv.getUser().getBuffer().c_str()), "Connect to server...");
+		 //str.copy(serv.getUser().getBuffer(), str.length(), 0);
+		 //send(serv.getFdServer(), buf.c_str(), 512, 0);
 
-	}
 	std::cout << "sortie" << std::endl;
 	// serv.closeUser(serv.getUser());
 
