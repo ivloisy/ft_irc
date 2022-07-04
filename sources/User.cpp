@@ -229,10 +229,11 @@ User::map_cmd		User::init_map_cmd()//Server & serv, User & user)
 	map_cmd cmd;
 	//cmd.insert(pair<string, pointer_function>("CAP", com.cap_cmd()));
 
-	cmd["CAP"] = cap_cmd;
-	cmd["NICK"] = nick_cmd;
-	cmd["PONG"] = pong_cmd;
-	cmd["USER"] = user_cmd;
+	cmd["CAP"] = cap_cmd();
+	cmd["NICK"] = nick_cmd();
+	cmd["PONG"] = pong_cmd();
+	cmd["USER"] = user_cmd();
+
 	// cmd["PASS"] = pass_cmd();
 	// cmd["MODE"] = mode_cmd();
 	// cmd["WHO"] = who_cmd();
@@ -255,7 +256,7 @@ void				User::tokenize(std::string const &str, const char delim, std::vector<std
 	}
 }
 
-void				User::parse_buffer_command(std::string & buf)
+void				User::parse_buffer_command(std::string & buf, Server & serv)
 {
 	const char delim = ' ';
 	std::vector<std::string> out;
@@ -263,7 +264,7 @@ void				User::parse_buffer_command(std::string & buf)
 	tokenize(buf, delim, out); //this splits the buffer into a vector
 
 	std::cout << "calling command ... ";
-	cmap.find(*out.begin())->second();
+	cmap.find(*out.begin())->second(serv, this, out);
 
 	/* Uncomment this for displaying all the vector content
 	std::vector<std::string>::iterator it = out.begin();

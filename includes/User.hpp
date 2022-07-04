@@ -27,7 +27,7 @@ namespace irc
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(void);
+		typedef void (*pointer_function)(Server & serv, User & user, std::vector<std::string> & out);
 		typedef std::map<std::string, pointer_function>		map_cmd;
 
 		map_cmd												cmap;
@@ -66,7 +66,7 @@ namespace irc
 		void												write_buf(User &user, std::string const &msg);
 
 		void												tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
-		void												parse_buffer_command(std::string & buf);
+		void												parse_buffer_command(std::string & buf, Server & serv);
 
 		std::string 										getPrefix() const;
 		std::string 										getHostname() const;

@@ -16,13 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/CAP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/CAP.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/DIE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/DIE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/MSG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/MSG.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/USER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/USER.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -2,6 +2,11 @@
 // Created by alangloi on 6/24/22.
 //
 
+#include "../../includes/User.hpp"
+#include "../../includes/Server.hpp"
+
+using namespace irc;
+
 //optional for the moment
 
 /********************* USER COMMAND **********************/
@@ -16,7 +21,7 @@
 //	std::cout << "cap command called" << std::endl;
 //}
 
-void	cap_cmd()
+void	cap_cmd(User & user, Server & server, std::vector<std::string> & buffer)
 {
 	std::cout << "cap command called" << std::endl;
 }
