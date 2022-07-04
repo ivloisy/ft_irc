@@ -78,6 +78,7 @@ namespace irc
 
 		void 												setFdUser(int & fd);
 		void												setBuffer(std::string & buffer);
+		void												setNickName(std::string nickname);
 
 		//void												send_message(int nb_command, Server server);
 

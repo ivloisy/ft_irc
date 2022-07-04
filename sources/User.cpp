@@ -218,6 +218,11 @@ void				User::setBuffer(std::string & buffer)
 	this->buffer = buffer;
 }
 
+void				User::setNickName(std::string nickname)
+{
+	this->_nickname = nickname;
+}
+
 User::map_cmd		User::init_map_cmd()//Server & serv, User & user)
 {
 	//std::string buf("Salut les amis");

@@ -2,6 +2,11 @@
 // Created by alangloi on 6/24/22.
 //
 
+#include "../../includes/User.hpp"
+#include "../../includes/Server.hpp"
+
+using namespace irc;
+
 /********************* USER COMMAND **********************/
 
 #include "../../includes/Command.hpp"
@@ -14,9 +19,9 @@
 //	std::cout << "user command called" << std::endl;
 //}
 
-void	user_cmd()
+void	user_cmd(User & user, Server & server, std::vector<std::string> & buffer)
 {
-
+	user.setNickName(*(buffer.begin() + 1));
 	std::cout << "user command called" << std::endl;
 }
 

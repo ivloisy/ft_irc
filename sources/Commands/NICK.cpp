@@ -2,6 +2,8 @@
 // Created by alangloi on 6/24/22.
 //
 
+//optional connection command
+
 /********************* USER COMMAND **********************/
 
 #include "../../includes/Command.hpp"

@@ -90,11 +90,12 @@ int adding_user(Server *serv)
 		if (recv(serv->getUser().getFdUser(), &buffer, 255, 0) >= 1)
 		{
 			//change the bufbuf string for testing the parser
-			std::string bufbuf("CAP machinmachin truc much push lululu");
+			std::string bufbuf("USER blabla");
 			//launch parser
 			serv->getUser().parse_buffer_command(bufbuf);
 			//change for buffer for testing with the real buffer
 			cout << "MESSAGE: " << bufbuf << endl;
+			cout << serv->getUser().getNickName() << endl;
 			serv->setUpFdMax(serv->getUser().getFdUser());
 		}
 		else
