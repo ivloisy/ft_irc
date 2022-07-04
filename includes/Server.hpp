@@ -16,18 +16,17 @@ namespace irc
 	class User;
 
 	class Server {
-
 		int 					_fd;
 		int						_fdMax;
-		//std::map<int, Channel> channels; (instantiation channels)
 		struct sockaddr_in		_serverAddr;
 		std::string				_serverName; //identify the server, has a max length of 63 chars. servername = hostname
-		//std::set<User *> 		user; *Store the different users
 		socklen_t 				_size;
-		//Config 				_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//std::string 			_upTime;
 		std::vector<User>		_user; //we're going to delete it for the instanciation with set
 		int						_portNum; //default port 6667
+		//std::map<int, Channel> channels; (instantiation channels)
+		//std::set<User *> 		user; *Store the different users
+		//Config 				_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
+		//std::string 			_upTime;
 
 	public:
 		Server();
