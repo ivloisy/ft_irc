@@ -17,11 +17,14 @@
 #include <sys/select.h>
 #include <sys/time.h>
 
+# include <cmath>
+
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
 #include "./includes/Message.hpp"
 #include "./includes/Config.hpp"
 #include "./includes/Command.hpp"
+#include "./includes/utils.hpp"
 //#include "../includes/Message.hpp"
 
 using namespace std;
@@ -125,6 +128,10 @@ void ft_run()
 	int select_ret, x;
 	struct timeval timeout;
 
+	display_set(read_set);
+	// display_set(tmp_set);
+	// display_set(write_set);
+	// display_set(err_set);
 	FD_ZERO(&tmp_set);
 	FD_ZERO(&read_set);
 	FD_ZERO(&write_set);
@@ -141,18 +148,28 @@ void ft_run()
 		cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << endl;
 
 		save_sets(&read_set, &tmp_set, serv.getFdMax());
+		display_set(read_set);
+		display_set(tmp_set);
+		display_set(write_set);
+		display_set(err_set);
 		select_ret = select(serv.getFdMax() + 1, &read_set, &write_set, &err_set, &timeout);
 
+		// display_set(read_set);
+		// display_set(tmp_set);
+		// display_set(write_set);
+		// display_set(err_set);
 		if (select_ret < 0)
 		{
 			perror("Select failed :");
 			break ;
 		}
 		if ((select_ret > 0))
+		{
 			for (x = 0; x <= serv.getFdMax(); x++)
 				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
 					if (adding_user(&serv))
 						break;
+		}
 		else
 			perror("There were select failures: ");
 		reinit_set(read_set, write_set, err_set, tmp_set, serv.getFdMax());
@@ -177,5 +194,6 @@ int main(int argc, char **argv)
 	{
 		cout << "error" << endl;
 	}
+
 	return 0;
 }

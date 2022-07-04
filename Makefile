@@ -7,7 +7,8 @@ SRCS = 	main.cpp \
 		sources/Config.cpp \
 		sources/Message.cpp \
 		sources/Server.cpp \
-		sources/User.cpp
+		sources/User.cpp \
+		sources/utils.cpp
 
 INCDIR = ./includes
 
