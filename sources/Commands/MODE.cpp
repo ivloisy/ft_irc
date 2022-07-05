@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -14,7 +15,7 @@ using namespace irc;
  * parameters <nickname> *( ( "+" / "-" ) *( "i" / "w" / "o" / "O" / "r" ) )
  */
 
-void	mode_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	mode_cmd(Command * cmd)
 {
 	std::cout << "mode command called" << std::endl;
 }

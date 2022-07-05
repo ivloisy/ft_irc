@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -14,7 +15,7 @@ using namespace irc;
  * <msgtarget> <text to be sent>
  */
 
-void	privmsg_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	privmsg_cmd(Command * cmd)
 {
 	std::cout << "privmsg command called" << std::endl;
 }

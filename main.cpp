@@ -80,6 +80,8 @@ void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax
 // 	cout << endl;
 // }
 
+
+
 int adding_user(Server *serv)
 {
 	char buffer[512];
@@ -93,10 +95,10 @@ int adding_user(Server *serv)
 			//std::string bufbuf("USER blabla");
 			serv->getUser()->setBuffer(buffer);
 			//launch parser
-			serv->getUser()->parse_buffer_command(*serv);
+			serv->getUser()->parse_buffer_command(serv);
 			//change for buffer for testing with the real buffer
 			cout << "MESSAGE: " << serv->getUser()->getBuffer() << endl;
-			cout << serv->getUser()->getNickName() << endl;
+			//cout << serv->getUser()->getNickName() << endl;
 			serv->setUpFdMax(serv->getUser()->getFdUser());
 		}
 		else
@@ -105,7 +107,6 @@ int adding_user(Server *serv)
 			return (1);
 		}
 	}
-	serv->getUser()->connection_replies(*serv);
 	return (0);
 }
 

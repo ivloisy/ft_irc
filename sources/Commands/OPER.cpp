@@ -5,6 +5,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -17,7 +18,7 @@ using namespace irc;
  *  ERR_NEEDMOREPARAMS  RPL_YOUREOPER ERR_NOOPERHOST   ERR_PASSWDMISMATCH
  */
 
-void	oper_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	oper_cmd(Command * cmd)
 {
 	std::cout << "oper command called" << std::endl;
 }

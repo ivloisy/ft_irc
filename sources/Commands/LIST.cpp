@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -16,7 +17,7 @@ using namespace irc;
  * parameters : [ <channel> *( "," <channel> ) [ <target> ] ]
  */
 
-void		list_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void		list_cmd(Command * cmd)
 {
 	std::cout << "list command called " << std::endl;
 }

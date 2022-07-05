@@ -12,22 +12,22 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <ostream>
-#include "Message.hpp"
+//#include "Message.hpp"
 #include "Command.hpp"
 #include "Server.hpp"
 
 namespace irc
 {
-	class Message;
+	//class Message;
 	class Server;
-	//class Command;
+	class Command;
 
 	class User
 	{
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(User & user, Server & server, std::vector<std::string> & buffer);
+		typedef void (*pointer_function)(Command * com);
 		typedef std::map<std::string, pointer_function>		map_cmd;
 		map_cmd												cmap;
 
@@ -40,21 +40,19 @@ namespace irc
 		std::string 										_username;
 		std::string 										_nickname;
 		std::string 										_password;
-		//std::string 										_buffer;
 		//std::vector<std::string>							_waitingToSend;
-		//std::map<std::string, Message *>					_commands;
 		//std::string										_prefix;
 		std::string 										buffer;
 		std::vector<std::string>							parameters;
 		int 												bufsize;
-		Message												*_msg;
-		Server												*server;
-		//Command											_command;
+		//Message											*_msg;
+		//Server											*server;
+		std::vector<Command *>								_command;
 
 		//if client send a cap command, ignore it
 
 	public:
-		User();
+		//User();
 		User(int fd, struct sockaddr_in address);
 		//virtual ~User();
 		//User(User const &src);
@@ -67,8 +65,8 @@ namespace irc
 		ssize_t 											send_buf(Server &serv, std::string const &msg);
 		void												write_buf(User * user, std::string const &msg);
 
-		void												tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
-		void												parse_buffer_command(Server & serv);
+		void												tokenize(std::string const &str, Server *serv);
+		void												parse_buffer_command(Server * serv);
 
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
@@ -80,7 +78,7 @@ namespace irc
 		std::string											getRealName() const;
 		std::string 										&getBuffer();
 		int 												getBufsize() const;
-		map_cmd												getCommand() const;
+		std::vector<Command *>								getCommand() const;
 
 		void 												setFdUser(int fd);
 		void												setNickName(std::string nickname);
@@ -92,10 +90,8 @@ namespace irc
 
 		//void												send_message(int nb_command, Server server);
 
-		void												connection_replies(Server & server);
+		void												connection_replies(Command * com);
 	};
 }
-
-
 
 #endif //FT_IRC_CLIENT_HPP

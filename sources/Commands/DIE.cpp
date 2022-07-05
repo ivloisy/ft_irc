@@ -4,12 +4,13 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
 /******************** OPERATOR COMMAND ***********************/
 
-void	die_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	die_cmd(Command * cmd)
 {
 	std::cout << "die command called" << std::endl;
 }

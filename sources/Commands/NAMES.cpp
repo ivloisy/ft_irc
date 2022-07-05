@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -17,7 +18,7 @@ using namespace irc;
 
  */
 
-void		names_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void		names_cmd(Command * cmd)
 {
 	std::cout << "names command called" << std::endl;
 }
