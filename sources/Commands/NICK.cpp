@@ -25,5 +25,6 @@ using namespace irc;
 
 void	nick_cmd(User & user, Server & server, std::vector<std::string> & buffer)
 {
+	user.setNickName(*(buffer.begin() + 1));
 	std::cout << "nick command called" << std::endl;
 }
