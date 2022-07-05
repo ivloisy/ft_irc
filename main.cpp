@@ -91,10 +91,11 @@ int adding_user(Server *serv)
 		{
 			//change the bufbuf string for testing the parser
 			std::string bufbuf("USER blabla");
+			serv->getUser().setBuffer(bufbuf);
 			//launch parser
-			serv->getUser().parse_buffer_command(bufbuf, *serv);
+			serv->getUser().parse_buffer_command();
 			//change for buffer for testing with the real buffer
-			cout << "MESSAGE: " << bufbuf << endl;
+			cout << "MESSAGE: " << serv->getUser().getBuffer() << endl;
 			cout << serv->getUser().getNickName() << endl;
 			serv->setUpFdMax(serv->getUser().getFdUser());
 		}
