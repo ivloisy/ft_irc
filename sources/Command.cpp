@@ -25,5 +25,3 @@ Command::~Command()
 {
 	return ;
 }
-
-

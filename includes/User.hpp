@@ -27,9 +27,8 @@ namespace irc
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(Server & serv, User & user, std::vector<std::string> & out);
+		typedef void (*pointer_function)(User & user, Server & server, std::vector<std::string> & buffer);
 		typedef std::map<std::string, pointer_function>		map_cmd;
-
 		map_cmd												cmap;
 
 		static int											_nbUser;
@@ -63,13 +62,13 @@ namespace irc
 
 		//void												establishConnection(void);
 
-		map_cmd												init_map_cmd(void);
+		void												init_map_cmd(void);
 
 		ssize_t 											send_buf(Server &serv, std::string const &msg);
-		void												write_buf(User &user, std::string const &msg);
+		void												write_buf(User * user, std::string const &msg);
 
 		void												tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
-		void												parse_buffer_command();
+		void												parse_buffer_command(Server & serv);
 
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
@@ -83,13 +82,13 @@ namespace irc
 		int 												getBufsize() const;
 		map_cmd												getCommand() const;
 
-		void 												setFdUser(int & fd);
+		void 												setFdUser(int fd);
 		void												setNickName(std::string nickname);
 		void												setUserName(std::string username);
 		void												setRealName(std::string realname);
 		void												setHostName(std::string hostname);
 		void												setPassWord(std::string password);
-		void												setBuffer(std::string & buf);
+		void												setBuffer(std::string buf);
 
 		//void												send_message(int nb_command, Server server);
 

@@ -27,7 +27,6 @@ Server::Server() :
 
 	this->_size = sizeof(this->getServerAddr());
 	// std::cout << "Looking for clients..." << std::endl;
-
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
 		//error
@@ -87,15 +86,15 @@ void				Server::bindServer()
 	}
 }
 
+/*
 void				Server::listenUser()
 {
 	//std::cout << "fduser = " << this->_user.at(0).getFdUser() << std::endl;
 	listen(this->_user.at(0).getFdUser(), 1);
-
-
 }
+*/
 
-int					Server::acceptUser(User & user, socklen_t  size)
+int					Server::acceptUser(socklen_t  size)
 {
 	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -104,8 +103,8 @@ int					Server::acceptUser(User & user, socklen_t  size)
 		std::cout << "Error on accepting..." << std::endl;
 		return (-1);
 	}
-	_user.push_back(User(fd, this->_serverAddr));
-	_user[0].setFdUser(fd);
+	_user.push_back(new User(fd, this->_serverAddr));
+	//_user.at(0)->setFdUser(fd);
 	//std::cout << "FDDDDDD = " << fd << std::endl;
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
@@ -113,9 +112,9 @@ int					Server::acceptUser(User & user, socklen_t  size)
 	return (fd);
 }
 
-void				Server::closeUser(User & user)
+void				Server::closeUser(User * user)
 {
-	close(user.getFdUser());
+	close(user->getFdUser());
 }
 
 int 				Server::getFdMax() const
@@ -135,7 +134,7 @@ void 				Server::setUpFdMax(int fdCurrent)
 
 // }
 
-int					&Server::getFdServer(void)
+int					Server::getFdServer(void) const
 {
 	return (this->_fd);
 }
@@ -145,9 +144,9 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-User 				&Server::getUser()
+User 				*Server::getUser()
 {
-	return (this->_user[0]);
+	return (this->_user.at(0));
 }
 
 socklen_t			Server::getSize() const
@@ -163,4 +162,14 @@ int 				Server::getPortNum() const
 std::string 		Server::getServerName() const
 {
 	return (this->_serverName);
+}
+
+void				Server::setFdServer(int fd)
+{
+	this->_fd = fd;
+}
+
+bool				Server::isUserEmpty()
+{
+	return (this->_user.empty());
 }

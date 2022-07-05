@@ -29,7 +29,7 @@ namespace irc
 		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 											_size;
 		std::vector<User *>									_user; //we're going to delete it for the instanciation with set
-		//std::vector<Channel *>								_channels;
+		//std::vector<Channel *>							_channels;
 		int													_portNum; //default port 6667
 		//Command											_commands;
 		//std::set<User *>									user; *Store the different users
@@ -51,22 +51,23 @@ namespace irc
 		void												establishConnection(void);
 		void												bindServer(void);
 		void												createServerAddr(int portNum);
-		void												listenUser(void);
-		int													acceptUser(User & user, socklen_t size);
-		void												closeUser(User & user);
+		//void												listenUser(void);
+		int													acceptUser(socklen_t size);
+		void												closeUser(User * user);
+
 		int													getFdMax( void ) const;
+		int													getFdServer() const;
+		struct sockaddr_in									getServerAddr() const;
+		User												*getUser();
+		socklen_t											getSize() const;
+		int													getPortNum() const;
+		std::string											getServerName() const;
+
+		void												setFdServer(int fd);
 		void												setUpFdMax(int fdCurrent);
 		// void												setDownFdMax(int fdCurrent);
 
-
-
-		int													&getFdServer();
-		struct sockaddr_in									getServerAddr() const;
-		User												&getUser();
-		socklen_t											getSize() const;
-		int													getPortNum() const;
-
-		std::string											getServerName() const;
+		bool												isUserEmpty();
 	};
 }
 
