@@ -30,10 +30,6 @@
 using namespace std;
 using namespace irc;
 
-
-
-
-
 /*
 void copy_buffer(string &dest, string const &src)
 {
@@ -164,9 +160,7 @@ void ft_run()
 
 int main(int argc, char **argv)
 {
-	typedef void (*pointer_function)(void);
-	std::map<std::string, pointer_function>		map_cmd;
-	map_cmd												cmap;
+
 
 	if (argc == 2) // without password
 	{

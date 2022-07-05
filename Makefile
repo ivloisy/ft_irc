@@ -11,7 +11,6 @@ SRCS = 	main.cpp \
 		sources/Command.cpp \
 		sources/Commands/CAP.cpp \
 		sources/Commands/NICK.cpp \
-		sources/Commands/PONG.cpp \
 		sources/Commands/USER.cpp \
 		sources/Commands/DIE.cpp \
 		sources/Commands/JOIN.cpp \

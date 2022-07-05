@@ -2,17 +2,16 @@
 // Created by alangloi on 6/24/22.
 //
 
+#include "../../includes/Command.hpp"
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include <list>
 
 using namespace irc;
 
 /********************* USER COMMAND **********************/
 
-#include "../../includes/Command.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include <list>
+
 
 //void	Command::user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
 //{
