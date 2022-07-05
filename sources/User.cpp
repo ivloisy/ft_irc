@@ -105,7 +105,7 @@ User &User::operator=(User const &rhs)
 
 /*************************** MEMBER FUNCTIONS **************************/
 
-void 				User::write_buf(User &user, std::string const &msg)
+void 				User::write_buf(User * user, std::string const &msg)
 {
 	//_waitingToSend.push_back(message);
 	this->buffer =  msg + "\n";
@@ -117,7 +117,7 @@ ssize_t 			User::send_buf(Server & serv, std::string const &msg)
 	ssize_t res;
 	write_buf(serv.getUser(), msg);
 	std::cout << this->buffer.c_str() << std::endl;
-	res = send(serv.getUser().getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
+	res = send(serv.getUser()->getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
 	if (res == -1)
 	{
 		return (res);
@@ -131,10 +131,10 @@ ssize_t 			User::send_buf(Server & serv, std::string const &msg)
 
 void 				User::connection_replies(Server & serv)
 {
-	this->_msg->reply(serv, *this, 1, serv.getUser().getNickName());
-	this->_msg->reply(serv, *this, 2, serv.getUser().getNickName());
-	this->_msg->reply(serv, *this, 3, serv.getUser().getNickName());
-	this->_msg->reply(serv, *this, 4, serv.getUser().getNickName());
+	this->_msg->reply(serv, *this, 1, serv.getUser()->getNickName());
+	this->_msg->reply(serv, *this, 2, serv.getUser()->getNickName());
+	this->_msg->reply(serv, *this, 3, serv.getUser()->getNickName());
+	this->_msg->reply(serv, *this, 4, serv.getUser()->getNickName());
 
 	//LUSERS(command);
 	//MOTD(command);
@@ -240,12 +240,12 @@ std::string 		User::getNickName() const
 
 /********************** SETTERS ***********************/
 
-void 				User::setFdUser(int & fd)
+void 				User::setFdUser(int fd)
 {
 	this->_fd = fd;
 }
 
-void				User::setBuffer(std::string & buf)
+void				User::setBuffer(std::string buf)
 {
 	this->buffer = buf;
 }
@@ -326,7 +326,6 @@ void				User::parse_buffer_command(Server & serv)
 	this->server = &serv;
 	std::cout << "calling command ... ";
 	cmap.find(*this->parameters.begin())->second(*this, *this->server, this->parameters);
-
 	/* Uncomment this for displaying all the vector content
 	std::vector<std::string>::iterator it = out.begin();
 	std::vector<std::string>::iterator ite = out.end();
