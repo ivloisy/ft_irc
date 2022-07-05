@@ -28,10 +28,10 @@ namespace irc
 		struct sockaddr_in									_serverAddr;
 		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 											_size;
-		std::vector<User>									_user; //we're going to delete it for the instanciation with set
+		std::vector<User *>									_user; //we're going to delete it for the instanciation with set
+		//std::vector<Channel *>								_channels;
 		int													_portNum; //default port 6667
 		//Command											_commands;
-		//std::map<int, Channel>							channels; (instantiation channels)
 		//std::set<User *>									user; *Store the different users
 		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
 		//std::string										_upTime;
