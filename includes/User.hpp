@@ -63,13 +63,13 @@ namespace irc
 
 		//void												establishConnection(void);
 
-		map_cmd												init_map_cmd(void);
+		void												init_map_cmd(void);
 
 		ssize_t 											send_buf(Server &serv, std::string const &msg);
 		void												write_buf(User &user, std::string const &msg);
 
 		void												tokenize(std::string const &str, const char delim, std::vector<std::string> &out);
-		void												parse_buffer_command();
+		void												parse_buffer_command(Server & serv);
 
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;

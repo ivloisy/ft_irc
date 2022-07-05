@@ -93,7 +93,7 @@ int adding_user(Server *serv)
 			std::string bufbuf("USER blabla");
 			serv->getUser().setBuffer(bufbuf);
 			//launch parser
-			serv->getUser().parse_buffer_command();
+			serv->getUser().parse_buffer_command(*serv);
 			//change for buffer for testing with the real buffer
 			cout << "MESSAGE: " << serv->getUser().getBuffer() << endl;
 			cout << serv->getUser().getNickName() << endl;

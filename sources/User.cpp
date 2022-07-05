@@ -46,12 +46,11 @@ void	squit_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	user_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	wallops_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 
-
-
 /**************************** CONSTRUCTORS ****************************/
 
-User::User() : _nickname("yoka"), cmap(init_map_cmd())
+User::User() : _nickname("yoka"), cmap()
 {
+	init_map_cmd();
 	return ;
 }
 
@@ -59,10 +58,11 @@ User::User(int fd, struct sockaddr_in address) :
 		_nickname("yoka"),
 		_fd(fd),
 		_hostname(),
+		cmap(),
 		_msg(),
-		cmap(init_map_cmd()),
 		bufsize(512)
 {
+	init_map_cmd();
 	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
@@ -277,35 +277,35 @@ void				User::setPassWord(std::string password)
 
 /******************** COMMANDS **********************/
 
-User::map_cmd		User::init_map_cmd()//Server & serv, User & user)
+void		User::init_map_cmd()//Server & serv, User & user)
 {
 	//std::string buf("Salut les amis");
-	map_cmd cmd;
+	//map_cmd cmd;
 	//cmd.insert(pair<string, pointer_function>("CAP", com.cap_cmd()));
 
-	cmd["CAP"] = cap_cmd;
-	cmd["DIE"] = user_cmd;
-	cmd["JOIN"] = join_cmd;
-	cmd["LIST"] = list_cmd;
-	cmd["MODE"] = mode_cmd;
-	cmd["MSG"] = msg_cmd;
-	cmd["NAMES"] = names_cmd;
-	cmd["NICK"] = nick_cmd;
-	cmd["NOTICE"] = notice_cmd;
-	cmd["OPER"] = oper_cmd;
-	cmd["PART"] = part_cmd;
-	cmd["PASS"] = pass_cmd;
-	cmd["PING"] = ping_cmd;
-	cmd["PONG"] = pong_cmd;
-	cmd["PRIVMSG"] = privmsg_cmd;
-	cmd["QUIT"] = quit_cmd;
-	cmd["REHASH"] = rehash_cmd;
-	cmd["RESTART"] = restart_cmd;
-	cmd["SQUIT"] = squit_cmd;
-	cmd["USER"] = user_cmd;
-	cmd["WALLOPS"] = wallops_cmd;
+	cmap["CAP"] 	= 	cap_cmd;
+	cmap["DIE"] 	= 	user_cmd;
+	cmap["JOIN"] 	= 	join_cmd;
+	cmap["LIST"] 	= 	list_cmd;
+	cmap["MODE"] 	= 	mode_cmd;
+	cmap["MSG"] 	= 	msg_cmd;
+	cmap["NAMES"] 	= 	names_cmd;
+	cmap["NICK"] 	=	nick_cmd;
+	cmap["NOTICE"] 	= 	notice_cmd;
+	cmap["OPER"] 	= 	oper_cmd;
+	cmap["PART"] 	=	part_cmd;
+	cmap["PASS"] 	= 	pass_cmd;
+	cmap["PING"] 	= 	ping_cmd;
+	cmap["PONG"] 	= 	pong_cmd;
+	cmap["PRIVMSG"] =	privmsg_cmd;
+	cmap["QUIT"] 	=	quit_cmd;
+	cmap["REHASH"] 	= 	rehash_cmd;
+	cmap["RESTART"] = 	restart_cmd;
+	cmap["SQUIT"] 	= 	squit_cmd;
+	cmap["USER"] 	= 	user_cmd;
+	cmap["WALLOPS"] = 	wallops_cmd;
 
-	return (cmd);
+	//return (cmd);
 }
 
 void				User::tokenize(std::string const &str, const char delim, std::vector<std::string> &out)
@@ -319,15 +319,14 @@ void				User::tokenize(std::string const &str, const char delim, std::vector<std
 	}
 }
 
-void				User::parse_buffer_command()
+void				User::parse_buffer_command(Server & serv)
 {
 	const char delim = ' ';
-	std::vector<std::string> out;
 
-	tokenize(this->buffer, delim, out); //this splits the buffer into a vector
-
+	tokenize(this->buffer, delim, this->parameters); //this splits the buffer into a vector
+	this->server = &serv;
 	std::cout << "calling command ... ";
-	cmap.find(*out.begin())->second(*this->server, *this, out);
+	cmap.find(*this->parameters.begin())->second(*this->server, *this, this->parameters);
 
 	/* Uncomment this for displaying all the vector content
 	std::vector<std::string>::iterator it = out.begin();

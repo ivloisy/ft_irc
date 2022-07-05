@@ -147,7 +147,7 @@ struct sockaddr_in	Server::getServerAddr() const
 
 User 				&Server::getUser()
 {
-	return (this->_user[0]);
+	return (this->_user.at(0));
 }
 
 socklen_t			Server::getSize() const
