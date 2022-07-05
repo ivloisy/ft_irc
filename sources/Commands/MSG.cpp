@@ -4,12 +4,13 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 //do not use this command
 
 using namespace irc;
 
-void msg_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void msg_cmd(Command * cmd)
 {
 	std::cout << "msg command called" << std::endl;
 }

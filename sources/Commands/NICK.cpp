@@ -6,6 +6,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include <list>
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -23,8 +24,8 @@ using namespace irc;
  *	ERR_NONICKNAMEGIVEN ERR_ERRONEUSNICKNAME  ERR_NICKNAMEINUSE    ERR_NICKCOLLISION ERR_RESTRICTED ERR_UNAVAILRESOURCE
  */
 
-void	nick_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	nick_cmd(Command * cmd)
 {
-	user.setNickName(*(buffer.begin() + 1));
+	// user.setNickName(*(buffer.begin() + 1));
 	std::cout << "nick command called" << std::endl;
 }

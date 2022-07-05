@@ -4,12 +4,13 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
 /*********************** OPERATOR COMMAND ************************/
 
-void	wallops_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	wallops_cmd(Command * cmd)
 {
 	std::cout << "wallops command called" << std::cout;
 }

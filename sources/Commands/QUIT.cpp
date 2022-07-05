@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -14,7 +15,7 @@ using namespace irc;
  * Parameters <quit message>
  */
 
-void	quit_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	quit_cmd(Command * cmdr)
 {
 	std::cout << "quit command called" << std::endl;
 }

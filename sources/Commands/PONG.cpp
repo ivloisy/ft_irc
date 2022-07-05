@@ -8,6 +8,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include <list>
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -16,7 +17,7 @@ using namespace irc;
 //	std::cout << "pong command called" << std::endl;
 //}
 
-void	pong_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	pong_cmd(Command * cmd)
 {
 	std::cout << "pong command called" << std::endl;
 }

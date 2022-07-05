@@ -6,6 +6,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include <list>
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -18,9 +19,9 @@ using namespace irc;
 //	std::cout << "user command called" << std::endl;
 //}
 
-void	user_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	user_cmd(Command * cmd)
 {
-	user.setUserName(*(buffer.begin() + 1));
+	// user.setUserName(*(buffer.begin() + 1));
 	std::cout << "user command called" << std::endl;
 }
 

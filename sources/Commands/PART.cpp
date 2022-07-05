@@ -4,6 +4,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -14,7 +15,7 @@ using namespace irc;
  * parameters: <channel> *( "," <channel> ) [ <Part Message> ]
  */
 
-void	part_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	part_cmd(Command * cmd)
 {
 	std::cout << "part command called" << std::endl;
 }

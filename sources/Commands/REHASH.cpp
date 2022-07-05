@@ -4,12 +4,15 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
+//DONT DO THIS COMMAND
+
 /**************** OPERATOR COMMAND *******************/
 
-void	rehash_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	rehash_cmd(Command * cmd)
 {
 
 }

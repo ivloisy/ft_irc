@@ -4,10 +4,11 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
-void	ping_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	ping_cmd(Command * cmd)
 {
 	std::cout << "ping command called" << std::endl;
 }

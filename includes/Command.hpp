@@ -9,31 +9,38 @@
 #include <map>
 #include <string>
 
-//using namespace irc;
-
-class Command
+namespace irc
 {
-	//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
+	class User;
+	class Server;
 
-private:
-	//typedef void (*pointer_function)(void);
-	//typedef std::map<std::string, pointer_function> map_cmd;
+	class Command
+	{
+		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
 
+	private:
+		//typedef void (*pointer_function)(void);
+		//typedef std::map<std::string, pointer_function> map_cmd;
 
-
-
-
-public:
-	Command();
-	virtual ~Command();
-
-	//void	pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	//void	cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	//void	user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-	//void	nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+		User 									*user;
+		Server 									*server;
+		std::vector<std::string> 				parameters;
 
 
-};
+	public:
+		Command(Server * serv, User * user, std::vector<std::string> & params);
+		virtual ~Command();
 
+		std::string			get_reply(unsigned short code, std::string servername, std::string nickname);
+		void				reply(Server & serv, User & user, unsigned short code, std::string nickname);
+
+		Server									&getServer();
+		User									&getUser();
+		std::vector<std::string>				getParameters();
+
+		void									print_parameters();
+
+	};
+}
 
 #endif //FT_IRC_COMMAND_HPP

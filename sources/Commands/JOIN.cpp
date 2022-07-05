@@ -5,6 +5,7 @@
 
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
+#include "../../includes/Command.hpp"
 
 using namespace irc;
 
@@ -16,7 +17,7 @@ using namespace irc;
                / "0"
  */
 
-void	join_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	join_cmd(Command * cmd)
 {
 	std::cout << "join command called" << std::endl;
 }

@@ -109,6 +109,7 @@ int					Server::acceptUser(socklen_t  size)
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
 	//std::cout << "after" << std::endl;
+
 	return (fd);
 }
 
