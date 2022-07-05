@@ -21,7 +21,7 @@ using namespace irc;
 //	std::cout << "cap command called" << std::endl;
 //}
 
-void	cap_cmd(User & user, Server & server, std::vector<std::string> & buffer)
+void	cap_cmd(void)
 {
 	std::cout << "cap command called" << std::endl;
 }

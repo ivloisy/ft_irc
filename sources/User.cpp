@@ -24,7 +24,8 @@
 
 using namespace irc;
 
-void	cap_cmd(User & user, Server & server, std::vector<std::string> & buffer);
+void	cap_cmd(void);
+/*
 void	die_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	join_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	list_cmd(User & user, Server & server, std::vector<std::string> & buffer);
@@ -45,7 +46,7 @@ void	restart_cmd(User & user, Server & server, std::vector<std::string> & buffer
 void	squit_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	user_cmd(User & user, Server & server, std::vector<std::string> & buffer);
 void	wallops_cmd(User & user, Server & server, std::vector<std::string> & buffer);
-
+*/
 /**************************** CONSTRUCTORS ****************************/
 
 User::User() : _nickname("yoka"), cmap()
@@ -284,6 +285,7 @@ void		User::init_map_cmd()//Server & serv, User & user)
 	//cmd.insert(pair<string, pointer_function>("CAP", com.cap_cmd()));
 
 	cmap["CAP"] 	= 	cap_cmd;
+	/*
 	cmap["DIE"] 	= 	user_cmd;
 	cmap["JOIN"] 	= 	join_cmd;
 	cmap["LIST"] 	= 	list_cmd;
@@ -304,6 +306,7 @@ void		User::init_map_cmd()//Server & serv, User & user)
 	cmap["SQUIT"] 	= 	squit_cmd;
 	cmap["USER"] 	= 	user_cmd;
 	cmap["WALLOPS"] = 	wallops_cmd;
+	*/
 
 	//return (cmd);
 }
@@ -326,7 +329,7 @@ void				User::parse_buffer_command(Server & serv)
 	tokenize(this->buffer, delim, this->parameters); //this splits the buffer into a vector
 	this->server = &serv;
 	std::cout << "calling command ... ";
-	cmap.find(*this->parameters.begin())->second(*this->server, *this, this->parameters);
+	cmap.find(*this->parameters.begin())->second();//*this->server, *this, this->parameters);
 
 	/* Uncomment this for displaying all the vector content
 	std::vector<std::string>::iterator it = out.begin();

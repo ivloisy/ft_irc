@@ -27,10 +27,7 @@ namespace irc
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(Server & serv, User & user, std::vector<std::string> & out);
-		typedef std::map<std::string, pointer_function>		map_cmd;
 
-		map_cmd												cmap;
 
 		static int											_nbUser;
 		//int												_idUser;
