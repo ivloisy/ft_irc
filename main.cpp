@@ -23,20 +23,12 @@
 
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
-#include "./includes/Message.hpp"
 #include "./includes/Config.hpp"
 #include "./includes/Command.hpp"
 //#include "../includes/Message.hpp"
 
 using namespace std;
 using namespace irc;
-
-/*
-void copy_buffer(string &dest, string const &src)
-{
-	for (unsigned long i = 0; i < src.length(); i++)
-		dest.push_back(src.at(i));
-}*/
 
 std::string char_to_str(char *buf)
 {
@@ -58,9 +50,9 @@ int adding_user(Server *serv)
 	{
 		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
-			std::cout << "BUFFER: = " << buffer << std::endl;
+			//std::cout << "1 BUFFER: = " << buffer << std::endl;
 			serv->getUser()->setBuffer(char_to_str(buffer));
-			cout << "MESSAGE: " << serv->getUser()->getBuffer() << endl;
+			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
 			serv->getUser()->parse_buffer_command(serv);
 			//bzero(buffer, 512);
 			//change for buffer for testing with the real buffer
@@ -118,9 +110,9 @@ void ft_run()
 					//bzero(buffer, 512);
 					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
 					{
-						std::cout << "BUFFER: = " << buffer << std::endl;
+						//std::cout << "2 BUFFER: = " << buffer << std::endl;
 						serv.getUser()->setBuffer(char_to_str(buffer));
-						cout << "MESSAGE: " << serv.getUser()->getBuffer() << endl;
+						//cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
 						serv.getUser()->parse_buffer_command(&serv);
 					}
 				}

@@ -15,7 +15,6 @@ using namespace irc;
 /*
  * NAMES
  * parameters: [ <channel> *( "," <channel> ) [ <target> ] ]
-
  */
 
 void		names_cmd(Command * cmd)

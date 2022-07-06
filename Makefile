@@ -5,7 +5,6 @@ SRCDIR = ./sources
 #SRCS = $(shell find $(SRCDIR) -name *.cpp -or -name *.c -or -name *.s)
 SRCS = 	main.cpp \
 		sources/Config.cpp \
-		sources/Message.cpp \
 		sources/Server.cpp \
 		sources/User.cpp \
 		sources/Command.cpp \

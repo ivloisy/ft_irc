@@ -8,7 +8,6 @@
 
 using namespace irc;
 
-
 //optionnal for the moment, dont use
 
 /********************* USER COMMAND **********************/

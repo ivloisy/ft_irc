@@ -12,13 +12,6 @@ using namespace irc;
 
 /********************* USER COMMAND **********************/
 
-
-
-//void	Command::user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
-//{
-//	std::cout << "user command called" << std::endl;
-//}
-
 void	user_cmd(Command * cmd)
 {
 	// user.setUserName(*(buffer.begin() + 1));

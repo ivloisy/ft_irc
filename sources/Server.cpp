@@ -24,17 +24,20 @@ Server::Server() :
 	this->_fdMax = this->_fd;
 
 	this->createServerAddr(this->_portNum);
+
+	/*
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
 		std::cout << "error setting socket option..." << std::endl;
 	}
+	*/
 
 	this->bindServer();
 
 
 	this->_size = sizeof(this->getServerAddr());
-	// std::cout << "Looking for clients..." << std::endl;
+
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
 		//error
@@ -53,19 +56,6 @@ Server::~Server()
 {
 	return;
 }
-
-/*
-Config &Server::getConfig()
-{
-	return (_config);
-}
-*/
-/*
-std::string Server::getUpTime()
-{
-	return (_upTime);
-}
-*/
 
 void				 Server::establishConnection(void)
 {
@@ -91,17 +81,8 @@ void				Server::bindServer()
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
 		std::cout << "Error binding socket..." << std::endl;
-		//exit(1);
 	}
 }
-
-/*
-void				Server::listenUser()
-{
-	//std::cout << "fduser = " << this->_user.at(0).getFdUser() << std::endl;
-	listen(this->_user.at(0).getFdUser(), 1);
-}
-*/
 
 int					Server::acceptUser(socklen_t  size)
 {
@@ -113,12 +94,6 @@ int					Server::acceptUser(socklen_t  size)
 		return (-1);
 	}
 	_user.push_back(new User(fd, this->_serverAddr));
-	//_user.at(0)->setFdUser(fd);
-	//std::cout << "FDDDDDD = " << fd << std::endl;
-	//std::cout << "before" << std::endl;
-	//std::cout << &(_user.at(0)) << std::endl;
-	//std::cout << "after" << std::endl;
-
 	return (fd);
 }
 
@@ -139,10 +114,11 @@ void 				Server::setUpFdMax(int fdCurrent)
 		this->_fdMax = fdCurrent;
 }
 
-// void 				Server::setDownFdMax(int fdCurrent)
-// {
-
-// }
+/*
+void 				Server::setDownFdMax(int fdCurrent)
+{
+}
+*/
 
 int					Server::getFdServer(void) const
 {

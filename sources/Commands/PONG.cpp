@@ -12,11 +12,6 @@
 
 using namespace irc;
 
-//void	Command::pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
-//{
-//	std::cout << "pong command called" << std::endl;
-//}
-
 void	pong_cmd(Command * cmd)
 {
 	(void)cmd;

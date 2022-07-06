@@ -9,7 +9,6 @@
 #include <sys/socket.h>
 #include "User.hpp"
 #include "Config.hpp"
-#include "Message.hpp"
 
 namespace irc
 {
