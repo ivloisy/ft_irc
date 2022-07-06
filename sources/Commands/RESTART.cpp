@@ -14,5 +14,6 @@ using namespace irc;
 
 void	restart_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "restart command called" << std::endl;
 }

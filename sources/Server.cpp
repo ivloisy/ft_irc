@@ -17,7 +17,7 @@ Server::Server() :
 	_portNum(6667),
 	_state(1)
 {
-	socklen_t size;
+	//socklen_t size;
 
 	this->establishConnection();
 
@@ -40,6 +40,7 @@ Server::Server() :
 
 Server::Server(Server const & src)
 {
+	*this = src;
 	return;
 }
 

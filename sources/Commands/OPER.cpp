@@ -20,5 +20,6 @@ using namespace irc;
 
 void	oper_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "oper command called" << std::endl;
 }

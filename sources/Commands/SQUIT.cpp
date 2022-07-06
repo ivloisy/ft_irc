@@ -17,5 +17,6 @@ using namespace irc;
 
 void squit_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "squit command called" << std::endl;
 }

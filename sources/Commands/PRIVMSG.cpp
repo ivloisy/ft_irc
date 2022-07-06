@@ -17,5 +17,6 @@ using namespace irc;
 
 void	privmsg_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "privmsg command called" << std::endl;
 }

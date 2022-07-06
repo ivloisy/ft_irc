@@ -40,8 +40,9 @@ void copy_buffer(string &dest, string const &src)
 std::string char_to_str(char *buf)
 {
 	std::string result;
+	int len = static_cast<int>(strlen(buf));
 
-	for (int i = 0; i < strlen(buf); i++)
+	for (int i = 0; i < len; i++)
 		result.push_back(buf[i]);
 	//std::cout << "result = " << result << std::endl;
 	return (result);
@@ -185,6 +186,7 @@ void ft_run()
 
 int main(int argc, char **argv)
 {
+	(void)argv;
 	if (argc == 2) // without password
 	{
 		ft_run();

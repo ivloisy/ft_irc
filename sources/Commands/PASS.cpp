@@ -22,5 +22,6 @@ using namespace irc;
 
 void	pass_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "pass command called" << std::endl;
 }

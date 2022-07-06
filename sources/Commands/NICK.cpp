@@ -26,5 +26,6 @@ using namespace irc;
 
 void	nick_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "nick command called" << std::endl;
 }

@@ -20,5 +20,6 @@ using namespace irc;
 
 void		names_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "names command called" << std::endl;
 }

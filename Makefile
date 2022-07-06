@@ -43,7 +43,7 @@ DEPS = $(OBJS:.o=.d)
 
 CXX = c++
 
-CXXFLAGS = -I $(INCDIR) -MMD -MP -std=c++98
+CXXFLAGS = -Wall -Werror -Wextra -I $(INCDIR) -MMD -MP -std=c++98
 
 all: $(NAME)
 

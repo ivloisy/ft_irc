@@ -42,8 +42,8 @@ std::string RPL_MYINFO(std::string servername, std::string nickname)
 }
 
 Command::Command(Server * serv, User * user, std::vector<std::string> & params) :
-	server(serv),
 	user(user),
+	server(serv),
 	parameters(params)
 {
 	return ;

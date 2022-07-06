@@ -17,5 +17,6 @@ using namespace irc;
 
 void	part_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "part command called" << std::endl;
 }
