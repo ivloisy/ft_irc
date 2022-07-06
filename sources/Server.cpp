@@ -4,6 +4,7 @@
 
 #include "../includes/Server.hpp"
 #include "../includes/User.hpp"
+#include "../includes/Channel.hpp"
 #include <iostream>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -130,9 +131,26 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-User 				*Server::getUser()
+User 				*Server::getUser(std::string nickname)
 {
-	return (this->_user.at(0));
+	std::vector<User *>::iterator last = this->_user.end();
+	for (std::vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		if ((*it)->getNickName() == nickname)
+			return (*it);
+	}
+	return (NULL);
+}
+
+Channel				*Server::getChannel(std::string name)
+{
+	std::vector<Channel *>::iterator last = this->_channel.end();
+	for (std::vector<Channel *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		if ((*it)->getChannelName() == name)
+			return (*it);
+	}
+	return (NULL)
 }
 
 socklen_t			Server::getSize() const

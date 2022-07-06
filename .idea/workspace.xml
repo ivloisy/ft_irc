@@ -15,8 +15,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outfile" beforeDir="false" afterPath="$PROJECT_DIR$/outfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/includes/Channel.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sources/Channel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +62,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/includes" />
       <recent name="$PROJECT_DIR$/sources" />
     </key>
   </component>
@@ -78,7 +86,7 @@
       <workItem from="1656681490882" duration="476000" />
       <workItem from="1656689617993" duration="9538000" />
       <workItem from="1657026710264" duration="4398000" />
-      <workItem from="1657117100635" duration="3074000" />
+      <workItem from="1657117100635" duration="6500000" />
     </task>
     <servers />
   </component>

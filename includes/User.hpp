@@ -35,10 +35,10 @@ namespace irc
 		//int												_idUser;
 		int 												_fd;
 		//struct sockaddr_in 								_serverAddr;
-		std::string											_hostname;
-		std::string 										_realname;
-		std::string 										_username;
-		std::string 										_nickname;
+		std::string											_hostname; //name or ip address of the machine
+		std::string 										_realname; //name with spaces
+		std::string 										_username; //name used on the machine
+		std::string 										_nickname; //name used on the server
 		std::string 										_password;
 		//std::vector<std::string>							_waitingToSend;
 		//std::string										_prefix;

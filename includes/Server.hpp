@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include "User.hpp"
 #include "Config.hpp"
+#include "Channel.hpp"
 
 namespace irc
 {
@@ -28,6 +29,7 @@ namespace irc
 		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 											_size;
 		std::vector<User *>									_user; //we're going to delete it for the instanciation with set
+		std::vector<Channel *>								_channel;
 		//std::vector<Channel *>							_channels;
 		int													_portNum; //default port 6667
 		//Command											_commands;
@@ -58,7 +60,8 @@ namespace irc
 		int													getFdMax( void ) const;
 		int													getFdServer() const;
 		struct sockaddr_in									getServerAddr() const;
-		User												*getUser();
+		User												*getUser(std::string nickname);
+		Channel												*getChannel(std::string name);
 		socklen_t											getSize() const;
 		int													getPortNum() const;
 		std::string											getServerName() const;

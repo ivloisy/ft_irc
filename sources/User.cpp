@@ -55,7 +55,8 @@ User::User(int fd, struct sockaddr_in address) :
 		_nickname("yoka"),
 		bufsize(512),
 		_command(),
-		_acceptConnect(1)
+		_acceptConnect(1),
+		_isOper(0)
 {
 	(void) address;
 	init_map_cmd();
