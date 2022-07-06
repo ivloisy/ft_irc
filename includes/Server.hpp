@@ -40,7 +40,7 @@ namespace irc
 		bool												_state;
 
 	public:
-		Server();
+		Server(int portNum);
 		Server(Server const & src);
 		virtual ~Server();
 
