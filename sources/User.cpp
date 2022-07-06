@@ -177,7 +177,19 @@ bool					User::getAcceptConnect() const
 	return (this->_acceptConnect);
 }
 
+bool					User::getOper() const
+{
+	return (this->_isOper);
+}
+
+
+
 /********************** SETTERS ***********************/
+
+void					User::setOper(bool op)
+{
+	this->_isOper = op;
+}
 
 void 					User::setFdUser(int fd)
 {

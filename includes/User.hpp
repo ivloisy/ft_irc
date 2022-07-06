@@ -49,6 +49,7 @@ namespace irc
 		//Server											*server;
 		std::vector<Command *>								_command;
 		bool												_acceptConnect;
+		bool												_isOper;
 
 		//if client send a cap command, ignore it
 
@@ -81,7 +82,9 @@ namespace irc
 		int 												getBufsize() const;
 		std::vector<Command *>								getCommand() const;
 		bool												getAcceptConnect() const;
+		bool												getOper() const;
 
+		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
 		void 												setFdUser(int fd);
 		void												setNickName(std::string nickname);
