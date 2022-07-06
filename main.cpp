@@ -68,10 +68,10 @@ int adding_user(Server *serv)
 	return (0);
 }
 
-void ft_run()
+void ft_run(int port)
 {
 	char buffer[512];
-	Server serv;
+	Server serv(port);
 	int select_ret;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
@@ -127,14 +127,17 @@ void ft_run()
 int main(int argc, char **argv)
 {
 	(void)argv;
+	// int port;
 	if (argc == 2) // without password
 	{
-		ft_run();
+		// if ((port = atoi(argv[1])) > 0)
+		ft_run(6667);
 		cout << "sortie propre" << endl;
 	}
 	// else if (argc == 3) //with password
 	// {
-	//
+	//if ((port = atoi(argv[1])) > 0)
+		// ft_run(port);
 	// }
 	else
 	{
