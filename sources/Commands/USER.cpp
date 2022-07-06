@@ -21,7 +21,7 @@ using namespace irc;
 
 void	user_cmd(Command * cmd)
 {
-	//cmd->getUser().setNickName(*(cmd->getUser().buffer.begin() + 1));
+	// user.setUserName(*(buffer.begin() + 1));
 	std::cout << "user command called" << std::endl;
 }
 
