@@ -17,7 +17,7 @@ Server::Server() :
 	_portNum(6667),
 	_state(1)
 {
-	socklen_t size;
+	// socklen_t size;
 
 	this->establishConnection();
 
@@ -27,6 +27,9 @@ Server::Server() :
 	int optval = 1;
 	setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 	this->bindServer();
+
+	int optval = 1;
+    setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 
 	this->_size = sizeof(this->getServerAddr());
 	// std::cout << "Looking for clients..." << std::endl;
@@ -40,6 +43,7 @@ Server::Server() :
 
 Server::Server(Server const & src)
 {
+	(void)src;
 	return;
 }
 

@@ -111,6 +111,7 @@ User &User::operator=(User const &rhs)
 
 void 					User::write_buf(User * user, std::string const &msg)
 {
+	(void)user;
 	//_waitingToSend.push_back(message);
 	this->buffer = msg + "\n";
 }
