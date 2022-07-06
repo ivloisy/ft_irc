@@ -100,7 +100,7 @@ ssize_t 				User::send_buf(Server & serv, std::string const &msg)
 {
 	ssize_t res;
 	write_buf(serv.getUser(), msg);
-	std::cout << this->buffer.c_str() << std::endl;
+	// std::cout << this->buffer.c_str() << std::endl;
 	res = send(serv.getUser()->getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
 	if (res == -1)
 	{

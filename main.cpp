@@ -50,7 +50,7 @@ int adding_user(Server *serv)
 	{
 		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
-			//std::cout << "1 BUFFER: = " << buffer << std::endl;
+			std::cout << "BUFFER: = " << buffer << std::endl;
 			serv->getUser()->setBuffer(char_to_str(buffer));
 			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
 			serv->getUser()->parse_buffer_command(serv);
@@ -110,7 +110,7 @@ void ft_run()
 					//bzero(buffer, 512);
 					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
 					{
-						//std::cout << "2 BUFFER: = " << buffer << std::endl;
+						std::cout << "BUFFER: = " << buffer << std::endl;
 						serv.getUser()->setBuffer(char_to_str(buffer));
 						//cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
 						serv.getUser()->parse_buffer_command(&serv);
