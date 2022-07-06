@@ -74,7 +74,7 @@ void ft_run()
 	Server serv;
 	int select_ret;
 	int fd_count = 1;
-	struct pollfd			_poll[1024];
+	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
 
