@@ -16,7 +16,7 @@ Config::Config()
 Config::Config(std::string config)
 {
 	(void)config;
-	return;
+	return ;
 }
 
 std::string Config::get(std::string key)

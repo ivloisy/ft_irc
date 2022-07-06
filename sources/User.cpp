@@ -339,9 +339,11 @@ void					User::tokenize(std::string const &str, Server *serv)
 		while (std::getline(o, u, ' '))
 		{
 			this->parameters.push_back(u);
+			std::cout << "+1 param" << std::endl;
 			//u.clear();
 		}
 		this->_command.push_back(new Command(serv, this, this->parameters));
+		std::cout << "+1 command" << std::endl;
 		//s.clear();
 	}
 	//std::cout << "exit tokenize function" << std::endl;
