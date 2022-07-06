@@ -84,18 +84,6 @@ void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax
 	}
 }
 
-// void print_fds(fd_set &to_print, int fdMax)
-// {
-// 	int x = 0;
-// 	while (x <= fdMax)
-// 	{
-// 		if (FD_ISSET(x, &to_print))
-// 			cout << "fds : " << x << "   : " << to_print.fds_bits[x] << ", ";
-// 		x++;
-// 	}
-// 	cout << endl;
-// }
-
 int adding_user(Server *serv)
 {
 	char buffer[512];
@@ -121,34 +109,15 @@ int adding_user(Server *serv)
 void ft_run()
 {
 	Server serv;
-	// fd_set read_set, err_set, write_set, tmp_set;
-	string str, buf;
 	int select_ret;
 	int fd_count = 1;
 	struct pollfd			_poll[1024];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
-	// struct timeval timeout;
-
-	// FD_ZERO(&tmp_set);
-	// FD_ZERO(&read_set);
-	// FD_ZERO(&write_set);
-	// FD_ZERO(&err_set);
-	// FD_SET(serv.getFdServer(), &read_set);
-	// FD_SET(serv.getFdServer(), &write_set);
-	// FD_SET(serv.getFdServer(), &err_set);
-	// int h = 0;
-
 
 	while (1)
 	{
-		// timeout.tv_sec = 15;
-		buf = "";
-		str = "Connect to server...";
-		copy_buffer(buf, str);
-		cout << "fdserver = " << serv.getFdServer() << " " << buf.c_str() << endl;
-
-		// save_sets(&read_set, &tmp_set, serv.getFdMax());
+		cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
 
 		select_ret = poll(_poll, fd_count, -1);
 
@@ -159,10 +128,8 @@ void ft_run()
 		}
 		if ((select_ret > 0))
 		{
-			cout << "------------------" << endl;
 			for (int x = 0; x < fd_count; x++)
 			{
-				cout << "++++++++++++++++" << endl;
 				if (_poll[x].revents & POLLIN)
 				{
 					if (_poll[x].fd == serv.getFdServer())
@@ -176,36 +143,14 @@ void ft_run()
 				}
 				else
 				{
-					// cout << "aaaah ok !!!!" << endl;
-					// cout << serv.getUser().getNickName() << endl;
-					// cout << "test" << endl;
-					// cout << serv.getUser().getFdUser() << endl;
-					cout << "test333333333333" << endl;
 					char buffer[512];
 					if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
 						cout << buffer << endl;
 				}
-				// if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
-				// {
-				// 		break;
-				// 	// FD_SET(serv.getUser().getFdUser(), &write_set);
-				// 	h = 1;
-				// }
-				// cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << endl;
-				// if (h == 1 && FD_ISSET(x, &write_set))
-				// 	cout << "selected : " << x << " //// fdUser : " <<  serv.getUser().getFdUser() << endl;
-				// if (FD_ISSET(x, &read_set) && x == serv.getUser().getFdUser())
-				// {
-				// 	cout << "ahhhhhhhhhhhhhhh" << endl;
-				// 	break;
-				// }
 			}
-			// if (x <= serv.getFdMax())
-			// 	break;
 		}
 		else
 			perror("There were select failures: ");
-		// reinit_set(read_set, write_set, err_set, tmp_set, serv.getFdMax());
 	}
 	serv.closeUser(serv.getUser());
 }
