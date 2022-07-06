@@ -14,5 +14,6 @@ using namespace irc;
 
 void	rehash_cmd(Command * cmd)
 {
+	(void)cmd;
 
 }

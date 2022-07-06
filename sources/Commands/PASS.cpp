@@ -23,5 +23,6 @@ using namespace irc;
 void	pass_cmd(Command * cmd)
 {
 	// user.setPassWord(*(buffer.begin() + 1));
+	(void)cmd;
 	std::cout << "pass command called" << std::endl;
 }

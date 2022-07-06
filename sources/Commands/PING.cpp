@@ -10,5 +10,6 @@ using namespace irc;
 
 void	ping_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "ping command called" << std::endl;
 }

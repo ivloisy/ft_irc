@@ -28,8 +28,6 @@ Server::Server() :
 	setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 	this->bindServer();
 
-	int optval = 1;
-    setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 
 	this->_size = sizeof(this->getServerAddr());
 	// std::cout << "Looking for clients..." << std::endl;

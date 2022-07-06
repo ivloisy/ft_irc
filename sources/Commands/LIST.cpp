@@ -19,5 +19,6 @@ using namespace irc;
 
 void		list_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "list command called " << std::endl;
 }

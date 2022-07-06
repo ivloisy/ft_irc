@@ -17,5 +17,6 @@ using namespace irc;
 
 void	mode_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "mode command called" << std::endl;
 }

@@ -12,5 +12,6 @@ using namespace irc;
 
 void	wallops_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "wallops command called" << std::cout;
 }

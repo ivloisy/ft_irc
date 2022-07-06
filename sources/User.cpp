@@ -57,15 +57,15 @@ User::User() : _nickname("yoka"), cmap(),
 }*/
 
 User::User(int fd, struct sockaddr_in address) :
-		_nickname("yoka"),
+		cmap(),
 		_fd(fd),
 		_hostname(),
-		cmap(),
+		_nickname("yoka"),
+		bufsize(512),
 		_command(),
-		_acceptConnect(1),
-		bufsize(512)
+		_acceptConnect(1)
 {
-
+	(void)address;
 	//fcntl(this->_fd, F_SETFL, O_NONBLOCK);
 	init_map_cmd();
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);

@@ -12,5 +12,6 @@ using namespace irc;
 
 void	notice_cmd(Command * cmd)
 {
+	(void)cmd;
 	std::cout << "notice command called" << std::endl;
 }

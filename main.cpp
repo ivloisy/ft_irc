@@ -42,39 +42,10 @@ std::string char_to_str(char *buf)
 {
 	std::string result;
 
-	for (int i = 0; i < strlen(buf); i++)
+	for (unsigned long i = 0; i < strlen(buf); i++)
 		result.push_back(buf[i]);
 	//std::cout << "result = " << result << std::endl;
 	return (result);
-}
-
-void save_sets(fd_set *src, fd_set *dst, int fdMax)
-{
-	int x = 0;
-	while (x <= fdMax)
-	{
-		if (FD_ISSET(x, src) && !FD_ISSET(x, dst))
-			FD_SET(x, dst);
-		x++;
-	}
-}
-
-void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax)
-{
-	int x = 0;
-	while (x <= fdMax)
-	{
-		if (FD_ISSET(x, &tmp))
-		{
-			if (!FD_ISSET(x, &read))
-				FD_SET(x, &read);
-			if (!FD_ISSET(x, &write))
-				FD_SET(x, &write);
-			if (!FD_ISSET(x, &err))
-				FD_SET(x, &err);
-		}
-		x++;
-	}
 }
 
 int adding_user(Server *serv)
@@ -84,7 +55,6 @@ int adding_user(Server *serv)
 		perror("Accept failed: ");
 	else
 	{
-		FD_SET(serv->getUser()->getFdUser(), read_set);
 		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
 			std::cout << "BUFFER: = " << buffer << std::endl;
@@ -136,7 +106,7 @@ void ft_run()
 					if (_poll[x].fd == serv.getFdServer())
 					{
 						adding_user(&serv);
-						_poll[fd_count].fd = serv.getUser().getFdUser();
+						_poll[fd_count].fd = serv.getUser()->getFdUser();
 						_poll[fd_count].events = POLLIN;
 						fd_count++;
 						break;
@@ -145,7 +115,7 @@ void ft_run()
 				else
 				{
 					char buffer[512];
-					if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
+					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
 						cout << buffer << endl;
 				}
 			}
