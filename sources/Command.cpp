@@ -113,6 +113,11 @@ std::vector<std::string>				Command::getParameters()
 
 void									Command::print_parameters()
 {
+	int i = 0;
 	for (std::vector<std::string>::iterator it = this->parameters.begin(); it != this->parameters.end(); it++)
-		std::cout << *it << std::endl;
+	{
+		std::cout << "param " << i << " : " << *it << std::endl;
+		i++;
+	}
+
 }

@@ -12,5 +12,6 @@ using namespace irc;
 
 void	die_cmd(Command * cmd)
 {
+	cmd->getServer().setState(0);
 	std::cout << "die command called" << std::endl;
 }

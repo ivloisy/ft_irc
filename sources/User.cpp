@@ -14,7 +14,7 @@
 //#include <iostream>
 #include <stdlib.h> //exit
 
-//#include <fcntl.h>
+#include <fcntl.h>
 //#include <iostream>
 //#include <sys/socket.h>
 //#include <algorithm>
@@ -62,10 +62,12 @@ User::User(int fd, struct sockaddr_in address) :
 		_hostname(),
 		cmap(),
 		_command(),
+		_acceptConnect(1),
 		bufsize(512)
 {
+
+	//fcntl(this->_fd, F_SETFL, O_NONBLOCK);
 	init_map_cmd();
-	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
 	//buffer = new char[512];
@@ -124,9 +126,7 @@ ssize_t 				User::send_buf(Server & serv, std::string const &msg)
 	{
 		return (res);
 	}
-
-
-	//this->buffer.clear();
+	this->buffer.clear();
 	//this->lastping = std::time(NULL);
 	return (res);
 }
@@ -240,6 +240,11 @@ std::string 			User::getNickName() const
 	return (this->_nickname);
 }
 
+bool					User::getAcceptConnect() const
+{
+	return (this->_acceptConnect);
+}
+
 /********************** SETTERS ***********************/
 
 void 					User::setFdUser(int fd)
@@ -277,6 +282,14 @@ void					User::setPassWord(std::string password)
 	this->_password = password;
 }
 
+
+
+void					User::setAcceptConnect(bool ac)
+{
+	this->_acceptConnect = ac;
+}
+
+
 /******************** COMMANDS **********************/
 
 void					User::init_map_cmd()//Server & serv, User & user)
@@ -311,18 +324,26 @@ void					User::init_map_cmd()//Server & serv, User & user)
 
 void					User::tokenize(std::string const &str, Server *serv)
 {
+	//std::cout << std::endl << "BUFFER = " << str << std::endl;
+
 	std::stringstream ss(str);
-	std::vector<std::string> out;
+	//std::vector<std::string> out;
 
 	std::string s;
 	while (std::getline(ss, s, '\n'))
 	{
-		while (std::getline(ss, s, ' '))
+		std::stringstream o(s);
+		std::string u;
+		//std::cout << "blablabla = " << o << std::endl;
+		while (std::getline(o, u, ' '))
 		{
-			this->parameters.push_back(s);
+			this->parameters.push_back(u);
+			//u.clear();
 		}
 		this->_command.push_back(new Command(serv, this, this->parameters));
+		//s.clear();
 	}
+	//std::cout << "exit tokenize function" << std::endl;
 }
 
 void					User::parse_buffer_command(Server * serv)
@@ -334,18 +355,28 @@ void					User::parse_buffer_command(Server * serv)
 	for(std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
 	{
 		(*itc)->print_parameters();
+		std::cout << "nl" << std::endl;
 	}
 
 	//this->server = serv;
 	//std::cout << "calling command ... ";
 
 	//cmap.find(*this->parameters.begin())->second(this->_command[0]);
-	this->connection_replies(this->_command[0]);
+	//for (std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	//{
+	//	cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	//}
+	if (this->getAcceptConnect())
+	{
+		this->connection_replies(*this->_command.begin());
+		this->setAcceptConnect(0);
+	}
+
 	/* Uncomment this for displaying all the vector content
 	std::vector<std::string>::iterator it = out.begin();
 	std::vector<std::string>::iterator ite = out.end();
 	for (std::vector<std::string>::iterator i = it; i != ite; i++)
 		std::cout << *i << std::endl;
 	*/
+	//std::cout << "exit parse buffer function" << std::endl;
 }
-

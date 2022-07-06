@@ -8,12 +8,14 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <fcntl.h>
 
 using namespace irc;
 
 Server::Server() :
 	_serverName("irc.sample.com"),
-	_portNum(6667)
+	_portNum(6667),
+	_state(1)
 {
 	socklen_t size;
 
@@ -22,7 +24,8 @@ Server::Server() :
 	this->_fdMax = this->_fd;
 
 	this->createServerAddr(this->_portNum);
-
+	int optval = 1;
+	setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 	this->bindServer();
 
 	this->_size = sizeof(this->getServerAddr());
@@ -173,4 +176,14 @@ void				Server::setFdServer(int fd)
 bool				Server::isUserEmpty()
 {
 	return (this->_user.empty());
+}
+
+bool				Server::getState() const
+{
+	return	(this->_state);
+}
+
+void				Server::setState(bool st)
+{
+	this->_state = st;
 }

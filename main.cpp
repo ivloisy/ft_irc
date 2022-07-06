@@ -37,6 +37,16 @@ void copy_buffer(string &dest, string const &src)
 		dest.push_back(src.at(i));
 }*/
 
+std::string char_to_str(char *buf)
+{
+	std::string result;
+
+	for (int i = 0; i < strlen(buf); i++)
+		result.push_back(buf[i]);
+	//std::cout << "result = " << result << std::endl;
+	return (result);
+}
+
 void save_sets(fd_set *src, fd_set *dst, int fdMax)
 {
 	int x = 0;
@@ -82,23 +92,23 @@ void reinit_set(fd_set &read, fd_set &write, fd_set &err, fd_set &tmp, int fdMax
 
 
 
-int adding_user(Server *serv)
+int adding_user(Server *serv, fd_set *read_set)//, char *buffer)
 {
 	char buffer[512];
+
 	if ((serv->acceptUser(serv->getSize())) < 0)
 		perror("Accept failed: ");
 	else
 	{
-		if (recv(serv->getUser()->getFdUser(), &buffer, 255, 0) >= 1)
+		FD_SET(serv->getUser()->getFdUser(), read_set);
+		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
-			//change the bufbuf string for testing the parser
-			//std::string bufbuf("USER blabla");
-			serv->getUser()->setBuffer(buffer);
-			//launch parser
-			serv->getUser()->parse_buffer_command(serv);
-			//change for buffer for testing with the real buffer
+			std::cout << "BUFFER: = " << buffer << std::endl;
+			serv->getUser()->setBuffer(char_to_str(buffer));
 			cout << "MESSAGE: " << serv->getUser()->getBuffer() << endl;
-			//cout << serv->getUser()->getNickName() << endl;
+			serv->getUser()->parse_buffer_command(serv);
+			//bzero(buffer, 512);
+			//change for buffer for testing with the real buffer
 			serv->setUpFdMax(serv->getUser()->getFdUser());
 		}
 		else
@@ -107,18 +117,20 @@ int adding_user(Server *serv)
 			return (1);
 		}
 	}
+	//std::cout << "exit adding user function" << std::endl;
 	return (0);
 }
 
 void ft_run()
 {
+	//char buffer[512];
 	Server serv;
 
 	fd_set read_set, err_set, write_set, tmp_set;
 	string str, buf;
 	int select_ret, x;
 	struct timeval timeout;
-
+	//char buffer[512] = "\0";
 	FD_ZERO(&tmp_set);
 	FD_ZERO(&read_set);
 	FD_ZERO(&write_set);
@@ -127,8 +139,17 @@ void ft_run()
 	FD_SET(serv.getFdServer(), &write_set);
 	FD_SET(serv.getFdServer(), &err_set);
 
-	while (1)
+
+	while (serv.getState())
 	{
+
+		//for (int i = 0; i < 510; i++)
+		//	buffer[i] = 'a';
+		//buffer[511] = '\n';
+		//std::cout << "JE VAIS PRINT CE QUI EST DANS LE BUFFER " << buffer << std::endl;
+		//bzero(&buffer, 512);
+		//buffer[0] = '\0';
+		//std::cout << "JE VAIS PRINT CE QUI Est DANS LE BUFFER " << buffer << std::endl;
 		timeout.tv_sec = 15;
 		//str = "Connect to server...";
 		//copy_buffer(buf, str);
@@ -148,8 +169,10 @@ void ft_run()
 			{
 				if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
 				{
-					if (adding_user(&serv))
+					if (adding_user(&serv, &read_set))//, buffer))
 						break;
+					//if (FD_ISSET(serv.getUser()->getFdUser(), &read_set))
+					//	std::cout << "fd is readable" << std::endl;
 				}
 			}
 		}

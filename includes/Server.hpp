@@ -35,6 +35,7 @@ namespace irc
 		//std::set<User *>									user; *Store the different users
 		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
 		//std::string										_upTime;
+		bool												_state;
 
 	public:
 		Server();
@@ -62,7 +63,9 @@ namespace irc
 		socklen_t											getSize() const;
 		int													getPortNum() const;
 		std::string											getServerName() const;
+		bool												getState() const;
 
+		void												setState(bool st);
 		void												setFdServer(int fd);
 		void												setUpFdMax(int fdCurrent);
 		// void												setDownFdMax(int fdCurrent);
