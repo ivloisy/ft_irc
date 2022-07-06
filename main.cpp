@@ -181,9 +181,9 @@ void ft_run()
 					// cout << "test" << endl;
 					// cout << serv.getUser().getFdUser() << endl;
 					cout << "test333333333333" << endl;
-					// char buffer[512];
-					// if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
-					// 	cout << buffer << endl;
+					char buffer[512];
+					if (recv(serv.getUser().getFdUser(), &buffer, 255, 0) >= 1)
+						cout << buffer << endl;
 				}
 				// if (FD_ISSET(x, &read_set) && x == serv.getFdServer())
 				// {
