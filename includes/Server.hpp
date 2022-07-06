@@ -14,6 +14,7 @@
 namespace irc
 {
 	class User;
+	class Channel;
 
 	class Server {
 
@@ -60,6 +61,7 @@ namespace irc
 		int													getFdMax( void ) const;
 		int													getFdServer() const;
 		struct sockaddr_in									getServerAddr() const;
+		User												*getUser(); //need to delete it soon
 		User												*getUser(std::string nickname);
 		Channel												*getChannel(std::string name);
 		socklen_t											getSize() const;

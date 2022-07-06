@@ -131,6 +131,11 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
+User				*Server::getUser()
+{
+	return (this->_user.at(0));
+}
+
 User 				*Server::getUser(std::string nickname)
 {
 	std::vector<User *>::iterator last = this->_user.end();
@@ -145,12 +150,12 @@ User 				*Server::getUser(std::string nickname)
 Channel				*Server::getChannel(std::string name)
 {
 	std::vector<Channel *>::iterator last = this->_channel.end();
-	for (std::vector<Channel *>::iterator it = this->_user.begin(); it != last; it++)
+	for (std::vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		if ((*it)->getChannelName() == name)
 			return (*it);
 	}
-	return (NULL)
+	return (NULL);
 }
 
 socklen_t			Server::getSize() const

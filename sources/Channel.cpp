@@ -4,6 +4,8 @@
 
 #include "../includes/Channel.hpp"
 
+using namespace irc;
+
 /******************** CONSTRUCTORS ***********************/
 
 Channel::Channel(std::string name) :
