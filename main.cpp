@@ -77,11 +77,11 @@ int adding_user(Server *serv)
 
 void ft_run()
 {
-	//char buffer[512];
+	char buffer[512];
 	Server serv;
 	int select_ret;
 	int fd_count = 1;
-	struct pollfd			_poll[1024];
+	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
 
@@ -114,9 +114,13 @@ void ft_run()
 				}
 				else
 				{
-					char buffer[512];
 					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
-						cout << buffer << endl;
+					{
+						std::cout << "BUFFER: = " << buffer << std::endl;
+						serv.getUser()->setBuffer(char_to_str(buffer));
+						cout << "MESSAGE: " << serv.getUser()->getBuffer() << endl;
+						serv.getUser()->parse_buffer_command(&serv);
+					}
 				}
 			}
 		}
