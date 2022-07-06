@@ -35,9 +35,10 @@ User::User(int fd, struct sockaddr_in address) :
 		_fd(fd),
 		_hostname(),
 		_waitingToSend(),
-		_command(),
-		bufsize(512)
+		bufsize(512),
+		_command()
 {
+	(void)address
 	//fcntl(_fd, F_SETFL, O_NONBLOCK);
 	//this->_hostaddr = inet_ntoa(addr.sin_addr);
 
@@ -114,6 +115,7 @@ std::string 		User::getNickName() const
 
 void 				User::write_buf(User &user, std::string const &msg)
 {
+	(void)user;
 	//_waitingToSend.push_back(message);
 	this->buffer =  msg + "\n";
 }

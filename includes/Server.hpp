@@ -44,7 +44,7 @@ namespace irc
 		void				bindServer(void);
 		void				createServerAddr(int portNum);
 		void				listenUser(void);
-		int 				acceptUser(User & user, socklen_t size);
+		int 				acceptUser(socklen_t size);
 		void				closeUser(User & user);
 		int 				getFdMax( void ) const;
 		void 				setUpFdMax(int fdCurrent);

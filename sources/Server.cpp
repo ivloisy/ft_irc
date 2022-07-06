@@ -15,7 +15,7 @@ Server::Server() :
 	_serverName("irc.sample.com"),
 	_portNum(6667)
 {
-	socklen_t size;
+	// socklen_t size;
 
 	this->establishConnection();
 
@@ -24,6 +24,9 @@ Server::Server() :
 	this->createServerAddr(this->_portNum);
 
 	this->bindServer();
+
+	int optval = 1;
+    setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, this->getSize());
 
 	this->_size = sizeof(this->getServerAddr());
 	// std::cout << "Looking for clients..." << std::endl;
@@ -38,6 +41,7 @@ Server::Server() :
 
 Server::Server(Server const & src)
 {
+	(void)src;
 	return;
 }
 
@@ -95,7 +99,7 @@ void				Server::listenUser()
 
 }
 
-int					Server::acceptUser(User & user, socklen_t  size)
+int					Server::acceptUser(socklen_t  size)
 {
 	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -105,7 +109,7 @@ int					Server::acceptUser(User & user, socklen_t  size)
 		return (-1);
 	}
 	_user.push_back(User(fd, this->_serverAddr));
-	_user[0].setFdUser(fd);
+	// _user[0].setFdUser(fd);
 	std::cout << "FDDDDDD = " << fd << std::endl;
 	//std::cout << "before" << std::endl;
 	//std::cout << &(_user.at(0)) << std::endl;
