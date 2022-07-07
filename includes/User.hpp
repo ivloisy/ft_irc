@@ -27,10 +27,8 @@ namespace irc
 
 	class User
 	{
-		//friend class Server;
-
 	private:
-		// map_cmd												cmap;
+		// map_cmd											cmap;
 
 		static int											_nbUser;
 		//int												_idUser;
@@ -41,9 +39,9 @@ namespace irc
 		string 												_username;
 	string 													_nickname;
 		string 												_password;
-		//vector<string>							_waitingToSend;
-		//string										_prefix;
-		string 										buffer;
+		//vector<string>									_waitingToSend;
+		//string											_prefix;
+		string 												buffer;
 		vector<string>										parameters;
 		int 												bufsize;
 		//Message											*_msg;
@@ -101,7 +99,6 @@ namespace irc
 		void												setRealName(string realname);
 		void												setHostName(string hostname);
 		void												setPassWord(string password);
-		void												setBuffer(string buf);
 		void 												setRdySend();
 
 		//void												send_message(int nb_command, Server server);

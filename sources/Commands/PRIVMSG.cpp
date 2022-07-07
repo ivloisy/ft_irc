@@ -16,15 +16,33 @@ using namespace std;
  * <msgtarget> <text to be sent>
  */
 
-void	privmsg_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	privmsg_cmd(Server * srv, User * usr, vector<string> params)
 {
-	if (srv->getChannel(params[1]))
+	if (params.size() < 2)
 	{
-		srv->sendToChan(usr->getNickName());
+		//ERR wrong number arguments
 	}
-	else if (srv->getUser(params[1]))
+	else
 	{
-		srv->sendToUser(params[1]);
+		// convert vector into params
+		string msg;
+		vector<string>::iterator last = params.end();
+		for (vector<string>::iterator it = params.begin() + 2; it != last; it++)
+		{
+			string::iterator last_char = (*it).end();
+			for (string::iterator it_char = (*it).begin(); it_char != last_char; it_char++)
+				msg.push_back(*it_char);
+			msg.push_back(' ');
+		}
+
+		if (srv->getChannel(params[1]))
+		{
+			srv->sendToChan(usr->getNickName(), msg);
+		}
+		else if (srv->getUser(params[1]))
+		{
+			srv->sendToUser(params[1], msg);
+		}
 	}
-	std::cout << "privmsg command called" << std::endl;
+	cout << "privmsg command called" << endl;
 }

@@ -245,23 +245,23 @@ void				Server::printParam()
 	}
 }
 
-void				Server::sendToChan(string name)
+void				Server::sendToChan(string name, string msg)
 {
 	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
-		sendBuffer(*it, this->_buffer);
+		sendBuffer(*it, msg);
 }
 
-void				Server::sendToUser(string name)
+void				Server::sendToUser(string name, string msg)
 {
-	sendBuffer(this->getUser(name), this->_buffer);
+	sendBuffer(this->getUser(name), msg);
 }
 
 void				Server::sendBuffer(User * dest, string content)
 {
 	(void)content;
-	send(dest->getFdUser(), this->_buffer.c_str(), this->_buffer.length(), 0);
+	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
 Channel				*Server::addChannel(string name)
@@ -322,6 +322,11 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
+vector<User *>		Server::getUser() const
+{
+	return (this->_user);
+}
+
 User 				*Server::getUser(int fd)
 {
 	vector<User *>::iterator it = this->_user.begin();
@@ -370,6 +375,22 @@ socklen_t			Server::getSize() const
 int 				Server::getPortNum() const
 {
 	return (this->_portNum);
+}
+
+vector<User *>		Server::getOper() const
+{
+	return (this->_oper);
+}
+
+User				*Server::getOper(string name)
+{
+	vector<User *>::iterator last = this->_oper.end();
+	for (vector<User *>::iterator it = this->_oper.begin(); it != last; it++)
+	{
+		if ((*it)->getUserName() == name)
+			return (*it);
+	}
+	return (NULL);
 }
 
 /********************* MUTATORS *************************/
