@@ -10,18 +10,20 @@
 #include <string>
 #include <map>
 
+using namespace std;
+
 namespace irc
 {
 	class Config
 	{
 	private:
-		std::map<std::string, std::string> values;
+		map<string, string>		values;
 
 	public:
 		Config();
-		Config(std::string config);
+		Config(string config);
 
-		std::string get(std::string key);
+		string					get(string key);
 	};
 }
 

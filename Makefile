@@ -7,6 +7,7 @@ SRCS = 	main.cpp \
 		sources/Config.cpp \
 		sources/Server.cpp \
 		sources/User.cpp \
+		sources/Channel.cpp \
 		sources/Reply.cpp \
 		sources/Command.cpp \
 		sources/Commands/CAP.cpp \
@@ -17,7 +18,6 @@ SRCS = 	main.cpp \
 		sources/Commands/LIST.cpp \
 		sources/Commands/PONG.cpp \
 		sources/Commands/MODE.cpp \
-		sources/Commands/MSG.cpp \
 		sources/Commands/NAMES.cpp \
 		sources/Commands/NOTICE.cpp \
 		sources/Commands/OPER.cpp \

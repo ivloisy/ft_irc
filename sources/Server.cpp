@@ -4,6 +4,7 @@
 
 #include "../includes/Server.hpp"
 #include "../includes/User.hpp"
+#include "../includes/Channel.hpp"
 #include <iostream>
 #include <unistd.h>
 #include <sys/socket.h>
@@ -18,9 +19,9 @@ using namespace std;
 
 /******************** CONSTRUCTORS **********************/
 
-Server::Server() :
+Server::Server(int portNum) :
 	_serverName("irc.sample.com"),
-	_portNum(6667),
+	_portNum(portNum),
 	_state(1)
 	// _cmap()
 {
@@ -66,7 +67,7 @@ Server::~Server()
 	return;
 }
 
-/******************** FUNCTIONS **********************/
+/******************** CONNECTION **********************/
 
 void				 Server::establishConnection(void)
 {
@@ -121,7 +122,7 @@ void				Server::closeUser(User * user)
 
 void					Server::exec_command()
 {
-	typedef void (*pointer_function)(void);
+	typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
 	map<string, pointer_function>		map_cmd;
 
 	map_cmd["CAP"] 		= 	cap_cmd;
@@ -129,7 +130,6 @@ void					Server::exec_command()
 	map_cmd["JOIN"] 	= 	join_cmd;
 	map_cmd["LIST"] 	= 	list_cmd;
 	map_cmd["MODE"] 	= 	mode_cmd;
-	map_cmd["MSG"] 		= 	msg_cmd;
 	map_cmd["NAMES"] 	= 	names_cmd;
 	map_cmd["NICK"] 	=	nick_cmd;
 	map_cmd["NOTICE"] 	= 	notice_cmd;
@@ -229,7 +229,7 @@ void					Server::tokenize(string const & str, int fd)
 	}
 }
 
-void	Server::print_param()
+void				Server::printParam()
 {
 	int	i = 0;
 
@@ -242,6 +242,53 @@ void	Server::print_param()
 		}
 		cout << " }" << endl;
 		i++;
+	}
+}
+
+void				Server::sendToChan(string name)
+{
+	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
+	vector<User *>::iterator last = chan_usr.end();
+	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
+		sendBuffer(*it, this->_buffer);
+}
+
+void				Server::sendToUser(string name)
+{
+	sendBuffer(this->getUser(name), this->_buffer);
+}
+
+void				Server::sendBuffer(User * dest, string content)
+{
+	(void)content;
+	send(dest->getFdUser(), this->_buffer.c_str(), this->_buffer.length(), 0);
+}
+
+Channel				*Server::addChannel(string name)
+{
+	this->_channel.push_back(new Channel(name));
+	return *(this->_channel.end() - 1);
+}
+
+Channel				*Server::searchChannel(string name)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		if ((*it)->getChannelName() == name)
+		{
+			return (*it);
+		}
+	}
+	return (NULL);
+}
+
+void				Server::delUserAllChannel(User * user)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		(*it)->delUser(user);
 	}
 }
 
@@ -291,6 +338,30 @@ User 				*Server::getUser(string nick)
 	return (*it);
 }
 
+// User 				*Server::getUser(string nickname)
+// {
+// 	vector<User *>::iterator last = this->_user.end();
+// 	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+// 	{
+// 		if ((*it)->getNickName() == nickname)
+// 		{
+// 			return (*it);
+// 		}
+// 	}
+// 	return (NULL);
+// }
+
+Channel				*Server::getChannel(string name)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		if ((*it)->getChannelName() == name)
+			return (*it);
+	}
+	return (NULL);
+}
+
 socklen_t			Server::getSize() const
 {
 	return (this->_size);
@@ -301,7 +372,9 @@ int 				Server::getPortNum() const
 	return (this->_portNum);
 }
 
-string 		Server::getServerName() const
+/********************* MUTATORS *************************/
+
+string 				Server::getServerName() const
 {
 	return (this->_serverName);
 }

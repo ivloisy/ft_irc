@@ -7,6 +7,7 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 /********************* CHANNEL COMMAND **********************/
 
@@ -15,7 +16,10 @@ using namespace irc;
  * parameters: <channel> *( "," <channel> ) [ <Part Message> ]
  */
 
-void	part_cmd()
+void	part_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "part command called" << std::endl;
 }

@@ -7,12 +7,16 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 //optional DONT DO THIS COMMAND
 
 /****************** OPERATOR COMMAND **********************/
 
-void	restart_cmd()
+void	restart_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "restart command called" << std::endl;
 }

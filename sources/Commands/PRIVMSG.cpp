@@ -7,6 +7,7 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 /********* SENDING MESSAGES ************/
 
@@ -15,7 +16,15 @@ using namespace irc;
  * <msgtarget> <text to be sent>
  */
 
-void	privmsg_cmd()
+void	privmsg_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	if (srv->getChannel(params[1]))
+	{
+		srv->sendToChan(usr->getNickName());
+	}
+	else if (srv->getUser(params[1]))
+	{
+		srv->sendToUser(params[1]);
+	}
 	std::cout << "privmsg command called" << std::endl;
 }

@@ -15,6 +15,7 @@
 
 #include "Command.hpp"
 #include "Server.hpp"
+#include "Channel.hpp"
 
 using namespace std;
 
@@ -42,12 +43,13 @@ namespace irc
 		string 												_password;
 		//vector<string>							_waitingToSend;
 		//string										_prefix;
-		// string 										buffer;
+		string 										buffer;
 		vector<string>										parameters;
-		// int 												bufsize;
+		int 												bufsize;
 		//Message											*_msg;
 		//Server											*server;
 		vector<Command *>									_command;
+		vector<Channel *>									_channel;
 		bool												_acceptConnect;
 		bool												_isOper;
 		int													_rdySend;
@@ -64,7 +66,7 @@ namespace irc
 
 		//void												establishConnection(void);
 
-		void												init_map_cmd(void);
+		//void												init_map_cmd(void);
 
 		// ssize_t 											send_buf(Server &serv, string const &msg);
 		// void												write_buf(User * user, string const &msg);
@@ -72,17 +74,21 @@ namespace irc
 		// void												tokenize(string const &str, Server *serv);
 		// void												parse_buffer_command(Server * serv);
 
+		void												clearAllChannels();
+		void												quitChannel(Channel * chan);
+		void												addChannel(Channel * chan);
+
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
-		string 										getPrefix() const;
-		string 										getHostname() const;
-		string 										getNickName() const;
-		string 										getPassWord() const;
-		string 										getUserName() const;
-		string											getRealName() const;
-		string 										&getBuffer();
-		int 												getBufsize() const;
-		vector<Command *>								getCommand() const;
+		string 												getPrefix() const;
+		string 												getHostname() const;
+		string 												getNickName() const;
+		string 												getPassWord() const;
+		string 												getUserName() const;
+		string												getRealName() const;
+		vector<Command *>									getCommand() const;
+		vector<Channel *>									getChannel() const;
+		Channel												*getChannelByName(string name);
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 		int 												getRdySend() const;
@@ -100,7 +106,6 @@ namespace irc
 
 		//void												send_message(int nb_command, Server server);
 
-		void												connection_replies(Command * com);
 	};
 	// bool	operator<(const User & lhs, const User & rhs);
 	// bool	operator>(const User & lhs, const User & rhs);

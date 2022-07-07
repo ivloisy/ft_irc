@@ -9,12 +9,16 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 /********************* USER COMMAND **********************/
 
-void	user_cmd()
+void	user_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
 	// user.setUserName(*(buffer.begin() + 1));
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "user command called" << std::endl;
 }
 

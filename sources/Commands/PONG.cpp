@@ -11,8 +11,12 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
-void	pong_cmd()
+void	pong_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "pong command called" << std::endl;
 }

@@ -7,11 +7,15 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 //DONT DO THIS COMMAND
 
 /**************** OPERATOR COMMAND *******************/
 
-void	rehash_cmd()
+void	rehash_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 }

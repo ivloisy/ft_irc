@@ -7,6 +7,7 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 //optional for the moment
 
@@ -22,7 +23,10 @@ using namespace irc;
 //	std::cout << "cap command called" << std::endl;
 //}
 
-void	cap_cmd()
+void	cap_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "cap command called" << std::endl;
 }

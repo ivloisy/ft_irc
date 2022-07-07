@@ -7,6 +7,7 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 //optionnal for the moment, dont use
 
@@ -19,8 +20,11 @@ using namespace irc;
  * Erreurs : ERR_NEEDMOREPARAMS ERR_ALREADYREGISTERED
  */
 
-void	pass_cmd()
+void	pass_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
 	// user.setPassWord(*(buffer.begin() + 1));
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "pass command called" << std::endl;
 }

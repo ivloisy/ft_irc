@@ -7,8 +7,12 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
-void	ping_cmd()
+void	ping_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "ping command called" << std::endl;
 }

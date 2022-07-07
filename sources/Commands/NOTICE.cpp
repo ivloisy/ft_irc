@@ -7,10 +7,14 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 /*********************** SEND MESSAGES ********************/
 
-void	notice_cmd()
+void	notice_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "notice command called" << std::endl;
 }

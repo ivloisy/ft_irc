@@ -34,10 +34,10 @@ using namespace irc;
 
 
 
-void ft_run()
+void ft_run(int port)
 {
 	char buffer[512];
-	Server serv;
+	Server serv(port);
 	int poll_ret, fd, test;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
@@ -87,7 +87,7 @@ void ft_run()
 					{
 						cout << "BUFFER: = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
-						serv.print_param();
+						serv.printParam();
 						serv.exec_command();
 						serv.welcome(fd);
 					}
@@ -106,15 +106,16 @@ void ft_run()
 int main(int argc, char **argv)
 {
 	(void)argv;
-
 	if (argc == 2) // without password
 	{
-		ft_run();
+		// if ((port = atoi(argv[1])) > 0)
+		ft_run(6667);
 		cout << "sortie propre" << endl;
 	}
 	// else if (argc == 3) //with password
 	// {
-	//
+	//if ((port = atoi(argv[1])) > 0)
+		// ft_run(port);
 	// }
 	else
 	{

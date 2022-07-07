@@ -6,10 +6,10 @@
 #include <list>
 #include "../includes/Server.hpp"
 
-//void	Command::pong_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-//void	Command::cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-//void	Command::user_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
-//void	Command::nick_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv);
+//void	Command::pong_cmd(string &buf, list<User>::iterator it_user, Server & serv);
+//void	Command::cap_cmd(string &buf, list<User>::iterator it_user, Server & serv);
+//void	Command::user_cmd(string &buf, list<User>::iterator it_user, Server & serv);
+//void	Command::nick_cmd(string &buf, list<User>::iterator it_user, Server & serv);
 
 //void	pong_cmd();
 //void	cap_cmd();
@@ -17,31 +17,32 @@
 //void	nick_cmd();
 
 using namespace irc;
+using namespace std;
 
-std::string 				RPL_WELCOME(std::string servername, std::string nickname)
+string 				RPL_WELCOME(string servername, string nickname)
 {
 	return (":" + servername + " 001 " + ":" + nickname + " Welcome to the Internet Relay Network " + nickname);
 }
 
-std::string 				RPL_YOURHOST(std::string servername, std::string nickname)
+string 				RPL_YOURHOST(string servername, string nickname)
 {
-	std::string ver("1.0");
+	string ver("1.0");
 	return (":" + servername + " 002 " + nickname + " :Your host is " + servername + ", running version " + ver);
 }
 
-std::string 				RPL_CREATED(std::string servername, std::string nickname)
+string 				RPL_CREATED(string servername, string nickname)
 {
-	std::string date("today");
+	string date("today");
 	return (":" + servername + " 003 " + nickname + " :This server was created " + date);
 }
 
-std::string 				RPL_MYINFO(std::string servername, std::string nickname)
+string 				RPL_MYINFO(string servername, string nickname)
 {
-	std::string version("1.0");
+	string version("1.0");
 	return (":" + servername + " 004 " + nickname + " " + servername + " " + version);// + " " + umodes + " " + cmodes);
 }
 
-Command::Command(Server * serv, User * user, std::vector<std::string> & params) :
+Command::Command(Server * serv, User * user, vector<string> & params) :
 	user(user),
 	server(serv),
 	parameters(params)
@@ -56,19 +57,19 @@ Command::~Command()
 
 //--------------------------
 //
-// void						Command::reply(Server & serv, User &usr, unsigned short code, std::string nickname)
+// void						Command::reply(Server & serv, User &usr, unsigned short code, string nickname)
 // {
 // 	usr.send_buf(serv, get_reply(code, serv.getServerName(), nickname));
 // }
 
 /*
-void Command::reply(unsigned short code, std::string arg1, std::string arg2, std::string arg3, std::string arg4, std::string arg5, std::string arg6, std::string arg7)
+void Command::reply(unsigned short code, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7)
 {
 	reply(*user, code, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
 */
 
-std::string					Command::get_reply(unsigned short code, std::string servername, std::string nickname)
+string					Command::get_reply(unsigned short code, string servername, string nickname)
 {
 	switch (code) {
 		case 001:
@@ -80,7 +81,7 @@ std::string					Command::get_reply(unsigned short code, std::string servername, 
 		case 004:
 			return (RPL_MYINFO(servername, nickname));
 		default:
-			return std::string();
+			return string();
 	}
 }
 
@@ -94,7 +95,7 @@ User						&Command::getUser()
 	return (*this->user);
 }
 
-std::vector<std::string>	Command::getParameters()
+vector<string>	Command::getParameters()
 {
 	return (this->parameters);
 }
@@ -102,9 +103,9 @@ std::vector<std::string>	Command::getParameters()
 void						Command::print_parameters()
 {
 	int i = 0;
-	for (std::vector<std::string>::iterator it = this->parameters.begin(); it != this->parameters.end(); it++)
+	for (vector<string>::iterator it = this->parameters.begin(); it != this->parameters.end(); it++)
 	{
-		std::cout << "param " << i << " : " << *it << std::endl;
+		cout << "param " << i << " : " << *it << endl;
 		i++;
 	}
 }
