@@ -63,7 +63,6 @@ namespace irc
 
 		void							establishConnection(void);
 		void							createServerAddr(int portNum);
-		void							bindServer(void);
 		//void							listenUser(void);
 		int								acceptUser(socklen_t size);
 		void							closeUser(User * user);
@@ -72,7 +71,9 @@ namespace irc
 		void							tokenize(string const & str, int fd);
 		void							print_param();
 		void							exec_command();
+		void 							welcome(int fd);
 
+		int								bindServer(void);
 		int								getFdMax( void ) const;
 		int								getFdServer() const;
 		struct sockaddr_in				getServerAddr() const;

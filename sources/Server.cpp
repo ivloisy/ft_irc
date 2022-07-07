@@ -9,7 +9,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include "../includes/Reply.hpp"
 #include <utility>
+#include "../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -85,12 +87,14 @@ void				Server::createServerAddr(int portNum)
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-void				Server::bindServer()
+int				Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
 		cout << "Error binding socket..." << endl;
+		return (0);
 	}
+	return (1);
 }
 
 int					Server::acceptUser(socklen_t  size)
@@ -114,9 +118,47 @@ void				Server::closeUser(User * user)
 	close(user->getFdUser());
 }
 
-// void							Server::exec_command()
-// {
-// }
+
+void					Server::exec_command()
+{
+	typedef void (*pointer_function)(void);
+	map<string, pointer_function>		map_cmd;
+
+	map_cmd["CAP"] 		= 	cap_cmd;
+	map_cmd["DIE"] 		= 	user_cmd;
+	map_cmd["JOIN"] 	= 	join_cmd;
+	map_cmd["LIST"] 	= 	list_cmd;
+	map_cmd["MODE"] 	= 	mode_cmd;
+	map_cmd["MSG"] 		= 	msg_cmd;
+	map_cmd["NAMES"] 	= 	names_cmd;
+	map_cmd["NICK"] 	=	nick_cmd;
+	map_cmd["NOTICE"] 	= 	notice_cmd;
+	map_cmd["OPER"] 	= 	oper_cmd;
+	map_cmd["PART"] 	=	part_cmd;
+	map_cmd["PASS"] 	= 	pass_cmd;
+	map_cmd["PING"] 	= 	ping_cmd;
+	map_cmd["PONG"] 	= 	pong_cmd;
+	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
+	map_cmd["QUIT"] 	=	quit_cmd;
+	map_cmd["REHASH"] 	= 	rehash_cmd;
+	map_cmd["RESTART"] 	= 	restart_cmd;
+	map_cmd["SQUIT"] 	= 	squit_cmd;
+	map_cmd["USER"] 	= 	user_cmd;
+	map_cmd["WALLOPS"] 	= 	wallops_cmd;
+}
+
+void 					Server::welcome(int fd)
+{
+	string buf = ft_reply(RPL_WELCOME, "WELCOME");
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_YOURHOST, "YOURHOST");
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_CREATED, "CREATED");
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_MYINFO, "MYINFO");
+	send(fd, buf.c_str(), buf.length(), 0);
+
+}
 
 void					Server::parse_buffer_command(string buffer, int fd)
 {
@@ -167,28 +209,16 @@ void					Server::tokenize(string const & str, int fd)
 	vector<string>	tmp;
 
 	int	i = 0;
-	int	j = 0;
 
 	while (getline(ss, s, '\r'))
 	{
 		this->getUser(fd)->setRdySend();
 		stringstream o(s);
 		string u;
-		j = 0;
 		while (getline(o, u, ' '))
-		{
-			// this->_param[i].push_back(u);
-			// if (u != "\n")
 			tmp.push_back(u);
-			// cout << "param[" << i << "][" << j << "] = " << tmp.back() << endl;
-			//u.clear();
-			j++;
-		}
 		this->_param.push_back(tmp);
 		tmp.clear();
-		// this->_command.push_back(new Command(serv, this, this->parameters));
-		// this->parameters.clear();
-		//s.clear();
 		i++;
 		getline(ss, s, '\n');
 	}
@@ -204,7 +234,6 @@ void	Server::print_param()
 		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
 		{
 			cout << *jt << "; ";
-			// j++;
 		}
 		cout << " }" << endl;
 		i++;
