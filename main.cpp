@@ -98,7 +98,8 @@ void ft_run(int port)
 						cout << "BUFFER: = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
 						serv.printParam();
-						serv.exec_command();
+						serv.execCommand();
+						// vector<string>::iterator v;
 						serv.welcome(fd);
 					}
 					if (test == 1)

@@ -10,7 +10,9 @@
 # include "User.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
-// # include <map>
+#include <map>
+#include <string>
+#include <algorithm>
 # include <sstream>
 
 // # define BUFFERSIZE 512
@@ -25,11 +27,9 @@ namespace irc
 	{
 
 	public:
-		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
-		//typedef void (*pointer_function)(void);
-		//typedef map<string, pointer_function>			map_cmd;
 		// typedef void (* Server::pointer_function)(/*Command * com*/);
-		// typedef map<string, pointer_function>		map_cmd;
+		typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
+		map<string, pointer_function>					map_cmd;
 
 	private:
 		int 											_fd;
@@ -77,7 +77,8 @@ namespace irc
 
 		void											sendBuffer(User * dest, string content);
 		void											printParam();
-		void											exec_command();
+		void											initCommand();
+		void 											execCommand();
 		void 											welcome(int fd);
 
 		Channel											*addChannel(string name);

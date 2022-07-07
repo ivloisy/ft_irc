@@ -12,6 +12,9 @@
 #include <fcntl.h>
 #include "../includes/Reply.hpp"
 #include <utility>
+#include <map>
+#include <string>
+#include <algorithm>
 #include "../includes/ft_irc.hpp"
 
 using namespace irc;
@@ -33,13 +36,13 @@ Server::Server(int portNum) :
 
 	this->createServerAddr(this->_portNum);
 
-	/*
+
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
 		cout << "error setting socket option..." << endl;
 	}
-	*/
+
 
 	this->bindServer();
 
@@ -51,6 +54,8 @@ Server::Server(int portNum) :
 		//error
 		;
 	}
+	this->initCommand();
+
 	// this->init_map_cmd();
 
 }
@@ -120,10 +125,9 @@ void				Server::closeUser(User * user)
 }
 
 
-void					Server::exec_command()
+void					Server::initCommand()
 {
-	typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
-	map<string, pointer_function>		map_cmd;
+
 
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	user_cmd;
@@ -192,13 +196,12 @@ void					Server::parse_buffer_command(string buffer, int fd)
 
 	// cout << this->_param[0][0] << endl;
 
-	/*			Uncomment this for executing commands
-	cmap.find(*this->parameters.begin())->second(this->_command[0]);
-	for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
-	{
-		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
-	}
-	*/
+	//			Uncomment this for executing commands
+	// for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// {
+	// 	cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	// }
+
 
 	// if (this->getAcceptConnect()) // connection ok
 	// {
@@ -243,6 +246,12 @@ void				Server::printParam()
 		cout << " }" << endl;
 		i++;
 	}
+}
+
+void 				Server::execCommand()
+{
+	for (int x = 0; x < static_cast<int>(this->_param.size()); x++)
+		map_cmd.find(this->_param[x][0])->second(this, this->getUser(this->_param[x][1]), this->_param[x]);
 }
 
 void				Server::sendToChan(string name, string msg)
