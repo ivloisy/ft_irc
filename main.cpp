@@ -51,9 +51,10 @@ int adding_user(Server *serv)
 		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
 			std::cout << "BUFFER: = " << buffer << std::endl;
-			serv->getUser()->setBuffer(char_to_str(buffer));
+			// serv->getUser()->setBuffer(char_to_str(buffer));
 			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
-			serv->getUser()->parse_buffer_command(serv);
+			serv->parse_buffer_command(buffer);
+			serv->print_param();
 			//bzero(buffer, 512);
 			//change for buffer for testing with the real buffer
 			serv->setUpFdMax(serv->getUser()->getFdUser());
@@ -111,9 +112,11 @@ void ft_run()
 					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
 					{
 						std::cout << "BUFFER: = " << buffer << std::endl;
-						serv.getUser()->setBuffer(char_to_str(buffer));
-						//cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
-						serv.getUser()->parse_buffer_command(&serv);
+						serv.parse_buffer_command(buffer);
+						serv.print_param();
+						// serv.getUser()->setBuffer(char_to_str(buffer));
+						// //cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
+						// serv.getUser()->parse_buffer_command(&serv);
 					}
 				}
 			}

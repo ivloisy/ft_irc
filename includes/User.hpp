@@ -29,7 +29,7 @@ namespace irc
 	private:
 		typedef void (*pointer_function)(Command * com);
 		typedef std::map<std::string, pointer_function>		map_cmd;
-		map_cmd												cmap;
+		// map_cmd												cmap;
 
 		static int											_nbUser;
 		//int												_idUser;
@@ -42,9 +42,9 @@ namespace irc
 		std::string 										_password;
 		//std::vector<std::string>							_waitingToSend;
 		//std::string										_prefix;
-		std::string 										buffer;
+		// std::string 										buffer;
 		std::vector<std::string>							parameters;
-		int 												bufsize;
+		// int 												bufsize;
 		//Message											*_msg;
 		//Server											*server;
 		std::vector<Command *>								_command;
@@ -64,11 +64,11 @@ namespace irc
 
 		void												init_map_cmd(void);
 
-		ssize_t 											send_buf(Server &serv, std::string const &msg);
-		void												write_buf(User * user, std::string const &msg);
-
-		void												tokenize(std::string const &str, Server *serv);
-		void												parse_buffer_command(Server * serv);
+		// ssize_t 											send_buf(Server &serv, std::string const &msg);
+		// void												write_buf(User * user, std::string const &msg);
+		//
+		// void												tokenize(std::string const &str, Server *serv);
+		// void												parse_buffer_command(Server * serv);
 
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;

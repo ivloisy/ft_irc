@@ -12,10 +12,13 @@
 
 using namespace irc;
 
+/******************** CONSTRUCTORS **********************/
+
 Server::Server() :
 	_serverName("irc.sample.com"),
 	_portNum(6667),
 	_state(1)
+	// _cmap()
 {
 	// socklen_t size;
 
@@ -43,6 +46,7 @@ Server::Server() :
 		//error
 		;
 	}
+	// this->init_map_cmd();
 
 }
 
@@ -56,6 +60,8 @@ Server::~Server()
 {
 	return;
 }
+
+/******************** FUNCTIONS **********************/
 
 void				 Server::establishConnection(void)
 {
@@ -101,6 +107,123 @@ void				Server::closeUser(User * user)
 {
 	close(user->getFdUser());
 }
+
+// void				Server::init_map_cmd()
+// {
+// 	_cmap["CAP"] 	= 	cap_cmd;
+// 	_cmap["DIE"] 	= 	user_cmd;
+// 	_cmap["JOIN"] 	= 	join_cmd;
+// 	_cmap["LIST"] 	= 	list_cmd;
+// 	_cmap["MODE"] 	= 	mode_cmd;
+// 	_cmap["MSG"] 	= 	msg_cmd;
+// 	_cmap["NAMES"] 	= 	names_cmd;
+// 	_cmap["NICK"] 	=	nick_cmd;
+// 	_cmap["NOTICE"] 	= 	notice_cmd;
+// 	_cmap["OPER"] 	= 	oper_cmd;
+// 	_cmap["PART"] 	=	part_cmd;
+// 	_cmap["PASS"] 	= 	pass_cmd;
+// 	_cmap["PING"] 	= 	ping_cmd;
+// 	_cmap["PONG"] 	= 	pong_cmd;
+// 	_cmap["PRIVMSG"] =	privmsg_cmd;
+// 	_cmap["QUIT"] 	=	quit_cmd;
+// 	_cmap["REHASH"] 	= 	rehash_cmd;
+// 	_cmap["RESTART"] = 	restart_cmd;
+// 	_cmap["SQUIT"] 	= 	squit_cmd;
+// 	_cmap["USER"] 	= 	user_cmd;
+// 	_cmap["WALLOPS"] = 	wallops_cmd;
+// }
+
+void					Server::parse_buffer_command(std::string buffer)
+{
+	this->_param.clear();
+	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
+	// Uncomment this for printing parameters
+	// for(std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// {
+	// 	(*itc)->print_parameters();
+	// 	std::cout << "nl" << std::endl;
+	// }
+
+	// for (size_t i = 0; i < this->_param.size(); i++)
+	// {
+	// 	std::cout << "param[" << i << "] = { ";
+	// 	for (size_t j = 0; j < this->_param[i].size(); j++)
+	// 	{
+	// 	 	std::cout << this->_param[i][j];
+	// 		if (j + 1 != this->_param[i].size())
+	// 			std::cout << "; ";
+	// 		else
+	// 			std::cout << " }" << std::endl;
+	// 	}
+	// }
+	// std::cout << std::endl;
+
+	// std::cout << this->_param[0][0] << std::endl;
+
+	/*			Uncomment this for executing commands
+	cmap.find(*this->parameters.begin())->second(this->_command[0]);
+	for (std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	{
+		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	}
+	*/
+
+	// if (this->getAcceptConnect()) // connection ok
+	// {
+	// 	this->connection_replies(*this->_command.begin());
+	// 	this->setAcceptConnect(0);
+	// }
+}
+
+void					Server::tokenize(std::string const & str)
+{
+	std::stringstream 			ss(str);
+	std::string					s;
+	std::vector<std::string>	tmp;
+
+	int	i = 0;
+	int	j = 0;
+
+	while (std::getline(ss, s, '\n'))
+	{
+		std::stringstream o(s);
+		std::string u;
+		j = 0;
+		while (std::getline(o, u, ' '))
+		{
+			// this->_param[i].push_back(u);
+			tmp.push_back(u);
+			std::cout << "param[" << i << "][" << j << "] = " << tmp.back() << std::endl;
+			//u.clear();
+			j++;
+		}
+		this->_param.push_back(tmp);
+		tmp.clear();
+		// this->_command.push_back(new Command(serv, this, this->parameters));
+		// this->parameters.clear();
+		//s.clear();
+		i++;
+	}
+}
+
+void	Server::print_param()
+{
+	int	i = 0;
+
+	for (std::vector<std::vector<std::string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
+	{
+		std::cout << "param[" << i << "] = { ";
+		for (std::vector<std::string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
+		{
+			std::cout << *jt << "; ";
+			// j++;
+		}
+		std::cout << " }\n" << std::endl;
+		i++;
+	}
+}
+
+/******************** ACCESSORS **********************/
 
 int 				Server::getFdMax() const
 {
@@ -168,4 +291,88 @@ bool				Server::getState() const
 void				Server::setState(bool st)
 {
 	this->_state = st;
+}
+
+void	Server::cap_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::die_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::join_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::list_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::mode_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::msg_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::names_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::nick_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::notice_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::oper_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::part_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::pass_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::ping_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::pong_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::privmsg_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::quit_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::rehash_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::restart_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::squit_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::user_cmd(/*Command * cmd*/)
+{
+}
+
+void	Server::wallops_cmd(/*Command * cmd*/)
+{
 }
