@@ -8,6 +8,7 @@ SRCS = 	main.cpp \
 		sources/Server.cpp \
 		sources/User.cpp \
 		sources/Channel.cpp \
+		sources/Reply.cpp \
 		sources/Command.cpp \
 		sources/Commands/CAP.cpp \
 		sources/Commands/NICK.cpp \

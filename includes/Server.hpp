@@ -10,7 +10,7 @@
 # include "User.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
-# include <map>
+// # include <map>
 # include <sstream>
 
 // # define BUFFERSIZE 512
@@ -61,42 +61,49 @@ namespace irc
 		//Config										&getConfig();
 		//string										getUpTime();
 
-		//void											add_user(User user);
+		//void												add_user(User user);
 
-		void											establishConnection(void);
-		void											createServerAddr(int portNum);
-		void											bindServer(void);
-		//void											listenUser(void);
-		int												acceptUser(socklen_t size);
-		void											closeUser(User * user);
-		// void											init_map_cmd();
-		void											parseBufferCommand(string buffer);
+		void							establishConnection(void);
+		void							createServerAddr(int portNum);
+		//void							listenUser(void);
+		int								acceptUser(socklen_t size);
+		void							closeUser(User * user);
+		// void							init_map_cmd();
+		void							parse_buffer_command(string buffer, int fd);
 		void											sendToChan(string name);
+		void							tokenize(string const & str, int fd);
 		void											sendToUser(string name);
+
 		void											sendBuffer(User * dest, string content);
-		void											tokenize(string const & str);
 		void											printParam();
+		// void							print_param();
+		void							exec_command();
+		void 							welcome(int fd);
+
 		Channel											*addChannel(string name);
+
 		Channel											*searchChannel(string name);
+
 		void											delUserAllChannel(User * user);
 
-		int												getFdMax( void ) const;
-		int												getFdServer() const;
-		struct sockaddr_in								getServerAddr() const;
-		User											*getUser(); //need to delete it soon
-		User											*getUser(string nickname);
+		int								bindServer(void);
+		int								getFdMax( void ) const;
+		int								getFdServer() const;
+		struct sockaddr_in				getServerAddr() const;
+		User							*getUser(int fd);
+		User							*getUser(string nick);
 		Channel											*getChannel(string name);
-		socklen_t										getSize() const;
-		int												getPortNum() const;
-		string											getServerName() const;
-		bool											getState() const;
-		void											setState(bool st);
-		void											setFdServer(int fd);
-		void											setUpFdMax(int fdCurrent);
-		// void											setDownFdMax(int fdCurrent);
+		socklen_t						getSize() const;
+		int								getPortNum() const;
+		string							getServerName() const;
+		bool							getState() const;
 
-		bool											isUserEmpty();
+		void							setState(bool st);
+		void							setFdServer(int fd);
+		void							setUpFdMax(int fdCurrent);
+		// void							setDownFdMax(int fdCurrent);
 
+		bool							isUserEmpty();
 	};
 }
 

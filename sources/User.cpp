@@ -32,10 +32,12 @@ User::User(int fd) :
 		// cmap(),
 		_fd(fd),
 		_hostname(),
-		_nickname("yoka"),
+		_nickname("lala"),
 		// bufsize(512),
 		_command(),
-		_acceptConnect(1)
+		_acceptConnect(1),
+		_isOper(0),
+		_rdySend(0)
 {
 	// (void) address;
 	// init_map_cmd();
@@ -47,11 +49,12 @@ User::User(int fd, struct sockaddr_in address) :
 		// cmap(),
 		_fd(fd),
 		_hostname(),
-		_nickname("yoka"),
+		_nickname("lala"),
 		// bufsize(512),
 		_command(),
 		_acceptConnect(1),
-		_isOper(0)
+		_isOper(0),
+		_rdySend(0)
 {
 	(void) address;
 	// init_map_cmd();
@@ -66,12 +69,12 @@ User::User(User const &src)
 
 /***************************** DESTRUCTORS ****************************/
 
-/*
+
 User::~User()
 {
 	;
 }
-*/
+
 
 /************************* ASSIGNMENT OPERATOR ************************/
 
@@ -172,6 +175,11 @@ bool				User::getOper() const
 	return (this->_isOper);
 }
 
+int 					User::getRdySend() const
+{
+	return this->_rdySend;
+}
+
 vector<Channel *>	User::getChannel() const
 {
 	return (this->_channel);
@@ -236,4 +244,10 @@ void				User::setPassWord(string password)
 void				User::setAcceptConnect(bool ac)
 {
 	this->_acceptConnect = ac;
+}
+
+void 					User::setRdySend()
+{
+	if (this->_rdySend < 5)
+		this->_rdySend++;
 }

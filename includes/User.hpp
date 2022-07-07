@@ -30,22 +30,20 @@ namespace irc
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(Command * com);
-		typedef map<string, pointer_function>				map_cmd;
-		// map_cmd											cmap;
+		// map_cmd												cmap;
 
 		static int											_nbUser;
 		//int												_idUser;
 		int 												_fd;
 		//struct sockaddr_in 								_serverAddr;
-		string												_hostname; //name or ip address of the machine
-		string 												_realname; //name with spaces
-		string 												_username; //name used on the machine
-		string 												_nickname; //name used on the server
+		string												_hostname;
+		string 												_realname;
+		string 												_username;
+	string 													_nickname;
 		string 												_password;
-		//vector<string>									_waitingToSend;
-		//string											_prefix;
-		string 												buffer;
+		//vector<string>							_waitingToSend;
+		//string										_prefix;
+		string 										buffer;
 		vector<string>										parameters;
 		int 												bufsize;
 		//Message											*_msg;
@@ -54,7 +52,7 @@ namespace irc
 		vector<Channel *>									_channel;
 		bool												_acceptConnect;
 		bool												_isOper;
-		//vector<Channel *>									_channel;
+		int													_rdySend;
 
 		//if client send a cap command, ignore it
 
@@ -62,7 +60,7 @@ namespace irc
 		//User();
 		User(int fd, struct sockaddr_in address);
 		User(int fd);
-		//virtual ~User();
+		virtual ~User();
 		//User(User const &src);
 		User &operator=(User const &rhs);
 
@@ -93,6 +91,7 @@ namespace irc
 		Channel												*getChannelByName(string name);
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
+		int 												getRdySend() const;
 
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
@@ -102,6 +101,8 @@ namespace irc
 		void												setRealName(string realname);
 		void												setHostName(string hostname);
 		void												setPassWord(string password);
+		void												setBuffer(string buf);
+		void 												setRdySend();
 
 		//void												send_message(int nb_command, Server server);
 

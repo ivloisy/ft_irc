@@ -10,7 +10,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include "../includes/Reply.hpp"
 #include <utility>
+#include "../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -61,6 +63,7 @@ Server::Server(Server const & src)
 
 Server::~Server()
 {
+	this->_user.clear();
 	return;
 }
 
@@ -85,12 +88,14 @@ void				Server::createServerAddr(int portNum)
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-void				Server::bindServer()
+int				Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
 		cout << "Error binding socket..." << endl;
+		return (0);
 	}
+	return (1);
 }
 
 int					Server::acceptUser(socklen_t  size)
@@ -102,7 +107,10 @@ int					Server::acceptUser(socklen_t  size)
 		cout << "Error on accepting..." << endl;
 		return (-1);
 	}
-	_user.push_back(new User(fd, this->_serverAddr));
+	vector<User *>::iterator it = _user.begin();
+	while (it != _user.end() && (*it)->getFdUser() > fd)
+		it++;
+	_user.insert(it, new User(fd, this->_serverAddr));
 	return (fd);
 }
 
@@ -111,37 +119,56 @@ void				Server::closeUser(User * user)
 	close(user->getFdUser());
 }
 
-// void				Server::init_map_cmd()
-// {
-// 	_cmap["CAP"] 	= 	cap_cmd;
-// 	_cmap["DIE"] 	= 	user_cmd;
-// 	_cmap["JOIN"] 	= 	join_cmd;
-// 	_cmap["LIST"] 	= 	list_cmd;
-// 	_cmap["MODE"] 	= 	mode_cmd;
-// 	_cmap["MSG"] 	= 	msg_cmd;
-// 	_cmap["NAMES"] 	= 	names_cmd;
-// 	_cmap["NICK"] 	=	nick_cmd;
-// 	_cmap["NOTICE"] 	= 	notice_cmd;
-// 	_cmap["OPER"] 	= 	oper_cmd;
-// 	_cmap["PART"] 	=	part_cmd;
-// 	_cmap["PASS"] 	= 	pass_cmd;
-// 	_cmap["PING"] 	= 	ping_cmd;
-// 	_cmap["PONG"] 	= 	pong_cmd;
-// 	_cmap["PRIVMSG"] =	privmsg_cmd;
-// 	_cmap["QUIT"] 	=	quit_cmd;
-// 	_cmap["REHASH"] 	= 	rehash_cmd;
-// 	_cmap["RESTART"] = 	restart_cmd;
-// 	_cmap["SQUIT"] 	= 	squit_cmd;
-// 	_cmap["USER"] 	= 	user_cmd;
-// 	_cmap["WALLOPS"] = 	wallops_cmd;
-// }
 
-/********************* PARSING ************************/
+void					Server::exec_command()
+{
+	typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
+	map<string, pointer_function>		map_cmd;
 
-void					Server::parseBufferCommand(string buffer)
+	map_cmd["CAP"] 		= 	cap_cmd;
+	map_cmd["DIE"] 		= 	user_cmd;
+	map_cmd["JOIN"] 	= 	join_cmd;
+	map_cmd["LIST"] 	= 	list_cmd;
+	map_cmd["MODE"] 	= 	mode_cmd;
+	map_cmd["NAMES"] 	= 	names_cmd;
+	map_cmd["NICK"] 	=	nick_cmd;
+	map_cmd["NOTICE"] 	= 	notice_cmd;
+	map_cmd["OPER"] 	= 	oper_cmd;
+	map_cmd["PART"] 	=	part_cmd;
+	map_cmd["PASS"] 	= 	pass_cmd;
+	map_cmd["PING"] 	= 	ping_cmd;
+	map_cmd["PONG"] 	= 	pong_cmd;
+	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
+	map_cmd["QUIT"] 	=	quit_cmd;
+	map_cmd["REHASH"] 	= 	rehash_cmd;
+	map_cmd["RESTART"] 	= 	restart_cmd;
+	map_cmd["SQUIT"] 	= 	squit_cmd;
+	map_cmd["USER"] 	= 	user_cmd;
+	map_cmd["WALLOPS"] 	= 	wallops_cmd;
+}
+
+void 					Server::welcome(int fd)
+{
+	if (this->getUser(fd)->getRdySend() != 3)
+		return;
+	string buf = ft_reply(RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
+	cout << buf << endl;
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
+	cout << buf << endl;
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
+	cout << buf << endl;
+	send(fd, buf.c_str(), buf.length(), 0);
+	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
+	send(fd, buf.c_str(), buf.length(), 0);
+
+}
+
+void					Server::parse_buffer_command(string buffer, int fd)
 {
 	this->_param.clear();
-	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
+	this->tokenize(/*this->*/buffer/*,  serv*/, fd); //this splits the buffer into different vectors of parameters
 	// Uncomment this for printing parameters
 	// for(vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
 	// {
@@ -180,34 +207,23 @@ void					Server::parseBufferCommand(string buffer)
 	// }
 }
 
-void					Server::tokenize(string const & str)
+void					Server::tokenize(string const & str, int fd)
 {
 	stringstream 			ss(str);
 	string					s;
 	vector<string>	tmp;
 
 	int	i = 0;
-	int	j = 0;
 
 	while (getline(ss, s, '\r'))
 	{
+		this->getUser(fd)->setRdySend();
 		stringstream o(s);
 		string u;
-		j = 0;
 		while (getline(o, u, ' '))
-		{
-			// this->_param[i].push_back(u);
-			// if (u != "\n")
 			tmp.push_back(u);
-			// cout << "param[" << i << "][" << j << "] = " << tmp.back() << endl;
-			//u.clear();
-			j++;
-		}
 		this->_param.push_back(tmp);
 		tmp.clear();
-		// this->_command.push_back(new Command(serv, this, this->parameters));
-		// this->parameters.clear();
-		//s.clear();
 		i++;
 		getline(ss, s, '\n');
 	}
@@ -223,7 +239,6 @@ void				Server::printParam()
 		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
 		{
 			cout << *jt << "; ";
-			// j++;
 		}
 		cout << " }" << endl;
 		i++;
@@ -307,23 +322,34 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-User				*Server::getUser()
+User 				*Server::getUser(int fd)
 {
-	return (this->_user[4]);
+	vector<User *>::iterator it = this->_user.begin();
+	while (it != _user.end() && (*it)->getFdUser() != fd)
+		it++;
+	return (*it);
 }
 
-User 				*Server::getUser(string nickname)
+User 				*Server::getUser(string nick)
 {
-	vector<User *>::iterator last = this->_user.end();
-	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
-	{
-		if ((*it)->getNickName() == nickname)
-		{
-			return (*it);
-		}
-	}
-	return (NULL);
+	vector<User *>::iterator it = this->_user.begin();
+	while (it != _user.end() && (*it)->getNickName() != nick)
+		it++;
+	return (*it);
 }
+
+// User 				*Server::getUser(string nickname)
+// {
+// 	vector<User *>::iterator last = this->_user.end();
+// 	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+// 	{
+// 		if ((*it)->getNickName() == nickname)
+// 		{
+// 			return (*it);
+// 		}
+// 	}
+// 	return (NULL);
+// }
 
 Channel				*Server::getChannel(string name)
 {
