@@ -101,7 +101,10 @@ int					Server::acceptUser(socklen_t  size)
 		cout << "Error on accepting..." << endl;
 		return (-1);
 	}
-	_user.insert(make_pair(fd, new User(fd, this->_serverAddr)));
+	vector<User *>::iterator it = _user.begin();
+	while (it != _user.end() && (*it)->getFdUser() > fd)
+		it++;
+	_user.insert(it, new User(fd, this->_serverAddr));
 	return (fd);
 }
 

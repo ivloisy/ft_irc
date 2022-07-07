@@ -10,7 +10,7 @@
 # include "User.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
-# include <map>
+// # include <map>
 # include <sstream>
 
 // # define BUFFERSIZE 512
@@ -37,7 +37,7 @@ namespace irc
 		struct sockaddr_in									_serverAddr;
 		string												_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 											_size;
-		map<int, User *>									_user; //we're going to delete it for the instanciation with set
+		vector<User *>										_user; //we're going to delete it for the instanciation with set
 		//vector<Channel *>							_channels;
 		int													_portNum; //default port 6667
 		//Command											_commands;
