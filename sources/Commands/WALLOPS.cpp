@@ -10,8 +10,10 @@ using namespace irc;
 
 /*********************** OPERATOR COMMAND ************************/
 
-void	wallops_cmd(Command * cmd)
+void	wallops_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "wallops command called" << std::cout;
 }

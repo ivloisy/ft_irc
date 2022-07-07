@@ -19,9 +19,11 @@ using namespace irc;
  * Erreurs : ERR_NEEDMOREPARAMS ERR_ALREADYREGISTERED
  */
 
-void	pass_cmd(Command * cmd)
+void	pass_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
 	// user.setPassWord(*(buffer.begin() + 1));
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "pass command called" << std::endl;
 }

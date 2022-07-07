@@ -5,39 +5,51 @@
 #ifndef FT_IRC_SERVER_HPP
 #define FT_IRC_SERVER_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include "User.hpp"
-#include "Config.hpp"
-#include "Channel.hpp"
+# include <netinet/in.h>
+# include <sys/socket.h>
+# include "User.hpp"
+# include "Config.hpp"
+# include "Command.hpp"
+# include <map>
+# include <sstream>
+
+// # define BUFFERSIZE 512
+using namespace std;
 
 namespace irc
 {
 	class User;
 	class Channel;
 
-	class Server {
+	class Server
+	{
 
 	public:
 		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
 		//typedef void (*pointer_function)(void);
-		//typedef std::map<std::string, pointer_function>		map_cmd;
+		//typedef map<string, pointer_function>			map_cmd;
+		// typedef void (* Server::pointer_function)(/*Command * com*/);
+		// typedef map<string, pointer_function>		map_cmd;
 
 	private:
-		int 												_fd;
-		int													_fdMax;
-		struct sockaddr_in									_serverAddr;
-		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
-		socklen_t 											_size;
-		std::vector<User *>									_user; //we're going to delete it for the instanciation with set
-		std::vector<Channel *>								_channel;
-		//std::vector<Channel *>							_channels;
-		int													_portNum; //default port 6667
-		//Command											_commands;
-		//std::set<User *>									user; *Store the different users
-		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//std::string										_upTime;
-		bool												_state;
+		int 											_fd;
+		int												_fdMax;
+		int*											_fds;
+		struct sockaddr_in								_serverAddr;
+		string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
+		socklen_t 										_size;			//_user; //we're going to delete it for the instanciation with set
+		vector<User *>									_user;
+		vector<Channel *>								_channel;
+
+		int												_portNum; //default port 6667
+		//Command										_commands;
+		//set<User *>									user; *Store the different users
+		//Config										_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
+		//string										_upTime;
+		bool											_state;
+		// map_cmd										_cmap;
+		string											_buffer;
+		vector<vector<string> >							_param;
 
 	public:
 		Server(int portNum);
@@ -46,36 +58,45 @@ namespace irc
 
 		//Server operator=(Server const & src);
 
-		//Config											&getConfig();
-		//std::string										getUpTime();
+		//Config										&getConfig();
+		//string										getUpTime();
 
-		//void												add_user(User user);
+		//void											add_user(User user);
 
-		void												establishConnection(void);
-		void												bindServer(void);
-		void												createServerAddr(int portNum);
-		//void												listenUser(void);
-		int													acceptUser(socklen_t size);
-		void												closeUser(User * user);
+		void											establishConnection(void);
+		void											createServerAddr(int portNum);
+		void											bindServer(void);
+		//void											listenUser(void);
+		int												acceptUser(socklen_t size);
+		void											closeUser(User * user);
+		// void											init_map_cmd();
+		void											parse_buffer_command(string buffer);
+		void											send_to_chan(string name);
+		void											send_to_user(string name);
+		void											send_buffer(User * dest, string content);
+		void											tokenize(string const & str);
+		void											print_param();
 
-		int													getFdMax( void ) const;
-		int													getFdServer() const;
-		struct sockaddr_in									getServerAddr() const;
-		User												*getUser(); //need to delete it soon
-		User												*getUser(std::string nickname);
-		Channel												*getChannel(std::string name);
-		socklen_t											getSize() const;
-		int													getPortNum() const;
-		std::string											getServerName() const;
-		bool												getState() const;
+		int												getFdMax( void ) const;
+		int												getFdServer() const;
+		struct sockaddr_in								getServerAddr() const;
+		User											*getUser(); //need to delete it soon
+		User											*getUser(string nickname);
+		Channel											*getChannel(string name);
+		socklen_t										getSize() const;
+		int												getPortNum() const;
+		string											getServerName() const;
+		bool											getState() const;
+		void											setState(bool st);
+		void											setFdServer(int fd);
+		void											setUpFdMax(int fdCurrent);
+		// void											setDownFdMax(int fdCurrent);
 
-		void												setState(bool st);
-		void												setFdServer(int fd);
-		void												setUpFdMax(int fdCurrent);
-		// void												setDownFdMax(int fdCurrent);
+		bool											isUserEmpty();
 
-		bool												isUserEmpty();
 	};
 }
+
+
 
 #endif //FT_IRC_SERVER_HPP

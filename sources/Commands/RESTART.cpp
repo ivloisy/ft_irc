@@ -12,8 +12,10 @@ using namespace irc;
 
 /****************** OPERATOR COMMAND **********************/
 
-void	restart_cmd(Command * cmd)
+void	restart_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "restart command called" << std::endl;
 }

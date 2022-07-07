@@ -5,10 +5,11 @@
 #include "../includes/Channel.hpp"
 
 using namespace irc;
+using namespace std;
 
 /******************** CONSTRUCTORS ***********************/
 
-Channel::Channel(std::string name) :
+Channel::Channel(string name) :
 	_name(name)
 {
 	return ;
@@ -16,10 +17,15 @@ Channel::Channel(std::string name) :
 
 /********************** GETTERS **************************/
 
-User					*Channel::getUser(std::string nickname)
+vector<User *>		Channel::getChannelUsers() const
 {
-	std::vector<User *>::iterator last = this->_user.end();
-	for (std::vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	return (this->_user);
+}
+
+User					*Channel::getUser(string nickname)
+{
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
 	{
 		if ((*it)->getNickName() == nickname)
 			return (*it);
@@ -27,23 +33,17 @@ User					*Channel::getUser(std::string nickname)
 	return (NULL);
 }
 
-std::string 			Channel::getChannelName() const
+string 			Channel::getChannelName() const
 {
 	return (this->_name);
 }
 
 /********************** SETTERS **************************/
 
-void					Channel::setChannelName(std::string name)
+void					Channel::setChannelName(string name)
 {
 	this->_name = name;
 }
 
 /******************** FUNCTIONS **************************/
 
-void					Channel::send_to_channel()
-{
-	std::vector<User *>::iterator last = this->_user.end();
-	for (std::vector<User *>::iterator it = this->_user.begin(); it != last; it++)
-		(*it)->send_buf()
-}

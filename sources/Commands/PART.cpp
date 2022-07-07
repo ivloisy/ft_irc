@@ -15,8 +15,10 @@ using namespace irc;
  * parameters: <channel> *( "," <channel> ) [ <Part Message> ]
  */
 
-void	part_cmd(Command * cmd)
+void	part_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "part command called" << std::endl;
 }

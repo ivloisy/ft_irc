@@ -15,8 +15,10 @@ using namespace irc;
  * <msgtarget> <text to be sent>
  */
 
-void	privmsg_cmd(Command * cmd)
+void	privmsg_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "privmsg command called" << std::endl;
 }

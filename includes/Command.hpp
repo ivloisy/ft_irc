@@ -9,6 +9,8 @@
 #include <map>
 #include <string>
 
+using namespace std;
+
 namespace irc
 {
 	class User;
@@ -19,22 +21,22 @@ namespace irc
 		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
 	private:
 		//typedef void (*pointer_function)(void);
-		//typedef std::map<std::string, pointer_function> map_cmd;
+		//typedef map<string, pointer_function> map_cmd;
 
 		User 									*user;
 		Server 									*server;
-		std::vector<std::string> 				parameters;
+		vector<string> 							parameters;
 
 	public:
-		Command(Server * serv, User * user, std::vector<std::string> & params);
+		Command(Server * serv, User * user, vector<string> & params);
 		virtual ~Command();
 
-		std::string								get_reply(unsigned short code, std::string servername, std::string nickname);
-		void									reply(Server & serv, User & user, unsigned short code, std::string nickname);
+		string									get_reply(unsigned short code, string servername, string nickname);
+		//void									reply(Server & serv, User & user, unsigned short code, string nickname);
 
 		Server									&getServer();
 		User									&getUser();
-		std::vector<std::string>				getParameters();
+		vector<string>							getParameters();
 
 		void									print_parameters();
 	};

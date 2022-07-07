@@ -10,13 +10,18 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <utility>
 
 using namespace irc;
+using namespace std;
+
+/******************** CONSTRUCTORS **********************/
 
 Server::Server(int portNum) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
 	_state(1)
+	// _cmap()
 {
 	// socklen_t size;
 
@@ -30,7 +35,7 @@ Server::Server(int portNum) :
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
-		std::cout << "error setting socket option..." << std::endl;
+		cout << "error setting socket option..." << endl;
 	}
 	*/
 
@@ -44,6 +49,7 @@ Server::Server(int portNum) :
 		//error
 		;
 	}
+	// this->init_map_cmd();
 
 }
 
@@ -58,16 +64,18 @@ Server::~Server()
 	return;
 }
 
+/******************** CONNECTION **********************/
+
 void				 Server::establishConnection(void)
 {
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
 	{
-		std::cout << "Error establishing connection..." << std::endl;
+		cout << "Error establishing connection..." << endl;
 		//exit(1);
 		return ;
 	}
-	std::cout << "Server Socket connection created..." << std::endl;
+	cout << "Server Socket connection created..." << endl;
 }
 
 void				Server::createServerAddr(int portNum)
@@ -81,7 +89,7 @@ void				Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
-		std::cout << "Error binding socket..." << std::endl;
+		cout << "Error binding socket..." << endl;
 	}
 }
 
@@ -91,7 +99,7 @@ int					Server::acceptUser(socklen_t  size)
 						  reinterpret_cast<socklen_t *>(&size));
 	if (fd < 0)
 	{
-		std::cout << "Error on accepting..." << std::endl;
+		cout << "Error on accepting..." << endl;
 		return (-1);
 	}
 	_user.push_back(new User(fd, this->_serverAddr));
@@ -102,6 +110,146 @@ void				Server::closeUser(User * user)
 {
 	close(user->getFdUser());
 }
+
+// void				Server::init_map_cmd()
+// {
+// 	_cmap["CAP"] 	= 	cap_cmd;
+// 	_cmap["DIE"] 	= 	user_cmd;
+// 	_cmap["JOIN"] 	= 	join_cmd;
+// 	_cmap["LIST"] 	= 	list_cmd;
+// 	_cmap["MODE"] 	= 	mode_cmd;
+// 	_cmap["MSG"] 	= 	msg_cmd;
+// 	_cmap["NAMES"] 	= 	names_cmd;
+// 	_cmap["NICK"] 	=	nick_cmd;
+// 	_cmap["NOTICE"] 	= 	notice_cmd;
+// 	_cmap["OPER"] 	= 	oper_cmd;
+// 	_cmap["PART"] 	=	part_cmd;
+// 	_cmap["PASS"] 	= 	pass_cmd;
+// 	_cmap["PING"] 	= 	ping_cmd;
+// 	_cmap["PONG"] 	= 	pong_cmd;
+// 	_cmap["PRIVMSG"] =	privmsg_cmd;
+// 	_cmap["QUIT"] 	=	quit_cmd;
+// 	_cmap["REHASH"] 	= 	rehash_cmd;
+// 	_cmap["RESTART"] = 	restart_cmd;
+// 	_cmap["SQUIT"] 	= 	squit_cmd;
+// 	_cmap["USER"] 	= 	user_cmd;
+// 	_cmap["WALLOPS"] = 	wallops_cmd;
+// }
+
+/********************* PARSING ************************/
+
+void					Server::parse_buffer_command(string buffer)
+{
+	this->_param.clear();
+	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
+	// Uncomment this for printing parameters
+	// for(vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// {
+	// 	(*itc)->print_parameters();
+	// 	cout << "nl" << endl;
+	// }
+
+	// for (size_t i = 0; i < this->_param.size(); i++)
+	// {
+	// 	cout << "param[" << i << "] = { ";
+	// 	for (size_t j = 0; j < this->_param[i].size(); j++)
+	// 	{
+	// 	 	cout << this->_param[i][j];
+	// 		if (j + 1 != this->_param[i].size())
+	// 			cout << "; ";
+	// 		else
+	// 			cout << " }" << endl;
+	// 	}
+	// }
+	// cout << endl;
+
+	// cout << this->_param[0][0] << endl;
+
+	/*			Uncomment this for executing commands
+	cmap.find(*this->parameters.begin())->second(this->_command[0]);
+	for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	{
+		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	}
+	*/
+
+	// if (this->getAcceptConnect()) // connection ok
+	// {
+	// 	this->connection_replies(*this->_command.begin());
+	// 	this->setAcceptConnect(0);
+	// }
+}
+
+void					Server::tokenize(string const & str)
+{
+	stringstream 			ss(str);
+	string					s;
+	vector<string>	tmp;
+
+	int	i = 0;
+	int	j = 0;
+
+	while (getline(ss, s, '\r'))
+	{
+		stringstream o(s);
+		string u;
+		j = 0;
+		while (getline(o, u, ' '))
+		{
+			// this->_param[i].push_back(u);
+			// if (u != "\n")
+			tmp.push_back(u);
+			// cout << "param[" << i << "][" << j << "] = " << tmp.back() << endl;
+			//u.clear();
+			j++;
+		}
+		this->_param.push_back(tmp);
+		tmp.clear();
+		// this->_command.push_back(new Command(serv, this, this->parameters));
+		// this->parameters.clear();
+		//s.clear();
+		i++;
+		getline(ss, s, '\n');
+	}
+}
+
+void				Server::print_param()
+{
+	int	i = 0;
+
+	for (vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
+	{
+		cout << "param[" << i << "] = { ";
+		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
+		{
+			cout << *jt << "; ";
+			// j++;
+		}
+		cout << " }" << endl;
+		i++;
+	}
+}
+
+void				Server::send_to_chan(string name)
+{
+	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
+	vector<User *>::iterator last = chan_usr.end();
+	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
+		send_buffer(*it, this->_buffer);
+}
+
+void				Server::send_to_user(string name)
+{
+	send_buffer(this->getUser(name), this->_buffer);
+}
+
+void				Server::send_buffer(User * dest, string content)
+{
+	(void)content;
+	send(dest->getFdUser(), this->_buffer.c_str(), this->_buffer.length(), 0);
+}
+
+/******************** ACCESSORS **********************/
 
 int 				Server::getFdMax() const
 {
@@ -133,24 +281,26 @@ struct sockaddr_in	Server::getServerAddr() const
 
 User				*Server::getUser()
 {
-	return (this->_user.at(0));
+	return (this->_user[4]);
 }
 
-User 				*Server::getUser(std::string nickname)
+User 				*Server::getUser(string nickname)
 {
-	std::vector<User *>::iterator last = this->_user.end();
-	for (std::vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
 	{
 		if ((*it)->getNickName() == nickname)
+		{
 			return (*it);
+		}
 	}
 	return (NULL);
 }
 
-Channel				*Server::getChannel(std::string name)
+Channel				*Server::getChannel(string name)
 {
-	std::vector<Channel *>::iterator last = this->_channel.end();
-	for (std::vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		if ((*it)->getChannelName() == name)
 			return (*it);
@@ -168,7 +318,9 @@ int 				Server::getPortNum() const
 	return (this->_portNum);
 }
 
-std::string 		Server::getServerName() const
+/********************* MUTATORS *************************/
+
+string 				Server::getServerName() const
 {
 	return (this->_serverName);
 }

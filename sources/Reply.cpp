@@ -4,7 +4,7 @@
 
 /************* USELESS FOR THE MOMENT *********************/
 
-using namespace irc;
+//using namespace irc;
 
 #include "../includes/Reply.hpp"
 

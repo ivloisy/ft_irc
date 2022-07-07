@@ -15,8 +15,10 @@ using namespace irc;
  * parameters <nickname> *( ( "+" / "-" ) *( "i" / "w" / "o" / "O" / "r" ) )
  */
 
-void	mode_cmd(Command * cmd)
+void	mode_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 	std::cout << "mode command called" << std::endl;
 }

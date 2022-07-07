@@ -12,7 +12,9 @@ using namespace irc;
 
 /**************** OPERATOR COMMAND *******************/
 
-void	rehash_cmd(Command * cmd)
+void	rehash_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)cmd;
+	(void)srv;
+	(void)usr;
+	(void)params;
 }
