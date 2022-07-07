@@ -55,7 +55,8 @@ User::User(int fd) :
 		_nickname("yoka"),
 		// bufsize(512),
 		_command(),
-		_acceptConnect(1)
+		_acceptConnect(1),
+		_rdySend(0)
 {
 	// (void) address;
 	// init_map_cmd();
@@ -70,7 +71,8 @@ User::User(int fd, struct sockaddr_in address) :
 		_nickname("yoka"),
 		// bufsize(512),
 		_command(),
-		_acceptConnect(1)
+		_acceptConnect(1),
+		_rdySend(0)
 {
 	(void) address;
 	// init_map_cmd();
@@ -197,6 +199,10 @@ bool					User::getOper() const
 	return (this->_isOper);
 }
 
+int 					User::getRdySend() const
+{
+	return this->_rdySend;
+}
 
 
 /********************** SETTERS ***********************/
@@ -246,6 +252,12 @@ void					User::setPassWord(std::string password)
 void					User::setAcceptConnect(bool ac)
 {
 	this->_acceptConnect = ac;
+}
+
+void 					User::setRdySend()
+{
+	if (this->_rdySend < 5)
+		this->_rdySend++;
 }
 
 

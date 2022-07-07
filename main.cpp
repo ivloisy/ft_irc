@@ -43,29 +43,29 @@ std::string char_to_str(char *buf)
 
 int adding_user(Server *serv)
 {
-	char buffer[512];
+	// char buffer[512];
 	int fd;
 	if ((fd = serv->acceptUser(serv->getSize())) < 0)
 		perror("Accept failed: ");
-	else
-	{
-		if (recv(fd, &buffer, 512, 0) >= 1)
-		{
-			std::cout << "BUFFER: = " << buffer << std::endl;
-			// serv->getUser()->setBuffer(char_to_str(buffer));
-			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
-			serv->parse_buffer_command(buffer);
-			serv->print_param();
-			//bzero(buffer, 512);
-			//change for buffer for testing with the real buffer
-			serv->setUpFdMax(fd);
-		}
-		else
-		{
-			perror("recv failure: ");
-			return (0);
-		}
-	}
+	// else
+	// {
+	// 	if (recv(fd, &buffer, 512, 0) >= 1)
+	// 	{
+	// 		std::cout << "BUFFER: = " << buffer << std::endl;
+	// 		// serv->getUser()->setBuffer(char_to_str(buffer));
+	// 		//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
+	// 		serv->parse_buffer_command(buffer);
+	// 		serv->print_param();
+	// 		//bzero(buffer, 512);
+	// 		//change for buffer for testing with the real buffer
+	// 		serv->setUpFdMax(fd);
+	// 	}
+	// 	else
+	// 	{
+	// 		perror("recv failure: ");
+	// 		return (0);
+	// 	}
+	// }
 	//std::cout << "exit adding user function" << std::endl;
 	return (fd);
 }
@@ -74,7 +74,7 @@ void ft_run()
 {
 	char buffer[512];
 	Server serv;
-	int select_ret, fd;
+	int select_ret, fd, test;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
@@ -84,6 +84,7 @@ void ft_run()
 	while (serv.getState())
 	{
 		cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
+		test = 0;
 
 		select_ret = poll(_poll, fd_count, -1);
 
@@ -104,23 +105,37 @@ void ft_run()
 						{
 							_poll[fd_count].fd = fd;
 							_poll[fd_count].events = POLLIN;
-							fd_count++;
+							test = 1;
+							serv.setUpFdMax(fd);
 						}
-						break;
+						// break;
 					}
-					else
-					{
+					// else
+					// {
 						//bzero(buffer, 512);
-						if (recv(_poll[x].fd, &buffer, 255, 0) >= 1)
+						if (test == 0)
+						{
+							fd = _poll[x].fd;
+						}
+						if (recv(fd, &buffer, 255, 0) >= 1)
 						{
 							std::cout << "BUFFER: = " << buffer << std::endl;
 							serv.parse_buffer_command(buffer);
 							serv.print_param();
+							// serv->parse_buffer_command(buffer);
+							// serv->print_param();
+							//bzero(buffer, 512);
+							//change for buffer for testing with the real buffer
 							// serv.getUser()->setBuffer(char_to_str(buffer));
 							// //cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
 							// serv.getUser()->parse_buffer_command(&serv);
 						}
-					}
+						if (test == 1)
+						{
+							fd_count++;
+							break ;
+						}
+					// }
 				}
 			}
 		}

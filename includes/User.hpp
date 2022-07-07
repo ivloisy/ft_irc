@@ -52,6 +52,7 @@ namespace irc
 		vector<Command *>								_command;
 		bool												_acceptConnect;
 		bool												_isOper;
+		int												_rdySend;
 
 		//if client send a cap command, ignore it
 
@@ -86,6 +87,7 @@ namespace irc
 		vector<Command *>								getCommand() const;
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
+		int 												getRdySend() const;
 
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
@@ -96,6 +98,7 @@ namespace irc
 		void												setHostName(string hostname);
 		void												setPassWord(string password);
 		void												setBuffer(string buf);
+		void 												setRdySend();
 
 		//void												send_message(int nb_command, Server server);
 
