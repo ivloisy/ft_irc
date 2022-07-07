@@ -51,6 +51,8 @@ Server::Server(int portNum) :
 		//error
 		;
 	}
+	this->initCommand();
+
 	// this->init_map_cmd();
 
 }
@@ -120,10 +122,9 @@ void				Server::closeUser(User * user)
 }
 
 
-void					Server::exec_command()
+void					Server::initCommand()
 {
-	typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
-	map<string, pointer_function>		map_cmd;
+
 
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	user_cmd;
@@ -192,13 +193,12 @@ void					Server::parse_buffer_command(string buffer, int fd)
 
 	// cout << this->_param[0][0] << endl;
 
-	/*			Uncomment this for executing commands
-	cmap.find(*this->parameters.begin())->second(this->_command[0]);
-	for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
-	{
-		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
-	}
-	*/
+	//			Uncomment this for executing commands
+	// for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// {
+	// 	cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	// }
+
 
 	// if (this->getAcceptConnect()) // connection ok
 	// {
@@ -243,6 +243,11 @@ void				Server::printParam()
 		cout << " }" << endl;
 		i++;
 	}
+}
+
+void 				Server::execCommand()
+{
+	map_cmd.find(this->_param.begin())->second(this, this->getUser(this->_param[1]), this->_param);
 }
 
 void				Server::sendToChan(string name)

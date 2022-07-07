@@ -30,6 +30,8 @@ namespace irc
 		//typedef map<string, pointer_function>			map_cmd;
 		// typedef void (* Server::pointer_function)(/*Command * com*/);
 		// typedef map<string, pointer_function>		map_cmd;
+		typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
+		map<string, pointer_function>		map_cmd;
 
 	private:
 		int 											_fd;
@@ -77,7 +79,8 @@ namespace irc
 		void											sendBuffer(User * dest, string content);
 		void											printParam();
 		// void							print_param();
-		void							exec_command();
+		void							initCommand();
+		void 				execCommand();
 		void 							welcome(int fd);
 
 		Channel											*addChannel(string name);
