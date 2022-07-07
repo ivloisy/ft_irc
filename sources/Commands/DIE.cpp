@@ -10,8 +10,8 @@ using namespace irc;
 
 /******************** OPERATOR COMMAND ***********************/
 
-void	die_cmd(Command * cmd)
+void	die_cmd()
 {
-	cmd->getServer().setState(0);
+	// cmd->getServer().setState(0);
 	std::cout << "die command called" << std::endl;
 }

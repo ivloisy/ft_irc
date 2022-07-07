@@ -15,8 +15,7 @@ using namespace irc;
  * parameters <server> <comment>
  */
 
-void squit_cmd(Command * cmd)
+void squit_cmd()
 {
-	(void)cmd;
 	std::cout << "squit command called" << std::endl;
 }

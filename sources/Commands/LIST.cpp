@@ -17,8 +17,7 @@ using namespace irc;
  * parameters : [ <channel> *( "," <channel> ) [ <target> ] ]
  */
 
-void		list_cmd(Command * cmd)
+void		list_cmd()
 {
-	(void)cmd;
 	std::cout << "list command called " << std::endl;
 }

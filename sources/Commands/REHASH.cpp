@@ -12,7 +12,6 @@ using namespace irc;
 
 /**************** OPERATOR COMMAND *******************/
 
-void	rehash_cmd(Command * cmd)
+void	rehash_cmd()
 {
-	(void)cmd;
 }

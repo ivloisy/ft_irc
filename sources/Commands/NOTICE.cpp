@@ -10,8 +10,7 @@ using namespace irc;
 
 /*********************** SEND MESSAGES ********************/
 
-void	notice_cmd(Command * cmd)
+void	notice_cmd()
 {
-	(void)cmd;
 	std::cout << "notice command called" << std::endl;
 }

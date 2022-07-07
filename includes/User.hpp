@@ -29,8 +29,6 @@ namespace irc
 		//friend class Server;
 
 	private:
-		typedef void (*pointer_function)(Command * com);
-		typedef map<string, pointer_function>		map_cmd;
 		// map_cmd												cmap;
 
 		static int											_nbUser;
@@ -60,7 +58,7 @@ namespace irc
 		//User();
 		User(int fd, struct sockaddr_in address);
 		User(int fd);
-		//virtual ~User();
+		virtual ~User();
 		//User(User const &src);
 		User &operator=(User const &rhs);
 

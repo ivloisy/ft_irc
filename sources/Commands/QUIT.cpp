@@ -15,8 +15,7 @@ using namespace irc;
  * Parameters <quit message>
  */
 
-void	quit_cmd(Command * cmd)
+void	quit_cmd()
 {
-	(void)cmd;
 	std::cout << "quit command called" << std::endl;
 }

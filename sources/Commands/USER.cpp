@@ -12,10 +12,9 @@ using namespace irc;
 
 /********************* USER COMMAND **********************/
 
-void	user_cmd(Command * cmd)
+void	user_cmd()
 {
 	// user.setUserName(*(buffer.begin() + 1));
-	(void)cmd;
 	std::cout << "user command called" << std::endl;
 }
 

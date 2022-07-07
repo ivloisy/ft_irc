@@ -8,8 +8,7 @@
 
 using namespace irc;
 
-void	ping_cmd(Command * cmd)
+void	ping_cmd()
 {
-	(void)cmd;
 	std::cout << "ping command called" << std::endl;
 }

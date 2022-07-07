@@ -22,8 +22,7 @@ using namespace irc;
 //	std::cout << "cap command called" << std::endl;
 //}
 
-void	cap_cmd(Command * cmd)
+void	cap_cmd()
 {
-	(void)cmd;
 	std::cout << "cap command called" << std::endl;
 }

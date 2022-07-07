@@ -19,9 +19,8 @@ using namespace irc;
  * Erreurs : ERR_NEEDMOREPARAMS ERR_ALREADYREGISTERED
  */
 
-void	pass_cmd(Command * cmd)
+void	pass_cmd()
 {
 	// user.setPassWord(*(buffer.begin() + 1));
-	(void)cmd;
 	std::cout << "pass command called" << std::endl;
 }

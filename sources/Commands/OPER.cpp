@@ -18,8 +18,7 @@ using namespace irc;
  *  ERR_NEEDMOREPARAMS  RPL_YOUREOPER ERR_NOOPERHOST   ERR_PASSWDMISMATCH
  */
 
-void	oper_cmd(Command * cmd)
+void	oper_cmd()
 {
-	(void)cmd;
 	std::cout << "oper command called" << std::endl;
 }

@@ -10,8 +10,7 @@
 
 using namespace irc;
 
-void msg_cmd(Command * cmd)
+void msg_cmd()
 {
-	(void)cmd;
 	std::cout << "msg command called" << std::endl;
 }

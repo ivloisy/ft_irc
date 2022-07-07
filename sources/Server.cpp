@@ -60,6 +60,7 @@ Server::Server(Server const & src)
 
 Server::~Server()
 {
+	this->_user.clear();
 	return;
 }
 
@@ -113,10 +114,9 @@ void				Server::closeUser(User * user)
 	close(user->getFdUser());
 }
 
-void							Server::exec_command()
-{
-	execve();
-}
+// void							Server::exec_command()
+// {
+// }
 
 void					Server::parse_buffer_command(string buffer, int fd)
 {

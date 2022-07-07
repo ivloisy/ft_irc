@@ -12,8 +12,7 @@
 
 using namespace irc;
 
-void	pong_cmd(Command * cmd)
+void	pong_cmd()
 {
-	(void)cmd;
 	std::cout << "pong command called" << std::endl;
 }

@@ -15,8 +15,7 @@ using namespace irc;
  * parameters: <channel> *( "," <channel> ) [ <Part Message> ]
  */
 
-void	part_cmd(Command * cmd)
+void	part_cmd()
 {
-	(void)cmd;
 	std::cout << "part command called" << std::endl;
 }

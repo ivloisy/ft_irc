@@ -19,9 +19,8 @@ using namespace irc;
  *	ERR_NONICKNAMEGIVEN ERR_ERRONEUSNICKNAME  ERR_NICKNAMEINUSE    ERR_NICKCOLLISION ERR_RESTRICTED ERR_UNAVAILRESOURCE
  */
 
-void	nick_cmd(Command * cmd)
+void	nick_cmd()
 {
 	// user.setNickName(*(buffer.begin() + 1));
-	(void)cmd;
 	std::cout << "nick command called" << std::endl;
 }

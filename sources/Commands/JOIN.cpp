@@ -17,8 +17,7 @@ using namespace irc;
                / "0"
  */
 
-void	join_cmd(Command * cmd)
+void	join_cmd()
 {
-	(void)cmd;
 	std::cout << "join command called" << std::endl;
 }
