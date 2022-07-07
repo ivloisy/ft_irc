@@ -43,6 +43,8 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 				else if ((existing = srv->searchChannel(params[1])))
 				{
 					//join channel
+					//std::cout;
+					//for (srv->getChannel(existing->getChannelName()))
 					existing->addUser(usr);
 					usr->addChannel(existing);
 					return ;
