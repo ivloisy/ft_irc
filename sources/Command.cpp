@@ -16,6 +16,56 @@
 //void	user_cmd();
 //void	nick_cmd();
 
+
+
+
+set();
+
+
+fdNew = accept();
+
+
+
+User {
+	fd
+	nickname
+
+}
+//
+//
+Operator<(UserTest)
+{
+	if (UserfdSrc < UserfdTest)
+    	return (0);
+	else
+		return (1);
+}
+//
+// User1 < User2;
+
+// set.push(new User(14))
+
+
+                              7
+						   3     9
+						            14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using namespace irc;
 
 std::string 				RPL_WELCOME(std::string servername, std::string nickname)

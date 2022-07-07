@@ -50,12 +50,8 @@ int adding_user(Server *serv)
 	{
 		if (recv(serv->getUser()->getFdUser(), &buffer, 512, 0) >= 1)
 		{
-			//std::cout << "1 BUFFER: = " << buffer << std::endl;
 			serv->getUser()->setBuffer(char_to_str(buffer));
-			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
 			serv->getUser()->parse_buffer_command(serv);
-			//bzero(buffer, 512);
-			//change for buffer for testing with the real buffer
 			serv->setUpFdMax(serv->getUser()->getFdUser());
 		}
 		else
@@ -68,10 +64,10 @@ int adding_user(Server *serv)
 	return (0);
 }
 
-void ft_run(int port)
+void ft_run(int port, char *password)
 {
 	char buffer[512];
-	Server serv(port);
+	Server serv(port, password);
 	int select_ret;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
@@ -94,6 +90,8 @@ void ft_run(int port)
 		{
 			for (int x = 0; x < fd_count; x++)
 			{
+				if (recv(_poll[x].fd, &buffer, 512, 0) >= 1)
+					cout << buffer << endl;
 				if (_poll[x].revents & POLLIN)
 				{
 					if (_poll[x].fd == serv.getFdServer())
@@ -107,12 +105,9 @@ void ft_run(int port)
 				}
 				else
 				{
-					//bzero(buffer, 512);
 					if (recv(serv.getUser()->getFdUser(), &buffer, 255, 0) >= 1)
 					{
-						//std::cout << "2 BUFFER: = " << buffer << std::endl;
 						serv.getUser()->setBuffer(char_to_str(buffer));
-						//cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
 						serv.getUser()->parse_buffer_command(&serv);
 					}
 				}
@@ -126,19 +121,20 @@ void ft_run(int port)
 
 int main(int argc, char **argv)
 {
-	(void)argv;
-	// int port;
+	// (void)argv;
+	int port;
 	if (argc == 2) // without password
 	{
-		// if ((port = atoi(argv[1])) > 0)
-		ft_run(6667);
+		if ((port = atoi(argv[1])) > 0)
+			ft_run(port, NULL);
+		// ft_run(6667);
 		cout << "sortie propre" << endl;
 	}
-	// else if (argc == 3) //with password
-	// {
-	//if ((port = atoi(argv[1])) > 0)
-		// ft_run(port);
-	// }
+	else if (argc == 3) //with password
+	{
+		if ((port = atoi(argv[1])) > 0)
+			ft_run(port, argv[2]);
+	}
 	else
 	{
 		cout << "error wrong number arguments" << endl;

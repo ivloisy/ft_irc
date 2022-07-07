@@ -33,6 +33,7 @@ namespace irc
 		std::vector<Channel *>								_channel;
 		//std::vector<Channel *>							_channels;
 		int													_portNum; //default port 6667
+		char*												_password;
 		//Command											_commands;
 		//std::set<User *>									user; *Store the different users
 		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
@@ -40,7 +41,7 @@ namespace irc
 		bool												_state;
 
 	public:
-		Server(int portNum);
+		Server(int portNum, char *password);
 		Server(Server const & src);
 		virtual ~Server();
 

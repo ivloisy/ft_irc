@@ -13,9 +13,10 @@
 
 using namespace irc;
 
-Server::Server(int portNum) :
+Server::Server(int portNum, char *password) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
+	_password(password),
 	_state(1)
 {
 	// socklen_t size;
