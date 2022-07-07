@@ -38,3 +38,12 @@ void					Channel::setChannelName(std::string name)
 {
 	this->_name = name;
 }
+
+/******************** FUNCTIONS **************************/
+
+void					Channel::send_to_channel()
+{
+	std::vector<User *>::iterator last = this->_user.end();
+	for (std::vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+		(*it)->send_buf()
+}

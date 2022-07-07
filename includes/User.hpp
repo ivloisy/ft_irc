@@ -64,7 +64,7 @@ namespace irc
 
 		void												init_map_cmd(void);
 
-		ssize_t 											send_buf(Server &serv, std::string const &msg);
+		ssize_t 											send_buf(User *dest, Server &serv, std::string const &msg);
 		void												write_buf(User * user, std::string const &msg);
 
 		void												tokenize(std::string const &str, Server *serv);

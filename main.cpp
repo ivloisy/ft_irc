@@ -70,11 +70,11 @@ int adding_user(Server *serv)
 
 void ft_run(int port)
 {
-	char buffer[512];
-	Server serv(port);
-	int select_ret;
-	int fd_count = 1;
-	struct pollfd			_poll[1025];
+	char			buffer[512];
+	Server			serv(port);
+	int				select_ret;
+	int				fd_count = 1;
+	struct pollfd	_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
 

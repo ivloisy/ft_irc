@@ -90,19 +90,21 @@ User &User::operator=(User const &rhs)
 }
 
 /*************************** MEMBER FUNCTIONS **************************/
-
+/*
 void 					User::write_buf(User * user, std::string const &msg)
 {
 	(void)user;
 	this->buffer = msg + "\n";
 }
-
-ssize_t 				User::send_buf(Server & serv, std::string const &msg)
+*/
+ssize_t 				User::send_buf(User *dest, Server & serv, std::string const &msg)
 {
 	ssize_t res;
-	write_buf(serv.getUser(), msg);
-	std::cout << this->buffer.c_str() << std::endl;
-	res = send(serv.getUser()->getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
+	(void)serv;
+	this->buffer = msg;
+	//write_buf(serv.getUser(), msg);
+	//std::cout << this->buffer.c_str() << std::endl;
+	res = send(dest->getFdUser(), this->buffer.c_str(), this->buffer.length(), 0);
 	if (res == -1)
 	{
 		return (res);

@@ -17,7 +17,6 @@ namespace irc
 	class Command
 	{
 		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
-
 	private:
 		//typedef void (*pointer_function)(void);
 		//typedef std::map<std::string, pointer_function> map_cmd;
@@ -26,20 +25,18 @@ namespace irc
 		Server 									*server;
 		std::vector<std::string> 				parameters;
 
-
 	public:
 		Command(Server * serv, User * user, std::vector<std::string> & params);
 		virtual ~Command();
 
-		std::string			get_reply(unsigned short code, std::string servername, std::string nickname);
-		void				reply(Server & serv, User & user, unsigned short code, std::string nickname);
+		std::string								get_reply(unsigned short code, std::string servername, std::string nickname);
+		void									reply(Server & serv, User & user, unsigned short code, std::string nickname);
 
 		Server									&getServer();
 		User									&getUser();
 		std::vector<std::string>				getParameters();
 
 		void									print_parameters();
-
 	};
 }
 

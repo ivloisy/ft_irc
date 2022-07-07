@@ -31,6 +31,7 @@ namespace irc
 
 		void					setChannelName(std::string name);
 
+		void					send_to_channel();
 	};
 }
 
