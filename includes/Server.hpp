@@ -70,12 +70,15 @@ namespace irc
 		int												acceptUser(socklen_t size);
 		void											closeUser(User * user);
 		// void											init_map_cmd();
-		void											parse_buffer_command(string buffer);
-		void											send_to_chan(string name);
-		void											send_to_user(string name);
-		void											send_buffer(User * dest, string content);
+		void											parseBufferCommand(string buffer);
+		void											sendToChan(string name);
+		void											sendToUser(string name);
+		void											sendBuffer(User * dest, string content);
 		void											tokenize(string const & str);
-		void											print_param();
+		void											printParam();
+		Channel											*addChannel(string name);
+		Channel											*searchChannel(string name);
+		void											delUserAllChannel(User * user);
 
 		int												getFdMax( void ) const;
 		int												getFdServer() const;

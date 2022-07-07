@@ -9,6 +9,7 @@
 #include "../../includes/Command.hpp"
 
 using namespace irc;
+using namespace std;
 
 /********************* USER COMMAND **********************/
 

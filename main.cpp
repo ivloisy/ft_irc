@@ -54,8 +54,8 @@ int adding_user(Server *serv)
 			std::cout << "BUFFER: = " << buffer << std::endl;
 			// serv->getUser()->setBuffer(char_to_str(buffer));
 			//cout << "1 MESSAGE: " << serv->getUser()->getBuffer() << endl;
-			serv->parse_buffer_command(buffer);
-			serv->print_param();
+			serv->parseBufferCommand(buffer);
+			serv->printParam();
 			//bzero(buffer, 512);
 			//change for buffer for testing with the real buffer
 			serv->setUpFdMax(fd);
@@ -114,8 +114,8 @@ void ft_run(int port)
 						if (recv(_poll[x].fd, &buffer, 255, 0) >= 1)
 						{
 							std::cout << "BUFFER: = " << buffer << std::endl;
-							serv.parse_buffer_command(buffer);
-							serv.print_param();
+							serv.parseBufferCommand(buffer);
+							serv.printParam();
 							// serv.getUser()->setBuffer(char_to_str(buffer));
 							// //cout << "2 MESSAGE: " << serv.getUser()->getBuffer() << endl;
 							// serv.getUser()->parse_buffer_command(&serv);

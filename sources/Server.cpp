@@ -138,7 +138,7 @@ void				Server::closeUser(User * user)
 
 /********************* PARSING ************************/
 
-void					Server::parse_buffer_command(string buffer)
+void					Server::parseBufferCommand(string buffer)
 {
 	this->_param.clear();
 	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
@@ -213,7 +213,7 @@ void					Server::tokenize(string const & str)
 	}
 }
 
-void				Server::print_param()
+void				Server::printParam()
 {
 	int	i = 0;
 
@@ -230,23 +230,51 @@ void				Server::print_param()
 	}
 }
 
-void				Server::send_to_chan(string name)
+void				Server::sendToChan(string name)
 {
 	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
-		send_buffer(*it, this->_buffer);
+		sendBuffer(*it, this->_buffer);
 }
 
-void				Server::send_to_user(string name)
+void				Server::sendToUser(string name)
 {
-	send_buffer(this->getUser(name), this->_buffer);
+	sendBuffer(this->getUser(name), this->_buffer);
 }
 
-void				Server::send_buffer(User * dest, string content)
+void				Server::sendBuffer(User * dest, string content)
 {
 	(void)content;
 	send(dest->getFdUser(), this->_buffer.c_str(), this->_buffer.length(), 0);
+}
+
+Channel				*Server::addChannel(string name)
+{
+	this->_channel.push_back(new Channel(name));
+	return *(this->_channel.end() - 1);
+}
+
+Channel				*Server::searchChannel(string name)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		if ((*it)->getChannelName() == name)
+		{
+			return (*it);
+		}
+	}
+	return (NULL);
+}
+
+void				Server::delUserAllChannel(User * user)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		(*it)->delUser(user);
+	}
 }
 
 /******************** ACCESSORS **********************/

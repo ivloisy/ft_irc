@@ -6,8 +6,10 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include "../../includes/Command.hpp"
+#include "../../includes/Channel.hpp"
 
 using namespace irc;
+using namespace std;
 
 /********************* CHANNEL COMMAND **********************/
 
@@ -17,34 +19,47 @@ using namespace irc;
                / "0"
  */
 
-void	join_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	join_cmd(Server * srv, User * usr, vector<string> params)
 {
-	(void)usr;
 	if (params[0] == "JOIN")
 	{
 		if (params.size() < 1)
 		{
-			//reply("wrong number of arguments");
+			//ERR_NEEDMOREPARAMS
 		}
 		else
 		{
-			std::vector<std::string>::iterator last = params.end();
-			for (std::vector<std::string>::iterator it = params.begin(); it != last; it++)
+			vector<string>::iterator last = params.end();
+			for (vector<string>::iterator it = params.begin(); it != last; it++)
 			{
+				Channel *existing;
 				if (params[1] == "0" && params.size() < 2)
 				{
 					//quit all joined channels
-					//return ;
+					usr->clearAllChannels();
+					srv->delUserAllChannel(usr);
+					return ;
 				}
-				else if (srv->getChannel(params.at(1)))
+				else if ((existing = srv->searchChannel(params[1])))
 				{
 					//join channel
+					existing->addUser(usr);
+					usr->addChannel(existing);
+					return ;
 				}
-				//else start with one of the channel symbols
+				else// > starts with one of the channel symbols
+				{
 					//create channel
+					Channel * new_chan = srv->addChannel(params[1]);;
+					new_chan->addUser(usr);
+					usr->addChannel(new_chan);
+					return ;
+
+				}
+
 			}
 
 		}
 	}
-	std::cout << "join command called" << std::endl;
+	cout << "join command called" << endl;
 }

@@ -17,7 +17,6 @@ SRCS = 	main.cpp \
 		sources/Commands/LIST.cpp \
 		sources/Commands/PONG.cpp \
 		sources/Commands/MODE.cpp \
-		sources/Commands/MSG.cpp \
 		sources/Commands/NAMES.cpp \
 		sources/Commands/NOTICE.cpp \
 		sources/Commands/OPER.cpp \

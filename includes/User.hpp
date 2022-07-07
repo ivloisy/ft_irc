@@ -15,6 +15,7 @@
 
 #include "Command.hpp"
 #include "Server.hpp"
+#include "Channel.hpp"
 
 using namespace std;
 
@@ -50,6 +51,7 @@ namespace irc
 		//Message											*_msg;
 		//Server											*server;
 		vector<Command *>									_command;
+		vector<Channel *>									_channel;
 		bool												_acceptConnect;
 		bool												_isOper;
 		//vector<Channel *>									_channel;
@@ -74,6 +76,10 @@ namespace irc
 		// void												tokenize(string const &str, Server *serv);
 		// void												parse_buffer_command(Server * serv);
 
+		void												clearAllChannels();
+		void												quitChannel(Channel * chan);
+		void												addChannel(Channel * chan);
+
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
 		string 												getPrefix() const;
@@ -83,6 +89,8 @@ namespace irc
 		string 												getUserName() const;
 		string												getRealName() const;
 		vector<Command *>									getCommand() const;
+		vector<Channel *>									getChannel() const;
+		Channel												*getChannelByName(string name);
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 

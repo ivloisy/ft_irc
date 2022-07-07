@@ -5,6 +5,7 @@
 #include "../includes/User.hpp"
 #include "../includes/Command.hpp"
 #include "../includes/Server.hpp"
+#include "../includes/Channel.hpp"
 //#include <sys/socket.h>
 
 //#include <netinet/in.h>
@@ -83,6 +84,29 @@ User &User::operator=(User const &rhs)
 	return (*this);
 }
 
+/********************** FUNCTIONS ****************************/
+
+void					User::addChannel(Channel * chan)
+{
+	this->_channel.push_back(chan);
+}
+
+void					User::clearAllChannels()
+{
+	this->_channel.clear();
+}
+
+void					User::quitChannel(Channel * chan)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		if (chan->getChannelName() == (*it)->getChannelName())
+		{
+			this->_channel.erase(it);
+		}
+	}
+}
 
 /********************* GETTERS ***********************/
 
@@ -91,7 +115,7 @@ int 					User::getFdUser(void) const
 	return (this->_fd);
 }
 
-string 			User::getPrefix() const
+string 					User::getPrefix() const
 {
 	string prefix = "prefix";
 	return (prefix);
@@ -113,12 +137,12 @@ vector<Command *>	User::getCommand() const
 	return (this->_command);
 }
 
-string 			User::getPassWord() const
+string 				User::getPassWord() const
 {
 	return (this->_password);
 }
 
-string 			User::getUserName() const
+string 				User::getUserName() const
 {
 	return (this->_username);
 }
@@ -128,36 +152,53 @@ string				User::getRealName() const
 	return (this->_realname);
 }
 
-string 			User::getHostname() const
+string 				User::getHostname() const
 {
 	return (this->_hostname);
 }
 
-string 			User::getNickName() const
+string 				User::getNickName() const
 {
 	return (this->_nickname);
 }
 
-bool					User::getAcceptConnect() const
+bool				User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
 }
 
-bool					User::getOper() const
+bool				User::getOper() const
 {
 	return (this->_isOper);
 }
 
+vector<Channel *>	User::getChannel() const
+{
+	return (this->_channel);
+}
+
+Channel				*User::getChannelByName(string name)
+{
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		if ((*it)->getChannelName() == name)
+		{
+			return (*it);
+		}
+	}
+	return (NULL);
+}
 
 
 /********************** SETTERS ***********************/
 
-void					User::setOper(bool op)
+void				User::setOper(bool op)
 {
 	this->_isOper = op;
 }
 
-void 					User::setFdUser(int fd)
+void 				User::setFdUser(int fd)
 {
 	this->_fd = fd;
 }
@@ -167,32 +208,32 @@ void 					User::setFdUser(int fd)
 // 	this->buffer = buf;
 // }
 
-void					User::setNickName(string nickname)
+void				User::setNickName(string nickname)
 {
 	this->_nickname = nickname;
 }
 
-void					User::setUserName(string username)
+void				User::setUserName(string username)
 {
 	this->_username = username;
 }
 
-void					User::setRealName(string realname)
+void				User::setRealName(string realname)
 {
 	this->_realname = realname;
 }
 
-void					User::setHostName(string hostname)
+void				User::setHostName(string hostname)
 {
 	this->_hostname = hostname;
 }
 
-void					User::setPassWord(string password)
+void				User::setPassWord(string password)
 {
 	this->_password = password;
 }
 
-void					User::setAcceptConnect(bool ac)
+void				User::setAcceptConnect(bool ac)
 {
 	this->_acceptConnect = ac;
 }
