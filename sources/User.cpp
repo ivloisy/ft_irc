@@ -48,6 +48,21 @@ using namespace irc;
 
 /**************************** CONSTRUCTORS ****************************/
 
+User::User(int fd) :
+		// cmap(),
+		_fd(fd),
+		_hostname(),
+		_nickname("yoka"),
+		// bufsize(512),
+		_command(),
+		_acceptConnect(1)
+{
+	// (void) address;
+	// init_map_cmd();
+}
+
+
+
 User::User(int fd, struct sockaddr_in address) :
 		// cmap(),
 		_fd(fd),
@@ -233,6 +248,16 @@ void					User::setAcceptConnect(bool ac)
 	this->_acceptConnect = ac;
 }
 
+
+// bool	User::operator<(const User & lhs, const User & rhs)
+// {
+// 	return (lhs.getFdUser() < rhs.getFdUser());
+// }
+//
+// bool	User::operator>(const User & lhs, const User & rhs)
+// {
+// 	return (lhs.getFdUser() > rhs.getFdUser());
+// }
 
 /******************** COMMANDS **********************/
 

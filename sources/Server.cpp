@@ -9,8 +9,10 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <utility>
 
 using namespace irc;
+using namespace std;
 
 /******************** CONSTRUCTORS **********************/
 
@@ -32,7 +34,7 @@ Server::Server() :
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
-		std::cout << "error setting socket option..." << std::endl;
+		cout << "error setting socket option..." << endl;
 	}
 	*/
 
@@ -68,11 +70,11 @@ void				 Server::establishConnection(void)
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
 	{
-		std::cout << "Error establishing connection..." << std::endl;
+		cout << "Error establishing connection..." << endl;
 		//exit(1);
 		return ;
 	}
-	std::cout << "Server Socket connection created..." << std::endl;
+	cout << "Server Socket connection created..." << endl;
 }
 
 void				Server::createServerAddr(int portNum)
@@ -86,7 +88,7 @@ void				Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
-		std::cout << "Error binding socket..." << std::endl;
+		cout << "Error binding socket..." << endl;
 	}
 }
 
@@ -96,10 +98,10 @@ int					Server::acceptUser(socklen_t  size)
 						  reinterpret_cast<socklen_t *>(&size));
 	if (fd < 0)
 	{
-		std::cout << "Error on accepting..." << std::endl;
+		cout << "Error on accepting..." << endl;
 		return (-1);
 	}
-	_user.push_back(new User(fd, this->_serverAddr));
+	_user.insert(make_pair(fd, new User(fd, this->_serverAddr)));
 	return (fd);
 }
 
@@ -133,36 +135,36 @@ void				Server::closeUser(User * user)
 // 	_cmap["WALLOPS"] = 	wallops_cmd;
 // }
 
-void					Server::parse_buffer_command(std::string buffer)
+void					Server::parse_buffer_command(string buffer)
 {
 	this->_param.clear();
 	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
 	// Uncomment this for printing parameters
-	// for(std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// for(vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
 	// {
 	// 	(*itc)->print_parameters();
-	// 	std::cout << "nl" << std::endl;
+	// 	cout << "nl" << endl;
 	// }
 
 	// for (size_t i = 0; i < this->_param.size(); i++)
 	// {
-	// 	std::cout << "param[" << i << "] = { ";
+	// 	cout << "param[" << i << "] = { ";
 	// 	for (size_t j = 0; j < this->_param[i].size(); j++)
 	// 	{
-	// 	 	std::cout << this->_param[i][j];
+	// 	 	cout << this->_param[i][j];
 	// 		if (j + 1 != this->_param[i].size())
-	// 			std::cout << "; ";
+	// 			cout << "; ";
 	// 		else
-	// 			std::cout << " }" << std::endl;
+	// 			cout << " }" << endl;
 	// 	}
 	// }
-	// std::cout << std::endl;
+	// cout << endl;
 
-	// std::cout << this->_param[0][0] << std::endl;
+	// cout << this->_param[0][0] << endl;
 
 	/*			Uncomment this for executing commands
 	cmap.find(*this->parameters.begin())->second(this->_command[0]);
-	for (std::vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
 	{
 		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
 	}
@@ -175,25 +177,26 @@ void					Server::parse_buffer_command(std::string buffer)
 	// }
 }
 
-void					Server::tokenize(std::string const & str)
+void					Server::tokenize(string const & str)
 {
-	std::stringstream 			ss(str);
-	std::string					s;
-	std::vector<std::string>	tmp;
+	stringstream 			ss(str);
+	string					s;
+	vector<string>	tmp;
 
 	int	i = 0;
 	int	j = 0;
 
-	while (std::getline(ss, s, '\n'))
+	while (getline(ss, s, '\r'))
 	{
-		std::stringstream o(s);
-		std::string u;
+		stringstream o(s);
+		string u;
 		j = 0;
-		while (std::getline(o, u, ' '))
+		while (getline(o, u, ' '))
 		{
 			// this->_param[i].push_back(u);
+			// if (u != "\n")
 			tmp.push_back(u);
-			std::cout << "param[" << i << "][" << j << "] = " << tmp.back() << std::endl;
+			// cout << "param[" << i << "][" << j << "] = " << tmp.back() << endl;
 			//u.clear();
 			j++;
 		}
@@ -203,6 +206,7 @@ void					Server::tokenize(std::string const & str)
 		// this->parameters.clear();
 		//s.clear();
 		i++;
+		getline(ss, s, '\n');
 	}
 }
 
@@ -210,15 +214,15 @@ void	Server::print_param()
 {
 	int	i = 0;
 
-	for (std::vector<std::vector<std::string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
+	for (vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
 	{
-		std::cout << "param[" << i << "] = { ";
-		for (std::vector<std::string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
+		cout << "param[" << i << "] = { ";
+		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
 		{
-			std::cout << *jt << "; ";
+			cout << *jt << "; ";
 			// j++;
 		}
-		std::cout << " }\n" << std::endl;
+		cout << " }" << endl;
 		i++;
 	}
 }
@@ -255,7 +259,7 @@ struct sockaddr_in	Server::getServerAddr() const
 
 User 				*Server::getUser()
 {
-	return (this->_user.at(0));
+	return (this->_user[4]);
 }
 
 socklen_t			Server::getSize() const
@@ -268,7 +272,7 @@ int 				Server::getPortNum() const
 	return (this->_portNum);
 }
 
-std::string 		Server::getServerName() const
+string 		Server::getServerName() const
 {
 	return (this->_serverName);
 }

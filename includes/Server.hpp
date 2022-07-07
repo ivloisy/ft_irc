@@ -10,9 +10,11 @@
 # include "User.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
+# include <map>
 # include <sstream>
 
 // # define BUFFERSIZE 512
+using namespace std;
 
 namespace irc
 {
@@ -24,27 +26,28 @@ namespace irc
 	public:
 		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
 		//typedef void (*pointer_function)(void);
-		//typedef std::map<std::string, pointer_function>		map_cmd;
+		//typedef map<string, pointer_function>		map_cmd;
 		// typedef void (* Server::pointer_function)(/*Command * com*/);
-		// typedef std::map<std::string, pointer_function>		map_cmd;
+		// typedef map<string, pointer_function>		map_cmd;
 
 	private:
 		int 												_fd;
 		int													_fdMax;
+		int*												_fds;
 		struct sockaddr_in									_serverAddr;
-		std::string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
+		string												_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 											_size;
-		std::vector<User *>									_user; //we're going to delete it for the instanciation with set
-		//std::vector<Channel *>							_channels;
+		map<int, User *>									_user; //we're going to delete it for the instanciation with set
+		//vector<Channel *>							_channels;
 		int													_portNum; //default port 6667
 		//Command											_commands;
-		//std::set<User *>									user; *Store the different users
+		//set<User *>									user; *Store the different users
 		//Config											_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//std::string										_upTime;
+		//string										_upTime;
 		bool												_state;
 		// map_cmd												_cmap;
-		// std::string 										_buffer[BUFFERSIZE];
-		std::vector<std::vector<std::string> >				_param;
+		// string 										_buffer[BUFFERSIZE];
+		vector<vector<string> >								_param;
 
 	public:
 		Server();
@@ -54,7 +57,7 @@ namespace irc
 		//Server operator=(Server const & src);
 
 		//Config											&getConfig();
-		//std::string										getUpTime();
+		//string										getUpTime();
 
 		//void												add_user(User user);
 
@@ -65,8 +68,8 @@ namespace irc
 		int								acceptUser(socklen_t size);
 		void							closeUser(User * user);
 		// void							init_map_cmd();
-		void							parse_buffer_command(std::string buffer);
-		void							tokenize(std::string const & str);
+		void							parse_buffer_command(string buffer);
+		void							tokenize(string const & str);
 		void							print_param();
 
 		int								getFdMax( void ) const;
@@ -75,7 +78,7 @@ namespace irc
 		User							*getUser();
 		socklen_t						getSize() const;
 		int								getPortNum() const;
-		std::string						getServerName() const;
+		string							getServerName() const;
 		bool							getState() const;
 
 		void							setState(bool st);

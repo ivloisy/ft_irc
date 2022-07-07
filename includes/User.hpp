@@ -16,6 +16,8 @@
 #include "Command.hpp"
 #include "Server.hpp"
 
+using namespace std;
+
 namespace irc
 {
 	//class Message;
@@ -28,26 +30,26 @@ namespace irc
 
 	private:
 		typedef void (*pointer_function)(Command * com);
-		typedef std::map<std::string, pointer_function>		map_cmd;
+		typedef map<string, pointer_function>		map_cmd;
 		// map_cmd												cmap;
 
 		static int											_nbUser;
 		//int												_idUser;
 		int 												_fd;
 		//struct sockaddr_in 								_serverAddr;
-		std::string											_hostname;
-		std::string 										_realname;
-		std::string 										_username;
-		std::string 										_nickname;
-		std::string 										_password;
-		//std::vector<std::string>							_waitingToSend;
-		//std::string										_prefix;
-		// std::string 										buffer;
-		std::vector<std::string>							parameters;
+		string											_hostname;
+		string 										_realname;
+		string 										_username;
+		string 										_nickname;
+		string 										_password;
+		//vector<string>							_waitingToSend;
+		//string										_prefix;
+		// string 										buffer;
+		vector<string>							parameters;
 		// int 												bufsize;
 		//Message											*_msg;
 		//Server											*server;
-		std::vector<Command *>								_command;
+		vector<Command *>								_command;
 		bool												_acceptConnect;
 		bool												_isOper;
 
@@ -56,6 +58,7 @@ namespace irc
 	public:
 		//User();
 		User(int fd, struct sockaddr_in address);
+		User(int fd);
 		//virtual ~User();
 		//User(User const &src);
 		User &operator=(User const &rhs);
@@ -64,40 +67,44 @@ namespace irc
 
 		void												init_map_cmd(void);
 
-		// ssize_t 											send_buf(Server &serv, std::string const &msg);
-		// void												write_buf(User * user, std::string const &msg);
+		// ssize_t 											send_buf(Server &serv, string const &msg);
+		// void												write_buf(User * user, string const &msg);
 		//
-		// void												tokenize(std::string const &str, Server *serv);
+		// void												tokenize(string const &str, Server *serv);
 		// void												parse_buffer_command(Server * serv);
 
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
-		std::string 										getPrefix() const;
-		std::string 										getHostname() const;
-		std::string 										getNickName() const;
-		std::string 										getPassWord() const;
-		std::string 										getUserName() const;
-		std::string											getRealName() const;
-		std::string 										&getBuffer();
+		string 										getPrefix() const;
+		string 										getHostname() const;
+		string 										getNickName() const;
+		string 										getPassWord() const;
+		string 										getUserName() const;
+		string											getRealName() const;
+		string 										&getBuffer();
 		int 												getBufsize() const;
-		std::vector<Command *>								getCommand() const;
+		vector<Command *>								getCommand() const;
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
 		void 												setFdUser(int fd);
-		void												setNickName(std::string nickname);
-		void												setUserName(std::string username);
-		void												setRealName(std::string realname);
-		void												setHostName(std::string hostname);
-		void												setPassWord(std::string password);
-		void												setBuffer(std::string buf);
+		void												setNickName(string nickname);
+		void												setUserName(string username);
+		void												setRealName(string realname);
+		void												setHostName(string hostname);
+		void												setPassWord(string password);
+		void												setBuffer(string buf);
 
 		//void												send_message(int nb_command, Server server);
 
 		void												connection_replies(Command * com);
 	};
+	// bool	operator<(const User & lhs, const User & rhs);
+	// bool	operator>(const User & lhs, const User & rhs);
 }
+
+
 
 #endif //FT_IRC_CLIENT_HPP
