@@ -79,8 +79,9 @@ void ft_run()
 					if (recv(fd, &buffer, 255, 0) >= 1)
 					{
 						std::cout << "BUFFER: = " << buffer << std::endl;
-						serv.parse_buffer_command(buffer);
+						serv.parse_buffer_command(buffer, fd);
 						serv.print_param();
+						serv.exec_command();
 					}
 					if (test == 1)
 						break ;

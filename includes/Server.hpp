@@ -68,14 +68,16 @@ namespace irc
 		int								acceptUser(socklen_t size);
 		void							closeUser(User * user);
 		// void							init_map_cmd();
-		void							parse_buffer_command(string buffer);
-		void							tokenize(string const & str);
+		void							parse_buffer_command(string buffer, int fd);
+		void							tokenize(string const & str, int fd);
 		void							print_param();
+		void							exec_command();
 
 		int								getFdMax( void ) const;
 		int								getFdServer() const;
 		struct sockaddr_in				getServerAddr() const;
-		User							*getUser();
+		User							*getUser(int fd);
+		User							*getUser(string nick);
 		socklen_t						getSize() const;
 		int								getPortNum() const;
 		string							getServerName() const;
@@ -87,28 +89,6 @@ namespace irc
 		// void							setDownFdMax(int fdCurrent);
 
 		bool							isUserEmpty();
-
-		void	cap_cmd(/*Command * cmd*/);
-		void	die_cmd(/*Command * cmd*/);
-		void	join_cmd(/*Command * cmd*/);
-		void	list_cmd(/*Command * cmd*/);
-		void	mode_cmd(/*Command * cmd*/);
-		void	msg_cmd(/*Command * cmd*/);
-		void	names_cmd(/*Command * cmd*/);
-		void	nick_cmd(/*Command * cmd*/);
-		void	notice_cmd(/*Command * cmd*/);
-		void	oper_cmd(/*Command * cmd*/);
-		void	part_cmd(/*Command * cmd*/);
-		void	pass_cmd(/*Command * cmd*/);
-		void	ping_cmd(/*Command * cmd*/);
-		void	pong_cmd(/*Command * cmd*/);
-		void	privmsg_cmd(/*Command * cmd*/);
-		void	quit_cmd(/*Command * cmd*/);
-		void	rehash_cmd(/*Command * cmd*/);
-		void	restart_cmd(/*Command * cmd*/);
-		void	squit_cmd(/*Command * cmd*/);
-		void	user_cmd(/*Command * cmd*/);
-		void	wallops_cmd(/*Command * cmd*/);
 	};
 }
 

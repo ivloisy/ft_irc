@@ -113,35 +113,15 @@ void				Server::closeUser(User * user)
 	close(user->getFdUser());
 }
 
-// void				Server::init_map_cmd()
-// {
-// 	_cmap["CAP"] 	= 	cap_cmd;
-// 	_cmap["DIE"] 	= 	user_cmd;
-// 	_cmap["JOIN"] 	= 	join_cmd;
-// 	_cmap["LIST"] 	= 	list_cmd;
-// 	_cmap["MODE"] 	= 	mode_cmd;
-// 	_cmap["MSG"] 	= 	msg_cmd;
-// 	_cmap["NAMES"] 	= 	names_cmd;
-// 	_cmap["NICK"] 	=	nick_cmd;
-// 	_cmap["NOTICE"] 	= 	notice_cmd;
-// 	_cmap["OPER"] 	= 	oper_cmd;
-// 	_cmap["PART"] 	=	part_cmd;
-// 	_cmap["PASS"] 	= 	pass_cmd;
-// 	_cmap["PING"] 	= 	ping_cmd;
-// 	_cmap["PONG"] 	= 	pong_cmd;
-// 	_cmap["PRIVMSG"] =	privmsg_cmd;
-// 	_cmap["QUIT"] 	=	quit_cmd;
-// 	_cmap["REHASH"] 	= 	rehash_cmd;
-// 	_cmap["RESTART"] = 	restart_cmd;
-// 	_cmap["SQUIT"] 	= 	squit_cmd;
-// 	_cmap["USER"] 	= 	user_cmd;
-// 	_cmap["WALLOPS"] = 	wallops_cmd;
-// }
+void							Server::exec_command()
+{
+	execve();
+}
 
-void					Server::parse_buffer_command(string buffer)
+void					Server::parse_buffer_command(string buffer, int fd)
 {
 	this->_param.clear();
-	this->tokenize(/*this->*/buffer/*,  serv*/); //this splits the buffer into different vectors of parameters
+	this->tokenize(/*this->*/buffer/*,  serv*/, fd); //this splits the buffer into different vectors of parameters
 	// Uncomment this for printing parameters
 	// for(vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
 	// {
@@ -180,7 +160,7 @@ void					Server::parse_buffer_command(string buffer)
 	// }
 }
 
-void					Server::tokenize(string const & str)
+void					Server::tokenize(string const & str, int fd)
 {
 	stringstream 			ss(str);
 	string					s;
@@ -191,6 +171,7 @@ void					Server::tokenize(string const & str)
 
 	while (getline(ss, s, '\r'))
 	{
+		this->getUser(fd)->setRdySend();
 		stringstream o(s);
 		string u;
 		j = 0;
@@ -260,9 +241,20 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-User 				*Server::getUser()
+User 				*Server::getUser(int fd)
 {
-	return (this->_user[4]);
+	vector<User *>::iterator it = this->_user.begin();
+	while (it != _user.end() && (*it)->getFdUser() != fd)
+		it++;
+	return (*it);
+}
+
+User 				*Server::getUser(string nick)
+{
+	vector<User *>::iterator it = this->_user.begin();
+	while (it != _user.end() && (*it)->getNickName() != nick)
+		it++;
+	return (*it);
 }
 
 socklen_t			Server::getSize() const
@@ -298,88 +290,4 @@ bool				Server::getState() const
 void				Server::setState(bool st)
 {
 	this->_state = st;
-}
-
-void	Server::cap_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::die_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::join_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::list_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::mode_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::msg_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::names_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::nick_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::notice_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::oper_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::part_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::pass_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::ping_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::pong_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::privmsg_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::quit_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::rehash_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::restart_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::squit_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::user_cmd(/*Command * cmd*/)
-{
-}
-
-void	Server::wallops_cmd(/*Command * cmd*/)
-{
 }

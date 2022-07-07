@@ -37,22 +37,22 @@ namespace irc
 		//int												_idUser;
 		int 												_fd;
 		//struct sockaddr_in 								_serverAddr;
-		string											_hostname;
-		string 										_realname;
-		string 										_username;
-		string 										_nickname;
-		string 										_password;
+		string												_hostname;
+		string 												_realname;
+		string 												_username;
+	string 													_nickname;
+		string 												_password;
 		//vector<string>							_waitingToSend;
 		//string										_prefix;
 		// string 										buffer;
-		vector<string>							parameters;
+		vector<string>										parameters;
 		// int 												bufsize;
 		//Message											*_msg;
 		//Server											*server;
-		vector<Command *>								_command;
+		vector<Command *>									_command;
 		bool												_acceptConnect;
 		bool												_isOper;
-		int												_rdySend;
+		int													_rdySend;
 
 		//if client send a cap command, ignore it
 
