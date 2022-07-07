@@ -30,17 +30,6 @@
 using namespace std;
 using namespace irc;
 
-std::string char_to_str(char *buf)
-{
-	std::string result;
-	size_t len = strlen(buf);
-
-	for (size_t i = 0; i < len; i++)
-		result.push_back(buf[i]);
-	//std::cout << "result = " << result << std::endl;
-	return (result);
-}
-
 void ft_run()
 {
 	char buffer[512];
