@@ -40,7 +40,7 @@ void	restart_cmd();
 void	squit_cmd();
 void	user_cmd();
 void	wallops_cmd();
-string ft_reply(string code, string message);
+string ft_reply(string code, string nick, string message);
 
 
 #endif

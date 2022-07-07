@@ -149,13 +149,18 @@ void					Server::exec_command()
 
 void 					Server::welcome(int fd)
 {
-	string buf = ft_reply(RPL_WELCOME, "WELCOME");
+	if (this->getUser(fd)->getRdySend() != 3)
+		return;
+	string buf = ft_reply(RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
+	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_YOURHOST, "YOURHOST");
+	buf = ft_reply(RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
+	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_CREATED, "CREATED");
+	buf = ft_reply(RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
+	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_MYINFO, "MYINFO");
+	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
 
 }
