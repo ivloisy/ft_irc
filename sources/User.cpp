@@ -3,7 +3,6 @@
 //
 
 #include "../includes/User.hpp"
-#include "../includes/Command.hpp"
 #include "../includes/Server.hpp"
 #include "../includes/Channel.hpp"
 //#include <sys/socket.h>
@@ -23,8 +22,6 @@
 //#include <arpa/inet.h>
 //#include <unistd.h>
 //#include <ctime>
-
-
 
 using namespace irc;
 using namespace std;

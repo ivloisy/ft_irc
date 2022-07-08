@@ -8,8 +8,6 @@
 # include <netinet/in.h>
 # include <sys/socket.h>
 # include "User.hpp"
-# include "Config.hpp"
-# include "Command.hpp"
 #include <map>
 #include <string>
 #include <algorithm>

@@ -13,16 +13,12 @@
 # include <sys/select.h>
 # include <sys/time.h>
 
-# include "Server.hpp"
-# include "User.hpp"
-# include "Config.hpp"
-# include "Command.hpp"
-
+#include "Server.hpp"
+#include "User.hpp"
 
 #define OPER_PASS	"hackme"
 #define OPER_NAME	"admin"
 
-// using namespace std, irc;
 using namespace std;
 using namespace irc;
 
@@ -42,9 +38,6 @@ void	ping_cmd(Server * srv, User * usr, vector<string> params);
 void	pong_cmd(Server * srv, User * usr, vector<string> params);
 void	privmsg_cmd(Server * srv, User * usr, vector<string> params);
 void	quit_cmd(Server * srv, User * usr, vector<string> params);
-void	rehash_cmd(Server * srv, User * usr, vector<string> params);
-void	restart_cmd(Server * srv, User * usr, vector<string> params);
-void	squit_cmd(Server * srv, User * usr, vector<string> params);
 void	user_cmd(Server * srv, User * usr, vector<string> params);
 void	wallops_cmd(Server * srv, User * usr, vector<string> params);
 

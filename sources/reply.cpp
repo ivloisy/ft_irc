@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "../includes/Reply.hpp"
+#include "../includes/reply.hpp"
 #include "../includes/ft_irc.hpp"
 
 string ft_reply(string code, string nick, string message)

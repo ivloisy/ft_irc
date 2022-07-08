@@ -14,7 +14,6 @@
 #include <ostream>
 #include <bitset>
 
-#include "Command.hpp"
 #include "Server.hpp"
 #include "Channel.hpp"
 

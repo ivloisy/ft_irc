@@ -20,7 +20,7 @@ using namespace std;
  * MODE
  * parameters <nickname> *( ( "+" / "-" ) *( "i" / "w" / "o" / "O" / "r" ) )
  *
-USER MODES :
+USER MODES :						ADD IF WE HAVE TIME
 	- a : away
 	- i : invisible
 	- w : wallops
@@ -30,8 +30,8 @@ USER MODES :
 CHANNEL MODES :
 for users :
     - O : channel creator
-    - o : channel operator
-    - v : voice
+    - o : channel operator				i : invited
+    - v : voice							b : banned
 for channels :
     - i : invite only
     - m : moderated

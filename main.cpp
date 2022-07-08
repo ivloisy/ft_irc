@@ -23,15 +23,11 @@
 
 #include "./includes/Server.hpp"
 #include "./includes/User.hpp"
-#include "./includes/Config.hpp"
-#include "./includes/Command.hpp"
 #include "./includes/ft_irc.hpp"
 //#include "../includes/Message.hpp"
 
 using namespace std;
 using namespace irc;
-
-
 
 
 void ft_run(int port)

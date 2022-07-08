@@ -10,7 +10,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include "../includes/Reply.hpp"
+#include "../includes/reply.hpp"
 #include <utility>
 #include <map>
 #include <string>
@@ -143,9 +143,6 @@ void					Server::initCommand()
 	map_cmd["PONG"] 	= 	pong_cmd;
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
-	map_cmd["REHASH"] 	= 	rehash_cmd;
-	map_cmd["RESTART"] 	= 	restart_cmd;
-	map_cmd["SQUIT"] 	= 	squit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
 }

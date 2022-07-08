@@ -17,6 +17,7 @@ Channel::Channel(string name) :
 	_invite(),
 	_ban(),
 	_inviteOnlyMode(0),
+	_key(NULL),
 	_name(name)
 {
 	//string 				_key;

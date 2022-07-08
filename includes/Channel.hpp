@@ -7,7 +7,9 @@
 
 #include "User.hpp"
 #include <iostream>
+#include <map>
 #include <bitset>
+#include "ft_irc.hpp"
 
 using namespace std;
 

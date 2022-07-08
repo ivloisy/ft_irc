@@ -7,6 +7,8 @@
 #include "../../includes/Server.hpp"
 #include "../../includes/Command.hpp"
 #include "../../includes/Channel.hpp"
+#include "../../includes/reply.hpp"
+#include "../../includes/ft_irc.hpp"
 #include <bitset>
 
 using namespace irc;
@@ -18,7 +20,7 @@ using namespace std;
  * JOIN command
  * ( <channel> *( "," <channel> ) [ <key> *( "," <key> ) ] )
                / "0"
- */
+*/
 
 /*
  * I don't know how to use theses :
@@ -40,16 +42,22 @@ void	user_join_channel(User * usr, Channel * existing)
 	if (existing->getInviteOnlyMode())
 	{
 		//ERR_INVITEONLYCHAN
+		string msg(existing->getChannelName() + " :Cannot join channel (+i)");
+		ft_reply(ERR_INVITEONLYCHAN, usr->getNickName(), msg);
 		return ;
 	}
 	else if (existing->isMaxUsers())
 	{
 		//ERR_CHANNELISFULL
+		string msg(existing->getChannelName() + " :Cannot join channel (+l)");
+		ft_reply(ERR_CHANNELISFULL, usr->getNickName(), msg);
 		return ;
 	}
 	else if (existing->getBanned(usr->getNickName()))
 	{
 		//ERR_BANNEDFROMCHAN
+		string msg(existing->getChannelName() + " :Cannot join channel (+b)");
+		ft_reply(ERR_BANNEDFROMCHAN, usr->getNickName(), msg);
 		return ;
 	}
 	//join channel
@@ -64,6 +72,8 @@ void	user_create_channel(Server *srv, User *usr, string name)
 	if (srv->isMaxChannel())
 	{
 		//ERR_TOOMANYCHANNELS
+		string msg(name + " :You have joined too many channels");
+		ft_reply(ERR_TOOMANYCHANNELS, usr->getNickName(), msg);
 		return ;
 	}
 	//create channel
@@ -79,14 +89,19 @@ void	user_create_channel(Server *srv, User *usr, string name)
 
 void	join_cmd(Server * srv, User * usr, vector<string> params)
 {
+	//need to implement key
 	if (params[0] == "JOIN")
 	{
 		if (params.size() < 1)
 		{
-			return ;//ERR_NEEDMOREPARAMS
+			string msg(params[0] + " :Not enough parameters");
+			ft_reply(ERR_NEEDMOREPARAMS, usr->getNickName(), msg);
+			return ; //ERR_NEEDMOREPARAMS
 		}
 		else
 		{
+			vector<string> tmp;
+
 			vector<string>::iterator last = params.end();
 			for (vector<string>::iterator it = params.begin(); it != last; it++)
 			{
@@ -94,22 +109,59 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 				if (params[1] == "0" && params.size() < 2)
 				{
 					//quit all joined channels
+					string msg(params[1] + " left!");
+					ft_reply(0, usr->getNickName(), msg);
+					msg.clear();
+					msg = usr->getNickName() + " left " + params[1];
+					srv->sendToChan(params[1], msg);
 					usr->clearAllChannels();
 					srv->delUserAllChannel(usr);
 					return ;
 				}
-				else if ((existing = srv->searchChannel(params[1])))
+				int x = 1;
+				while (x < params.size())
 				{
-					user_join_channel(usr, existing);
-					return ;
-				}
-				else// > starts with one of the channel symbols
-				{
+					if (x > 1 && srv->getChannel(params[x - 1]))
+					{
+						for (string::iterator it = params[x].begin(); it != params[x].end(); it++)
+						{
+							if ((*it) == ',')
+							{
+								string key;
+								for (; it != params[x].end(); it++)
+								{
+									if (*it != ' ' && *it != ',')
+										key.push_back(*it);
+								}
+								srv->getChannel(params[x - 1])->setKey(key);
+							}
+						}
+					}
 
-					user_create_channel(srv, usr, params[1]);
-					return ;
+					if ((existing = srv->searchChannel(params[x])))
+					{
+						user_join_channel(usr, existing);
+						//optionnal
+						string msg(params[1] + " joined!");
+						ft_reply(0, usr->getNickName(), msg);
+						msg.clear();
+						msg = usr->getNickName() + " joined " + params[1];
+						srv->sendToChan(params[1], msg);
+						return ;
+					}
+					else if (params[x][0] == '#' || params[x][0] == '&' )// > starts with one of the channel symbols
+					{
 
+						user_create_channel(srv, usr, params[1]);
+						//optionnal
+						string msg(params[1] + " created!");
+						ft_reply(0, usr->getNickName(), msg);
+						return ;
+
+					}
+					x++;
 				}
+
 
 			}
 
