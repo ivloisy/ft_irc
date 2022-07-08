@@ -149,6 +149,7 @@ void					Server::initCommand()
 	map_cmd["SQUIT"] 	= 	squit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
+	map_cmd["WHOIS"] 	= 	whois_cmd;
 }
 
 void 					Server::welcome(int fd)

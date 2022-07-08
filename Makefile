@@ -29,7 +29,8 @@ SRCS = 	main.cpp \
 		sources/Commands/REHASH.cpp \
 		sources/Commands/RESTART.cpp \
 		sources/Commands/SQUIT.cpp \
-		sources/Commands/WALLOPS.cpp
+		sources/Commands/WALLOPS.cpp \
+		sources/Commands/WHOIS.cpp
 
 INCDIR = ./includes
 
