@@ -112,7 +112,7 @@ void ft_run(int port)
 			perror("There were select failures: ");
 	}
 	// serv.closeUser(serv.getUser(4));
-	close(serv.getFdServer());
+	// close(serv.getFdServer());
 }
 
 int main(int argc, char **argv)

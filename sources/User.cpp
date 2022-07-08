@@ -253,3 +253,8 @@ void 					User::setRdySend()
 	if (this->_rdySend < 5)
 		this->_rdySend++;
 }
+
+void 					User::setToClose(int x)
+{
+	this->_toClose = x;
+}

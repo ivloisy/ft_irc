@@ -101,6 +101,7 @@ namespace irc
 		void												setHostName(string hostname);
 		void												setPassWord(string password);
 		void 												setRdySend();
+		void 												setToClose(int x);
 
 		//void												send_message(int nb_command, Server server);
 

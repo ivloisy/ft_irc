@@ -64,7 +64,7 @@ Server::Server(int portNum, string passw) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
 	_state(1),
-	_password(passw);
+	_password(passw)
 	// _cmap()
 {
 	// socklen_t size;
@@ -167,7 +167,7 @@ void					Server::initCommand()
 
 
 	map_cmd["CAP"] 		= 	cap_cmd;
-	map_cmd["DIE"] 		= 	user_cmd;
+	map_cmd["DIE"] 		= 	die_cmd;
 	map_cmd["JOIN"] 	= 	join_cmd;
 	map_cmd["LIST"] 	= 	list_cmd;
 	map_cmd["MODE"] 	= 	mode_cmd;
@@ -178,7 +178,6 @@ void					Server::initCommand()
 	map_cmd["PART"] 	=	part_cmd;
 	map_cmd["PASS"] 	= 	pass_cmd;
 	map_cmd["PING"] 	= 	ping_cmd;
-	map_cmd["PONG"] 	= 	pong_cmd;
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
 	map_cmd["REHASH"] 	= 	rehash_cmd;
@@ -261,7 +260,9 @@ void					Server::tokenize(string const & str, int fd)
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
+		{
 			tmp.push_back(u);
+		}
 		this->_param.push_back(tmp);
 		tmp.clear();
 		i++;
@@ -287,8 +288,38 @@ void				Server::printParam()
 
 void 				Server::execCommand(int fd)
 {
-	for (int x = 0; x < static_cast<int>(this->_param.size()); x++)
-		this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+	vector<string> test;
+	test.push_back("CAP");
+	test.push_back("DIE");
+	test.push_back("JOIN");
+	test.push_back("LIST");
+	test.push_back("MODE");
+	test.push_back("NAMES");
+	test.push_back("NICK");
+	test.push_back("NOTICE");
+	test.push_back("OPER");
+	test.push_back("PART");
+	test.push_back("PASS");
+	test.push_back("PING");
+	test.push_back("PRIVMSG");
+	test.push_back("QUIT");
+	test.push_back("REHASH");
+	test.push_back("RESTART");
+	test.push_back("SQUIT");
+	test.push_back("USER");
+	test.push_back("WALLOPS");
+	for (size_t x = 0; x < this->_param.size(); x++)
+	{
+		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
+		cout << "avant" << endl;
+		for (size_t y = 0; y < test.size(); y++)
+		{
+			if (this->_param[x][0] == test[y])
+				this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+		}
+		cout << _param[x][0] << endl;
+		cout << "apres" << endl;
+	}
 }
 
 int					Server::searchNick(string nick)
@@ -459,7 +490,7 @@ string 				Server::getServerName() const
 	return (this->_serverName);
 }
 
-string							getPassword() const
+string				Server::getPassword() const
 {
 	return (this->_password);
 }
