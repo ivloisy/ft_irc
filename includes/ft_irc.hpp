@@ -2,7 +2,7 @@
 # define FT_IRC_HPP
 
 # include <iostream>
-# include <string.h>
+# include <string>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
@@ -45,6 +45,7 @@ void	restart_cmd(Server * srv, User * usr, vector<string> params);
 void	squit_cmd(Server * srv, User * usr, vector<string> params);
 void	user_cmd(Server * srv, User * usr, vector<string> params);
 void	wallops_cmd(Server * srv, User * usr, vector<string> params);
+void	whois_cmd(Server * srv, User * usr, vector<string> params);
 
 // void	cap_cmd();
 // void	die_cmd();
