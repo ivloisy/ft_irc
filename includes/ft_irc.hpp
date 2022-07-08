@@ -67,7 +67,7 @@ void	wallops_cmd(Server * srv, User * usr, vector<string> params);
 // void	squit_cmd();
 // void	user_cmd();
 // void	wallops_cmd();
-string ft_reply(string code, string nick, string message);
+string ft_reply(string servername, string code, string nick, string message);
 
 
 #endif

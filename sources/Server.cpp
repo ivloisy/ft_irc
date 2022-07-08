@@ -155,16 +155,16 @@ void 					Server::welcome(int fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3)
 		return;
-	string buf = ft_reply(RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
+	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
+	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
+	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
+	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
 
 }
@@ -248,10 +248,23 @@ void				Server::printParam()
 	}
 }
 
-void 				Server::execCommand()
+void 				Server::execCommand(int fd)
 {
 	for (int x = 0; x < static_cast<int>(this->_param.size()); x++)
-		map_cmd.find(this->_param[x][0])->second(this, this->getUser(this->_param[x][1]), this->_param[x]);
+		this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+}
+
+int					Server::searchNick(string nick)
+{
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		if ((*it)->getNickName() == nick)
+		{
+			return ((*it)->getFdUser());
+		}
+	}
+	return (0);
 }
 
 void				Server::sendToChan(string name, string msg)

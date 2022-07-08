@@ -78,8 +78,9 @@ namespace irc
 		void											sendBuffer(User * dest, string content);
 		void											printParam();
 		void											initCommand();
-		void 											execCommand();
+		void 											execCommand(int fd);
 		void 											welcome(int fd);
+		int												searchNick(string nick);
 
 		Channel											*addChannel(string name);
 

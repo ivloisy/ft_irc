@@ -9,10 +9,11 @@ using namespace std;
 #include "../includes/Reply.hpp"
 #include "../includes/ft_irc.hpp"
 
-string ft_reply(string code, string nick, string message)
+string ft_reply(string servername, string code, string nick, string message)
 {
-	string ret = "";
-	ret += ":server ";
+	string ret = ":";
+	ret += servername;
+	ret += " ";
 	ret += code;
 	ret += " ";
 	ret += nick;
