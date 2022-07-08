@@ -46,7 +46,7 @@ void ft_run(int port)
 	int fin = 0;
 
 
-	while (serv.getState() && fin < 10)
+	while (serv.getState())
 	{
 		fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;

@@ -25,7 +25,6 @@ SRCS = 	main.cpp \
 		sources/Commands/PASS.cpp \
 		sources/Commands/PRIVMSG.cpp \
 		sources/Commands/QUIT.cpp \
-		sources/Commands/REHASH.cpp \
 		sources/Commands/RESTART.cpp \
 		sources/Commands/SQUIT.cpp \
 		sources/Commands/WALLOPS.cpp

@@ -180,7 +180,6 @@ void					Server::initCommand()
 	map_cmd["PING"] 	= 	ping_cmd;
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
-	map_cmd["REHASH"] 	= 	rehash_cmd;
 	map_cmd["RESTART"] 	= 	restart_cmd;
 	map_cmd["SQUIT"] 	= 	squit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
@@ -303,7 +302,6 @@ void 				Server::execCommand(int fd)
 	test.push_back("PING");
 	test.push_back("PRIVMSG");
 	test.push_back("QUIT");
-	test.push_back("REHASH");
 	test.push_back("RESTART");
 	test.push_back("SQUIT");
 	test.push_back("USER");
