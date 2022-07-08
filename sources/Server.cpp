@@ -174,7 +174,8 @@ void					Server::initCommand()
 
 void 					Server::welcome(int fd)
 {
-	if (this->getUser(fd)->getRdySend() != 3 || !this->getUser(fd)->getToClose())
+	cout << "gggggggggggggggggggggggggg" << this->getUser(fd)->getToClose() << endl;
+	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
 		return;
 	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
 	cout << buf << endl;

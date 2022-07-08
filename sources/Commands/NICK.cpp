@@ -26,6 +26,7 @@ void	nick_cmd(Server * srv, User * usr, vector<string> params)
 		cout << buf << endl;
 		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
 		usr->setToClose(1);
+		cout << "////////////// " << usr->getToClose() << endl;
 		return ;
 	}
 	if (/*params.size() > 2 || */params[1].length() > 9)
@@ -34,6 +35,7 @@ void	nick_cmd(Server * srv, User * usr, vector<string> params)
 		cout << buf << endl;
 		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
 		usr->setToClose(1);
+		cout << "////////////// " << usr->getToClose() << endl;
 		return ;
 	}
 	if (srv->searchNick(params[1]))
@@ -42,6 +44,7 @@ void	nick_cmd(Server * srv, User * usr, vector<string> params)
 		cout << buf << endl;
 		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
 		usr->setToClose(1);
+		cout << "////////////// " << usr->getToClose() << endl;
 		return ;
 	}
 	srv->getUser(usr->getFdUser())->setNickName(params[1]);
