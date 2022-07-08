@@ -25,7 +25,8 @@ using namespace std;
 Server::Server(int portNum) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
-	_state(1)
+	_state(1),
+	_maxChannels(10)
 	// _cmap()
 {
 	// socklen_t size;
@@ -127,8 +128,6 @@ void				Server::closeUser(User * user)
 
 void					Server::initCommand()
 {
-
-
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	user_cmd;
 	map_cmd["JOIN"] 	= 	join_cmd;
@@ -166,7 +165,6 @@ void 					Server::welcome(int fd)
 	send(fd, buf.c_str(), buf.length(), 0);
 	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
-
 }
 
 void					Server::parse_buffer_command(string buffer, int fd)
@@ -402,6 +400,11 @@ User				*Server::getOper(string name)
 	return (NULL);
 }
 
+int 				Server::getMaxChannel() const
+{
+	return (this->_maxChannels);
+}
+
 /********************* MUTATORS *************************/
 
 string 				Server::getServerName() const
@@ -414,10 +417,7 @@ void				Server::setFdServer(int fd)
 	this->_fd = fd;
 }
 
-bool				Server::isUserEmpty()
-{
-	return (this->_user.empty());
-}
+
 
 bool				Server::getState() const
 {
@@ -427,4 +427,22 @@ bool				Server::getState() const
 void				Server::setState(bool st)
 {
 	this->_state = st;
+}
+
+/******************* CHECKERS **********************/
+
+bool				Server::isMaxChannel()
+{
+	int nb;
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		nb++;
+	}
+	return (nb >= this->_maxChannels);
+}
+
+bool				Server::isUserEmpty()
+{
+	return (this->_user.empty());
 }

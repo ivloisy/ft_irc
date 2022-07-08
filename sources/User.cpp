@@ -198,8 +198,17 @@ Channel				*User::getChannelByName(string name)
 	return (NULL);
 }
 
+string 				User::getMode() const
+{
+	return (this->_mode);
+}
 
 /********************** SETTERS ***********************/
+
+void				User::setMode(string mode)
+{
+	this->_mode = mode;
+}
 
 void				User::setOper(bool op)
 {

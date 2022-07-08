@@ -15,10 +15,12 @@
 
 # include "Server.hpp"
 # include "User.hpp"
-// # include "Message.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
 
+
+#define OPER_PASS	"hackme"
+#define OPER_NAME	"admin"
 
 // using namespace std, irc;
 using namespace std;

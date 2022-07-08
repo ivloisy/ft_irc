@@ -48,6 +48,7 @@ namespace irc
 		//Server											*server;
 		vector<Command *>									_command;
 		vector<Channel *>									_channel;
+		string 												_mode;
 		bool												_acceptConnect;
 		bool												_isOper;
 		int													_rdySend;
@@ -90,7 +91,9 @@ namespace irc
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 		int 												getRdySend() const;
+		string 												getMode() const;
 
+		void												setMode(string mode);
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
 		void 												setFdUser(int fd);

@@ -10,9 +10,12 @@ using namespace std;
 /******************** CONSTRUCTORS ***********************/
 
 Channel::Channel(string name) :
+	_maxUsers(10),
 	_user(),
 	_oper(),
 	_invite(),
+	_ban(),
+	_inviteOnlyMode(0),
 	_name(name)
 {
 	//string 				_key;
@@ -75,6 +78,22 @@ User				*Channel::getInvite(string nickname)
 	return (NULL);
 }
 
+vector<User *>		Channel::getBanned() const
+{
+	return (this->_ban);
+}
+
+User				*Channel::getBanned(string nickname)
+{
+	vector<User *>::iterator last = this->_ban.end();
+	for (vector<User *>::iterator it = this->_ban.begin(); it != last; it++)
+	{
+		if ((*it)->getNickName() == nickname)
+			return (*it);
+	}
+	return (NULL);
+}
+
 string 				Channel::getMode() const
 {
 	return (this->_mode);
@@ -85,9 +104,33 @@ string 				Channel::getKey() const
 	return (this->_key);
 }
 
+bool				Channel::getInviteOnlyMode() const
+{
+	return (this->_inviteOnlyMode);
+}
 
+
+
+/******************* CHECKERS ****************************/
+
+bool 				Channel::isMaxUsers()
+{
+	int cur = 0;
+
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		cur++;
+	}
+	return (cur >= this->_maxUsers);
+}
 
 /********************** SETTERS **************************/
+
+void				Channel::setInviteOnlyMode(bool set)
+{
+	this->_inviteOnlyMode = set;
+}
 
 void				Channel::setChannelName(string name)
 {
@@ -121,6 +164,11 @@ void				Channel::addInvite(User * user)
 	this->_invite.push_back(user);
 }
 
+void				Channel::addBanned(User * user)
+{
+	this->_ban.push_back(user);
+}
+
 void				Channel::delUser(User * user)
 {
 	vector<User *>::iterator last = this->_user.end();
@@ -148,5 +196,15 @@ void				Channel::delInvite(User * user)
 	{
 		if (user->getNickName() == (*it)->getNickName())
 			this->_invite.erase(it);
+	}
+}
+
+void				Channel::delBanned(User * user)
+{
+	vector<User *>::iterator last = this->_ban.end();
+	for (vector<User *>::iterator it = this->_ban.begin(); it != last; it++)
+	{
+		if (user->getNickName() == (*it)->getNickName())
+			this->_ban.erase(it);
 	}
 }

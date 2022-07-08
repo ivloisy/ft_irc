@@ -9,6 +9,10 @@
 using namespace irc;
 using namespace std;
 
+//DONT DO THIS COMMAND
+/*
+The SQUIT command is available only to operators.  >>>> It is used to disconnect server links.
+*/
 /********************* OPERATOR COMMAND **********************/
 
 /*

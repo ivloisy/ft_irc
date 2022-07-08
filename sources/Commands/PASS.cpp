@@ -9,8 +9,6 @@
 using namespace irc;
 using namespace std;
 
-//optionnal for the moment, dont use
-
 /********************* USER COMMAND **********************/
 
 /*

@@ -6,6 +6,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -24,13 +25,23 @@ void	oper_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	if (params.size() < 2)
+	if (params.size() < 3)
 	{
-		//wrong number of parameters
+		return ;//ERR_NEEDMOREPARAMS
 	}
 	else
 	{
-
+		if (params[1] == OPER_NAME)
+		{
+			if (params[2] == OPER_PASS)
+			{
+				usr->setOper(1);
+				//RPL_YOUREOPER
+				return ;
+			}
+			//ERR_PASSWDMISMATCH
+		}
+		//ERR_NOOPERHOST
 	}
 	std::cout << "oper command called" << std::endl;
 }

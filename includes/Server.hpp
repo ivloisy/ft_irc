@@ -51,6 +51,7 @@ namespace irc
 		// map_cmd										_cmap;
 		string											_buffer;
 		vector<vector<string> >							_param;
+		int 											_maxChannels;
 
 	public:
 		Server(int portNum);
@@ -101,12 +102,14 @@ namespace irc
 		int												getPortNum() const;
 		string											getServerName() const;
 		bool											getState() const;
+		int 											getMaxChannel() const;
 
 		void											setState(bool st);
 		void											setFdServer(int fd);
 		void											setUpFdMax(int fdCurrent);
 		// void											setDownFdMax(int fdCurrent);
 
+		bool											isMaxChannel();
 		bool											isUserEmpty();
 	};
 }

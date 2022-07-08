@@ -9,6 +9,8 @@
 using namespace irc;
 using namespace std;
 
+//DONT DO THIS COMMAND
+
 /*********************** OPERATOR COMMAND ************************/
 
 void	wallops_cmd(Server * srv, User * usr, std::vector<std::string> params)

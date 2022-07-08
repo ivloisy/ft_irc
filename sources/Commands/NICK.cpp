@@ -11,8 +11,6 @@
 using namespace irc;
 using namespace std;
 
-//optional connection command
-
 /********************* USER COMMAND **********************/
 
 /* Gives a nickname to given user or change the existing one:

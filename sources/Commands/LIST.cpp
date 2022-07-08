@@ -9,6 +9,8 @@
 using namespace irc;
 using namespace std;
 
+//DONT DO THIS COMMAND
+
 /********************* CHANNEL COMMAND **********************/
 
 //not mandatory but usefull for debugging
@@ -23,5 +25,6 @@ void		list_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
+
 	std::cout << "list command called " << std::endl;
 }
