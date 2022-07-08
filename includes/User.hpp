@@ -5,17 +5,7 @@
 #ifndef FT_IRC_CLIENT_HPP
 #define FT_IRC_CLIENT_HPP
 
-#include <vector>
-#include <string>
-
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <iostream>
-#include <ostream>
-
-#include "Command.hpp"
-#include "Server.hpp"
-#include "Channel.hpp"
+#include "ft_irc.hpp"
 
 using namespace std;
 
@@ -48,8 +38,11 @@ namespace irc
 		//Server											*server;
 		vector<Command *>									_command;
 		vector<Channel *>									_channel;
+		Channel												*_currChan;
+		bitset<2> 											_mode;
 		bool												_acceptConnect;
 		bool												_isOper;
+		bool												_isInv;
 		bool												_toClose;
 		int													_rdySend;
 
@@ -91,7 +84,12 @@ namespace irc
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 		int 												getRdySend() const;
+		bitset<2> 											getMode() const;
+		bool												getInvisible() const;
+		Channel												*getCurrentChannel();
 
+		void												setInvisible(bool inv);
+		void												setMode(bitset<2> mode);
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
 		void 												setFdUser(int fd);

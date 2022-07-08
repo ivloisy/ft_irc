@@ -1,38 +1,7 @@
-//#include "../includes/ft_irc.hpp"
-
-# include <iostream>
-# include <cstring>
-# include <string.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string>
-# include <list>
-# include <fcntl.h>
-# include <poll.h>
-
-#include <sys/select.h>
-#include <sys/time.h>
-#include <map>
-#include <string>
-#include <vector>
-
-#include "./includes/Server.hpp"
-#include "./includes/User.hpp"
-#include "./includes/Config.hpp"
-#include "./includes/Command.hpp"
 #include "./includes/ft_irc.hpp"
-//#include "../includes/Message.hpp"
 
 using namespace std;
 using namespace irc;
-
-
-
 
 void ft_run(int port)
 {

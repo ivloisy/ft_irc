@@ -2,12 +2,12 @@
 // Created by antoine on 04/07/22.
 //
 
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
+
+//DONT DO THIS COMMAND
 
 /********************* CHANNEL COMMAND **********************/
 
@@ -23,5 +23,6 @@ void		list_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
+
 	std::cout << "list command called " << std::endl;
 }

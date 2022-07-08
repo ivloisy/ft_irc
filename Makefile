@@ -4,12 +4,10 @@ SRCDIR = ./sources
 
 #SRCS = $(shell find $(SRCDIR) -name *.cpp -or -name *.c -or -name *.s)
 SRCS = 	main.cpp \
-		sources/Config.cpp \
 		sources/Server.cpp \
 		sources/User.cpp \
 		sources/Channel.cpp \
-		sources/Reply.cpp \
-		sources/Command.cpp \
+		sources/reply.cpp \
 		sources/Commands/CAP.cpp \
 		sources/Commands/NICK.cpp \
 		sources/Commands/USER.cpp \
@@ -25,8 +23,6 @@ SRCS = 	main.cpp \
 		sources/Commands/PASS.cpp \
 		sources/Commands/PRIVMSG.cpp \
 		sources/Commands/QUIT.cpp \
-		sources/Commands/RESTART.cpp \
-		sources/Commands/SQUIT.cpp \
 		sources/Commands/WALLOPS.cpp \
 		sources/Commands/WHOIS.cpp
 

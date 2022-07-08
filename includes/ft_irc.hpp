@@ -1,6 +1,9 @@
 #ifndef FT_IRC_HPP
 # define FT_IRC_HPP
 
+
+# include <algorithm>
+# include <bitset>
 # include <iostream>
 # include <string>
 # include <sys/types.h>
@@ -8,19 +11,23 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <stdlib.h>
+# include <map>
+# include <netinet/ip.h>
+# include <poll.h>
+# include <string.h>
+# include <sstream>
+# include <stdio.h>
 # include <unistd.h>
+# include <vector>
 
-# include <sys/select.h>
-# include <sys/time.h>
-
+# include "Channel.hpp"
+# include "reply.hpp"
 # include "Server.hpp"
 # include "User.hpp"
-// # include "Message.hpp"
-# include "Config.hpp"
-# include "Command.hpp"
 
+#define OPER_PASS	"hackme"
+#define OPER_NAME	"admin"
 
-// using namespace std, irc;
 using namespace std;
 using namespace irc;
 
@@ -40,9 +47,6 @@ void	ping_cmd(Server * srv, User * usr, vector<string> params);
 void	pong_cmd(Server * srv, User * usr, vector<string> params);
 void	privmsg_cmd(Server * srv, User * usr, vector<string> params);
 void	quit_cmd(Server * srv, User * usr, vector<string> params);
-void	rehash_cmd(Server * srv, User * usr, vector<string> params);
-void	restart_cmd(Server * srv, User * usr, vector<string> params);
-void	squit_cmd(Server * srv, User * usr, vector<string> params);
 void	user_cmd(Server * srv, User * usr, vector<string> params);
 void	wallops_cmd(Server * srv, User * usr, vector<string> params);
 void	whois_cmd(Server * srv, User * usr, vector<string> params);

@@ -2,26 +2,7 @@
 // Created by antoine on 20/06/22.
 //
 
-#include "../includes/User.hpp"
-#include "../includes/Command.hpp"
-#include "../includes/Server.hpp"
-#include "../includes/Channel.hpp"
-//#include <sys/socket.h>
-
-//#include <netinet/in.h>
-//#include <netinet/ip.h>
-
-#include <sstream>
-#include <stdlib.h> //exit
-
-#include <fcntl.h>
-//#include <iostream>
-//#include <sys/socket.h>
-//#include <algorithm>
-//#include <netdb.h>
-//#include <arpa/inet.h>
-//#include <unistd.h>
-//#include <ctime>
+#include "../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -35,6 +16,8 @@ User::User(int fd) :
 		_nickname("lala"),
 		// bufsize(512),
 		_command(),
+		_currChan(NULL),
+		_mode(string("01")),
 		_acceptConnect(1),
 		_isOper(0),
 		_toClose(0),
@@ -53,6 +36,8 @@ User::User(int fd, struct sockaddr_in address) :
 		_nickname("lala"),
 		// bufsize(512),
 		_command(),
+		_currChan(NULL),
+		_mode(1),
 		_acceptConnect(1),
 		_isOper(0),
 		_toClose(0),
@@ -177,7 +162,7 @@ bool				User::getOper() const
 	return (this->_isOper);
 }
 
-int 					User::getRdySend() const
+int 				User::getRdySend() const
 {
 	return this->_rdySend;
 }
@@ -200,8 +185,34 @@ Channel				*User::getChannelByName(string name)
 	return (NULL);
 }
 
+bitset<2>			User::getMode() const
+{
+	return (this->_mode);
+}
+
+bool				User::getInvisible() const
+{
+	return (this->_isInv);
+}
+
+Channel				*User::getCurrentChannel()
+{
+	return (this->_currChan);
+}
 
 /********************** SETTERS ***********************/
+
+void				User::setInvisible(bool inv)
+{
+	this->_isInv = inv;
+}
+
+
+
+void				User::setMode(bitset<2> mode)
+{
+	this->_mode = mode;
+}
 
 void				User::setOper(bool op)
 {

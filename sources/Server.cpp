@@ -2,19 +2,7 @@
 // Created by blyzance on 18/06/22.
 //
 
-#include "../includes/Server.hpp"
-#include "../includes/User.hpp"
-#include "../includes/Channel.hpp"
-#include <iostream>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "../includes/Reply.hpp"
-#include <utility>
-#include <map>
-#include <string>
-#include <algorithm>
+
 #include "../includes/ft_irc.hpp"
 
 using namespace irc;
@@ -25,7 +13,8 @@ using namespace std;
 Server::Server(int portNum) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
-	_state(1)
+	_state(1),
+	_maxChannels(10)
 	// _cmap()
 {
 	// socklen_t size;
@@ -164,8 +153,6 @@ void				Server::closeUser(User * user)
 
 void					Server::initCommand()
 {
-
-
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	die_cmd;
 	map_cmd["JOIN"] 	= 	join_cmd;
@@ -180,8 +167,6 @@ void					Server::initCommand()
 	map_cmd["PING"] 	= 	ping_cmd;
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
-	map_cmd["RESTART"] 	= 	restart_cmd;
-	map_cmd["SQUIT"] 	= 	squit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
 	map_cmd["WHOIS"] 	= 	whois_cmd;
@@ -202,7 +187,6 @@ void 					Server::welcome(int fd)
 	send(fd, buf.c_str(), buf.length(), 0);
 	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
-
 }
 
 void					Server::parse_buffer_command(string buffer, int fd)
@@ -378,6 +362,9 @@ void				Server::delUserAllChannel(User * user)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		(*it)->delUser(user);
+		(*it)->delOper(user);
+		(*it)->delUserMode(user);
+		(*it)->delInvite(user);
 	}
 }
 
@@ -482,6 +469,11 @@ User				*Server::getOper(string name)
 	return (NULL);
 }
 
+int 				Server::getMaxChannel() const
+{
+	return (this->_maxChannels);
+}
+
 /********************* MUTATORS *************************/
 
 string 				Server::getServerName() const
@@ -500,10 +492,7 @@ void				Server::setFdServer(int fd)
 	this->_fd = fd;
 }
 
-bool				Server::isUserEmpty()
-{
-	return (this->_user.empty());
-}
+
 
 bool				Server::getState() const
 {
@@ -513,4 +502,22 @@ bool				Server::getState() const
 void				Server::setState(bool st)
 {
 	this->_state = st;
+}
+
+/******************* CHECKERS **********************/
+
+bool				Server::isMaxChannel()
+{
+	int nb;
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+	{
+		nb++;
+	}
+	return (nb >= this->_maxChannels);
+}
+
+bool				Server::isUserEmpty()
+{
+	return (this->_user.empty());
 }

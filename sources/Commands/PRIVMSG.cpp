@@ -2,9 +2,7 @@
 // Created by antoine on 04/07/22.
 //
 
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -18,6 +16,7 @@ using namespace std;
 
 void	privmsg_cmd(Server * srv, User * usr, vector<string> params)
 {
+	(void)usr;
 	if (params.size() < 2)
 	{
 		//ERR wrong number arguments
@@ -37,7 +36,7 @@ void	privmsg_cmd(Server * srv, User * usr, vector<string> params)
 
 		if (srv->getChannel(params[1]))
 		{
-			srv->sendToChan(usr->getNickName(), msg);
+			srv->sendToChan(params[1], msg);
 		}
 		else if (srv->getUser(params[1]))
 		{
