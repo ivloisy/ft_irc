@@ -55,6 +55,43 @@ Server::Server(int portNum) :
 
 }
 
+Server::Server(int portNum, string passw) :
+	_serverName("irc.sample.com"),
+	_portNum(portNum),
+	_state(1),
+	_password(passw);
+	// _cmap()
+{
+	// socklen_t size;
+
+	this->establishConnection();
+
+	this->_fdMax = this->_fd;
+
+	this->createServerAddr(this->_portNum);
+
+	/*
+	int optval = 1;
+	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
+	{
+		cout << "error setting socket option..." << endl;
+	}
+	*/
+
+	this->bindServer();
+
+
+	this->_size = sizeof(this->getServerAddr());
+
+	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
+	{
+		//error
+		;
+	}
+	// this->init_map_cmd();
+
+}
+
 Server::Server(Server const & src)
 {
 	*this = src;
@@ -378,6 +415,12 @@ string 				Server::getServerName() const
 {
 	return (this->_serverName);
 }
+
+string							getPassword() const
+{
+	return (this->_password);
+}
+
 
 void				Server::setFdServer(int fd)
 {

@@ -37,6 +37,7 @@ User::User(int fd) :
 		_command(),
 		_acceptConnect(1),
 		_isOper(0),
+		_toClose(0),
 		_rdySend(0)
 {
 	// (void) address;
@@ -54,6 +55,7 @@ User::User(int fd, struct sockaddr_in address) :
 		_command(),
 		_acceptConnect(1),
 		_isOper(0),
+		_toClose(0),
 		_rdySend(0)
 {
 	(void) address;

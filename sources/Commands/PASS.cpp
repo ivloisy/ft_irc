@@ -26,5 +26,13 @@ void	pass_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
+	passw = srv.getPassword();
+	if (params.len != 1)
+		cout << "===================WTF=============================" << endl;
+	string testing = params[0];
+	if (params[0] != serv.getPassword())
+	{
+		usr.setToClose(1);
+	}
 	std::cout << "pass command called" << std::endl;
 }

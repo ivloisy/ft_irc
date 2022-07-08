@@ -12,7 +12,9 @@ using namespace std;
 void	ping_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
 	(void)srv;
-	(void)usr;
 	(void)params;
+	string buf = "PONG";
+	// cout << buf << endl;
+	send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
 	std::cout << "ping command called" << std::endl;
 }

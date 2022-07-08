@@ -39,11 +39,11 @@ namespace irc
 		string												_hostname;
 		string 												_realname;
 		string 												_username;
-	string 													_nickname;
+		string												_nickname;
 		string 												_password;
 		//vector<string>							_waitingToSend;
 		//string										_prefix;
-		string 										buffer;
+		string 												buffer;
 		vector<string>										parameters;
 		int 												bufsize;
 		//Message											*_msg;
@@ -52,6 +52,7 @@ namespace irc
 		vector<Channel *>									_channel;
 		bool												_acceptConnect;
 		bool												_isOper;
+		bool												_toClose;
 		int													_rdySend;
 
 		//if client send a cap command, ignore it

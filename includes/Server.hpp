@@ -49,10 +49,12 @@ namespace irc
 		bool											_state;
 		// map_cmd										_cmap;
 		string											_buffer;
+		string											_password;
 		vector<vector<string> >							_param;
 
 	public:
 		Server(int portNum);
+		Server(int portNum, string passw);
 		Server(Server const & src);
 		virtual ~Server();
 
@@ -95,6 +97,7 @@ namespace irc
 		Channel											*getChannel(string name);
 		socklen_t						getSize() const;
 		int								getPortNum() const;
+		string							getPassword() const;
 		string							getServerName() const;
 		bool							getState() const;
 
