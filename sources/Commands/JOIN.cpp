@@ -106,17 +106,18 @@ bool	quit_all_chan(Server *srv, User *usr, vector<string> params)
 
 void	reply_channel_joined(Server * srv, User * usr, Channel * existing)
 {
-	string msg = usr->getPrefix() + "!" + " JOIN " + existing->getChannelName() +"\r\n";
+	string msg = usr->getPrefix() + " JOIN " + existing->getChannelName() + "\r\n";
+	srv->sendBuffer(usr, msg);
 	cout << msg << endl;
-	vector<User *> chan = existing->getChannelUsers();
-	vector<User *>::iterator lst = chan.end();
-	for (vector<User *>::iterator it = chan.begin(); it != lst; it++)
-		srv->sendBuffer(*it, msg);
-	msg.clear();
-	msg = "";
-	srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_NAMREPLY, usr->getNickName(), msg));
-	msg = "";
-	srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_ENDOFNAMES, usr->getNickName(), msg));
+	//vector<User *> chan = existing->getChannelUsers();
+	//vector<User *>::iterator lst = chan.end();
+	//for (vector<User *>::iterator it = chan.begin(); it != lst; it++)
+	//	srv->sendBuffer(*it, msg);
+	//msg.clear();
+	//msg = "";
+	//srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_NAMREPLY, usr->getNickName(), msg));
+	//msg = "";
+	//srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_ENDOFNAMES, usr->getNickName(), msg));
 
 }
 

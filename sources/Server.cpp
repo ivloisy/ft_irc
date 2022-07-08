@@ -94,7 +94,7 @@ Server::~Server()
 
 /******************** CONNECTION **********************/
 
-void				 Server::establishConnection(void)
+void					 Server::establishConnection(void)
 {
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
@@ -106,14 +106,14 @@ void				 Server::establishConnection(void)
 	cout << "Server Socket connection created..." << endl;
 }
 
-void				Server::createServerAddr(int portNum)
+void					Server::createServerAddr(int portNum)
 {
 	this->_serverAddr.sin_family = AF_INET;
 	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
 	this->_serverAddr.sin_port = htons(portNum);
 }
 
-int				Server::bindServer()
+int						Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
@@ -123,7 +123,7 @@ int				Server::bindServer()
 	return (1);
 }
 
-int					Server::acceptUser(socklen_t  size)
+int						Server::acceptUser(socklen_t  size)
 {
 	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -139,7 +139,7 @@ int					Server::acceptUser(socklen_t  size)
 	return (fd);
 }
 
-void				Server::closeUser(User * user)
+void					Server::closeUser(User * user)
 {
 	close(user->getFdUser());
 }
@@ -163,6 +163,7 @@ void					Server::initCommand()
 	map_cmd["QUIT"] 	=	quit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
+	map_cmd["WHOIS"] 	= 	whois_cmd;
 }
 
 void 					Server::welcome(int fd)
@@ -329,13 +330,13 @@ void				Server::sendBuffer(User * dest, string content)
 	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
-Channel				*Server::addChannel(string name)
+Channel*			Server::addChannel(string name)
 {
 	this->_channel.push_back(new Channel(name));
 	return *(this->_channel.end() - 1);
 }
 
-Channel				*Server::searchChannel(string name)
+Channel*			Server::searchChannel(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -389,7 +390,7 @@ vector<User *>		Server::getUser() const
 	return (this->_user);
 }
 
-User 				*Server::getUser(int fd)
+User*				Server::getUser(int fd)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getFdUser() != fd)
@@ -397,7 +398,7 @@ User 				*Server::getUser(int fd)
 	return (*it);
 }
 
-User 				*Server::getUser(string nick)
+User*				Server::getUser(string nick)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getNickName() != nick)
@@ -405,7 +406,7 @@ User 				*Server::getUser(string nick)
 	return (*it);
 }
 
-Channel				*Server::getChannel(string name)
+Channel*			Server::getChannel(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -431,7 +432,7 @@ vector<User *>		Server::getOper() const
 	return (this->_oper);
 }
 
-User				*Server::getOper(string name)
+User*				Server::getOper(string name)
 {
 	vector<User *>::iterator last = this->_oper.end();
 	for (vector<User *>::iterator it = this->_oper.begin(); it != last; it++)

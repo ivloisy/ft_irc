@@ -4,6 +4,12 @@
 # include <algorithm>
 # include <bitset>
 # include <iostream>
+# include <string>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+# include <stdlib.h>
 # include <map>
 # include <netinet/ip.h>
 # include <poll.h>
@@ -42,6 +48,7 @@ void	privmsg_cmd(Server * srv, User * usr, vector<string> params);
 void	quit_cmd(Server * srv, User * usr, vector<string> params);
 void	user_cmd(Server * srv, User * usr, vector<string> params);
 void	wallops_cmd(Server * srv, User * usr, vector<string> params);
+void	whois_cmd(Server * srv, User * usr, vector<string> params);
 
 string ft_reply(string servername, string code, string nick, string message);
 

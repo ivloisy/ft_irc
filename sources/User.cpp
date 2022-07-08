@@ -101,52 +101,52 @@ int 					User::getFdUser(void) const
 	return (this->_fd);
 }
 
-string 				User::getPassWord() const
+string 					User::getPassWord() const
 {
 	return (this->_password);
 }
 
-string 				User::getUserName() const
+string 					User::getUserName() const
 {
 	return (this->_username);
 }
 
-string				User::getRealName() const
+string					User::getRealName() const
 {
 	return (this->_realname);
 }
 
-string 				User::getHostname() const
+string 					User::getHostname() const
 {
 	return (this->_hostname);
 }
 
-string 				User::getNickName() const
+string 					User::getNickName() const
 {
 	return (this->_nickname);
 }
 
-bool				User::getAcceptConnect() const
+bool					User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
 }
 
-bool				User::getOper() const
+bool					User::getOper() const
 {
 	return (this->_isOper);
 }
 
-int 				User::getRdySend() const
+int 					User::getRdySend() const
 {
 	return this->_rdySend;
 }
 
-vector<Channel *>	User::getChannel() const
+vector<Channel *>		User::getChannel() const
 {
 	return (this->_channel);
 }
 
-Channel				*User::getChannelByName(string name)
+Channel*				User::getChannelByName(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -159,22 +159,22 @@ Channel				*User::getChannelByName(string name)
 	return (NULL);
 }
 
-bitset<2>			User::getMode() const
+bitset<2>				User::getMode() const
 {
 	return (this->_mode);
 }
 
-bool				User::getInvisible() const
+bool					User::getInvisible() const
 {
 	return (this->_isInv);
 }
 
-Channel*			User::getCurrentChannel()
+Channel*				User::getCurrentChannel()
 {
 	return (this->_currChan);
 }
 
-string 				User::getPrefix() const
+string 					User::getPrefix() const
 {
 	return (this->_prefix);
 }
@@ -182,65 +182,65 @@ string 				User::getPrefix() const
 
 /********************** SETTERS ***********************/
 
-void				User::setPrefix()
+void					User::setPrefix()
 {
 	this->_prefix = ":" + _nickname + "!" + _username + "@" + _hostname;
 }
 
-void				User::setInvisible(bool inv)
+void					User::setInvisible(bool inv)
 {
 	this->_isInv = inv;
 }
 
 
 
-void				User::setMode(bitset<2> mode)
+void					User::setMode(bitset<2> mode)
 {
 	this->_mode = mode;
 }
 
-void				User::setOper(bool op)
+void					User::setOper(bool op)
 {
 	this->_isOper = op;
 }
 
-void 				User::setFdUser(int fd)
+void 					User::setFdUser(int fd)
 {
 	this->_fd = fd;
 }
 
-void				User::setNickName(string nickname)
+void					User::setNickName(string nickname)
 {
 	this->_nickname = nickname;
 }
 
-void				User::setUserName(string username)
+void					User::setUserName(string username)
 {
 	this->_username = username;
 }
 
-void				User::setRealName(string realname)
+void					User::setRealName(string realname)
 {
 	this->_realname = realname;
 }
 
-void				User::setHostName(string hostname)
+void					User::setHostName(string hostname)
 {
 	this->_hostname = hostname;
 }
 
 
-void				User::setServerName(string name)
+void					User::setServerName(string name)
 {
 	this->_serverName = name;
 }
 
-void				User::setPassWord(string password)
+void					User::setPassWord(string password)
 {
 	this->_password = password;
 }
 
-void				User::setAcceptConnect(bool ac)
+void					User::setAcceptConnect(bool ac)
 {
 	this->_acceptConnect = ac;
 }

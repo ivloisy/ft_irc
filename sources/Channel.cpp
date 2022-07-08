@@ -30,7 +30,7 @@ vector<User *>			Channel::getChannelUsers() const
 	return (this->_user);
 }
 
-User					*Channel::getUser(string nickname)
+User*					Channel::getUser(string nickname)
 {
 	//into try catch or send null
 	vector<User *>::iterator last = this->_user.end();
@@ -52,7 +52,7 @@ vector<User *>			Channel::getChannelOpers() const
 	return (this->_oper);
 }
 
-User					*Channel::getOper(string nickname)
+User*					Channel::getOper(string nickname)
 {
 	//into try catch or send null
 	vector<User *>::iterator last = this->_oper.end();
@@ -69,7 +69,7 @@ vector<User *>			Channel::getChannelInvite() const
 	return (this->_invite);
 }
 
-User					*Channel::getInvite(string nickname)
+User*					Channel::getInvite(string nickname)
 {
 	//into try catch or send NULL
 	vector<User *>::iterator last = this->_invite.end();
@@ -86,7 +86,7 @@ vector<User *>			Channel::getBanned() const
 	return (this->_ban);
 }
 
-User					*Channel::getBanned(string nickname)
+User*					Channel::getBanned(string nickname)
 {
 	//into try catch or send NULL
 	vector<User *>::iterator last = this->_ban.end();
