@@ -5,17 +5,7 @@
 #ifndef FT_IRC_CLIENT_HPP
 #define FT_IRC_CLIENT_HPP
 
-#include <vector>
-#include <string>
-
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <iostream>
-#include <ostream>
-#include <bitset>
-
-#include "Server.hpp"
-#include "Channel.hpp"
+#include "ft_irc.hpp"
 
 using namespace std;
 
@@ -37,7 +27,7 @@ namespace irc
 		string												_hostname;
 		string 												_realname;
 		string 												_username;
-		string 												_nickname;
+		string												_nickname;
 		string 												_password;
 		//vector<string>									_waitingToSend;
 		//string											_prefix;
@@ -53,6 +43,7 @@ namespace irc
 		bool												_acceptConnect;
 		bool												_isOper;
 		bool												_isInv;
+		bool												_toClose;
 		int													_rdySend;
 
 		//if client send a cap command, ignore it
@@ -108,6 +99,7 @@ namespace irc
 		void												setHostName(string hostname);
 		void												setPassWord(string password);
 		void 												setRdySend();
+		void 												setToClose(int x);
 
 		//void												send_message(int nb_command, Server server);
 

@@ -1,34 +1,7 @@
-//#include "../includes/ft_irc.hpp"
-
-# include <iostream>
-# include <cstring>
-# include <string.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string>
-# include <list>
-# include <fcntl.h>
-# include <poll.h>
-
-#include <sys/select.h>
-#include <sys/time.h>
-#include <map>
-#include <string>
-#include <vector>
-
-#include "./includes/Server.hpp"
-#include "./includes/User.hpp"
 #include "./includes/ft_irc.hpp"
-//#include "../includes/Message.hpp"
 
 using namespace std;
 using namespace irc;
-
 
 void ft_run(int port)
 {
@@ -42,7 +15,7 @@ void ft_run(int port)
 	int fin = 0;
 
 
-	while (serv.getState() && fin < 10)
+	while (serv.getState())
 	{
 		fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
@@ -94,7 +67,8 @@ void ft_run(int port)
 						cout << "BUFFER: = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
 						serv.printParam();
-						serv.execCommand();
+						// cout << "??????? = " << serv.getUser(fd)->getNickName() << endl;
+						serv.execCommand(fd);
 						// vector<string>::iterator v;
 						serv.welcome(fd);
 					}
@@ -107,7 +81,7 @@ void ft_run(int port)
 			perror("There were select failures: ");
 	}
 	// serv.closeUser(serv.getUser(4));
-	close(serv.getFdServer());
+	// close(serv.getFdServer());
 }
 
 int main(int argc, char **argv)

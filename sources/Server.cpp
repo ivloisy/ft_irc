@@ -2,19 +2,7 @@
 // Created by blyzance on 18/06/22.
 //
 
-#include "../includes/Server.hpp"
-#include "../includes/User.hpp"
-#include "../includes/Channel.hpp"
-#include <iostream>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "../includes/reply.hpp"
-#include <utility>
-#include <map>
-#include <string>
-#include <algorithm>
+
 #include "../includes/ft_irc.hpp"
 
 using namespace irc;
@@ -57,6 +45,43 @@ Server::Server(int portNum) :
 	}
 	this->initCommand();
 
+	// this->init_map_cmd();
+
+}
+
+Server::Server(int portNum, string passw) :
+	_serverName("irc.sample.com"),
+	_portNum(portNum),
+	_state(1),
+	_password(passw)
+	// _cmap()
+{
+	// socklen_t size;
+
+	this->establishConnection();
+
+	this->_fdMax = this->_fd;
+
+	this->createServerAddr(this->_portNum);
+
+	/*
+	int optval = 1;
+	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
+	{
+		cout << "error setting socket option..." << endl;
+	}
+	*/
+
+	this->bindServer();
+
+
+	this->_size = sizeof(this->getServerAddr());
+
+	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
+	{
+		//error
+		;
+	}
 	// this->init_map_cmd();
 
 }
@@ -129,7 +154,7 @@ void				Server::closeUser(User * user)
 void					Server::initCommand()
 {
 	map_cmd["CAP"] 		= 	cap_cmd;
-	map_cmd["DIE"] 		= 	user_cmd;
+	map_cmd["DIE"] 		= 	die_cmd;
 	map_cmd["JOIN"] 	= 	join_cmd;
 	map_cmd["LIST"] 	= 	list_cmd;
 	map_cmd["MODE"] 	= 	mode_cmd;
@@ -140,7 +165,6 @@ void					Server::initCommand()
 	map_cmd["PART"] 	=	part_cmd;
 	map_cmd["PASS"] 	= 	pass_cmd;
 	map_cmd["PING"] 	= 	ping_cmd;
-	map_cmd["PONG"] 	= 	pong_cmd;
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
@@ -151,16 +175,16 @@ void 					Server::welcome(int fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3)
 		return;
-	string buf = ft_reply(RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
+	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
+	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
+	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
+	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
 }
 
@@ -219,7 +243,9 @@ void					Server::tokenize(string const & str, int fd)
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
+		{
 			tmp.push_back(u);
+		}
 		this->_param.push_back(tmp);
 		tmp.clear();
 		i++;
@@ -243,10 +269,52 @@ void				Server::printParam()
 	}
 }
 
-void 				Server::execCommand()
+void 				Server::execCommand(int fd)
 {
-	for (int x = 0; x < static_cast<int>(this->_param.size()); x++)
-		map_cmd.find(this->_param[x][0])->second(this, this->getUser(this->_param[x][1]), this->_param[x]);
+	vector<string> test;
+	test.push_back("CAP");
+	test.push_back("DIE");
+	test.push_back("JOIN");
+	test.push_back("LIST");
+	test.push_back("MODE");
+	test.push_back("NAMES");
+	test.push_back("NICK");
+	test.push_back("NOTICE");
+	test.push_back("OPER");
+	test.push_back("PART");
+	test.push_back("PASS");
+	test.push_back("PING");
+	test.push_back("PRIVMSG");
+	test.push_back("QUIT");
+	test.push_back("RESTART");
+	test.push_back("SQUIT");
+	test.push_back("USER");
+	test.push_back("WALLOPS");
+	for (size_t x = 0; x < this->_param.size(); x++)
+	{
+		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
+		cout << "avant" << endl;
+		for (size_t y = 0; y < test.size(); y++)
+		{
+			if (this->_param[x][0] == test[y])
+				this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+		}
+		cout << _param[x][0] << endl;
+		cout << "apres" << endl;
+	}
+}
+
+int					Server::searchNick(string nick)
+{
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		if ((*it)->getNickName() == nick)
+		{
+			return ((*it)->getFdUser());
+		}
+	}
+	return (0);
 }
 
 void				Server::sendToChan(string name, string msg)
@@ -411,6 +479,12 @@ string 				Server::getServerName() const
 {
 	return (this->_serverName);
 }
+
+string				Server::getPassword() const
+{
+	return (this->_password);
+}
+
 
 void				Server::setFdServer(int fd)
 {

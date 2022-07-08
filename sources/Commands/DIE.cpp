@@ -2,9 +2,7 @@
 // Created by antoine on 05/07/22.
 //
 
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -13,7 +11,6 @@ using namespace std;
 
 void	die_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	(void)srv;
 	(void)usr;
 	(void)params;
 	srv->setState(0);

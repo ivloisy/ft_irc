@@ -5,13 +5,7 @@
 #ifndef FT_IRC_SERVER_HPP
 #define FT_IRC_SERVER_HPP
 
-# include <netinet/in.h>
-# include <sys/socket.h>
-# include "User.hpp"
-#include <map>
-#include <string>
-#include <algorithm>
-# include <sstream>
+#include "ft_irc.hpp"
 
 // # define BUFFERSIZE 512
 using namespace std;
@@ -48,11 +42,13 @@ namespace irc
 		bool											_state;
 		// map_cmd										_cmap;
 		string											_buffer;
+		string											_password;
 		vector<vector<string> >							_param;
 		int 											_maxChannels;
 
 	public:
 		Server(int portNum);
+		Server(int portNum, string passw);
 		Server(Server const & src);
 		virtual ~Server();
 
@@ -77,8 +73,9 @@ namespace irc
 		void											sendBuffer(User * dest, string content);
 		void											printParam();
 		void											initCommand();
-		void 											execCommand();
+		void 											execCommand(int fd);
 		void 											welcome(int fd);
+		int												searchNick(string nick);
 
 		Channel											*addChannel(string name);
 
@@ -99,6 +96,7 @@ namespace irc
 		socklen_t										getSize() const;
 		int												getPortNum() const;
 		string											getServerName() const;
+		string											getPassword() const;
 		bool											getState() const;
 		int 											getMaxChannel() const;
 

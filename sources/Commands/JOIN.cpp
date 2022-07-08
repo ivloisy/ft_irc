@@ -2,14 +2,7 @@
 // Created by antoine on 04/07/22.
 //
 
-
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include "../../includes/Command.hpp"
-#include "../../includes/Channel.hpp"
-#include "../../includes/reply.hpp"
 #include "../../includes/ft_irc.hpp"
-#include <bitset>
 
 using namespace irc;
 using namespace std;
@@ -37,27 +30,27 @@ using namespace std;
  * check the symbol before the name of the channel for setting its mode
  */
 
-void	user_join_channel(User * usr, Channel * existing)
+void	user_join_channel(Server * srv, User * usr, Channel * existing)
 {
 	if (existing->getInviteOnlyMode())
 	{
 		//ERR_INVITEONLYCHAN
 		string msg(existing->getChannelName() + " :Cannot join channel (+i)");
-		ft_reply(ERR_INVITEONLYCHAN, usr->getNickName(), msg);
+		ft_reply(srv->getServerName(), ERR_INVITEONLYCHAN, usr->getNickName(), msg);
 		return ;
 	}
 	else if (existing->isMaxUsers())
 	{
 		//ERR_CHANNELISFULL
 		string msg(existing->getChannelName() + " :Cannot join channel (+l)");
-		ft_reply(ERR_CHANNELISFULL, usr->getNickName(), msg);
+		ft_reply(srv->getServerName(), ERR_CHANNELISFULL, usr->getNickName(), msg);
 		return ;
 	}
 	else if (existing->getBanned(usr->getNickName()))
 	{
 		//ERR_BANNEDFROMCHAN
 		string msg(existing->getChannelName() + " :Cannot join channel (+b)");
-		ft_reply(ERR_BANNEDFROMCHAN, usr->getNickName(), msg);
+		ft_reply(srv->getServerName(), ERR_BANNEDFROMCHAN, usr->getNickName(), msg);
 		return ;
 	}
 	//join channel
@@ -73,7 +66,7 @@ void	user_create_channel(Server *srv, User *usr, string name)
 	{
 		//ERR_TOOMANYCHANNELS
 		string msg(name + " :You have joined too many channels");
-		ft_reply(ERR_TOOMANYCHANNELS, usr->getNickName(), msg);
+		ft_reply(srv->getServerName(), ERR_TOOMANYCHANNELS, usr->getNickName(), msg);
 		return ;
 	}
 	//create channel
@@ -95,7 +88,7 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 		if (params.size() < 1)
 		{
 			string msg(params[0] + " :Not enough parameters");
-			ft_reply(ERR_NEEDMOREPARAMS, usr->getNickName(), msg);
+			ft_reply(srv->getServerName(), ERR_NEEDMOREPARAMS, usr->getNickName(), msg);
 			return ; //ERR_NEEDMOREPARAMS
 		}
 		else
@@ -110,7 +103,7 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 				{
 					//quit all joined channels
 					string msg(params[1] + " left!");
-					ft_reply(0, usr->getNickName(), msg);
+					ft_reply(srv->getServerName(), 0, usr->getNickName(), msg);
 					msg.clear();
 					msg = usr->getNickName() + " left " + params[1];
 					srv->sendToChan(params[1], msg);
@@ -118,7 +111,7 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 					srv->delUserAllChannel(usr);
 					return ;
 				}
-				int x = 1;
+				unsigned long x = 1;
 				while (x < params.size())
 				{
 					if (x > 1 && srv->getChannel(params[x - 1]))
@@ -140,10 +133,10 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 
 					if ((existing = srv->searchChannel(params[x])))
 					{
-						user_join_channel(usr, existing);
+						user_join_channel(srv, usr, existing);
 						//optionnal
 						string msg(params[1] + " joined!");
-						ft_reply(0, usr->getNickName(), msg);
+						ft_reply(srv->getServerName(), 0, usr->getNickName(), msg);
 						msg.clear();
 						msg = usr->getNickName() + " joined " + params[1];
 						srv->sendToChan(params[1], msg);
@@ -155,7 +148,7 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 						user_create_channel(srv, usr, params[1]);
 						//optionnal
 						string msg(params[1] + " created!");
-						ft_reply(0, usr->getNickName(), msg);
+						ft_reply(srv->getServerName(), 0, usr->getNickName(), msg);
 						return ;
 
 					}

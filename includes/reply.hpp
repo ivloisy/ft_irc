@@ -7,6 +7,7 @@
 #ifndef FT_IRC_REPLY_HPP
 #define FT_IRC_REPLY_HPP
 
+
 /*Command responses */
 
 # define RPL_WELCOME "001"

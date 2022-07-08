@@ -2,26 +2,7 @@
 // Created by antoine on 20/06/22.
 //
 
-#include "../includes/User.hpp"
-#include "../includes/Server.hpp"
-#include "../includes/Channel.hpp"
-//#include <sys/socket.h>
-
-//#include <netinet/in.h>
-//#include <netinet/ip.h>
-
-#include <sstream>
-#include <stdlib.h> //exit
-#include <bitset>
-
-#include <fcntl.h>
-//#include <iostream>
-//#include <sys/socket.h>
-//#include <algorithm>
-//#include <netdb.h>
-//#include <arpa/inet.h>
-//#include <unistd.h>
-//#include <ctime>
+#include "../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -39,6 +20,7 @@ User::User(int fd) :
 		_mode(string("01")),
 		_acceptConnect(1),
 		_isOper(0),
+		_toClose(0),
 		_rdySend(0)
 {
 	// (void) address;
@@ -58,6 +40,7 @@ User::User(int fd, struct sockaddr_in address) :
 		_mode(1),
 		_acceptConnect(1),
 		_isOper(0),
+		_toClose(0),
 		_rdySend(0)
 {
 	(void) address;
@@ -280,4 +263,9 @@ void 					User::setRdySend()
 {
 	if (this->_rdySend < 5)
 		this->_rdySend++;
+}
+
+void 					User::setToClose(int x)
+{
+	this->_toClose = x;
 }

@@ -14,14 +14,13 @@ SRCS = 	main.cpp \
 		sources/Commands/DIE.cpp \
 		sources/Commands/JOIN.cpp \
 		sources/Commands/LIST.cpp \
-		sources/Commands/PONG.cpp \
+		sources/Commands/PING.cpp \
 		sources/Commands/MODE.cpp \
 		sources/Commands/NAMES.cpp \
 		sources/Commands/NOTICE.cpp \
 		sources/Commands/OPER.cpp \
 		sources/Commands/PART.cpp \
 		sources/Commands/PASS.cpp \
-		sources/Commands/PING.cpp \
 		sources/Commands/PRIVMSG.cpp \
 		sources/Commands/QUIT.cpp \
 		sources/Commands/WALLOPS.cpp
@@ -38,7 +37,7 @@ DEPS = $(OBJS:.o=.d)
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -I $(INCDIR) -MMD -MP -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -I $(INCDIR) -MMD -MP -std=c++98# -g -fsanitize=address
 
 all: $(NAME)
 

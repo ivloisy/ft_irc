@@ -2,11 +2,7 @@
 // Created by alangloi on 6/24/22.
 //
 
-#include "../../includes/Command.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include <list>
-#include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;
@@ -18,11 +14,33 @@ using namespace std;
  *	ERR_NONICKNAMEGIVEN ERR_ERRONEUSNICKNAME  ERR_NICKNAMEINUSE    ERR_NICKCOLLISION ERR_RESTRICTED ERR_UNAVAILRESOURCE
  */
 
-void	nick_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	nick_cmd(Server * srv, User * usr, vector<string> params)
 {
-	// user.setNickName(*(buffer.begin() + 1));
-	(void)srv;
-	(void)usr;
-	(void)params;
-	std::cout << "nick command called" << std::endl;
+	string	tmp = usr->getNickName();
+	string	buf;
+
+	// if (ERR_RESTRICTED)////////////////////////////
+	if (params.size() == 1)
+	{
+		buf = ft_reply(srv->getServerName(), ERR_NONICKNAMEGIVEN, usr->getNickName(), ":No nickname given");
+		cout << buf << endl;
+		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
+		return ;
+	}
+	if (params.size() > 2 || params[1].length() > 9)
+	{
+		buf = ft_reply(srv->getServerName(), ERR_ERRONEUSNICKNAME, usr->getNickName(), params[1] + " :Erroneous nickname");
+		cout << buf << endl;
+		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
+		return ;
+	}
+	if (srv->searchNick(params[1]))
+	{
+		buf = ft_reply(srv->getServerName(), ERR_NICKNAMEINUSE, usr->getNickName(), params[1] + " :Nickname is already in use");
+		cout << buf << endl;
+		send(usr->getFdUser(), buf.c_str(), buf.length(), 0);
+		return ;
+	}
+	srv->getUser(usr->getFdUser())->setNickName(params[1]);
+	std::cout << tmp << "'s nickname become " << usr->getNickName() << std::endl;
 }

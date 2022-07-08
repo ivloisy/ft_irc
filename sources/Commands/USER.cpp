@@ -2,11 +2,7 @@
 // Created by alangloi on 6/24/22.
 //
 
-#include "../../includes/Command.hpp"
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include <list>
-#include "../../includes/Command.hpp"
+#include "../../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;

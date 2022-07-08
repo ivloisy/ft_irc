@@ -2,11 +2,7 @@
 // Created by antoine on 04/07/22.
 //
 
-#include "../../includes/User.hpp"
-#include "../../includes/Server.hpp"
-#include "../../includes/Command.hpp"
-#include <cstring>
-#include <bitset>
+#include "../../includes/ft_irc.hpp"
 
 #define OPERATOR	2
 #define INVISIBLE	1

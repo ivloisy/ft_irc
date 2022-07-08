@@ -5,10 +5,6 @@
 #ifndef FT_IRC_CHANNEL_HPP
 #define FT_IRC_CHANNEL_HPP
 
-#include "User.hpp"
-#include <iostream>
-#include <map>
-#include <bitset>
 #include "ft_irc.hpp"
 
 using namespace std;

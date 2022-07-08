@@ -3,7 +3,6 @@
 //
 
 #include "../includes/Channel.hpp"
-#include <bitset>
 
 using namespace irc;
 using namespace std;

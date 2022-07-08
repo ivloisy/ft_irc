@@ -1,20 +1,23 @@
 #ifndef FT_IRC_HPP
 # define FT_IRC_HPP
 
+
+# include <algorithm>
+# include <bitset>
 # include <iostream>
+# include <map>
+# include <netinet/ip.h>
+# include <poll.h>
 # include <string.h>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
-# include <stdlib.h>
+# include <sstream>
+# include <stdio.h>
 # include <unistd.h>
+# include <vector>
 
-# include <sys/select.h>
-# include <sys/time.h>
-
-#include "Server.hpp"
-#include "User.hpp"
+# include "Channel.hpp"
+# include "reply.hpp"
+# include "Server.hpp"
+# include "User.hpp"
 
 #define OPER_PASS	"hackme"
 #define OPER_NAME	"admin"
@@ -62,7 +65,7 @@ void	wallops_cmd(Server * srv, User * usr, vector<string> params);
 // void	squit_cmd();
 // void	user_cmd();
 // void	wallops_cmd();
-string ft_reply(string code, string nick, string message);
+string ft_reply(string servername, string code, string nick, string message);
 
 
 #endif
