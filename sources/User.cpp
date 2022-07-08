@@ -195,10 +195,16 @@ bool				User::getInvisible() const
 	return (this->_isInv);
 }
 
-Channel				*User::getCurrentChannel()
+Channel*			User::getCurrentChannel()
 {
 	return (this->_currChan);
 }
+
+bool 				User::getToClose()
+{
+	return (this->_toClose);
+}
+
 
 /********************** SETTERS ***********************/
 

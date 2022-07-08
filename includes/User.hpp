@@ -87,6 +87,7 @@ namespace irc
 		bitset<2> 											getMode() const;
 		bool												getInvisible() const;
 		Channel												*getCurrentChannel();
+		bool 												getToClose();
 
 		void												setInvisible(bool inv);
 		void												setMode(bitset<2> mode);
