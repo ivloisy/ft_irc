@@ -16,6 +16,7 @@ using namespace std;
 
 void	privmsg_cmd(Server * srv, User * usr, vector<string> params)
 {
+	cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr->getFdUser() << endl;
 	(void)usr;
 	if (params.size() < 2)
 	{
@@ -33,13 +34,14 @@ void	privmsg_cmd(Server * srv, User * usr, vector<string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-
 		if (srv->getChannel(params[1]))
 		{
+			cout << "SEND TO CHAN = " << msg << "\n";
 			srv->sendToChan(params[1], msg);
 		}
 		else if (srv->getUser(params[1]))
 		{
+			cout << "SEND TO USER = " << msg << "\n";
 			srv->sendToUser(params[1], msg);
 		}
 	}

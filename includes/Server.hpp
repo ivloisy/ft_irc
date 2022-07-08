@@ -33,15 +33,8 @@ namespace irc
 		vector<User *>									_user;
 		vector<User *>									_oper;
 		vector<Channel *>								_channel;
-
 		int												_portNum; //default port 6667
-		//Command										_commands;
-		//set<User *>									user; *Store the different users
-		//Config										_config; *I don't know if we're gonna use a config file. if yes, we're going to store it there
-		//string										_upTime;
 		bool											_state;
-		// map_cmd										_cmap;
-		string											_buffer;
 		string											_password;
 		vector<vector<string> >							_param;
 		int 											_maxChannels;
@@ -52,12 +45,6 @@ namespace irc
 		Server(Server const & src);
 		virtual ~Server();
 
-		//Server operator=(Server const & src);
-
-		//Config										&getConfig();
-		//string										getUpTime();
-
-		//void											add_user(User user);
 
 		void											establishConnection(void);
 		void											createServerAddr(int portNum);
@@ -104,6 +91,7 @@ namespace irc
 		void											setFdServer(int fd);
 		void											setUpFdMax(int fdCurrent);
 		// void											setDownFdMax(int fdCurrent);
+
 
 		bool											isMaxChannel();
 		bool											isUserEmpty();

@@ -10,12 +10,15 @@ using namespace std;
 /**************************** CONSTRUCTORS ****************************/
 
 User::User(int fd) :
-		// cmap(),
 		_fd(fd),
-		_hostname(),
+		_hostname(""),
+		_realname(""),
+		_username(""),
 		_nickname("lala"),
-		// bufsize(512),
-		_command(),
+		_password(""),
+		_serverName(""),
+		_prefix(""),
+		_channel(),
 		_currChan(NULL),
 		_mode(string("01")),
 		_acceptConnect(1),
@@ -23,36 +26,29 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
-	// (void) address;
-	// init_map_cmd();
+
 }
 
 
 
 User::User(int fd, struct sockaddr_in address) :
-		// cmap(),
 		_fd(fd),
-		_hostname(),
+		_hostname(""),
+		_realname(""),
+		_username(""),
 		_nickname("lala"),
-		// bufsize(512),
-		_command(),
+		_password(""),
+		_serverName(""),
+		_channel(),
 		_currChan(NULL),
-		_mode(1),
+		_mode(string("01")),
 		_acceptConnect(1),
 		_isOper(0),
 		_toClose(0),
 		_rdySend(0)
 {
 	(void) address;
-	// init_map_cmd();
 }
-
-/*
-User::User(User const &src)
-{
-	;
-}
-*/
 
 /***************************** DESTRUCTORS ****************************/
 
@@ -103,28 +99,6 @@ void					User::quitChannel(Channel * chan)
 int 					User::getFdUser(void) const
 {
 	return (this->_fd);
-}
-
-string 					User::getPrefix() const
-{
-	string prefix = "prefix";
-	return (prefix);
-}
-//
-// string 			&User::getBuffer()
-// {
-// 	return (this->buffer);
-// }
-
-
-// int 					User::getBufsize() const
-// {
-// 	return (this->bufsize);
-// }
-
-vector<Command *>	User::getCommand() const
-{
-	return (this->_command);
 }
 
 string 				User::getPassWord() const
@@ -195,12 +169,23 @@ bool				User::getInvisible() const
 	return (this->_isInv);
 }
 
-Channel				*User::getCurrentChannel()
+Channel*			User::getCurrentChannel()
 {
 	return (this->_currChan);
 }
 
+string 				User::getPrefix() const
+{
+	return (this->_prefix);
+}
+
+
 /********************** SETTERS ***********************/
+
+void				User::setPrefix()
+{
+	this->_prefix = ":" + _nickname + "!" + _username + "@" + _hostname;
+}
 
 void				User::setInvisible(bool inv)
 {
@@ -223,11 +208,6 @@ void 				User::setFdUser(int fd)
 {
 	this->_fd = fd;
 }
-//
-// void					User::setBuffer(string buf)
-// {
-// 	this->buffer = buf;
-// }
 
 void				User::setNickName(string nickname)
 {
@@ -249,6 +229,12 @@ void				User::setHostName(string hostname)
 	this->_hostname = hostname;
 }
 
+
+void				User::setServerName(string name)
+{
+	this->_serverName = name;
+}
+
 void				User::setPassWord(string password)
 {
 	this->_password = password;
@@ -268,4 +254,9 @@ void 					User::setRdySend()
 void 					User::setToClose(int x)
 {
 	this->_toClose = x;
+}
+
+void					User::setCurrentChannel(Channel * chan)
+{
+	this->_currChan = chan;
 }

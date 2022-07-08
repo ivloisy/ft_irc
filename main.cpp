@@ -14,19 +14,20 @@ void ft_run(int port)
 	_poll[0].events = POLLIN;
 	int fin = 0;
 
-
 	while (serv.getState())
 	{
 		fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
 
 		// list all users in the server
+		/*
 		vector<User *> users = serv.getUser();
 		vector<User *>::iterator last = users.end();
 		for (vector<User *>::iterator it = users.begin(); it != last; it++)
 		{
 			cout << (*it)->getNickName() << endl;
 		}
+		 */
 		// ----------------------------
 
 		test = 0;
@@ -64,12 +65,10 @@ void ft_run(int port)
 					}
 					if (recv(fd, &buffer, 255, 0) >= 1)
 					{
-						cout << "BUFFER: = " << buffer << endl;
+						//cout << "BUFFER: = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
 						serv.printParam();
-						// cout << "??????? = " << serv.getUser(fd)->getNickName() << endl;
 						serv.execCommand(fd);
-						// vector<string>::iterator v;
 						serv.welcome(fd);
 					}
 					if (test == 1)

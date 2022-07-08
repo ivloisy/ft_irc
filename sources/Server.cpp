@@ -11,20 +11,26 @@ using namespace std;
 /******************** CONSTRUCTORS **********************/
 
 Server::Server(int portNum) :
+	map_cmd(),
+	_fd(-1),
+	_fdMax(-1),
 	_serverName("irc.sample.com"),
+	_size(0),
+	_user(),
+	_oper(),
+	_channel(),
 	_portNum(portNum),
 	_state(1),
+	_password(),
+	_param(),
 	_maxChannels(10)
 	// _cmap()
 {
-	// socklen_t size;
-
 	this->establishConnection();
 
 	this->_fdMax = this->_fd;
 
 	this->createServerAddr(this->_portNum);
-
 
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
@@ -32,9 +38,7 @@ Server::Server(int portNum) :
 		cout << "error setting socket option..." << endl;
 	}
 
-
 	this->bindServer();
-
 
 	this->_size = sizeof(this->getServerAddr());
 
@@ -44,9 +48,6 @@ Server::Server(int portNum) :
 		;
 	}
 	this->initCommand();
-
-	// this->init_map_cmd();
-
 }
 
 Server::Server(int portNum, string passw) :
@@ -54,23 +55,18 @@ Server::Server(int portNum, string passw) :
 	_portNum(portNum),
 	_state(1),
 	_password(passw)
-	// _cmap()
 {
-	// socklen_t size;
-
 	this->establishConnection();
 
 	this->_fdMax = this->_fd;
 
 	this->createServerAddr(this->_portNum);
 
-	/*
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
 		cout << "error setting socket option..." << endl;
 	}
-	*/
 
 	this->bindServer();
 
@@ -82,8 +78,6 @@ Server::Server(int portNum, string passw) :
 		//error
 		;
 	}
-	// this->init_map_cmd();
-
 }
 
 Server::Server(Server const & src)
@@ -259,12 +253,12 @@ void				Server::printParam()
 
 	for (vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
 	{
-		cout << "param[" << i << "] = { ";
+		//cout << "param[" << i << "] = { ";
 		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
 		{
-			cout << *jt << "; ";
+			//cout << *jt << "; ";
 		}
-		cout << " }" << endl;
+		//cout << " }" << endl;
 		i++;
 	}
 }
@@ -290,17 +284,17 @@ void 				Server::execCommand(int fd)
 	test.push_back("SQUIT");
 	test.push_back("USER");
 	test.push_back("WALLOPS");
+
+
 	for (size_t x = 0; x < this->_param.size(); x++)
 	{
 		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
-		cout << "avant" << endl;
 		for (size_t y = 0; y < test.size(); y++)
 		{
 			if (this->_param[x][0] == test[y])
 				this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
 		}
 		cout << _param[x][0] << endl;
-		cout << "apres" << endl;
 	}
 }
 
@@ -332,7 +326,6 @@ void				Server::sendToUser(string name, string msg)
 
 void				Server::sendBuffer(User * dest, string content)
 {
-	(void)content;
 	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
@@ -381,12 +374,6 @@ void 				Server::setUpFdMax(int fdCurrent)
 		this->_fdMax = fdCurrent;
 }
 
-/*
-void 				Server::setDownFdMax(int fdCurrent)
-{
-}
-*/
-
 int					Server::getFdServer(void) const
 {
 	return (this->_fd);
@@ -417,19 +404,6 @@ User 				*Server::getUser(string nick)
 		it++;
 	return (*it);
 }
-
-// User 				*Server::getUser(string nickname)
-// {
-// 	vector<User *>::iterator last = this->_user.end();
-// 	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
-// 	{
-// 		if ((*it)->getNickName() == nickname)
-// 		{
-// 			return (*it);
-// 		}
-// 	}
-// 	return (NULL);
-// }
 
 Channel				*Server::getChannel(string name)
 {
@@ -503,11 +477,12 @@ void				Server::setState(bool st)
 	this->_state = st;
 }
 
+
 /******************* CHECKERS **********************/
 
 bool				Server::isMaxChannel()
 {
-	int nb;
+	int nb = 0;
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{

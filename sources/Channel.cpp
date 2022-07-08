@@ -16,11 +16,10 @@ Channel::Channel(string name) :
 	_invite(),
 	_ban(),
 	_inviteOnlyMode(0),
-	_key(NULL),
+	_key(),
 	_name(name)
 {
-	//string 				_key;
-	//string 				_mode;
+
 	return ;
 }
 

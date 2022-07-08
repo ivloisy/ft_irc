@@ -18,25 +18,16 @@ namespace irc
 	class User
 	{
 	private:
-		// map_cmd											cmap;
-
-		static int											_nbUser;
-		//int												_idUser;
 		int 												_fd;
-		//struct sockaddr_in 								_serverAddr;
 		string												_hostname;
 		string 												_realname;
 		string 												_username;
 		string												_nickname;
 		string 												_password;
-		//vector<string>									_waitingToSend;
-		//string											_prefix;
-		string 												buffer;
+		string 												_serverName;
+		string 												_prefix;
 		vector<string>										parameters;
 		int 												bufsize;
-		//Message											*_msg;
-		//Server											*server;
-		vector<Command *>									_command;
 		vector<Channel *>									_channel;
 		Channel												*_currChan;
 		bitset<2> 											_mode;
@@ -49,22 +40,10 @@ namespace irc
 		//if client send a cap command, ignore it
 
 	public:
-		//User();
 		User(int fd, struct sockaddr_in address);
 		User(int fd);
 		virtual ~User();
-		//User(User const &src);
 		User &operator=(User const &rhs);
-
-		//void												establishConnection(void);
-
-		//void												init_map_cmd(void);
-
-		// ssize_t 											send_buf(Server &serv, string const &msg);
-		// void												write_buf(User * user, string const &msg);
-		//
-		// void												tokenize(string const &str, Server *serv);
-		// void												parse_buffer_command(Server * serv);
 
 		void												clearAllChannels();
 		void												quitChannel(Channel * chan);
@@ -78,7 +57,6 @@ namespace irc
 		string 												getPassWord() const;
 		string 												getUserName() const;
 		string												getRealName() const;
-		vector<Command *>									getCommand() const;
 		vector<Channel *>									getChannel() const;
 		Channel												*getChannelByName(string name);
 		bool												getAcceptConnect() const;
@@ -88,6 +66,7 @@ namespace irc
 		bool												getInvisible() const;
 		Channel												*getCurrentChannel();
 
+		void												setPrefix();
 		void												setInvisible(bool inv);
 		void												setMode(bitset<2> mode);
 		void												setOper(bool op);
@@ -100,6 +79,8 @@ namespace irc
 		void												setPassWord(string password);
 		void 												setRdySend();
 		void 												setToClose(int x);
+		void												setCurrentChannel(Channel * chan);
+		void												setServerName(string name);
 
 		//void												send_message(int nb_command, Server server);
 

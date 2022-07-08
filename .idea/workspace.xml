@@ -16,31 +16,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/Channel.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Channel.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/ft_irc.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/ft_irc.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/reply.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/reply.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Channel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Channel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/CAP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/CAP.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/DIE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/DIE.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/LIST.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/LIST.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/MODE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/MODE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/OPER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/OPER.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PART.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PART.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PING.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PING.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PONG.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/USER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/USER.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/reply.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/reply.cpp" afterDir="false" />
@@ -87,7 +72,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="ft_irc" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ft_irc" TARGET_NAME="ft_irc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ft_irc" RUN_TARGET_NAME="ft_irc">
+    <configuration name="ft_irc" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="xxx" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$/../42-ft_irc" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ft_irc" TARGET_NAME="ft_irc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ft_irc" RUN_TARGET_NAME="ft_irc">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -110,7 +95,7 @@
       <workItem from="1657140537165" duration="6935000" />
       <workItem from="1657185783505" duration="35355000" />
       <workItem from="1657271995857" duration="4545000" />
-      <workItem from="1657281497166" duration="17535000" />
+      <workItem from="1657281497166" duration="35024000" />
     </task>
     <servers />
   </component>

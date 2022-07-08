@@ -31,9 +31,6 @@ namespace irc
 
 	public:
 		Channel(string name);
-		//virtual ~Channel();
-		//Channel(Channel const &src);
-		//Channel	operator=(Channel const &rhs);
 
 		vector<User *>			getChannelUsers() const;
 		User					*getUser(string nickname);
@@ -69,8 +66,7 @@ namespace irc
 		void					delInvite(User * user);
 		void					delBanned(User * user);
 
-
-		void				setChannelName(string name);
+		void					setChannelName(string name);
 
 	};
 }

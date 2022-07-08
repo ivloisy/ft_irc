@@ -11,10 +11,17 @@ using namespace std;
 
 void	user_cmd(Server * srv, User * usr, std::vector<std::string> params)
 {
-	// user.setUserName(*(buffer.begin() + 1));
 	(void)srv;
-	(void)usr;
-	(void)params;
+	if (params.size() < 4)
+	{
+		//ERR_NEEDMOREPARAMS
+		return ;
+	}
+	usr->setUserName(params[1]);
+	usr->setHostName(params[2]);
+	usr->setServerName(params[3]);
+
+	usr->setPrefix();
 	std::cout << "user command called" << std::endl;
 }
 
