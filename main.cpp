@@ -65,7 +65,7 @@ void ft_run(int port)
 					}
 					if (recv(fd, &buffer, 255, 0) >= 1)
 					{
-						//cout << "BUFFER: = " << buffer << endl;
+						cout << "BUFFER RECEIVE = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
 						serv.printParam();
 						serv.execCommand(fd);

@@ -104,14 +104,16 @@ bool	quit_all_chan(Server *srv, User *usr, vector<string> params)
 	return (false);
 }
 
-void	reply_channel_joined(Server * srv, User * usr, Channel * existing)
+void	reply_channel_joined(Server * srv, User * usr, Channel * chan)
 {
-	string msg = usr->getPrefix() + " JOIN " + existing->getChannelName() + "\r\n";
-	srv->sendBuffer(usr, msg);
-	cout << msg << endl;
-	//vector<User *> chan = existing->getChannelUsers();
-	//vector<User *>::iterator lst = chan.end();
-	//for (vector<User *>::iterator it = chan.begin(); it != lst; it++)
+	string msg = usr->getPrefix() + " JOIN " + chan->getChannelName() + "\r\n";
+	//srv->sendBuffer(usr, msg);
+	srv->sendToUser(chan->getChannelName(), msg);
+	//cout << msg << endl;
+	//vector<User *> chan_usr = existing->getChannelUsers();
+	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
+	//vector<User *>::iterator lst = chan_usr.end();
+	//for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++)
 	//	srv->sendBuffer(*it, msg);
 	//msg.clear();
 	//msg = "";
@@ -160,19 +162,19 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 				{
 					user_join_channel(srv, usr, existing);
 					reply_channel_joined(srv, usr, existing);
-					string msg = params[1] + " joined!";
-					srv->sendToUser(usr->getNickName(), msg);
-					msg.clear();
-					msg = usr->getNickName() + " joined " + params[1];
-					srv->sendToChan(params[1], msg);
+					//string msg = params[1] + " joined!";
+					//srv->sendToUser(usr->getNickName(), msg);
+					//msg.clear();
+					//msg = usr->getNickName() + " joined " + params[1];
+					//srv->sendToChan(params[1], msg);
 				}
 				else
 				{
 					Channel * new_chan = user_create_channel(srv, usr, params[1]);
 					if (new_chan)
 						reply_channel_joined(srv, usr, new_chan);
-					string msg = params[1] + " created!";
-					srv->sendToUser(usr->getNickName(), msg);
+					//string msg = params[1] + " created!";
+					//srv->sendToUser(usr->getNickName(), msg);
 				}
 				x++;
 			}

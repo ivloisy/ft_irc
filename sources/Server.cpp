@@ -327,6 +327,7 @@ void				Server::sendToUser(string name, string msg)
 
 void				Server::sendBuffer(User * dest, string content)
 {
+	cout << "BUFFER SEND = " << content << endl;
 	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
