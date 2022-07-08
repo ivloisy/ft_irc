@@ -10,7 +10,9 @@
 # include "User.hpp"
 # include "Config.hpp"
 # include "Command.hpp"
-// # include <map>
+#include <map>
+#include <string>
+#include <algorithm>
 # include <sstream>
 
 // # define BUFFERSIZE 512
@@ -25,11 +27,9 @@ namespace irc
 	{
 
 	public:
-		//typedef void (*pointer_function)(string &buf, User *it_user, Server &serv);
-		//typedef void (*pointer_function)(void);
-		//typedef map<string, pointer_function>			map_cmd;
 		// typedef void (* Server::pointer_function)(/*Command * com*/);
-		// typedef map<string, pointer_function>		map_cmd;
+		typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
+		map<string, pointer_function>					map_cmd;
 
 	private:
 		int 											_fd;
@@ -39,6 +39,7 @@ namespace irc
 		string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t 										_size;			//_user; //we're going to delete it for the instanciation with set
 		vector<User *>									_user;
+		vector<User *>									_oper;
 		vector<Channel *>								_channel;
 
 		int												_portNum; //default port 6667
@@ -63,24 +64,25 @@ namespace irc
 		//Config										&getConfig();
 		//string										getUpTime();
 
-		//void												add_user(User user);
+		//void											add_user(User user);
 
-		void							establishConnection(void);
-		void							createServerAddr(int portNum);
-		//void							listenUser(void);
-		int								acceptUser(socklen_t size);
-		void							closeUser(User * user);
-		// void							init_map_cmd();
-		void							parse_buffer_command(string buffer, int fd);
-		void											sendToChan(string name);
-		void							tokenize(string const & str, int fd);
-		void											sendToUser(string name);
+		void											establishConnection(void);
+		void											createServerAddr(int portNum);
+		//void											listenUser(void);
+		int												acceptUser(socklen_t size);
+		void											closeUser(User * user);
+		// void											init_map_cmd();
+		void											parse_buffer_command(string buffer, int fd);
+		void											sendToChan(string name, string msg);
+		void											tokenize(string const & str, int fd);
+		void											sendToUser(string name, string msg);
 
 		void											sendBuffer(User * dest, string content);
 		void											printParam();
-		// void							print_param();
-		void							exec_command();
-		void 							welcome(int fd);
+		void											initCommand();
+		void 											execCommand(int fd);
+		void 											welcome(int fd);
+		int												searchNick(string nick);
 
 		Channel											*addChannel(string name);
 
@@ -88,25 +90,28 @@ namespace irc
 
 		void											delUserAllChannel(User * user);
 
-		int								bindServer(void);
-		int								getFdMax( void ) const;
-		int								getFdServer() const;
-		struct sockaddr_in				getServerAddr() const;
-		User							*getUser(int fd);
-		User							*getUser(string nick);
+		int												bindServer(void);
+		int												getFdMax( void ) const;
+		int												getFdServer() const;
+		struct sockaddr_in								getServerAddr() const;
+		vector<User *>									getUser() const;
+		vector<User *>									getOper() const;
+		User											*getOper(string name);
+		User											*getUser(int fd);
+		User											*getUser(string nick);
 		Channel											*getChannel(string name);
-		socklen_t						getSize() const;
-		int								getPortNum() const;
-		string							getPassword() const;
-		string							getServerName() const;
-		bool							getState() const;
+		socklen_t										getSize() const;
+		int												getPortNum() const;
+		string											getServerName() const;
+		string											getPassword() const;
+		bool											getState() const;
 
-		void							setState(bool st);
-		void							setFdServer(int fd);
-		void							setUpFdMax(int fdCurrent);
-		// void							setDownFdMax(int fdCurrent);
+		void											setState(bool st);
+		void											setFdServer(int fd);
+		void											setUpFdMax(int fdCurrent);
+		// void											setDownFdMax(int fdCurrent);
 
-		bool							isUserEmpty();
+		bool											isUserEmpty();
 	};
 }
 

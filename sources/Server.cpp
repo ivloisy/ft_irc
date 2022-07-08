@@ -12,6 +12,9 @@
 #include <fcntl.h>
 #include "../includes/Reply.hpp"
 #include <utility>
+#include <map>
+#include <string>
+#include <algorithm>
 #include "../includes/ft_irc.hpp"
 
 using namespace irc;
@@ -33,13 +36,13 @@ Server::Server(int portNum) :
 
 	this->createServerAddr(this->_portNum);
 
-	/*
+
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
 		cout << "error setting socket option..." << endl;
 	}
-	*/
+
 
 	this->bindServer();
 
@@ -51,6 +54,8 @@ Server::Server(int portNum) :
 		//error
 		;
 	}
+	this->initCommand();
+
 	// this->init_map_cmd();
 
 }
@@ -157,10 +162,9 @@ void				Server::closeUser(User * user)
 }
 
 
-void					Server::exec_command()
+void					Server::initCommand()
 {
-	typedef void (*pointer_function)(Server * srv, User * usr, std::vector<std::string> params);
-	map<string, pointer_function>		map_cmd;
+
 
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	user_cmd;
@@ -188,16 +192,16 @@ void 					Server::welcome(int fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3)
 		return;
-	string buf = ft_reply(RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
+	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
+	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
+	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
 	cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
-	buf = ft_reply(RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
+	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
 
 }
@@ -229,13 +233,12 @@ void					Server::parse_buffer_command(string buffer, int fd)
 
 	// cout << this->_param[0][0] << endl;
 
-	/*			Uncomment this for executing commands
-	cmap.find(*this->parameters.begin())->second(this->_command[0]);
-	for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
-	{
-		cmap.find(*(*itc)->getParameters().begin())->second(*itc);
-	}
-	*/
+	//			Uncomment this for executing commands
+	// for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
+	// {
+	// 	cmap.find(*(*itc)->getParameters().begin())->second(*itc);
+	// }
+
 
 	// if (this->getAcceptConnect()) // connection ok
 	// {
@@ -282,23 +285,42 @@ void				Server::printParam()
 	}
 }
 
-void				Server::sendToChan(string name)
+void 				Server::execCommand(int fd)
+{
+	for (int x = 0; x < static_cast<int>(this->_param.size()); x++)
+		this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+}
+
+int					Server::searchNick(string nick)
+{
+	vector<User *>::iterator last = this->_user.end();
+	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
+	{
+		if ((*it)->getNickName() == nick)
+		{
+			return ((*it)->getFdUser());
+		}
+	}
+	return (0);
+}
+
+void				Server::sendToChan(string name, string msg)
 {
 	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
-		sendBuffer(*it, this->_buffer);
+		sendBuffer(*it, msg);
 }
 
-void				Server::sendToUser(string name)
+void				Server::sendToUser(string name, string msg)
 {
-	sendBuffer(this->getUser(name), this->_buffer);
+	sendBuffer(this->getUser(name), msg);
 }
 
 void				Server::sendBuffer(User * dest, string content)
 {
 	(void)content;
-	send(dest->getFdUser(), this->_buffer.c_str(), this->_buffer.length(), 0);
+	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
 Channel				*Server::addChannel(string name)
@@ -359,6 +381,11 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
+vector<User *>		Server::getUser() const
+{
+	return (this->_user);
+}
+
 User 				*Server::getUser(int fd)
 {
 	vector<User *>::iterator it = this->_user.begin();
@@ -407,6 +434,22 @@ socklen_t			Server::getSize() const
 int 				Server::getPortNum() const
 {
 	return (this->_portNum);
+}
+
+vector<User *>		Server::getOper() const
+{
+	return (this->_oper);
+}
+
+User				*Server::getOper(string name)
+{
+	vector<User *>::iterator last = this->_oper.end();
+	for (vector<User *>::iterator it = this->_oper.begin(); it != last; it++)
+	{
+		if ((*it)->getUserName() == name)
+			return (*it);
+	}
+	return (NULL);
 }
 
 /********************* MUTATORS *************************/

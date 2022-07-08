@@ -49,7 +49,17 @@ void ft_run(int port)
 	while (serv.getState() && fin < 10)
 	{
 		fin++;
-		cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
+		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
+
+		// list all users in the server
+		vector<User *> users = serv.getUser();
+		vector<User *>::iterator last = users.end();
+		for (vector<User *>::iterator it = users.begin(); it != last; it++)
+		{
+			cout << (*it)->getNickName() << endl;
+		}
+		// ----------------------------
+
 		test = 0;
 
 		poll_ret = poll(_poll, fd_count, -1);
@@ -88,7 +98,9 @@ void ft_run(int port)
 						cout << "BUFFER: = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
 						serv.printParam();
-						serv.exec_command();
+						// cout << "??????? = " << serv.getUser(fd)->getNickName() << endl;
+						serv.execCommand(fd);
+						// vector<string>::iterator v;
 						serv.welcome(fd);
 					}
 					if (test == 1)
