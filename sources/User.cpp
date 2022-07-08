@@ -13,6 +13,7 @@
 
 #include <sstream>
 #include <stdlib.h> //exit
+#include <bitset>
 
 #include <fcntl.h>
 //#include <iostream>
@@ -22,6 +23,8 @@
 //#include <arpa/inet.h>
 //#include <unistd.h>
 //#include <ctime>
+
+
 
 using namespace irc;
 using namespace std;
@@ -35,6 +38,8 @@ User::User(int fd) :
 		_nickname("lala"),
 		// bufsize(512),
 		_command(),
+		_currChan(NULL),
+		_mode(string("01")),
 		_acceptConnect(1),
 		_isOper(0),
 		_rdySend(0)
@@ -52,6 +57,8 @@ User::User(int fd, struct sockaddr_in address) :
 		_nickname("lala"),
 		// bufsize(512),
 		_command(),
+		_currChan(NULL),
+		_mode(1),
 		_acceptConnect(1),
 		_isOper(0),
 		_rdySend(0)
@@ -175,7 +182,7 @@ bool				User::getOper() const
 	return (this->_isOper);
 }
 
-int 					User::getRdySend() const
+int 				User::getRdySend() const
 {
 	return this->_rdySend;
 }
@@ -198,14 +205,31 @@ Channel				*User::getChannelByName(string name)
 	return (NULL);
 }
 
-string 				User::getMode() const
+bitset<2>			User::getMode() const
 {
 	return (this->_mode);
 }
 
+bool				User::getInvisible() const
+{
+	return (this->_isInv);
+}
+
+Channel				*User::getCurrentChannel()
+{
+	return (this->_currChan);
+}
+
 /********************** SETTERS ***********************/
 
-void				User::setMode(string mode)
+void				User::setInvisible(bool inv)
+{
+	this->_isInv = inv;
+}
+
+
+
+void				User::setMode(bitset<2> mode)
 {
 	this->_mode = mode;
 }

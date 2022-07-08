@@ -7,6 +7,7 @@
 
 #include "User.hpp"
 #include <iostream>
+#include <bitset>
 
 using namespace std;
 
@@ -16,15 +17,16 @@ namespace irc
 
 	class Channel {
 
-		int 				_maxUsers;
-		vector<User *>		_user; //current users present in the channel
-		vector<User *>		_oper;
-		vector<User *>		_invite;
-		vector<User *>		_ban;
-		bool				_inviteOnlyMode;
-		string 				_key;
-		string 				_mode;
-		string 				_name; //begining with &#+| 50 char max and case insensitive, no spaces, no ^G, no coma, : is used for channel mask
+		int 					_maxUsers;
+		vector<User *>			_user; //current users present in the channel
+		map<User *, bitset<3> >	_userMode;
+		vector<User *>			_oper;
+		vector<User *>			_invite;
+		vector<User *>			_ban;
+		bitset<2>				_mode;
+		bool					_inviteOnlyMode;
+		string 					_key;
+		string 					_name; //begining with &#+| 50 char max and case insensitive, no spaces, no ^G, no coma, : is used for channel mask
 		//channel modes, the modes affect the way servers manage the channels
 		//privilegied members (operators?)
 
@@ -35,33 +37,39 @@ namespace irc
 		//Channel(Channel const &src);
 		//Channel	operator=(Channel const &rhs);
 
-		vector<User *>		getChannelUsers() const;
-		User				*getUser(string nickname);
-		vector<User *>		getChannelOpers() const;
-		User				*getOper(string nickname);
-		vector<User *>		getChannelInvite() const;
-		User				*getInvite(string nickname);
-		vector<User *>		getBanned() const;
-		User				*getBanned(string nickname);
-		string 				getMode() const;
-		string 				getKey() const;
-		string 				getChannelName() const;
-		bool				getInviteOnlyMode() const;
-		bool 				isMaxUsers();
+		vector<User *>			getChannelUsers() const;
+		User					*getUser(string nickname);
+		vector<User *>			getChannelOpers() const;
+		User					*getOper(string nickname);
+		vector<User *>			getChannelInvite() const;
+		User					*getInvite(string nickname);
+		vector<User *>			getBanned() const;
+		User					*getBanned(string nickname);
+		map<User *, bitset<3> >	getChannelUserMode() const;
+		bitset<3>				getUserMode(User *user);
+		bitset<2>				getMode() const;
+		string 					getKey() const;
+		string 					getChannelName() const;
+		bool					getInviteOnlyMode() const;
 
-		void				setInviteOnlyMode(bool set);
-		void				setMode(string mode);
-		void				setKey(string key);
+		bool 					isMaxUsers();
 
-		void				addUser(User * user);
-		void				addOper(User * user);
-		void				addInvite(User * user);
-		void				addBanned(User * user);
+		void					setUserMode(User * user, bitset<3> mode);
+		void					setInviteOnlyMode(bool set);
+		void					setMode(bitset<2> mode);
+		void					setKey(string key);
 
-		void				delUser(User * user);
-		void				delOper(User * user);
-		void				delInvite(User * user);
-		void				delBanned(User * user);
+		void					addUserMode(User * user, bitset<3> mode);
+		void					addUser(User * user);
+		void					addOper(User * user);
+		void					addInvite(User * user);
+		void					addBanned(User * user);
+
+		void					delUserMode(User * user);
+		void					delUser(User * user);
+		void					delOper(User * user);
+		void					delInvite(User * user);
+		void					delBanned(User * user);
 
 
 		void				setChannelName(string name);

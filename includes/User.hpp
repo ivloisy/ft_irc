@@ -12,6 +12,7 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <ostream>
+#include <bitset>
 
 #include "Command.hpp"
 #include "Server.hpp"
@@ -37,7 +38,7 @@ namespace irc
 		string												_hostname;
 		string 												_realname;
 		string 												_username;
-	string 													_nickname;
+		string 												_nickname;
 		string 												_password;
 		//vector<string>									_waitingToSend;
 		//string											_prefix;
@@ -48,9 +49,11 @@ namespace irc
 		//Server											*server;
 		vector<Command *>									_command;
 		vector<Channel *>									_channel;
-		string 												_mode;
+		Channel												*_currChan;
+		bitset<2> 											_mode;
 		bool												_acceptConnect;
 		bool												_isOper;
+		bool												_isInv;
 		int													_rdySend;
 
 		//if client send a cap command, ignore it
@@ -91,9 +94,12 @@ namespace irc
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 		int 												getRdySend() const;
-		string 												getMode() const;
+		bitset<2> 											getMode() const;
+		bool												getInvisible() const;
+		Channel												*getCurrentChannel();
 
-		void												setMode(string mode);
+		void												setInvisible(bool inv);
+		void												setMode(bitset<2> mode);
 		void												setOper(bool op);
 		void												setAcceptConnect(bool ac);
 		void 												setFdUser(int fd);

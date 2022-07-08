@@ -296,6 +296,9 @@ void				Server::delUserAllChannel(User * user)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		(*it)->delUser(user);
+		(*it)->delOper(user);
+		(*it)->delUserMode(user);
+		(*it)->delInvite(user);
 	}
 }
 

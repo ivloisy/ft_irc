@@ -7,6 +7,7 @@
 #include "../../includes/Server.hpp"
 #include "../../includes/Command.hpp"
 #include "../../includes/Channel.hpp"
+#include <bitset>
 
 using namespace irc;
 using namespace std;
@@ -34,6 +35,48 @@ using namespace std;
  * check the symbol before the name of the channel for setting its mode
  */
 
+void	user_join_channel(User * usr, Channel * existing)
+{
+	if (existing->getInviteOnlyMode())
+	{
+		//ERR_INVITEONLYCHAN
+		return ;
+	}
+	else if (existing->isMaxUsers())
+	{
+		//ERR_CHANNELISFULL
+		return ;
+	}
+	else if (existing->getBanned(usr->getNickName()))
+	{
+		//ERR_BANNEDFROMCHAN
+		return ;
+	}
+	//join channel
+	bitset<3> dflt(string("101"));
+	existing->addUser(usr);
+	existing->addUserMode(usr, dflt);
+	usr->addChannel(existing);
+}
+
+void	user_create_channel(Server *srv, User *usr, string name)
+{
+	if (srv->isMaxChannel())
+	{
+		//ERR_TOOMANYCHANNELS
+		return ;
+	}
+	//create channel
+	Channel * new_chan = srv->addChannel(name);
+	bitset<3> creator(string("101"));
+
+	new_chan->addUser(usr);
+	new_chan->addOper(usr);
+	new_chan->addUserMode(usr, creator);
+	usr->addChannel(new_chan);
+	//got channel operator mode
+}
+
 void	join_cmd(Server * srv, User * usr, vector<string> params)
 {
 	if (params[0] == "JOIN")
@@ -57,38 +100,13 @@ void	join_cmd(Server * srv, User * usr, vector<string> params)
 				}
 				else if ((existing = srv->searchChannel(params[1])))
 				{
-					if (existing->getInviteOnlyMode())
-					{
-						//ERR_INVITEONLYCHAN
-						return ;
-					}
-					else if (existing->isMaxUsers())
-					{
-						//ERR_CHANNELISFULL
-						return ;
-					}
-					else if (existing->getBanned(usr->getNickName()))
-					{
-						//ERR_BANNEDFROMCHAN
-						return ;
-					}
-					//join channel
-					existing->addUser(usr);
-					usr->addChannel(existing);
+					user_join_channel(usr, existing);
 					return ;
 				}
 				else// > starts with one of the channel symbols
 				{
-					if (srv->isMaxChannel())
-					{
-						//ERR_TOOMANYCHANNELS
-						return ;
-					}
-					//create channel
-					Channel * new_chan = srv->addChannel(params[1]);
-					new_chan->addUser(usr);
-					usr->addChannel(new_chan);
-					//got channel operator mode
+
+					user_create_channel(srv, usr, params[1]);
 					return ;
 
 				}

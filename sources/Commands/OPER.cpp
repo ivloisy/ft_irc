@@ -31,7 +31,8 @@ void	oper_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	}
 	else
 	{
-		if (params[1] == OPER_NAME)
+		//IRCOperator
+		if (params[1] == usr->getNickName() && params[1] == OPER_NAME)
 		{
 			if (params[2] == OPER_PASS)
 			{
@@ -42,6 +43,13 @@ void	oper_cmd(Server * srv, User * usr, std::vector<std::string> params)
 			//ERR_PASSWDMISMATCH
 		}
 		//ERR_NOOPERHOST
+		//srv->reply()
+
+		//Channel Operator
+		//if (srv->getUser(params[1]) == srv->getChannel())
+		//{
+			//if (params[2])
+		//}
 	}
 	std::cout << "oper command called" << std::endl;
 }
