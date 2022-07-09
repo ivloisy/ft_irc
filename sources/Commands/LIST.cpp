@@ -18,7 +18,7 @@ using namespace std;
  * parameters : [ <channel> *( "," <channel> ) [ <target> ] ]
  */
 
-void		list_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void		list_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;

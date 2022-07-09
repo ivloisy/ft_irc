@@ -14,7 +14,7 @@ using namespace std;
  * parameters: <channel> *( "," <channel> ) [ <Part Message> ]
  */
 
-void	part_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	part_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;

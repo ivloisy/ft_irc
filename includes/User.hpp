@@ -67,20 +67,20 @@ namespace irc
 		Channel												*getCurrentChannel();
 
 		void												setPrefix();
-		void												setInvisible(bool inv);
-		void												setMode(bitset<2> mode);
-		void												setOper(bool op);
-		void												setAcceptConnect(bool ac);
-		void 												setFdUser(int fd);
-		void												setNickName(string nickname);
-		void												setUserName(string username);
-		void												setRealName(string realname);
-		void												setHostName(string hostname);
-		void												setPassWord(string password);
+		void												setInvisible(bool const & inv);
+		void												setMode(bitset<2> const & mode);
+		void												setOper(bool const & op);
+		void												setAcceptConnect(bool const & ac);
+		void 												setFdUser(int const & fd);
+		void												setNickName(string const & nickname);
+		void												setUserName(string const & username);
+		void												setRealName(string const & realname);
+		void												setHostName(string const & hostname);
+		void												setPassWord(string const & password);
 		void 												setRdySend();
-		void 												setToClose(int x);
+		void 												setToClose(int const & x);
 		void												setCurrentChannel(Channel * chan);
-		void												setServerName(string name);
+		void												setServerName(string const & name);
 
 		//void												send_message(int nb_command, Server server);
 

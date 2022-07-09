@@ -40,7 +40,7 @@ disabled
  */
 
 
-bitset<2>			chanMode(User * user, string mode)
+bitset<2>			chanMode(User & user, string mode)
 {
 	(void)user;
 	(void)mode;
@@ -80,29 +80,29 @@ bitset<2>			setBitset(string mode)
 	return (bitset);
 }
 
-bitset<2>	userMode(User * usr, string mode)
+bitset<2>	userMode(User & usr, string mode)
 {
 	if (isUnknown(mode))
 	{
 		//ERR_UNKNOWNMODEFLAG
 		return (0);
 	}
-	bitset<2> usr_mode = usr->getMode();
+	bitset<2> usr_mode = usr.getMode();
 	bitset<2> bitset = setBitset(mode);
 	if (mode[0] == '-')
 		bitset.flip();
 	usr_mode |= bitset;
-	usr->setInvisible(usr_mode.test(2));
+	usr.setInvisible(usr_mode.test(2));
 	if (usr_mode.test(1))
 	{
 		;//dire au client qu'il n'a pas les droits necessaires
 	}
 	else
-		usr->setOper(usr_mode.test(1));
+		usr.setOper(usr_mode.test(1));
 	return (usr_mode);
 }
 
-void	mode_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;
@@ -114,15 +114,15 @@ void	mode_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	}
 	else
 	{
-		if (usr->getNickName() == params[1])
+		if (usr.getNickName() == params[1])
 		{
 			bitset<2> usr_mode = userMode(usr, params[2]);
-			usr->setMode(usr_mode);
+			usr.setMode(usr_mode);
 			//USR MODE SET
 			return ;
 		}
 		Channel * chan;
-		if ((chan = srv->getChannel(params[1])))
+		if ((chan = srv.getChannel(params[1])))
 		{
 			//if ((usr->getChannlByName))
 			bitset<2> chn_mode = chanMode(usr, params[2]);

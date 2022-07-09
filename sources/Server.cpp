@@ -10,7 +10,7 @@ using namespace std;
 
 /******************** CONSTRUCTORS **********************/
 
-Server::Server(int portNum) :
+Server::Server(int const & portNum) :
 	map_cmd(),
 	_fd(-1),
 	_fdMax(-1),
@@ -50,7 +50,7 @@ Server::Server(int portNum) :
 	this->initCommand();
 }
 
-Server::Server(int portNum, string passw) :
+Server::Server(int const & portNum, string const & passw) :
 	_serverName("irc.sample.com"),
 	_portNum(portNum),
 	_state(1),
@@ -106,7 +106,7 @@ void					 Server::establishConnection(void)
 	cout << "Server Socket connection created..." << endl;
 }
 
-void					Server::createServerAddr(int portNum)
+void					Server::createServerAddr(int const & portNum)
 {
 	this->_serverAddr.sin_family = AF_INET;
 	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
@@ -123,7 +123,7 @@ int						Server::bindServer()
 	return (1);
 }
 
-int						Server::acceptUser(socklen_t  size)
+int						Server::acceptUser(socklen_t size)
 {
 	int fd = accept(this->_fd, (struct sockaddr*)&this->_serverAddr,
 						  reinterpret_cast<socklen_t *>(&size));
@@ -139,9 +139,9 @@ int						Server::acceptUser(socklen_t  size)
 	return (fd);
 }
 
-void					Server::closeUser(User * user)
+void					Server::closeUser(User const &  user)
 {
-	close(user->getFdUser());
+	close(user.getFdUser());
 }
 
 
@@ -166,7 +166,7 @@ void					Server::initCommand()
 	map_cmd["WHOIS"] 	= 	whois_cmd;
 }
 
-void 					Server::welcome(int fd)
+void 					Server::welcome(int const & fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3)
 		return;
@@ -183,7 +183,7 @@ void 					Server::welcome(int fd)
 	send(fd, buf.c_str(), buf.length(), 0);
 }
 
-void					Server::parse_buffer_command(string buffer, int fd)
+void					Server::parse_buffer_command(string const & buffer, int const & fd)
 {
 	this->_param.clear();
 	this->tokenize(/*this->*/buffer/*,  serv*/, fd); //this splits the buffer into different vectors of parameters
@@ -224,7 +224,7 @@ void					Server::parse_buffer_command(string buffer, int fd)
 	// }
 }
 
-void					Server::tokenize(string const & str, int fd)
+void					Server::tokenize(string const & str, int const & fd)
 {
 	stringstream 			ss(str);
 	string					s;
@@ -264,7 +264,7 @@ void				Server::printParam()
 	}
 }
 
-void 				Server::execCommand(int fd)
+void 				Server::execCommand(int const & fd)
 {
 	vector<string> test;
 	test.push_back("CAP");
@@ -286,20 +286,22 @@ void 				Server::execCommand(int fd)
 	test.push_back("USER");
 	test.push_back("WALLOPS");
 
-
 	for (size_t x = 0; x < this->_param.size(); x++)
 	{
 		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
 		for (size_t y = 0; y < test.size(); y++)
 		{
 			if (this->_param[x][0] == test[y])
-				this->map_cmd.find(this->_param[x][0])->second(this, this->getUser(fd), this->_param[x]);
+			{
+				this->map_cmd.find(this->_param[x][0])->second(*this, *this->getUser(fd), this->_param[x]);
+			}
+
 		}
 		cout << _param[x][0] << endl;
 	}
 }
 
-int					Server::searchNick(string nick)
+int					Server::searchNick(string const & nick)
 {
 	vector<User *>::iterator last = this->_user.end();
 	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
@@ -312,32 +314,32 @@ int					Server::searchNick(string nick)
 	return (0);
 }
 
-void				Server::sendToChan(string name, string msg)
+void				Server::sendToChan(string const & name, string const & msg)
 {
 	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
-		sendBuffer(*it, msg);
+		sendBuffer(*(*it), msg);
 }
 
-void				Server::sendToUser(string name, string msg)
+void				Server::sendToUser(string const & name, string const &  msg)
 {
-	sendBuffer(this->getUser(name), msg);
+	sendBuffer(*this->getUser(name), msg);
 }
 
-void				Server::sendBuffer(User * dest, string content)
+void				Server::sendBuffer(User const & dest, string const & content)
 {
-	cout << "BUFFER SEND = " << content << endl;
-	send(dest->getFdUser(), content.c_str(), content.length(), 0);
+	cout << "BUFFER SEND = " << content << " to " << dest.getNickName() << endl;
+	send(dest.getFdUser(), content.c_str(), content.length(), 0);
 }
 
-Channel*			Server::addChannel(string name)
+Channel*			Server::addChannel(string const & name)
 {
 	this->_channel.push_back(new Channel(name));
 	return *(this->_channel.end() - 1);
 }
 
-Channel*			Server::searchChannel(string name)
+Channel*			Server::searchChannel(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -370,11 +372,7 @@ int 				Server::getFdMax() const
 }
 
 
-void 				Server::setUpFdMax(int fdCurrent)
-{
-	if (fdCurrent > this->_fdMax)
-		this->_fdMax = fdCurrent;
-}
+
 
 int					Server::getFdServer(void) const
 {
@@ -391,7 +389,7 @@ vector<User *>		Server::getUser() const
 	return (this->_user);
 }
 
-User*				Server::getUser(int fd)
+User*				Server::getUser(int const & fd)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getFdUser() != fd)
@@ -399,7 +397,7 @@ User*				Server::getUser(int fd)
 	return (*it);
 }
 
-User*				Server::getUser(string nick)
+User*				Server::getUser(string const & nick)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getNickName() != nick)
@@ -407,7 +405,7 @@ User*				Server::getUser(string nick)
 	return (*it);
 }
 
-Channel*			Server::getChannel(string name)
+Channel*			Server::getChannel(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -433,7 +431,7 @@ vector<User *>		Server::getOper() const
 	return (this->_oper);
 }
 
-User*				Server::getOper(string name)
+User*				Server::getOper(string const & name)
 {
 	vector<User *>::iterator last = this->_oper.end();
 	for (vector<User *>::iterator it = this->_oper.begin(); it != last; it++)
@@ -449,7 +447,10 @@ int 				Server::getMaxChannel() const
 	return (this->_maxChannels);
 }
 
-/********************* MUTATORS *************************/
+bool				Server::getState() const
+{
+	return	(this->_state);
+}
 
 string 				Server::getServerName() const
 {
@@ -461,22 +462,22 @@ string				Server::getPassword() const
 	return (this->_password);
 }
 
+/********************* MUTATORS *************************/
 
-void				Server::setFdServer(int fd)
+void				Server::setFdServer(int const & fd)
 {
 	this->_fd = fd;
 }
 
-
-
-bool				Server::getState() const
-{
-	return	(this->_state);
-}
-
-void				Server::setState(bool st)
+void				Server::setState(bool const & st)
 {
 	this->_state = st;
+}
+
+void 				Server::setUpFdMax(int const & fdCurrent)
+{
+	if (fdCurrent > this->_fdMax)
+		this->_fdMax = fdCurrent;
 }
 
 

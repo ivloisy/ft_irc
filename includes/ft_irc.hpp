@@ -30,25 +30,25 @@
 using namespace std;
 using namespace irc;
 
-void	cap_cmd(Server * srv, User * usr, vector<string> params);
-void	die_cmd(Server * srv, User * usr, vector<string> params);
-void	join_cmd(Server * srv, User * usr, vector<string> params);
-void	list_cmd(Server * srv, User * usr, vector<string> params);
-void	mode_cmd(Server * srv, User * usr, vector<string> params);
-void	msg_cmd(Server * srv, User * usr, vector<string> params);
-void	names_cmd(Server * srv, User * usr, vector<string> params);
-void	nick_cmd(Server * srv, User * usr, vector<string> params);
-void	notice_cmd(Server * srv, User * usr, vector<string> params);
-void	oper_cmd(Server * srv, User * usr, vector<string> params);
-void	part_cmd(Server * srv, User * usr, vector<string> params);
-void	pass_cmd(Server * srv, User * usr, vector<string> params);
-void	ping_cmd(Server * srv, User * usr, vector<string> params);
-void	pong_cmd(Server * srv, User * usr, vector<string> params);
-void	privmsg_cmd(Server * srv, User * usr, vector<string> params);
-void	quit_cmd(Server * srv, User * usr, vector<string> params);
-void	user_cmd(Server * srv, User * usr, vector<string> params);
-void	wallops_cmd(Server * srv, User * usr, vector<string> params);
-void	whois_cmd(Server * srv, User * usr, vector<string> params);
+void	cap_cmd(Server & srv, User & usr, vector<string> params);
+void	die_cmd(Server & srv, User & usr, vector<string> params);
+void	join_cmd(Server & srv, User & usr, vector<string> params);
+void	list_cmd(Server & srv, User & usr, vector<string> params);
+void	mode_cmd(Server & srv, User & usr, vector<string> params);
+void	msg_cmd(Server & srv, User & usr, vector<string> params);
+void	names_cmd(Server & srv, User & usr, vector<string> params);
+void	nick_cmd(Server & srv, User & usr, vector<string> params);
+void	notice_cmd(Server & srv, User & usr, vector<string> params);
+void	oper_cmd(Server & srv, User & usr, vector<string> params);
+void	part_cmd(Server & srv, User & usr, vector<string> params);
+void	pass_cmd(Server & srv, User & usr, vector<string> params);
+void	ping_cmd(Server & srv, User & usr, vector<string> params);
+void	pong_cmd(Server & srv, User & usr, vector<string> params);
+void	privmsg_cmd(Server & srv, User & usr, vector<string> params);
+void	quit_cmd(Server & srv, User & usr, vector<string> params);
+void	user_cmd(Server & srv, User & usr, vector<string> params);
+void	wallops_cmd(Server & srv, User & usr, vector<string> params);
+void	whois_cmd(Server & srv, User & usr, vector<string> params);
 
 string ft_reply(string servername, string code, string nick, string message);
 

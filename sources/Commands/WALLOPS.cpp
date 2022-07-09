@@ -11,7 +11,7 @@ using namespace std;
 
 /*********************** OPERATOR COMMAND ************************/
 
-void	wallops_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	wallops_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;

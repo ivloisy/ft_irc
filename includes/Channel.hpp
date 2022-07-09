@@ -33,15 +33,15 @@ namespace irc
 		Channel(string name);
 
 		vector<User *>			getChannelUsers() const;
-		User					*getUser(string nickname);
+		User					*getUser(string const & nickname);
 		vector<User *>			getChannelOpers() const;
-		User					*getOper(string nickname);
+		User					*getOper(string const & nickname);
 		vector<User *>			getChannelInvite() const;
-		User					*getInvite(string nickname);
+		User					*getInvite(string const & nickname);
 		vector<User *>			getBanned() const;
-		User					*getBanned(string nickname);
+		User					*getBanned(string const & nickname);
 		map<User *, bitset<3> >	getChannelUserMode() const;
-		bitset<3>				getUserMode(User *user);
+		bitset<3>				getUserMode(User * user);
 		bitset<2>				getMode() const;
 		string 					getKey() const;
 		string 					getChannelName() const;
@@ -49,12 +49,13 @@ namespace irc
 
 		bool 					isMaxUsers();
 
-		void					setUserMode(User * user, bitset<3> mode);
-		void					setInviteOnlyMode(bool set);
-		void					setMode(bitset<2> mode);
-		void					setKey(string key);
+		void					setUserMode(User * user, bitset<3> const & mode);
+		void					setInviteOnlyMode(bool const & set);
+		void					setMode(bitset<2> const & mode);
+		void					setKey(string const & key);
+		void					setChannelName(string const & name);
 
-		void					addUserMode(User * user, bitset<3> mode);
+		void					addUserMode(User * user, bitset<3> const & mode);
 		void					addUser(User * user);
 		void					addOper(User * user);
 		void					addInvite(User * user);
@@ -66,7 +67,7 @@ namespace irc
 		void					delInvite(User * user);
 		void					delBanned(User * user);
 
-		void					setChannelName(string name);
+
 
 	};
 }

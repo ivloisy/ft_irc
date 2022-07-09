@@ -16,7 +16,7 @@ using namespace std;
  * Erreurs : ERR_NEEDMOREPARAMS ERR_ALREADYREGISTERED
  */
 
-void	pass_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	// user.setPassWord(*(buffer.begin() + 1));
 	// (void)srv;
@@ -26,9 +26,9 @@ void	pass_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	if (params.size() != 1)
 		cout << "===================WTF=============================" << endl;
 	// string testing = params[0];
-	if (params[0] != srv->getPassword())
+	if (params[0] != srv.getPassword())
 	{
-		usr->setToClose(1);
+		usr.setToClose(1);
 	}
 	std::cout << "pass command called" << std::endl;
 }
