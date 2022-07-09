@@ -14,7 +14,7 @@ using namespace std;
  * Parameters <quit message>
  */
 
-void	quit_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;

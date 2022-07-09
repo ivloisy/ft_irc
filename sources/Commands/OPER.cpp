@@ -17,7 +17,7 @@ using namespace std;
  *  ERR_NEEDMOREPARAMS  RPL_YOUREOPER ERR_NOOPERHOST   ERR_PASSWDMISMATCH
  */
 
-void	oper_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)usr;
@@ -29,11 +29,11 @@ void	oper_cmd(Server * srv, User * usr, std::vector<std::string> params)
 	else
 	{
 		//IRCOperator
-		if (params[1] == usr->getNickName() && params[1] == OPER_NAME)
+		if (params[1] == usr.getNickName() && params[1] == OPER_NAME)
 		{
 			if (params[2] == OPER_PASS)
 			{
-				usr->setOper(1);
+				usr.setOper(1);
 				//RPL_YOUREOPER
 				return ;
 			}

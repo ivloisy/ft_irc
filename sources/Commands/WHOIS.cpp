@@ -40,7 +40,7 @@ Command: WHOIS
 		RPL_ENDOFWHOIS
 */
 
-void	whois_cmd(Server * srv, User * usr, vector<string> params)
+void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
 	(void)srv;
 	(void)usr;

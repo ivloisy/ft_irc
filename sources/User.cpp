@@ -10,12 +10,15 @@ using namespace std;
 /**************************** CONSTRUCTORS ****************************/
 
 User::User(int fd) :
-		// cmap(),
 		_fd(fd),
-		_hostname(),
+		_hostname(""),
+		_realname(""),
+		_username(""),
 		_nickname("lala"),
-		// bufsize(512),
-		_command(),
+		_password(""),
+		_serverName(""),
+		_prefix(""),
+		_channel(),
 		_currChan(NULL),
 		_mode(string("01")),
 		_acceptConnect(1),
@@ -23,36 +26,27 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
-	// (void) address;
-	// init_map_cmd();
+
 }
 
-
-
 User::User(int fd, struct sockaddr_in address) :
-		// cmap(),
 		_fd(fd),
-		_hostname(),
+		_hostname(""),
+		_realname(""),
+		_username(""),
 		_nickname("lala"),
-		// bufsize(512),
-		_command(),
+		_password(""),
+		_serverName(""),
+		_channel(),
 		_currChan(NULL),
-		_mode(1),
+		_mode(string("01")),
 		_acceptConnect(1),
 		_isOper(0),
 		_toClose(0),
 		_rdySend(0)
 {
 	(void) address;
-	// init_map_cmd();
 }
-
-/*
-User::User(User const &src)
-{
-	;
-}
-*/
 
 /***************************** DESTRUCTORS ****************************/
 
@@ -105,74 +99,52 @@ int 					User::getFdUser(void) const
 	return (this->_fd);
 }
 
-string 					User::getPrefix() const
-{
-	string prefix = "prefix";
-	return (prefix);
-}
-//
-// string 			&User::getBuffer()
-// {
-// 	return (this->buffer);
-// }
-
-
-// int 					User::getBufsize() const
-// {
-// 	return (this->bufsize);
-// }
-
-vector<Command *>	User::getCommand() const
-{
-	return (this->_command);
-}
-
-string 				User::getPassWord() const
+string 					User::getPassWord() const
 {
 	return (this->_password);
 }
 
-string 				User::getUserName() const
+string 					User::getUserName() const
 {
 	return (this->_username);
 }
 
-string				User::getRealName() const
+string					User::getRealName() const
 {
 	return (this->_realname);
 }
 
-string 				User::getHostname() const
+string 					User::getHostname() const
 {
 	return (this->_hostname);
 }
 
-string 				User::getNickName() const
+string 					User::getNickName() const
 {
 	return (this->_nickname);
 }
 
-bool				User::getAcceptConnect() const
+bool					User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
 }
 
-bool				User::getOper() const
+bool					User::getOper() const
 {
 	return (this->_isOper);
 }
 
-int 				User::getRdySend() const
+int 					User::getRdySend() const
 {
 	return this->_rdySend;
 }
 
-vector<Channel *>	User::getChannel() const
+vector<Channel *>		User::getChannel() const
 {
 	return (this->_channel);
 }
 
-Channel				*User::getChannelByName(string name)
+Channel*				User::getChannelByName(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
@@ -185,82 +157,91 @@ Channel				*User::getChannelByName(string name)
 	return (NULL);
 }
 
-bitset<2>			User::getMode() const
+bitset<2>				User::getMode() const
 {
 	return (this->_mode);
 }
 
-bool				User::getInvisible() const
+bool					User::getInvisible() const
 {
 	return (this->_isInv);
 }
 
-Channel*			User::getCurrentChannel()
+Channel*				User::getCurrentChannel()
 {
 	return (this->_currChan);
 }
+
 
 bool 				User::getToClose()
 {
 	return (this->_toClose);
 }
+string 					User::getPrefix() const
+{
+	return (this->_prefix);
+}
 
 
 /********************** SETTERS ***********************/
 
-void				User::setInvisible(bool inv)
+void					User::setPrefix()
+{
+	this->_prefix = ":" + _nickname + "!" + _username + "@" + _hostname;
+}
+
+void					User::setInvisible(bool const & inv)
 {
 	this->_isInv = inv;
 }
 
-
-
-void				User::setMode(bitset<2> mode)
+void					User::setMode(bitset<2> const & mode)
 {
 	this->_mode = mode;
 }
 
-void				User::setOper(bool op)
+void					User::setOper(bool const & op)
 {
 	this->_isOper = op;
 }
 
-void 				User::setFdUser(int fd)
+void 					User::setFdUser(int const & fd)
 {
 	this->_fd = fd;
 }
-//
-// void					User::setBuffer(string buf)
-// {
-// 	this->buffer = buf;
-// }
 
-void				User::setNickName(string nickname)
+void					User::setNickName(string const & nickname)
 {
 	this->_nickname = nickname;
 }
 
-void				User::setUserName(string username)
+void					User::setUserName(string const & username)
 {
 	this->_username = username;
 }
 
-void				User::setRealName(string realname)
+void					User::setRealName(string const & realname)
 {
 	this->_realname = realname;
 }
 
-void				User::setHostName(string hostname)
+void					User::setHostName(string const & hostname)
 {
 	this->_hostname = hostname;
 }
 
-void				User::setPassWord(string password)
+
+void					User::setServerName(string const & name)
+{
+	this->_serverName = name;
+}
+
+void					User::setPassWord(string const & password)
 {
 	this->_password = password;
 }
 
-void				User::setAcceptConnect(bool ac)
+void					User::setAcceptConnect(bool const & ac)
 {
 	this->_acceptConnect = ac;
 }
@@ -271,7 +252,12 @@ void 					User::setRdySend()
 		this->_rdySend++;
 }
 
-void 					User::setToClose(int x)
+void 					User::setToClose(int const & x)
 {
 	this->_toClose = x;
+}
+
+void					User::setCurrentChannel(Channel * chan)
+{
+	this->_currChan = chan;
 }

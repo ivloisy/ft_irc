@@ -11,7 +11,7 @@ using namespace std;
 
 /*********************** SEND MESSAGES ********************/
 
-void	notice_cmd(Server * srv, User * usr, std::vector<std::string> params)
+void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	if (params.size() < 2)
 	{
@@ -29,13 +29,13 @@ void	notice_cmd(Server * srv, User * usr, std::vector<std::string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-		if (srv->getChannel(params[1]))
+		if (srv.getChannel(params[1]))
 		{
-			srv->sendToChan(usr->getNickName(), msg);
+			srv.sendToChan(usr.getNickName(), msg);
 		}
-		else if (srv->getUser(params[1]))
+		else if (srv.getUser(params[1]))
 		{
-			srv->sendToUser(params[1], msg);
+			srv.sendToUser(params[1], msg);
 		}
 	}
 	std::cout << "notice command called" << std::endl;

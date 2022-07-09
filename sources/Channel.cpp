@@ -16,11 +16,10 @@ Channel::Channel(string name) :
 	_invite(),
 	_ban(),
 	_inviteOnlyMode(0),
-	_key(NULL),
+	_key(),
 	_name(name)
 {
-	//string 				_key;
-	//string 				_mode;
+
 	return ;
 }
 
@@ -31,7 +30,7 @@ vector<User *>			Channel::getChannelUsers() const
 	return (this->_user);
 }
 
-User					*Channel::getUser(string nickname)
+User*					Channel::getUser(string const & nickname)
 {
 	//into try catch or send null
 	vector<User *>::iterator last = this->_user.end();
@@ -53,7 +52,7 @@ vector<User *>			Channel::getChannelOpers() const
 	return (this->_oper);
 }
 
-User					*Channel::getOper(string nickname)
+User*					Channel::getOper(string const & nickname)
 {
 	//into try catch or send null
 	vector<User *>::iterator last = this->_oper.end();
@@ -70,7 +69,7 @@ vector<User *>			Channel::getChannelInvite() const
 	return (this->_invite);
 }
 
-User					*Channel::getInvite(string nickname)
+User*					Channel::getInvite(string const & nickname)
 {
 	//into try catch or send NULL
 	vector<User *>::iterator last = this->_invite.end();
@@ -87,7 +86,7 @@ vector<User *>			Channel::getBanned() const
 	return (this->_ban);
 }
 
-User					*Channel::getBanned(string nickname)
+User*					Channel::getBanned(string const & nickname)
 {
 	//into try catch or send NULL
 	vector<User *>::iterator last = this->_ban.end();
@@ -119,7 +118,7 @@ map<User *, bitset<3> >	Channel::getChannelUserMode() const
 	return (this->_userMode);
 }
 
-bitset<3>				Channel::getUserMode(User *user)
+bitset<3>				Channel::getUserMode(User * user)
 {
 	//into try catch of beware to check is user exists before this function
 	map<User *, bitset<3> >::iterator lst = _userMode.end();
@@ -149,7 +148,7 @@ bool 					Channel::isMaxUsers()
 
 /********************** SETTERS **************************/
 
-void					Channel::setUserMode(User * user, bitset<3> mode)
+void					Channel::setUserMode(User * user, bitset<3> const & mode)
 {
 	//into try catch
 	map<User *, bitset<3> >::iterator lst = _userMode.end();
@@ -162,29 +161,29 @@ void					Channel::setUserMode(User * user, bitset<3> mode)
 	}
 }
 
-void					Channel::setInviteOnlyMode(bool set)
+void					Channel::setInviteOnlyMode(bool const & set)
 {
 	this->_inviteOnlyMode = set;
 }
 
-void					Channel::setChannelName(string name)
+void					Channel::setChannelName(string const & name)
 {
 	this->_name = name;
 }
 
-void					Channel::setMode(bitset<2> mode)
+void					Channel::setMode(bitset<2> const & mode)
 {
 	this->_mode = mode;
 }
 
-void					Channel::setKey(string key)
+void					Channel::setKey(string const & key)
 {
 	this->_key = key;
 }
 
 /******************** FUNCTIONS **************************/
 
-void					Channel::addUserMode(User * user, bitset<3> mode)
+void					Channel::addUserMode(User * user, bitset<3> const & mode)
 {
 	_userMode[user] = mode;
 }
@@ -213,7 +212,7 @@ void					Channel::addBanned(User * user)
 
 void					Channel::delUserMode(User * user)
 {
-	_userMode.erase(user);
+	this->_userMode.erase(user);
 }
 
 void					Channel::delUser(User * user)
