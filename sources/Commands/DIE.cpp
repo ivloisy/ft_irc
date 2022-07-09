@@ -14,5 +14,6 @@ void	die_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)usr;
 	(void)params;
 	srv.setState(0);
+	//quitter proprement (kick all users)
 	std::cout << "die command called" << std::endl;
 }

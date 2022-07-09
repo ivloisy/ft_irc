@@ -63,9 +63,7 @@ User::~User()
 User &User::operator=(User const &rhs)
 {
 	if (this != &rhs)
-	{
 		this->_fd = rhs._fd;
-	}
 	return (*this);
 }
 
@@ -85,12 +83,8 @@ void					User::quitChannel(Channel * chan)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		if (chan->getChannelName() == (*it)->getChannelName())
-		{
 			this->_channel.erase(it);
-		}
-	}
 }
 
 /********************* GETTERS ***********************/
@@ -139,12 +133,8 @@ Channel*				User::getChannelByName(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		if ((*it)->getChannelName() == name)
-		{
 			return (*it);
-		}
-	}
 	return (NULL);
 }
 

@@ -39,7 +39,7 @@ namespace irc
 	public:
 		Server(int const & portNum);
 		Server(int const & portNum, string const & passw);
-		Server(Server const & src);
+		// Server(Server const & src);
 		virtual ~Server();
 
 
@@ -56,13 +56,14 @@ namespace irc
 		void											initCommand();
 		void 											welcome(int const & fd);
 		void											parse_buffer_command(string const &  buffer, int const &  fd);
-		void											tokenize(string const & str, int const & fd);
+		// void											tokenize(string const & str, int const & fd);
 		void											printParam();
 		void 											execCommand(int const & fd);
 		int												searchNick(string const & nick);
 		void											sendToChan(string const & name, string const & msg);
 		void											sendToUser(string const & name, string const & msg);
 		void											sendBuffer(User const & dest, string const & content);
+		void											sending(int fd, string toSend);
 
 		Channel*										addChannel(string const & name);
 

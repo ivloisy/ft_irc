@@ -37,11 +37,11 @@ Server::Server(int const & portNum, string const & passw) :
 	this->initServer();
 }
 
-Server::Server(Server const & src)
-{
-	*this = src;
-	return;
-}
+// Server::Server(Server const & src)
+// {
+// 	*this = src;
+// 	return;
+// }
 
 Server::~Server()
 {
@@ -54,27 +54,20 @@ Server::~Server()
 void 					Server::initServer()
 {
 	this->establishConnection();
-
 	this->_fdMax = this->_fd;
-
 	this->createServerAddr(this->_portNum);
 
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
-	{
 		cout << "error setting socket option..." << endl;
-	}
-
 	this->bindServer();
-
-
 	this->_size = sizeof(this->getServerAddr());
-
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
 		//===========================error //////////////////////////
 		;
 	}
+	this->initCommand();
 }
 
 void					 Server::establishConnection(void)
@@ -151,65 +144,23 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-	cout << "gggggggggggggggggggggggggg" << this->getUser(fd)->getToClose() << endl;
 	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
 		return;
 	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
-	cout << buf << endl;
-	send(fd, buf.c_str(), buf.length(), 0);
+	sending(fd, buf);
 	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
-	cout << buf << endl;
-	send(fd, buf.c_str(), buf.length(), 0);
+	sending(fd, buf);
 	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
-	cout << buf << endl;
-	send(fd, buf.c_str(), buf.length(), 0);
+	sending(fd, buf);
 	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
-	send(fd, buf.c_str(), buf.length(), 0);
+	sending(fd, buf);
 }
 
-void					Server::parse_buffer_command(string const & buffer, int const & fd)
+void					Server::parse_buffer_command(string const & str, int const & fd)
 {
+	// for(vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
+	// 	(*it).clear();
 	this->_param.clear();
-	this->tokenize(/*this->*/buffer/*,  serv*/, fd); //this splits the buffer into different vectors of parameters
-	// Uncomment this for printing parameters
-	// for(vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
-	// {
-	// 	(*itc)->print_parameters();
-	// 	cout << "nl" << endl;
-	// }
-
-	// for (size_t i = 0; i < this->_param.size(); i++)
-	// {
-	// 	cout << "param[" << i << "] = { ";
-	// 	for (size_t j = 0; j < this->_param[i].size(); j++)
-	// 	{
-	// 	 	cout << this->_param[i][j];
-	// 		if (j + 1 != this->_param[i].size())
-	// 			cout << "; ";
-	// 		else
-	// 			cout << " }" << endl;
-	// 	}
-	// }
-	// cout << endl;
-
-	// cout << this->_param[0][0] << endl;
-
-	//			Uncomment this for executing commands
-	// for (vector<Command *>::iterator itc = this->_command.begin(); itc != this->_command.end(); itc++)
-	// {
-	// 	cmap.find(*(*itc)->getParameters().begin())->second(*itc);
-	// }
-
-
-	// if (this->getAcceptConnect()) // connection ok
-	// {
-	// 	this->connection_replies(*this->_command.begin());
-	// 	this->setAcceptConnect(0);
-	// }
-}
-
-void					Server::tokenize(string const & str, int const & fd)
-{
 	stringstream 			ss(str);
 	string					s;
 	vector<string>	tmp;
@@ -278,6 +229,7 @@ void 				Server::execCommand(int const & fd)
 			if (this->_param[x][0] == test[y])
 			{
 				this->map_cmd.find(this->_param[x][0])->second(*this, *this->getUser(fd), this->_param[x]);
+				break;
 			}
 
 		}
@@ -313,8 +265,13 @@ void				Server::sendToUser(string const & name, string const &  msg)
 
 void				Server::sendBuffer(User const & dest, string const & content)
 {
-	cout << "BUFFER SEND = " << content << " to " << dest.getNickName() << endl;
-	send(dest.getFdUser(), content.c_str(), content.length(), 0);
+	sending(dest.getFdUser(), content);
+}
+
+void				Server::sending(int fd, string toSend)
+{
+	cout << "Sending : " << toSend << endl;
+	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 
 Channel*			Server::addChannel(string const & name)
