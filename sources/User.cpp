@@ -26,10 +26,10 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
-
+	return;
 }
 
-User::User(int fd, struct sockaddr_in address) :
+User::User(int fd/*, struct sockaddr_in address*/) :
 		_fd(fd),
 		_hostname(""),
 		_realname(""),
@@ -45,7 +45,8 @@ User::User(int fd, struct sockaddr_in address) :
 		_toClose(0),
 		_rdySend(0)
 {
-	(void) address;
+	// (void) address;
+	return;
 }
 
 /***************************** DESTRUCTORS ****************************/
@@ -53,7 +54,7 @@ User::User(int fd, struct sockaddr_in address) :
 
 User::~User()
 {
-	;
+	return;
 }
 
 
@@ -99,6 +100,21 @@ int 					User::getFdUser(void) const
 	return (this->_fd);
 }
 
+string 					User::getPrefix() const
+{
+	return (this->_prefix);
+}
+
+string 					User::getHostname() const
+{
+	return (this->_hostname);
+}
+
+string 					User::getNickName() const
+{
+	return (this->_nickname);
+}
+
 string 					User::getPassWord() const
 {
 	return (this->_password);
@@ -112,31 +128,6 @@ string 					User::getUserName() const
 string					User::getRealName() const
 {
 	return (this->_realname);
-}
-
-string 					User::getHostname() const
-{
-	return (this->_hostname);
-}
-
-string 					User::getNickName() const
-{
-	return (this->_nickname);
-}
-
-bool					User::getAcceptConnect() const
-{
-	return (this->_acceptConnect);
-}
-
-bool					User::getOper() const
-{
-	return (this->_isOper);
-}
-
-int 					User::getRdySend() const
-{
-	return this->_rdySend;
 }
 
 vector<Channel *>		User::getChannel() const
@@ -157,6 +148,21 @@ Channel*				User::getChannelByName(string name)
 	return (NULL);
 }
 
+bool					User::getAcceptConnect() const
+{
+	return (this->_acceptConnect);
+}
+
+bool					User::getOper() const
+{
+	return (this->_isOper);
+}
+
+int 					User::getRdySend() const
+{
+	return this->_rdySend;
+}
+
 bitset<2>				User::getMode() const
 {
 	return (this->_mode);
@@ -172,16 +178,10 @@ Channel*				User::getCurrentChannel()
 	return (this->_currChan);
 }
 
-
 bool 				User::getToClose()
 {
 	return (this->_toClose);
 }
-string 					User::getPrefix() const
-{
-	return (this->_prefix);
-}
-
 
 /********************** SETTERS ***********************/
 
@@ -203,6 +203,11 @@ void					User::setMode(bitset<2> const & mode)
 void					User::setOper(bool const & op)
 {
 	this->_isOper = op;
+}
+
+void					User::setAcceptConnect(bool const & ac)
+{
+	this->_acceptConnect = ac;
 }
 
 void 					User::setFdUser(int const & fd)
@@ -230,20 +235,9 @@ void					User::setHostName(string const & hostname)
 	this->_hostname = hostname;
 }
 
-
-void					User::setServerName(string const & name)
-{
-	this->_serverName = name;
-}
-
 void					User::setPassWord(string const & password)
 {
 	this->_password = password;
-}
-
-void					User::setAcceptConnect(bool const & ac)
-{
-	this->_acceptConnect = ac;
 }
 
 void 					User::setRdySend()
@@ -260,4 +254,9 @@ void 					User::setToClose(int const & x)
 void					User::setCurrentChannel(Channel * chan)
 {
 	this->_currChan = chan;
+}
+
+void					User::setServerName(string const & name)
+{
+	this->_serverName = name;
 }

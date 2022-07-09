@@ -27,7 +27,6 @@ namespace irc
 		string 												_serverName;
 		string 												_prefix;
 		vector<string>										parameters;
-		int 												bufsize;
 		vector<Channel *>									_channel;
 		Channel												*_currChan;
 		bitset<2> 											_mode;
@@ -45,10 +44,12 @@ namespace irc
 		virtual ~User();
 		User &operator=(User const &rhs);
 
+		/********************** FUNCTIONS ****************************/
 		void												clearAllChannels();
 		void												quitChannel(Channel * chan);
 		void												addChannel(Channel * chan);
 
+		/********************* GETTERS ***********************/
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
 		string 												getPrefix() const;
@@ -67,6 +68,7 @@ namespace irc
 		Channel												*getCurrentChannel();
 		bool 												getToClose();
 
+		/********************** SETTERS ***********************/
 		void												setPrefix();
 		void												setInvisible(bool const & inv);
 		void												setMode(bitset<2> const & mode);
@@ -86,8 +88,6 @@ namespace irc
 		//void												send_message(int nb_command, Server server);
 
 	};
-	// bool	operator<(const User & lhs, const User & rhs);
-	// bool	operator>(const User & lhs, const User & rhs);
 }
 
 

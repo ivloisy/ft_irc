@@ -7,7 +7,6 @@
 
 #include "ft_irc.hpp"
 
-// # define BUFFERSIZE 512
 using namespace std;
 
 namespace irc
@@ -26,7 +25,6 @@ namespace irc
 	private:
 		int 											_fd;
 		int												_fdMax;
-		int*											_fds;
 		struct sockaddr_in								_serverAddr;
 		string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t										_size;			//_user; //we're going to delete it for the instanciation with set
