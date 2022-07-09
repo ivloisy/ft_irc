@@ -75,7 +75,7 @@ namespace irc
 		int												getFdMax( void ) const;
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
-		vector<User *>									getUser() const;
+		vector<User *>									getUsers() const;
 		User*											getUser(int const & fd);
 		User*											getUser(string const & nick);
 		Channel*										getChannel(string const & name);

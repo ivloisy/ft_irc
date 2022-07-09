@@ -39,7 +39,10 @@ Server::Server(int const & portNum, string const & passw) :
 
 Server::~Server()
 {
+	for (vector<User *>::iterator it = this->_user.begin(); it != this->_user.end(); it++)
+		delete(*it);
 	this->_user.clear();
+	cout << "================== CALL DESTRUCTORS =============" << endl;
 	return;
 }
 
@@ -294,7 +297,7 @@ struct sockaddr_in	Server::getServerAddr() const
 	return (this->_serverAddr);
 }
 
-vector<User *>		Server::getUser() const
+vector<User *>		Server::getUsers() const
 {
 	return (this->_user);
 }

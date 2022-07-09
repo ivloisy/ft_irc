@@ -76,6 +76,7 @@ void ft_run(int port)
 						_poll[x] = _poll[fd_count - 1];
 						_poll[x].events = POLLIN;
 						close(fd);
+						// ser.deleteUser(fd);
 						fd_count--;
 					}
 					if (test == 1)
