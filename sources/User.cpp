@@ -29,26 +29,6 @@ User::User(int fd) :
 	return;
 }
 
-User::User(int fd, struct sockaddr_in address) :
-		_fd(fd),
-		_hostname(""),
-		_realname(""),
-		_username(""),
-		_nickname("lala"),
-		_password(""),
-		_serverName(""),
-		_channel(),
-		_currChan(NULL),
-		_mode(string("01")),
-		_acceptConnect(1),
-		_isOper(0),
-		_toClose(0),
-		_rdySend(0)
-{
-	(void) address;
-	return;
-}
-
 /***************************** DESTRUCTORS ****************************/
 
 

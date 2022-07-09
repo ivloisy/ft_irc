@@ -37,12 +37,6 @@ Server::Server(int const & portNum, string const & passw) :
 	this->initServer();
 }
 
-// Server::Server(Server const & src)
-// {
-// 	*this = src;
-// 	return;
-// }
-
 Server::~Server()
 {
 	this->_user.clear();
@@ -101,7 +95,7 @@ int						Server::acceptUser(socklen_t size)
 	vector<User *>::iterator it = _user.begin();
 	while (it != _user.end() && (*it)->getFdUser() > fd)
 		it++;
-	_user.insert(it, new User(fd, this->_serverAddr));
+	_user.insert(it, new User(fd));
 	return (fd);
 }
 
@@ -146,14 +140,10 @@ void 					Server::welcome(int const & fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
 		return;
-	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
-	sending(fd, buf);
-	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
-	sending(fd, buf);
-	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
-	sending(fd, buf);
-	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
-	sending(fd, buf);
+	sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
+	sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
+	sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
+	sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)
@@ -163,9 +153,7 @@ void					Server::parse_buffer_command(string const & str, int const & fd)
 	this->_param.clear();
 	stringstream 			ss(str);
 	string					s;
-	vector<string>	tmp;
-
-	int	i = 0;
+	vector<string>			tmp;
 
 	while (getline(ss, s, '\r'))
 	{
@@ -173,12 +161,9 @@ void					Server::parse_buffer_command(string const & str, int const & fd)
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
-		{
 			tmp.push_back(u);
-		}
 		this->_param.push_back(tmp);
 		tmp.clear();
-		i++;
 		getline(ss, s, '\n');
 	}
 }
@@ -189,12 +174,10 @@ void				Server::printParam()
 
 	for (vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
 	{
-		//cout << "param[" << i << "] = { ";
+		cout << "param[" << i << "] = { ";
 		for (vector<string>::iterator jt = (*it).begin(); jt != (*it).end(); jt++)
-		{
-			//cout << *jt << "; ";
-		}
-		//cout << " }" << endl;
+			cout << *jt << "; ";
+		cout << " }" << endl;
 		i++;
 	}
 }
@@ -225,15 +208,12 @@ void 				Server::execCommand(int const & fd)
 	{
 		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
 		for (size_t y = 0; y < test.size(); y++)
-		{
 			if (this->_param[x][0] == test[y])
 			{
 				this->map_cmd.find(this->_param[x][0])->second(*this, *this->getUser(fd), this->_param[x]);
 				break;
 			}
-
-		}
-		cout << _param[x][0] << endl;
+		// cout << _param[x][0] << endl;
 	}
 }
 
@@ -241,12 +221,8 @@ int					Server::searchNick(string const & nick)
 {
 	vector<User *>::iterator last = this->_user.end();
 	for (vector<User *>::iterator it = this->_user.begin(); it != last; it++)
-	{
 		if ((*it)->getNickName() == nick)
-		{
 			return ((*it)->getFdUser());
-		}
-	}
 	return (0);
 }
 
@@ -284,12 +260,8 @@ Channel*			Server::searchChannel(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		if ((*it)->getChannelName() == name)
-		{
 			return (*it);
-		}
-	}
 	return (NULL);
 }
 
@@ -311,9 +283,6 @@ int 				Server::getFdMax() const
 {
 	return this->_fdMax;
 }
-
-
-
 
 int					Server::getFdServer(void) const
 {
@@ -350,10 +319,8 @@ Channel*			Server::getChannel(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		if ((*it)->getChannelName() == name)
 			return (*it);
-	}
 	return (NULL);
 }
 
@@ -376,10 +343,8 @@ User*				Server::getOper(string const & name)
 {
 	vector<User *>::iterator last = this->_oper.end();
 	for (vector<User *>::iterator it = this->_oper.begin(); it != last; it++)
-	{
 		if ((*it)->getUserName() == name)
 			return (*it);
-	}
 	return (NULL);
 }
 
@@ -429,9 +394,7 @@ bool				Server::isMaxChannel()
 	int nb = 0;
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		nb++;
-	}
 	return (nb >= this->_maxChannels);
 }
 

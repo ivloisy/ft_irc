@@ -39,7 +39,6 @@ namespace irc
 	public:
 		Server(int const & portNum);
 		Server(int const & portNum, string const & passw);
-		// Server(Server const & src);
 		virtual ~Server();
 
 

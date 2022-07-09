@@ -39,7 +39,6 @@ namespace irc
 		//if client send a cap command, ignore it
 
 	public:
-		User(int fd, struct sockaddr_in address);
 		User(int fd);
 		virtual ~User();
 		User &operator=(User const &rhs);
