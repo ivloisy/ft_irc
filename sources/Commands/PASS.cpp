@@ -30,5 +30,5 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	{
 		usr.setToClose(1);
 	}
-	std::cout << "pass command called" << std::endl;
+	//std::cout << "pass command called" << std::endl;
 }

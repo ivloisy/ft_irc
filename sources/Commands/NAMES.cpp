@@ -21,5 +21,5 @@ void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "names command called" << std::endl;
+	//std::cout << "names command called" << std::endl;
 }

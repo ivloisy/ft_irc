@@ -16,5 +16,5 @@ void	wallops_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "wallops command called" << std::cout;
+	//std::cout << "wallops command called" << std::cout;
 }

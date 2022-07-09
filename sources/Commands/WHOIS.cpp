@@ -45,5 +45,5 @@ void	whois_cmd(Server & srv, User & usr, vector<string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "whois command called" << std::endl;
+	//std::cout << "whois command called" << std::endl;
 }

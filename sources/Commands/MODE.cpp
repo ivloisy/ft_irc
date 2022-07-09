@@ -133,5 +133,5 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		return ;
 
 	}
-	std::cout << "mode command called" << std::endl;
+	//std::cout << "mode command called" << std::endl;
 }

@@ -171,13 +171,13 @@ void 					Server::welcome(int const & fd)
 	if (this->getUser(fd)->getRdySend() != 3)
 		return;
 	string buf = ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network");
-	cout << buf << endl;
+	//cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
 	buf = ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef");
-	cout << buf << endl;
+	//cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
 	buf = ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now");
-	cout << buf << endl;
+	//cout << buf << endl;
 	send(fd, buf.c_str(), buf.length(), 0);
 	buf = ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO");
 	send(fd, buf.c_str(), buf.length(), 0);
@@ -297,7 +297,7 @@ void 				Server::execCommand(int const & fd)
 			}
 
 		}
-		cout << _param[x][0] << endl;
+		//cout << _param[x][0] << endl;
 	}
 }
 
@@ -319,18 +319,18 @@ void				Server::sendToChan(string const & name, string const & msg)
 	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
-		sendBuffer(*(*it), msg);
+		sendBuffer(*it, msg);
 }
 
 void				Server::sendToUser(string const & name, string const &  msg)
 {
-	sendBuffer(*this->getUser(name), msg);
+	sendBuffer(this->getUser(name), msg);
 }
 
-void				Server::sendBuffer(User const & dest, string const & content)
+void				Server::sendBuffer(User * dest, string const & content)
 {
-	cout << "BUFFER SEND = " << content << " to " << dest.getNickName() << endl;
-	send(dest.getFdUser(), content.c_str(), content.length(), 0);
+	cout << "BUFFER SEND = " << content << endl;// << " to " << dest->getNickName() << endl;
+	send(dest->getFdUser(), content.c_str(), content.length(), 0);
 }
 
 Channel*			Server::addChannel(string const & name)

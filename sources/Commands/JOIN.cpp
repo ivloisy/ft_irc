@@ -108,21 +108,23 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 {
 	string msg = usr.getPrefix() + " JOIN " + chan.getChannelName() + "\r\n";
 	//srv->sendBuffer(usr, msg);
+	//srv.sendToUser(usr.getNickName(), msg);
 	if (srv.searchChannel(chan.getChannelName()))
 		srv.sendToChan(chan.getChannelName(), msg);
 	else
 		cout << "error channel not found" << endl;
 	//cout << msg << endl;
-	//vector<User *> chan_usr = existing->getChannelUsers();
+	vector<User *> chan_usr = chan.getChannelUsers();
 	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
-	//vector<User *>::iterator lst = chan_usr.end();
-	//for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++)
-	//	srv->sendBuffer(*it, msg);
-	//msg.clear();
-	//msg = "";
-	//srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_NAMREPLY, usr->getNickName(), msg));
-	//msg = "";
-	//srv->sendBuffer(usr, ft_reply(srv->getServerName(), RPL_ENDOFNAMES, usr->getNickName(), msg));
+	vector<User *>::iterator lst = chan_usr.end();
+	for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++) {
+		msg.clear();
+		msg = "";
+		srv.sendToChan(chan.getChannelName(), ft_reply(srv.getServerName(), RPL_NAMREPLY, (*it)->getNickName(), msg));
+		msg = "";
+		srv.sendToChan(chan.getChannelName(), ft_reply(srv.getServerName(), RPL_ENDOFNAMES, (*it)->getNickName(), msg));
+
+	}
 
 }
 
@@ -174,8 +176,12 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 				else
 				{
 					Channel * new_chan = user_create_channel(srv, usr, params[1]);
+					//user_create_channel(srv, usr, params[x]);
 					if (new_chan)
 						reply_channel_joined(srv, usr, *new_chan);
+					//string msg = "";
+					//srv.sendBuffer(&usr, ft_reply(srv.getServerName(), RPL_NAMREPLY, usr.getNickName(), msg));
+					//srv.sendBuffer(&usr, ft_reply(srv.getServerName(), RPL_ENDOFNAMES, usr.getNickName(), msg));
 					//string msg = params[1] + " created!";
 					//srv->sendToUser(usr->getNickName(), msg);
 				}
@@ -183,5 +189,5 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			}
 		}
 	}
-	cout << "join command called" << endl;
+	//cout << "join command called" << endl;
 }

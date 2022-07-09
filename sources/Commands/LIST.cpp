@@ -24,5 +24,5 @@ void		list_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)usr;
 	(void)params;
 
-	std::cout << "list command called " << std::endl;
+	//std::cout << "list command called " << std::endl;
 }

@@ -57,7 +57,7 @@ namespace irc
 		void											tokenize(string const & str, int const & fd);
 		void											sendToUser(string const & name, string const & msg);
 
-		void											sendBuffer(User const & dest, string const & content);
+		void											sendBuffer(User * dest, string const & content);
 		void											printParam();
 		void											initCommand();
 		void 											execCommand(int const & fd);

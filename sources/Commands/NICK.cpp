@@ -42,7 +42,8 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 		send(usr.getFdUser(), buf.c_str(), buf.length(), 0);
 		return ;
 	}
-	srv.getUser(usr.getFdUser())->setNickName(params[1]);
-	//std::cout << tmp << "'s nickname become " << usr->getNickName() << std::endl;
-	cout << "nick command called" << endl;
+	//srv.getUser(usr.getFdUser())->setNickName(params[1]);
+	usr.setNickName(params[1]);
+	std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;
+	//cout << "nick command called" << endl;
 }

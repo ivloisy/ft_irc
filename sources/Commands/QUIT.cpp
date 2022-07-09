@@ -19,5 +19,5 @@ void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "quit command called" << std::endl;
+	//std::cout << "quit command called" << std::endl;
 }

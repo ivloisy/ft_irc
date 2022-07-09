@@ -38,5 +38,5 @@ void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			srv.sendToUser(params[1], msg);
 		}
 	}
-	std::cout << "notice command called" << std::endl;
+	//std::cout << "notice command called" << std::endl;
 }

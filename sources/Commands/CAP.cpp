@@ -23,5 +23,5 @@ void	cap_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "cap command called" << std::endl;
+	//std::cout << "cap command called" << std::endl;
 }

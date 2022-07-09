@@ -32,7 +32,7 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	usr->setUserName(real);
 	*/
 	usr.setPrefix();
-	std::cout << "user command called = " << usr.getUserName() << std::endl;
+	//std::cout << "user command called = " << usr.getUserName() << std::endl;
 }
 
 /*

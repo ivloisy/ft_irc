@@ -48,5 +48,5 @@ void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			//if (params[2])
 		//}
 	}
-	std::cout << "oper command called" << std::endl;
+	//std::cout << "oper command called" << std::endl;
 }

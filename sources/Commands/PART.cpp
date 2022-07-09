@@ -19,5 +19,5 @@ void	part_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	std::cout << "part command called" << std::endl;
+	//std::cout << "part command called" << std::endl;
 }
