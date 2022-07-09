@@ -29,7 +29,7 @@ User::User(int fd) :
 	return;
 }
 
-User::User(int fd/*, struct sockaddr_in address*/) :
+User::User(int fd, struct sockaddr_in address) :
 		_fd(fd),
 		_hostname(""),
 		_realname(""),
@@ -45,7 +45,7 @@ User::User(int fd/*, struct sockaddr_in address*/) :
 		_toClose(0),
 		_rdySend(0)
 {
-	// (void) address;
+	(void) address;
 	return;
 }
 

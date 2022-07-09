@@ -25,7 +25,7 @@ Server::Server(int const & portNum) :
 	_param(),
 	_maxChannels(10)
 {
-	initServer();this->
+	this->initServer();
 }
 
 Server::Server(int const & portNum, string const & passw) :
