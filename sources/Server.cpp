@@ -24,30 +24,8 @@ Server::Server(int const & portNum) :
 	_password(),
 	_param(),
 	_maxChannels(10)
-	// _cmap()
 {
-	this->establishConnection();
-
-	this->_fdMax = this->_fd;
-
-	this->createServerAddr(this->_portNum);
-
-	int optval = 1;
-	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
-	{
-		cout << "error setting socket option..." << endl;
-	}
-
-	this->bindServer();
-
-	this->_size = sizeof(this->getServerAddr());
-
-	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
-	{
-		//error
-		;
-	}
-	this->initCommand();
+	initServer();this->
 }
 
 Server::Server(int const & portNum, string const & passw) :
@@ -56,28 +34,7 @@ Server::Server(int const & portNum, string const & passw) :
 	_state(1),
 	_password(passw)
 {
-	this->establishConnection();
-
-	this->_fdMax = this->_fd;
-
-	this->createServerAddr(this->_portNum);
-
-	int optval = 1;
-	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
-	{
-		cout << "error setting socket option..." << endl;
-	}
-
-	this->bindServer();
-
-
-	this->_size = sizeof(this->getServerAddr());
-
-	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
-	{
-		//error
-		;
-	}
+	this->initServer();
 }
 
 Server::Server(Server const & src)
@@ -94,13 +51,39 @@ Server::~Server()
 
 /******************** CONNECTION **********************/
 
+void 					Server::initServer()
+{
+	this->establishConnection();
+
+	this->_fdMax = this->_fd;
+
+	this->createServerAddr(this->_portNum);
+
+	int optval = 1;
+	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
+	{
+		cout << "error setting socket option..." << endl;
+	}
+
+	this->bindServer();
+
+
+	this->_size = sizeof(this->getServerAddr());
+
+	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
+	{
+		//===========================error //////////////////////////
+		;
+	}
+}
+
 void					 Server::establishConnection(void)
 {
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
 	{
 		cout << "Error establishing connection..." << endl;
-		//exit(1);
+		//=======================exit(1); //////////////////////////
 		return ;
 	}
 	cout << "Server Socket connection created..." << endl;
@@ -111,16 +94,6 @@ void					Server::createServerAddr(int const & portNum)
 	this->_serverAddr.sin_family = AF_INET;
 	this->_serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
 	this->_serverAddr.sin_port = htons(portNum);
-}
-
-int						Server::bindServer()
-{
-	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
-	{
-		cout << "Error binding socket..." << endl;
-		return (0);
-	}
-	return (1);
 }
 
 int						Server::acceptUser(socklen_t size)
@@ -144,6 +117,16 @@ void					Server::closeUser(User const &  user)
 	close(user.getFdUser());
 }
 
+
+int						Server::bindServer()
+{
+	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
+	{
+		cout << "Error binding socket..." << endl;
+		return (0);
+	}
+	return (1);
+}
 
 void					Server::initCommand()
 {

@@ -18,7 +18,6 @@ namespace irc
 	{
 
 	public:
-		// typedef void (* Server::pointer_function)(/*Command * com*/);
 		typedef void (*pointer_function)(Server & srv, User & usr, std::vector<std::string> params);
 		map<string, pointer_function>					map_cmd;
 
@@ -44,23 +43,26 @@ namespace irc
 		virtual ~Server();
 
 
+		/******************** CONNECTION **********************/
+		void 											initServer(void);
 		void											establishConnection(void);
 		void											createServerAddr(int const & portNum);
 		//void											listenUser(void);
 		int												acceptUser(socklen_t size);
 		void											closeUser(User const &  user);
 		// void											init_map_cmd();
-		void											parse_buffer_command(string const &  buffer, int const &  fd);
-		void											sendToChan(string const & name, string const & msg);
-		void											tokenize(string const & str, int const & fd);
-		void											sendToUser(string const & name, string const & msg);
+		int												bindServer(void);
 
-		void											sendBuffer(User const & dest, string const & content);
-		void											printParam();
 		void											initCommand();
-		void 											execCommand(int const & fd);
 		void 											welcome(int const & fd);
+		void											parse_buffer_command(string const &  buffer, int const &  fd);
+		void											tokenize(string const & str, int const & fd);
+		void											printParam();
+		void 											execCommand(int const & fd);
 		int												searchNick(string const & nick);
+		void											sendToChan(string const & name, string const & msg);
+		void											sendToUser(string const & name, string const & msg);
+		void											sendBuffer(User const & dest, string const & content);
 
 		Channel*										addChannel(string const & name);
 
@@ -68,29 +70,32 @@ namespace irc
 
 		void											delUserAllChannel(User * user);
 
-		int												bindServer(void);
+
+		/******************** ACCESSORS **********************/
 		int												getFdMax( void ) const;
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
 		vector<User *>									getUser() const;
-		vector<User *>									getOper() const;
-		User*											getOper(string const & name);
 		User*											getUser(int const & fd);
 		User*											getUser(string const & nick);
 		Channel*										getChannel(string const & name);
 		socklen_t										getSize() const;
 		int												getPortNum() const;
+		vector<User *>									getOper() const;
+		User*											getOper(string const & name);
+		int 											getMaxChannel() const;
+		bool											getState() const;
 		string											getServerName() const;
 		string											getPassword() const;
-		bool											getState() const;
-		int 											getMaxChannel() const;
 
-		void											setState(bool const & st);
+		/********************* MUTATORS *************************/
 		void											setFdServer(int const & fd);
+		void											setState(bool const & st);
 		void											setUpFdMax(int const & fdCurrent);
 		// void											setDownFdMax(int const & fdCurrent);
 
 
+		/******************* CHECKERS **********************/
 		bool											isMaxChannel();
 		bool											isUserEmpty();
 	};
