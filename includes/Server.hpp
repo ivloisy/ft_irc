@@ -69,6 +69,7 @@ namespace irc
 		Channel*										searchChannel(string const & name);
 
 		void											delUserAllChannel(User * user);
+		void 											deleteUser(vector<User *>::iterator user);
 
 
 		/******************** ACCESSORS **********************/

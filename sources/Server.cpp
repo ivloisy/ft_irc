@@ -141,7 +141,8 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
+
+	if (this->getUser(fd)->getRdySend() != 4)
 		return;
 	sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
 	sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
@@ -216,6 +217,8 @@ void 				Server::execCommand(int const & fd)
 				this->map_cmd.find(this->_param[x][0])->second(*this, *this->getUser(fd), this->_param[x]);
 				break;
 			}
+		if (this->getUser(fd)->getToClose() == 1)
+			break;
 		// cout << _param[x][0] << endl;
 	}
 }
@@ -278,6 +281,11 @@ void				Server::delUserAllChannel(User * user)
 		(*it)->delUserMode(user);
 		(*it)->delInvite(user);
 	}
+}
+
+void				Server::deleteUser(vector<User *>::iterator user)
+{
+	this->_user.erase(user);
 }
 
 /******************** ACCESSORS **********************/

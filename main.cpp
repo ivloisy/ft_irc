@@ -3,10 +3,10 @@
 using namespace std;
 using namespace irc;
 
-void ft_run(int port)
+void ft_run(int port, string password)
 {
 	char buffer[512];
-	Server serv(port);
+	Server serv(port, password);
 	int poll_ret, fd, test;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
@@ -93,18 +93,20 @@ void ft_run(int port)
 
 int main(int argc, char **argv)
 {
-	(void)argv;
-	if (argc == 2) // without password
-	{
-		// if ((port = atoi(argv[1])) > 0)
-		ft_run(6667);
-		cout << "sortie propre" << endl;
-	}
-	// else if (argc == 3) //with password
+	// (void)argv;
+	// if (argc == 2) // without password
 	// {
-	//if ((port = atoi(argv[1])) > 0)
-		// ft_run(port);
+	// 	// if ((port = atoi(argv[1])) > 0)
+	// 	ft_run(6667);
+	// 	cout << "sortie propre" << endl;
 	// }
+	int port;
+	if (argc == 3) //with password
+	{
+		string password = argv[2];
+		if ((port = atoi(argv[1])) > 0)
+			ft_run(port, password);
+	}
 	else
 	{
 		cout << "error wrong number arguments" << endl;
