@@ -65,6 +65,7 @@ void 					Server::initServer()
 		;
 	}
 	this->initCommand();
+	this->initReplyTree();
 }
 
 void					 Server::establishConnection(void)
@@ -137,6 +138,26 @@ void					Server::initCommand()
 	map_cmd["USER"] 	= 	user_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
 	map_cmd["WHOIS"] 	= 	whois_cmd;
+}
+
+string 	Server::initReplyTree()
+{
+	_replyTree[1] = string("");
+}
+
+string 	Server::ft_reply(User & dest, Server string code)
+{
+	string ret = ":";
+	ret += this->_serverName;
+	ret += " ";
+	ret += code;
+	ret += " ";
+	ret += _replyTree(code)->second(dest);
+	ret += " :";
+	//ret += _replyTree(code);
+	ret += "\r\n";
+	send_buff.
+	return (ret);
 }
 
 void 					Server::welcome(int const & fd)

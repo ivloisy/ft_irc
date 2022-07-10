@@ -20,6 +20,7 @@ namespace irc
 	public:
 		typedef void (*pointer_function)(Server & srv, User & usr, std::vector<std::string> params);
 		map<string, pointer_function>					map_cmd;
+		typedef void (*function_reply)(User & dest, User & from, int code);
 
 	private:
 		int 											_fd;
@@ -35,6 +36,9 @@ namespace irc
 		string											_password;
 		vector<vector<string> >							_param;
 		int 											_maxChannels;
+		map<string, function_reply>						_replyTree;
+		string 											_date;
+		string 											_ver;
 
 	public:
 		Server(int const & portNum);
@@ -53,6 +57,7 @@ namespace irc
 		int												bindServer(void);
 
 		void											initCommand();
+		string											initReplyTree();
 		void 											welcome(int const & fd);
 		void											parse_buffer_command(string const &  buffer, int const &  fd);
 		// void											tokenize(string const & str, int const & fd);
