@@ -217,6 +217,12 @@ void 					User::setRdySend()
 		this->_rdySend++;
 }
 
+void 					User::resetRdySend()
+{
+	this->_rdySend = 0;
+}
+
+
 void 					User::setToClose(int const & x)
 {
 	this->_toClose = x;

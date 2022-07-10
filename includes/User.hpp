@@ -81,6 +81,7 @@ namespace irc
 		void												setHostName(string const & hostname);
 		void												setPassWord(string const & password);
 		void 												setRdySend();
+		void 												resetRdySend();
 		void 												setToClose(int const & x);
 		void												setCurrentChannel(Channel * chan);
 		void												setServerName(string const & name);
