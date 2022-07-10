@@ -39,7 +39,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 			//cout << "SEND TO CHAN = " << msg << "\n";
 			srv.sendToChan(params[1], msg);
 		}
-		else if (srv.getUser(params[1]))
+		else if (*srv.getUser(params[1]))
 		{
 			//cout << "SEND TO USER = " << msg << "\n";
 			srv.sendToUser(params[1], msg);

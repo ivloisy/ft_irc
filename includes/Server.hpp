@@ -69,6 +69,8 @@ namespace irc
 		Channel*										searchChannel(string const & name);
 		void											delUserAllChannel(User * user);
 		void 											ft_reply(User * from, User * to, string code);
+		void 											deleteUser(vector<User *>::iterator user);
+		// void											deleteUser(int fd);
 		//string const									getDate() const;
 		//string const									getVersion() const;
 
@@ -77,8 +79,8 @@ namespace irc
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
 		vector<User *>									getUsers() const;
-		User*											getUser(int const & fd);
-		User*											getUser(string const & nick);
+		vector<User *>::iterator						getUser(int const & fd);
+		vector<User *>::iterator						getUser(string const & nick);
 		Channel*										getChannelByName(string const & name);
 		vector<Channel *>								getChannels() const;
 		string 											getVersion() const;

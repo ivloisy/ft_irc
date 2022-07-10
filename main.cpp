@@ -3,11 +3,11 @@
 using namespace std;
 using namespace irc;
 
-void ft_run(int port)
+void ft_run(int port, string password)
 {
 	char buffer[512];
-	Server serv(port);
-	int poll_ret, fd, test;
+	Server serv(port, password);
+	int poll_ret, fd, test, receive;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
@@ -63,7 +63,7 @@ void ft_run(int port)
 							break;
 						}
 					}
-					if (recv(fd, &buffer, 255, 0) >= 1)
+					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
 						cout << "BUFFER RECEIVE = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
@@ -71,12 +71,13 @@ void ft_run(int port)
 						serv.execCommand(fd);
 						serv.welcome(fd);
 					}
-					else
+					if (test != 1 && (receive < 1 || (*(serv.getUser(fd)))->getToClose() == 1))
 					{
+						cout << "CLOSE FD" << endl;
 						_poll[x] = _poll[fd_count - 1];
 						_poll[x].events = POLLIN;
+						serv.deleteUser(serv.getUser(fd));
 						close(fd);
-						// ser.deleteUser(fd);
 						fd_count--;
 					}
 					if (test == 1)
@@ -93,18 +94,20 @@ void ft_run(int port)
 
 int main(int argc, char **argv)
 {
-	(void)argv;
-	if (argc == 2) // without password
-	{
-		// if ((port = atoi(argv[1])) > 0)
-		ft_run(6667);
-		cout << "sortie propre" << endl;
-	}
-	// else if (argc == 3) //with password
+	// (void)argv;
+	// if (argc == 2) // without password
 	// {
-	//if ((port = atoi(argv[1])) > 0)
-		// ft_run(port);
+	// 	// if ((port = atoi(argv[1])) > 0)
+	// 	ft_run(6667);
+	// 	cout << "sortie propre" << endl;
 	// }
+	int port;
+	if (argc == 3) //with password
+	{
+		string password = argv[2];
+		if ((port = atoi(argv[1])) > 0)
+			ft_run(port, password);
+	}
 	else
 	{
 		cout << "error wrong number arguments" << endl;

@@ -17,23 +17,24 @@ User
 
 
 Benjamin:
-Die
 Pass
-Ping
-Quit
-
-
+List
+Whois
 
 
 
 
 Vacant:
-List
 Part
-Whois
 Wallops
 
 
 
-Fait:
+Verifier:
+Die
+Ping
+
+
+supprimer :
 CAP
+Quit
