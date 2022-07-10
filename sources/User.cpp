@@ -14,7 +14,7 @@ User::User(int fd) :
 		_hostname(""),
 		_realname(""),
 		_username(""),
-		_nickname("lala"),
+		_nickname(""),
 		_password(""),
 		_serverName(""),
 		_prefix(""),
@@ -26,6 +26,7 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
+	this->setPrefix();
 	return;
 }
 

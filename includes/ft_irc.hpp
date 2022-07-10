@@ -54,5 +54,6 @@ string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
 string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);
 string 	ft_RPL_CREATED(Server * srv, User * from, User * to);
 string 	ft_RPL_MYINFO(Server * srv, User * from, User * to);
+string	ft_reply(/*string prefix, */string servername, string code, string nick, string message);
 
 #endif

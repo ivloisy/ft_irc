@@ -37,20 +37,20 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 	if (existing.getInviteOnlyMode())
 	{
 		string msg = existing.getChannelName() + " :Cannot join channel (+i)";
-		//ft_reply(srv.getServerName(), ERR_INVITEONLYCHAN, usr.getNickName(), msg);
+	//	ft_reply(srv.getServerName(), ERR_INVITEONLYCHAN, usr.getNickName(), msg);
 		return ;
 	}
 	else if (existing.isMaxUsers())
 	{
 		string msg = existing.getChannelName() + " :Cannot join channel (+l)";
-		//ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
+		// ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
 		return ;
 	}
 	else if (existing.getBanned(usr.getNickName()))
 	{
 
 		string msg = existing.getChannelName() + " :Cannot join channel (+b)";
-		//ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
+		// ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
 		return ;
 	}
 	//join channel
@@ -70,7 +70,7 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	{
 		//ERR_TOOMANYCHANNELS
 		string msg = name + " :You have joined too many channels";
-		//ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
+		// ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
 		return (NULL);
 	}
 	//create channel
@@ -94,7 +94,7 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 	{
 		//quit all joined channels
 		string msg(params[1] + " left!");
-		//ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
+		// ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
 		msg.clear();
 		msg = usr.getNickName() + " left " + params[1];
 		srv.sendToChan(params[1], msg);
@@ -131,7 +131,8 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 	{
 		if (params.size() < 1)
 		{
-			//srv.ft_reply(&usr, NULL, ERR_NEEDMOREPARAMS);
+			string msg = params[0] + " :Not enough parameters";
+			// ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), msg);
 			return ; //ERR_NEEDMOREPARAMS
 		}
 		else
