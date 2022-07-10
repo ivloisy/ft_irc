@@ -13,7 +13,7 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	if (params.size() < 5)
 	{
-		srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
+		srv.sending(usr.getFdUser(), ft_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
 		return ;
 	}
 	usr.setUserName(params[1]);

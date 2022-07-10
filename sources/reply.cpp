@@ -8,9 +8,9 @@
 
 using namespace std;
 
-string ft_reply(string servername, string code, string nick, string message)
+string ft_reply(/*string prefix, */string servername, string code, string nick, string message)
 {
-	string ret = ":";
+	string ret = /*prefix + */":";
 	ret += servername;
 	ret += " ";
 	ret += code;

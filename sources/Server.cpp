@@ -143,10 +143,10 @@ void 					Server::welcome(int const & fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
 		return;
-	sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
-	sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
-	sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
-	sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
+	sending(fd, ft_reply(/*this->getUser(fd)->getPrefix(), */this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network " + this->getUser(fd)->getPrefix()));
+	sending(fd, ft_reply(/*this->getUser(fd)->getPrefix(), */this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
+	sending(fd, ft_reply(/*this->getUser(fd)->getPrefix(), */this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
+	sending(fd, ft_reply(/*this->getUser(fd)->getPrefix(), */this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)
