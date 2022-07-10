@@ -36,7 +36,7 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 	cout << "USER JOIN CHANNEL UFNCTION\n";
 	if (existing.getInviteOnlyMode())
 	{
-		string msg = existing.getChannelName() + " :Cannot join channel (+i)";
+		//string msg = existing.getChannelName() + " :Cannot join channel (+i)";
 		//ft_reply(srv.getServerName(), ERR_INVITEONLYCHAN, usr.getNickName(), msg);
 		return ;
 	}
@@ -119,9 +119,9 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
 	vector<User *>::iterator lst = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++) {
-		//srv.ft_reply(&usr, *it, RPL_NAMREPLY);
+		srv.ft_reply(&usr, *it, RPL_NAMREPLY);
 	}
-	//srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
+	srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
 }
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
