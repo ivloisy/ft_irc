@@ -122,7 +122,7 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			return ;
 		}
 		Channel * chan;
-		if ((chan = srv.getChannel(params[1])))
+		if ((chan = srv.getChannelByName(params[1])))
 		{
 			//if ((usr->getChannlByName))
 			bitset<2> chn_mode = chanMode(usr, params[2]);

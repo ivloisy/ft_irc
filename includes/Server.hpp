@@ -19,12 +19,12 @@ namespace irc
 
 	public:
 		typedef void (*function_command)(Server & srv, User & usr, std::vector<std::string> params);
-
-		typedef void (*function_reply)(User & dest, User & from, int code);
-
+		map<string, function_command>					map_cmd;
+		typedef string (*function_reply)(Server * srv, User * from, User * to);
+		map<string, function_reply>						map_rep;
 
 	private:
-		map<string, function_command>					map_cmd;
+
 
 		int 											_fd;
 		int												_fdMax;
@@ -48,7 +48,6 @@ namespace irc
 		Server(int const & portNum, string const & passw);
 		virtual ~Server();
 
-
 		/******************** CONNECTION **********************/
 		void 											initServer(void);
 		void											establishConnection(void);
@@ -69,11 +68,9 @@ namespace irc
 		Channel*										addChannel(string const & name);
 		Channel*										searchChannel(string const & name);
 		void											delUserAllChannel(User * user);
-		string 											ft_reply(string code, string nick, string message);
-		string const									getDate() const;
-		string const									getVersion() const;
-
-
+		void 											ft_reply(User * from, User * to, string code);
+		//string const									getDate() const;
+		//string const									getVersion() const;
 
 		/******************** ACCESSORS **********************/
 		int												getFdMax( void ) const;
@@ -84,6 +81,7 @@ namespace irc
 		User*											getUser(string const & nick);
 		Channel*										getChannelByName(string const & name);
 		vector<Channel *>								getChannels() const;
+		string 											getVersion() const;
 		socklen_t										getSize() const;
 		int												getPortNum() const;
 		vector<User *>									getOper() const;
@@ -103,9 +101,13 @@ namespace irc
 		/******************* CHECKERS **********************/
 		bool											isMaxChannel();
 		bool											isUserEmpty();
+
+		/********************* REPLIES **************************/
+		void											initReplyTree();
+
+
+
 	};
 }
-
-
 
 #endif //FT_IRC_SERVER_HPP

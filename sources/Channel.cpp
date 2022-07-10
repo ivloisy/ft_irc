@@ -2,7 +2,7 @@
 // Created by antoine on 06/07/22.
 //
 
-#include "../includes/Channel.hpp"
+#include "../includes/ft_irc.hpp"
 
 using namespace irc;
 using namespace std;

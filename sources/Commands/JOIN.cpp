@@ -32,24 +32,25 @@ using namespace std;
 
 void	user_join_channel(Server & srv, User & usr, Channel & existing)
 {
+	(void)srv;
 	cout << "USER JOIN CHANNEL UFNCTION\n";
 	if (existing.getInviteOnlyMode())
 	{
 		string msg = existing.getChannelName() + " :Cannot join channel (+i)";
-		ft_reply(srv.getServerName(), ERR_INVITEONLYCHAN, usr.getNickName(), msg);
+		//ft_reply(srv.getServerName(), ERR_INVITEONLYCHAN, usr.getNickName(), msg);
 		return ;
 	}
 	else if (existing.isMaxUsers())
 	{
 		string msg = existing.getChannelName() + " :Cannot join channel (+l)";
-		ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
+		//ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
 		return ;
 	}
 	else if (existing.getBanned(usr.getNickName()))
 	{
 
 		string msg = existing.getChannelName() + " :Cannot join channel (+b)";
-		ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
+		//ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
 		return ;
 	}
 	//join channel
@@ -69,7 +70,7 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	{
 		//ERR_TOOMANYCHANNELS
 		string msg = name + " :You have joined too many channels";
-		ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
+		//ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
 		return (NULL);
 	}
 	//create channel
@@ -93,7 +94,7 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 	{
 		//quit all joined channels
 		string msg(params[1] + " left!");
-		ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
+		//ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
 		msg.clear();
 		msg = usr.getNickName() + " left " + params[1];
 		srv.sendToChan(params[1], msg);
@@ -118,14 +119,9 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
 	vector<User *>::iterator lst = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++) {
-		msg.clear();
-		msg = "";
-		srv.sendToChan(chan.getChannelName(), ft_reply(srv.getServerName(), RPL_NAMREPLY, (*it)->getNickName(), msg));
-		msg = "";
-		srv.sendToChan(chan.getChannelName(), ft_reply(srv.getServerName(), RPL_ENDOFNAMES, (*it)->getNickName(), msg));
-
+		//srv.ft_reply(&usr, *it, RPL_NAMREPLY);
 	}
-
+	//srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
 }
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
@@ -135,8 +131,7 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 	{
 		if (params.size() < 1)
 		{
-			string msg = params[0] + " :Not enough parameters";
-			ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), msg);
+			//srv.ft_reply(&usr, NULL, ERR_NEEDMOREPARAMS);
 			return ; //ERR_NEEDMOREPARAMS
 		}
 		else
@@ -146,7 +141,7 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			unsigned long x = 1;
 			while (x < params.size())
 			{
-				if (x >= 1 && srv.getChannel(params[x - 1]))
+				if (x >= 1 && srv.getChannelByName(params[x - 1]))
 				{
 					for (string::iterator i = params[x].begin(); i != params[x].end(); i++)
 					{
@@ -158,7 +153,7 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 								if (*i != ' ' && *i != ',')
 									key.push_back(*i);
 							}
-							srv.getChannel(params[x - 1])->setKey(key);
+							srv.getChannelByName(params[x - 1])->setKey(key);
 						}
 					}
 				}

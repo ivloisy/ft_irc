@@ -34,7 +34,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-		if (srv.getChannel(params[1]))
+		if (srv.getChannelByName(params[1]))
 		{
 			//cout << "SEND TO CHAN = " << msg << "\n";
 			srv.sendToChan(params[1], msg);

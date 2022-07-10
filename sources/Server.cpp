@@ -67,6 +67,7 @@ void 					Server::initServer()
 		;
 	}
 	this->initCommand();
+	this->initReplyTree();
 }
 
 void					 Server::establishConnection(void)
@@ -145,10 +146,16 @@ void 					Server::welcome(int const & fd)
 {
 	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
 		return;
-	sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
-	sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
-	sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
-	sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
+	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
+	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
+	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
+	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
+	cout << "Welcome my friends" << endl;
+	ft_reply(this->getUser(fd), NULL, RPL_WELCOME);
+	ft_reply(this->getUser(fd), NULL, RPL_YOURHOST);
+	ft_reply(this->getUser(fd), NULL, RPL_CREATED);
+	ft_reply(this->getUser(fd), NULL, RPL_MYINFO);
+	cout << "Bye my friends" << endl;
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)
@@ -235,7 +242,7 @@ int					Server::searchNick(string const & nick)
 
 void				Server::sendToChan(string const & name, string const & msg)
 {
-	vector<User *> chan_usr = this->getChannel(name)->getChannelUsers();
+	vector<User *> chan_usr = this->getChannelByName(name)->getChannelUsers();
 	vector<User *>::iterator last = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != last; it++)
 		sendBuffer(*it, msg);
@@ -322,13 +329,23 @@ User*				Server::getUser(string const & nick)
 	return (*it);
 }
 
-Channel*			Server::getChannel(string const & name)
+Channel*			Server::getChannelByName(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
 			return (*it);
 	return (NULL);
+}
+
+vector<Channel *>	Server::getChannels() const
+{
+	return (this->_channel);
+}
+
+string 				Server::getVersion() const
+{
+	return (this->_ver);
 }
 
 socklen_t			Server::getSize() const

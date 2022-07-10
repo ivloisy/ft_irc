@@ -50,6 +50,9 @@ void	user_cmd(Server & srv, User & usr, vector<string> params);
 void	wallops_cmd(Server & srv, User & usr, vector<string> params);
 void	whois_cmd(Server & srv, User & usr, vector<string> params);
 
-
+string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
+string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);
+string 	ft_RPL_CREATED(Server * srv, User * from, User * to);
+string 	ft_RPL_MYINFO(Server * srv, User * from, User * to);
 
 #endif

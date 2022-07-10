@@ -11,9 +11,8 @@ using namespace std;
 
 namespace irc
 {
-	//class Message;
+	class Channel;
 	class Server;
-	class Command;
 
 	class User
 	{

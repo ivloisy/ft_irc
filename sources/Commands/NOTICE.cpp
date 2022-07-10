@@ -29,7 +29,7 @@ void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-		if (srv.getChannel(params[1]))
+		if (srv.getChannelByName(params[1]))
 		{
 			srv.sendToChan(usr.getNickName(), msg);
 		}

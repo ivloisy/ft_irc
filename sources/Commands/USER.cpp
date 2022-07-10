@@ -11,14 +11,16 @@ using namespace std;
 
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	(void)srv;
 	if (params.size() < 5)
 	{
-		srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
+		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
 		return ;
 	}
 	usr.setUserName(params[1]);
 	usr.setHostName(params[2]);
 	usr.setServerName(params[3]);
+	//usr.
 	/*
 	string	real = params[4].substr(1, params[4].length() - 1);
 	for (vector<string>::iterator it = params.begin() + 5; it != params.end(); it++)
