@@ -67,8 +67,6 @@ namespace irc
 		void					delInvite(User * user);
 		void					delBanned(User * user);
 
-
-
 	};
 }
 

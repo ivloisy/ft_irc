@@ -15,26 +15,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/To_DO" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sources/Utils.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/Channel.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Channel.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/CAP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/CAP.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/User.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/User.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/ft_irc.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/ft_irc.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/reply.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/reply.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/DIE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/DIE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/LIST.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/LIST.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/MODE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/MODE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/OPER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/OPER.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PART.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PART.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/PING.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PING.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/USER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/USER.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/User.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/reply.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/reply.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +100,8 @@
       <workItem from="1657185783505" duration="35355000" />
       <workItem from="1657271995857" duration="4545000" />
       <workItem from="1657281497166" duration="39844000" />
-      <workItem from="1657355947231" duration="8219000" />
+      <workItem from="1657355947231" duration="19649000" />
+      <workItem from="1657415260938" duration="3000" />
     </task>
     <servers />
   </component>

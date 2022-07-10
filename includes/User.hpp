@@ -27,7 +27,6 @@ namespace irc
 		string 												_serverName;
 		string 												_prefix;
 		vector<string>										parameters;
-		int 												bufsize;
 		vector<Channel *>									_channel;
 		Channel												*_currChan;
 		bitset<2> 											_mode;
@@ -36,19 +35,21 @@ namespace irc
 		bool												_isInv;
 		bool												_toClose;
 		int													_rdySend;
+		string 												_awayMsg;
 
 		//if client send a cap command, ignore it
 
 	public:
-		User(int fd, struct sockaddr_in address);
 		User(int fd);
 		virtual ~User();
 		User &operator=(User const &rhs);
 
+		/********************** FUNCTIONS ****************************/
 		void												clearAllChannels();
 		void												quitChannel(Channel * chan);
 		void												addChannel(Channel * chan);
 
+		/********************* GETTERS ***********************/
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
 		string 												getPrefix() const;
@@ -65,7 +66,10 @@ namespace irc
 		bitset<2> 											getMode() const;
 		bool												getInvisible() const;
 		Channel												*getCurrentChannel();
+		bool 												getToClose();
+		//string											getAwayMsg();
 
+		/********************** SETTERS ***********************/
 		void												setPrefix();
 		void												setInvisible(bool const & inv);
 		void												setMode(bitset<2> const & mode);
@@ -82,11 +86,8 @@ namespace irc
 		void												setCurrentChannel(Channel * chan);
 		void												setServerName(string const & name);
 
-		//void												send_message(int nb_command, Server server);
 
 	};
-	// bool	operator<(const User & lhs, const User & rhs);
-	// bool	operator>(const User & lhs, const User & rhs);
 }
 
 

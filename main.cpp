@@ -14,7 +14,7 @@ void ft_run(int port)
 	_poll[0].events = POLLIN;
 	int fin = 0;
 
-	while (serv.getState())
+	while (serv.getState() && fin < 30)
 	{
 		fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
@@ -71,6 +71,14 @@ void ft_run(int port)
 						serv.execCommand(fd);
 						serv.welcome(fd);
 					}
+					else
+					{
+						_poll[x] = _poll[fd_count - 1];
+						_poll[x].events = POLLIN;
+						close(fd);
+						// ser.deleteUser(fd);
+						fd_count--;
+					}
 					if (test == 1)
 						break ;
 				}
@@ -80,7 +88,7 @@ void ft_run(int port)
 			perror("There were select failures: ");
 	}
 	// serv.closeUser(serv.getUser(4));
-	// close(serv.getFdServer());
+	close(serv.getFdServer());
 }
 
 int main(int argc, char **argv)

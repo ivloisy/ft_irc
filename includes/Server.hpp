@@ -7,7 +7,6 @@
 
 #include "ft_irc.hpp"
 
-// # define BUFFERSIZE 512
 using namespace std;
 
 namespace irc
@@ -19,14 +18,16 @@ namespace irc
 	{
 
 	public:
-		// typedef void (* Server::pointer_function)(/*Command * com*/);
-		typedef void (*pointer_function)(Server & srv, User & usr, std::vector<std::string> params);
-		map<string, pointer_function>					map_cmd;
+		typedef void (*function_command)(Server & srv, User & usr, std::vector<std::string> params);
+
+		typedef void (*function_reply)(User & dest, User & from, int code);
+
 
 	private:
+		map<string, function_command>					map_cmd;
+
 		int 											_fd;
 		int												_fdMax;
-		int*											_fds;
 		struct sockaddr_in								_serverAddr;
 		string											_serverName; //identify the server, has a max length of 63 chars. servername = hostname
 		socklen_t										_size;			//_user; //we're going to delete it for the instanciation with set
@@ -38,61 +39,68 @@ namespace irc
 		string											_password;
 		vector<vector<string> >							_param;
 		int 											_maxChannels;
+		map<string, function_reply>						_replyTree;
+		string 											_date;
+		string 											_ver;
 
 	public:
 		Server(int const & portNum);
 		Server(int const & portNum, string const & passw);
-		Server(Server const & src);
 		virtual ~Server();
 
 
+		/******************** CONNECTION **********************/
+		void 											initServer(void);
 		void											establishConnection(void);
 		void											createServerAddr(int const & portNum);
-		//void											listenUser(void);
 		int												acceptUser(socklen_t size);
 		void											closeUser(User const &  user);
-		// void											init_map_cmd();
-		void											parse_buffer_command(string const &  buffer, int const &  fd);
-		void											sendToChan(string const & name, string const & msg);
-		void											tokenize(string const & str, int const & fd);
-		void											sendToUser(string const & name, string const & msg);
-
+		int												bindServer(void);
 		void											sendBuffer(User * dest, string const & content);
 		void											printParam();
 		void											initCommand();
-		void 											execCommand(int const & fd);
 		void 											welcome(int const & fd);
+		void											parse_buffer_command(string const &  buffer, int const &  fd);
+		void 											execCommand(int const & fd);
 		int												searchNick(string const & nick);
-
+		void											sendToChan(string const & name, string const & msg);
+		void											sendToUser(string const & name, string const & msg);
+		void											sending(int fd, string toSend);
 		Channel*										addChannel(string const & name);
-
 		Channel*										searchChannel(string const & name);
-
 		void											delUserAllChannel(User * user);
+		string 											ft_reply(string code, string nick, string message);
+		string const									getDate() const;
+		string const									getVersion() const;
 
-		int												bindServer(void);
+
+
+		/******************** ACCESSORS **********************/
 		int												getFdMax( void ) const;
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
-		vector<User *>									getUser() const;
-		vector<User *>									getOper() const;
-		User*											getOper(string const & name);
+		vector<User *>									getUsers() const;
 		User*											getUser(int const & fd);
 		User*											getUser(string const & nick);
-		Channel*										getChannel(string const & name);
+		Channel*										getChannelByName(string const & name);
+		vector<Channel *>								getChannels() const;
 		socklen_t										getSize() const;
 		int												getPortNum() const;
+		vector<User *>									getOper() const;
+		User*											getOper(string const & name);
+		int 											getMaxChannel() const;
+		bool											getState() const;
 		string											getServerName() const;
 		string											getPassword() const;
-		bool											getState() const;
-		int 											getMaxChannel() const;
 
-		void											setState(bool const & st);
+		/********************* MUTATORS *************************/
 		void											setFdServer(int const & fd);
+		void											setState(bool const & st);
 		void											setUpFdMax(int const & fdCurrent);
 		// void											setDownFdMax(int const & fdCurrent);
 
 
+		/******************* CHECKERS **********************/
 		bool											isMaxChannel();
 		bool											isUserEmpty();
 	};

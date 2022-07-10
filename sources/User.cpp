@@ -26,26 +26,7 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
-
-}
-
-User::User(int fd, struct sockaddr_in address) :
-		_fd(fd),
-		_hostname(""),
-		_realname(""),
-		_username(""),
-		_nickname("lala"),
-		_password(""),
-		_serverName(""),
-		_channel(),
-		_currChan(NULL),
-		_mode(string("01")),
-		_acceptConnect(1),
-		_isOper(0),
-		_toClose(0),
-		_rdySend(0)
-{
-	(void) address;
+	return;
 }
 
 /***************************** DESTRUCTORS ****************************/
@@ -53,7 +34,7 @@ User::User(int fd, struct sockaddr_in address) :
 
 User::~User()
 {
-	;
+	return;
 }
 
 
@@ -62,9 +43,7 @@ User::~User()
 User &User::operator=(User const &rhs)
 {
 	if (this != &rhs)
-	{
 		this->_fd = rhs._fd;
-	}
 	return (*this);
 }
 
@@ -84,12 +63,8 @@ void					User::quitChannel(Channel * chan)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
 		if (chan->getChannelName() == (*it)->getChannelName())
-		{
 			this->_channel.erase(it);
-		}
-	}
 }
 
 /********************* GETTERS ***********************/
@@ -97,6 +72,21 @@ void					User::quitChannel(Channel * chan)
 int 					User::getFdUser(void) const
 {
 	return (this->_fd);
+}
+
+string 					User::getPrefix() const
+{
+	return (this->_prefix);
+}
+
+string 					User::getHostname() const
+{
+	return (this->_hostname);
+}
+
+string 					User::getNickName() const
+{
+	return (this->_nickname);
 }
 
 string 					User::getPassWord() const
@@ -114,14 +104,18 @@ string					User::getRealName() const
 	return (this->_realname);
 }
 
-string 					User::getHostname() const
+vector<Channel *>		User::getChannel() const
 {
-	return (this->_hostname);
+	return (this->_channel);
 }
 
-string 					User::getNickName() const
+Channel*				User::getChannelByName(string name)
 {
-	return (this->_nickname);
+	vector<Channel *>::iterator last = this->_channel.end();
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
+		if ((*it)->getChannelName() == name)
+			return (*it);
+	return (NULL);
 }
 
 bool					User::getAcceptConnect() const
@@ -139,24 +133,6 @@ int 					User::getRdySend() const
 	return this->_rdySend;
 }
 
-vector<Channel *>		User::getChannel() const
-{
-	return (this->_channel);
-}
-
-Channel*				User::getChannelByName(string name)
-{
-	vector<Channel *>::iterator last = this->_channel.end();
-	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
-	{
-		if ((*it)->getChannelName() == name)
-		{
-			return (*it);
-		}
-	}
-	return (NULL);
-}
-
 bitset<2>				User::getMode() const
 {
 	return (this->_mode);
@@ -172,11 +148,10 @@ Channel*				User::getCurrentChannel()
 	return (this->_currChan);
 }
 
-string 					User::getPrefix() const
+bool 				User::getToClose()
 {
-	return (this->_prefix);
+	return (this->_toClose);
 }
-
 
 /********************** SETTERS ***********************/
 
@@ -198,6 +173,11 @@ void					User::setMode(bitset<2> const & mode)
 void					User::setOper(bool const & op)
 {
 	this->_isOper = op;
+}
+
+void					User::setAcceptConnect(bool const & ac)
+{
+	this->_acceptConnect = ac;
 }
 
 void 					User::setFdUser(int const & fd)
@@ -225,20 +205,9 @@ void					User::setHostName(string const & hostname)
 	this->_hostname = hostname;
 }
 
-
-void					User::setServerName(string const & name)
-{
-	this->_serverName = name;
-}
-
 void					User::setPassWord(string const & password)
 {
 	this->_password = password;
-}
-
-void					User::setAcceptConnect(bool const & ac)
-{
-	this->_acceptConnect = ac;
 }
 
 void 					User::setRdySend()
@@ -255,4 +224,9 @@ void 					User::setToClose(int const & x)
 void					User::setCurrentChannel(Channel * chan)
 {
 	this->_currChan = chan;
+}
+
+void					User::setServerName(string const & name)
+{
+	this->_serverName = name;
 }
