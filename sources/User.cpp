@@ -217,6 +217,12 @@ void 					User::setRdySend()
 		this->_rdySend++;
 }
 
+void 					User::decreaseRdySend()
+{
+	if (this->_rdySend > 0)
+		this->_rdySend--;
+}
+
 void 					User::resetRdySend()
 {
 	this->_rdySend = 0;
