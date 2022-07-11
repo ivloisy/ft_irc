@@ -33,7 +33,6 @@ using namespace std;
 void	user_join_channel(Server & srv, User & usr, Channel & existing)
 {
 	(void)srv;
-	cout << "USER JOIN CHANNEL UFNCTION\n";
 	if (existing.getInviteOnlyMode())
 	{
 		//string msg = existing.getChannelName() + " :Cannot join channel (+i)";
@@ -112,21 +111,14 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 
 void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 {
-	//string msg = usr.getPrefix() + " JOIN " + chan.getChannelName() + "\r\n";
-	//srv->sendBuffer(usr, msg);
-	//srv.sendToUser(usr.getNickName(), msg);
+	cout << "reply chan func joind" << endl;
 	if ((srv.searchChannel(chan.getChannelName())))
 		srv.ft_notice_chan(&usr, &chan, NTC_JOIN(chan.getChannelName()));
 	else
 		cout << "error channel not found" << endl;
-	//cout << msg << endl;
-	//vector<User *> chan_usr = chan.getChannelUsers();
-	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
-	//vector<User *>::iterator lst = chan_usr.end();
-	//for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++) {
-	//	srv.ft_reply(&usr, *it, RPL_NAMREPLY);
-	//}
-	//srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
+	srv.ft_reply(&usr, RPL_NAMREPLY, chan.getChannelName(), chan.printAllUsers());
+	srv.ft_reply(&usr, RPL_ENDOFNAMES, chan.getChannelName());
+	cout << "replies sent for channel joined" << endl;
 }
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)

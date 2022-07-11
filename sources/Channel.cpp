@@ -258,3 +258,16 @@ void					Channel::delBanned(User * user)
 			this->_ban.erase(it);
 	}
 }
+
+string const 			Channel::printAllUsers()
+{
+	string result;
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		result += (*it)->getNickName();
+		result += " ";
+	}
+	result.erase(result.size());
+	cout << "MEMBERS = " << result << endl;
+	return (result);
+}

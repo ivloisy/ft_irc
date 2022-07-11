@@ -125,13 +125,13 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		if ((chan = srv.getChannelByName(params[1])))
 		{
 			//if ((usr->getChannlByName))
-			bitset<2> chn_mode = chanMode(usr, params[2]);
-			chan->setMode(chn_mode);
+			//bitset<2> chn_mode = chanMode(usr, params[2]);
+			//chan->setMode(chn_mode);
 			return ;
 		}
 		//ERR_USERDONTMATCH
 		return ;
 
 	}
-	//std::cout << "mode command called" << std::endl;
+
 }
