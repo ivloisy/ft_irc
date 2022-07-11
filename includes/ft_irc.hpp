@@ -46,6 +46,7 @@ void	ping_cmd(Server & srv, User & usr, vector<string> params);
 void	pong_cmd(Server & srv, User & usr, vector<string> params);
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params);
 void	quit_cmd(Server & srv, User & usr, vector<string> params);
+void	squery_cmd(Server & srv, User & usr, vector<string> params);
 void	user_cmd(Server & srv, User & usr, vector<string> params);
 void	wallops_cmd(Server & srv, User & usr, vector<string> params);
 void	whois_cmd(Server & srv, User & usr, vector<string> params);

@@ -145,7 +145,7 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-	if ((*(this->getUser(fd)))->getRdySend() != 3)
+	if ((*(this->getUser(fd)))->getRdySend() != 4)
 		return;
 	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
 	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
@@ -210,8 +210,7 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("PING");
 	test.push_back("PRIVMSG");
 	test.push_back("QUIT");
-	test.push_back("RESTART");
-	test.push_back("SQUIT");
+	test.push_back("SQUERY");
 	test.push_back("USER");
 	test.push_back("WALLOPS");
 

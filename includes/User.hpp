@@ -3,9 +3,9 @@
 //
 
 #ifndef FT_IRC_CLIENT_HPP
-#define FT_IRC_CLIENT_HPP
+# define FT_IRC_CLIENT_HPP
 
-#include "ft_irc.hpp"
+# include "ft_irc.hpp"
 
 using namespace std;
 

@@ -2,14 +2,12 @@ Antoine :
 -Mode
 -Notice
 -Oper
--PRIVMSG
 -User
 
 
 Ivan :
--NICK
 -Names
--User
+-Part
 
 
 Benjamin:
@@ -18,7 +16,6 @@ Benjamin:
 
 
 Vacant:
--Part
 -Wallops
 
 
@@ -27,6 +24,9 @@ Verifier:
 -Die
 -Pass
 -Ping
+-User
+-PRIVMSG
+-NICK
 
 
 supprimer :

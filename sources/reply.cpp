@@ -35,3 +35,4 @@ using namespace irc;
  //string RPL_BANLIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (channel + " " + banip); }
  //string RPL_ENDOFBANLIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (channel + " :End of channel ban list"); }
  //string RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (":You are now an IRC operator"); }
+ string ft_RPL_WHOREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (arg1 + " " + arg2 + " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " :0 " + arg7); } //arg1 = channel, arg2 = user, arg3 =host, arg4 = server, arg5 = nick, arg6 = state, arg7 = real
