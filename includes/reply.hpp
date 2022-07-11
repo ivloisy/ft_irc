@@ -15,7 +15,6 @@ using namespace std;
 
 /*Command responses */
 
-
 # define RPL_WELCOME "001"
 # define RPL_YOURHOST "002"
 # define RPL_CREATED "003"
@@ -94,7 +93,6 @@ using namespace std;
 # define NTC_KICK(channel, mode, arg) ("MODE " + channel + " " + mode + " :" + arg)
 # define NTC_INVITE(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
 # define NTC_CHANMODE_ARG(usr, channel) ("INVITE " + usr + " :" + channel)
-
 
 string ft_RPL_WELCOME(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
 string ft_RPL_YOURHOST(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");

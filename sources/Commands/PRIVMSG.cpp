@@ -51,7 +51,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 		{
 			//cout << "SEND TO USER = " << msg << "\n";
 			//srv.sendToUser(params[1], msg);
-			cout << "sending private message " << endl;
+			cout << "sending private message to " << dstu->getNickName() << endl;
 			srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
 		}
 		else
