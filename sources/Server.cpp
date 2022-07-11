@@ -145,16 +145,16 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-	if (this->getUser(fd)->getRdySend() != 3 || this->getUser(fd)->getToClose())
+	if ((*(this->getUser(fd)))->getRdySend() != 3)
 		return;
 	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
 	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
 	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
 	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
-	ft_reply(this->getUser(fd), NULL, RPL_WELCOME);
-	ft_reply(this->getUser(fd), NULL, RPL_YOURHOST);
-	ft_reply(this->getUser(fd), NULL, RPL_CREATED);
-	ft_reply(this->getUser(fd), NULL, RPL_MYINFO);
+	ft_reply(*this->getUser(fd), NULL, RPL_WELCOME);
+	ft_reply(*this->getUser(fd), NULL, RPL_YOURHOST);
+	ft_reply(*this->getUser(fd), NULL, RPL_CREATED);
+	ft_reply(*this->getUser(fd), NULL, RPL_MYINFO);
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)
@@ -168,7 +168,7 @@ void					Server::parse_buffer_command(string const & str, int const & fd)
 
 	while (getline(ss, s, '\r'))
 	{
-		this->getUser(fd)->setRdySend();
+		(*(this->getUser(fd)))->setRdySend();
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
@@ -219,14 +219,14 @@ void 				Server::execCommand(int const & fd)
 	{
 		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
 		for (size_t y = 0; y < test.size(); y++)
-		{
 			if (this->_param[x][0] == test[y])
 			{
-				this->map_cmd.find(this->_param[x][0])->second(*this, *this->getUser(fd), this->_param[x]);
+				this->map_cmd.find(this->_param[x][0])->second(*this, *(*(this->getUser(fd))), this->_param[x]);
 				break;
 			}
-		}
-		//cout << _param[x][0] << endl;
+		if ((*(this->getUser(fd)))->getToClose() == 1)
+			break;
+		// cout << _param[x][0] << endl;
 	}
 }
 
@@ -249,7 +249,7 @@ void				Server::sendToChan(string const & name, string const & msg)
 
 void				Server::sendToUser(string const & name, string const &  msg)
 {
-	sendBuffer(this->getUser(name), msg);
+	sendBuffer(*this->getUser(name), msg);
 }
 
 void				Server::sendBuffer(User * dest, string const & content)
@@ -290,6 +290,28 @@ void				Server::delUserAllChannel(User * user)
 	}
 }
 
+void				Server::deleteUser(vector<User *>::iterator user)
+{
+	delete(*user);
+	this->_user.erase(user);
+}
+
+// void				Server::deleteUser(int fd)
+// {
+// 	for (vector<User *>::iterator it = this->_user.begin(); it != this->_user.end(); it++)
+// 	{
+// 		cout << "LAAAAAAAAAAAAAAAAAAAAA" << endl;
+//
+// 		if (it != this->_user.end() && (*it)->getFdUser() == fd)
+// 		{
+// 			cout << "LOOOOOOOOOOOOOOOOOOOOOOOO" << endl;
+// 			this->_user.erase(it);
+// 			// delete(*it);
+// 		}
+// 		cout << "LIIIIIIIIIIIIIIIIIIIIIIII" << endl;
+// 	}
+// }
+
 /******************** ACCESSORS **********************/
 
 int 				Server::getFdMax() const
@@ -312,20 +334,20 @@ vector<User *>		Server::getUsers() const
 	return (this->_user);
 }
 
-User*				Server::getUser(int const & fd)
+vector<User *>::iterator				Server::getUser(int const & fd)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getFdUser() != fd)
 		it++;
-	return (*it);
+	return (it);
 }
 
-User*				Server::getUser(string const & nick)
+vector<User *>::iterator				Server::getUser(string const & nick)
 {
 	vector<User *>::iterator it = this->_user.begin();
 	while (it != _user.end() && (*it)->getNickName() != nick)
 		it++;
-	return (*it);
+	return (it);
 }
 
 Channel*			Server::getChannelByName(string const & name)
@@ -425,4 +447,3 @@ bool				Server::isUserEmpty()
 {
 	return (this->_user.empty());
 }
-

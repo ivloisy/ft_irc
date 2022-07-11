@@ -43,15 +43,17 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 	}
 	else if (existing.isMaxUsers())
 	{
-		string msg = existing.getChannelName() + " :Cannot join channel (+l)";
-		//ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
+		//string msg = existing.getChannelName() + " :Cannot join channel (+l)";
+		// ft_reply(srv.getServerName(), ERR_CHANNELISFULL, usr.getNickName(), msg);
+		srv.ft_error(&usr, ERR_CHANNELISFULL, existing.getChannelName());
 		return ;
 	}
 	else if (existing.getBanned(usr.getNickName()))
 	{
 
-		string msg = existing.getChannelName() + " :Cannot join channel (+b)";
-		//ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
+		//string msg = existing.getChannelName() + " :Cannot join channel (+b)";
+		// ft_reply(srv.getServerName(), ERR_BANNEDFROMCHAN, usr.getNickName(), msg);
+		srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
 		return ;
 	}
 	//join channel
@@ -67,11 +69,13 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 
 Channel*	user_create_channel(Server &srv, User &usr, string &name)
 {
-	if (srv.isMaxChannel())
+	//cout << "it is ? " << usr.isMaxChannel() << endl;
+	if (usr.isMaxChannel())
 	{
 		//ERR_TOOMANYCHANNELS
-		string msg = name + " :You have joined too many channels";
-		//ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
+		//string msg = name + " :You have joined too many channels";
+		// ft_reply(srv.getServerName(), ERR_TOOMANYCHANNELS, usr.getNickName(), msg);
+		srv.ft_error(&usr, ERR_TOOMANYCHANNELS, name);
 		return (NULL);
 	}
 	//create channel
@@ -95,7 +99,7 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 	{
 		//quit all joined channels
 		string msg(params[1] + " left!");
-		//ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
+		// ft_reply(srv.getServerName(), 0, usr.getNickName(), msg);
 		msg.clear();
 		msg = usr.getNickName() + " left " + params[1];
 		srv.sendToChan(params[1], msg);

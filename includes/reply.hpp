@@ -19,6 +19,7 @@ using namespace std;
 # define RPL_YOURHOST "002"
 # define RPL_CREATED "003"
 # define RPL_MYINFO "004"
+# define RPL_WHOISUSER "311"
 # define RPL_NOTOPIC "331"
 # define RPL_NAMREPLY "353"
 # define RPL_ENDOFNAMES "366"
@@ -96,6 +97,7 @@ using namespace std;
 string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
 string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);
 string 	ft_RPL_CREATED(Server * srv, User * from, User * to);
+string	ft_RPL_WHOISUSER(Server * srv, User * from, User * to);
 string 	ft_RPL_MYINFO(Server * srv, User * from, User * to);
 
 #endif //FT_IRC_REPLY_HPP

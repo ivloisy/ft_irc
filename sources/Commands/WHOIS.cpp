@@ -43,7 +43,13 @@ Command: WHOIS
 void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
 	(void)srv;
-	(void)usr;
-	(void)params;
+	// (void)usr;
+	// (void)params;
+	if (params.size() == 1)
+	{
+		// srv.sending(usr.getFdUser(), ft_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NONICKNAMEGIVEN, usr.getNickName(), ":No nickname given"));
+		return ;
+	}
+	srv.ft_reply(NULL, &usr, RPL_WHOISUSER);
 	//std::cout << "whois command called" << std::endl;
 }

@@ -11,6 +11,6 @@ void	ping_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
 	(void)params;
-	srv.sending(usr.getFdUser(), "PONG");
+	srv.sending(usr.getFdUser(), "PONG\r\n");
 	std::cout << "ping command called" << std::endl;
 }

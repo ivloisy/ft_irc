@@ -33,7 +33,7 @@ void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		{
 			srv.sendToChan(usr.getNickName(), msg);
 		}
-		else if (srv.getUser(params[1]))
+		else if (*srv.getUser(params[1]))
 		{
 			srv.sendToUser(params[1], msg);
 		}

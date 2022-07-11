@@ -14,11 +14,12 @@ User::User(int fd) :
 		_hostname(""),
 		_realname(""),
 		_username(""),
-		_nickname("lala"),
+		_nickname(""),
 		_password(""),
 		_serverName(""),
 		_prefix(""),
 		_channel(),
+		_maxChan(10),
 		_currChan(NULL),
 		_mode(string("01")),
 		_acceptConnect(1),
@@ -26,6 +27,7 @@ User::User(int fd) :
 		_toClose(0),
 		_rdySend(0)
 {
+	this->setPrefix();
 	return;
 }
 
@@ -65,6 +67,14 @@ void					User::quitChannel(Channel * chan)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if (chan->getChannelName() == (*it)->getChannelName())
 			this->_channel.erase(it);
+}
+
+bool					User::isMaxChannel()
+{
+	int nb = 0;
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != this->_channel.end(); it++)
+		nb++;
+	return (nb >= _maxChan);
 }
 
 /********************* GETTERS ***********************/
@@ -230,6 +240,18 @@ void 					User::setRdySend()
 	if (this->_rdySend < 5)
 		this->_rdySend++;
 }
+
+void 					User::decreaseRdySend()
+{
+	if (this->_rdySend > 0)
+		this->_rdySend--;
+}
+
+void 					User::resetRdySend()
+{
+	this->_rdySend = 0;
+}
+
 
 void 					User::setToClose(int const & x)
 {
