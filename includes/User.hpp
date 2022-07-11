@@ -27,6 +27,7 @@ namespace irc
 		string 												_prefix;
 		vector<string>										parameters;
 		vector<Channel *>									_channel;
+		int 												_maxChan;
 		Channel												*_currChan;
 		bitset<2> 											_mode;
 		bool												_acceptConnect;
@@ -48,6 +49,7 @@ namespace irc
 		void												clearAllChannels();
 		void												quitChannel(Channel * chan);
 		void												addChannel(Channel * chan);
+		bool												isMaxChannel();
 
 		/********************* GETTERS ***********************/
 		//int 												getIdUser(void) const;

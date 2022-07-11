@@ -145,8 +145,7 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-
-	if ((*(this->getUser(fd)))->getRdySend() != 4)
+	if ((*(this->getUser(fd)))->getRdySend() != 3)
 		return;
 	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
 	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
@@ -533,9 +532,9 @@ void	Server::ft_error(User * from, string code, string arg)
 {
 	string ret = ":";
 	ret += _serverName;
-	ret += " * "; // arg err[errn]
-	ret += code;
 	ret += " ";
+	ret += code;
+	ret += " * ";
 	ret += arg;
 	ret += " ";
 	ret += map_err.find(code)->second;
@@ -549,5 +548,17 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	ret += from->getPrefix();
 	ret += " ";
 	ret += notice;
+	ret += "\r\n";
 	sendBuffer(to, ret);
+}
+void	Server::ft_notice_chan(User * from, Channel * to, string notice)
+{
+	string ret = ":";
+	ret += from->getPrefix();
+	ret += " ";
+	ret += notice;
+	ret += "\r\n";
+	vector<User *> tousr = to->getChannelUsers();
+	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
+		sendBuffer(*it, ret);
 }

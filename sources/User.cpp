@@ -19,6 +19,7 @@ User::User(int fd) :
 		_serverName(""),
 		_prefix(""),
 		_channel(),
+		_maxChan(10),
 		_currChan(NULL),
 		_mode(string("01")),
 		_acceptConnect(1),
@@ -66,6 +67,14 @@ void					User::quitChannel(Channel * chan)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if (chan->getChannelName() == (*it)->getChannelName())
 			this->_channel.erase(it);
+}
+
+bool					User::isMaxChannel()
+{
+	int nb = 0;
+	for (vector<Channel *>::iterator it = this->_channel.begin(); it != this->_channel.end(); it++)
+		nb++;
+	return (nb >= _maxChan);
 }
 
 /********************* GETTERS ***********************/
@@ -173,7 +182,7 @@ void					User::setMsg(string const & msg)
 
 void					User::setPrefix()
 {
-	this->_prefix = ":" + _nickname + "!" + _username + "@" + _hostname;
+	this->_prefix = _nickname + "!" + _username + "@" + _hostname;
 }
 
 void					User::setInvisible(bool const & inv)

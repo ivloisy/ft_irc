@@ -31,15 +31,3 @@ string	ft_RPL_WHOISUSER(Server * srv, User * from, User * to) { (void)srv; (void
 //string RPL_WHOISCHANNELS(User * usr) {
 //		result += usr->getNickName() + " :" + (*it)->getChannelName() + "\n";
 //}
-
-
-
-
-
-
-
-
-// string ft_RPL_WELCOME(Server * srv, User * from, User * to) { (void)srv; (void)to; return (from->getNickName() + " :Welcome to the Internet Relay Network " + from->getNickName()); }
-// string ft_RPL_YOURHOST(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :Your host is " + srv->getServerName() + ", running version " /*+ srv->getVersion()*/); }
-// string ft_RPL_CREATED(Server * srv, User * from, User * to) { (void)srv; (void)to; (void)from; return (from->getNickName() + " :This server was created ");} //function to get date); }
-// string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :" + srv->getServerName() + " " /*+ srv->getVersion()*/  + " io 0o"); }// + //availables user modes + " " + //available channel modes); }

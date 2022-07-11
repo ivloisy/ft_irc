@@ -67,7 +67,7 @@ void ft_run(int port, string password)
 					{
 						cout << "BUFFER RECEIVE = " << buffer << endl;
 						serv.parse_buffer_command(buffer, fd);
-						serv.printParam();
+						//serv.printParam();
 						serv.execCommand(fd);
 						serv.welcome(fd);
 					}
