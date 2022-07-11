@@ -147,20 +147,15 @@ void 					Server::welcome(int const & fd)
 {
 	if ((*(this->getUser(fd)))->getRdySend() != 4)
 		return;
-	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
-	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
-	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
-	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
+	(*(this->getUser(fd)))->setRdySend();
 	ft_reply(*this->getUser(fd), RPL_WELCOME, (*this->getUser(fd))->getPrefix());
 	ft_reply(*this->getUser(fd), RPL_YOURHOST, _serverName, _ver);
 	ft_reply(*this->getUser(fd), RPL_CREATED, "today");
 	ft_reply(*this->getUser(fd), RPL_MYINFO, _serverName, _ver, "io", "0o");
 }
 
-void					Server::parse_buffer_command(string const & str, int const & fd)
+void					Server::parse_buffer_command(string const & str)
 {
-	// for(vector<vector<string> >::iterator it = this->_param.begin(); it != this->_param.end(); it++)
-	// 	(*it).clear();
 	this->_param.clear();
 	stringstream 			ss(str);
 	string					s;
@@ -168,11 +163,16 @@ void					Server::parse_buffer_command(string const & str, int const & fd)
 
 	while (getline(ss, s, '\r'))
 	{
-		(*(this->getUser(fd)))->setRdySend();
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
 			tmp.push_back(u);
+		size_t x = tmp.size() - 1;
+		size_t y = tmp[x].size() - 1;
+		if (tmp[x][y] == '\n')
+		{
+			tmp[x].replace(y, 1, "\0");
+		}
 		this->_param.push_back(tmp);
 		tmp.clear();
 		getline(ss, s, '\n');
@@ -224,7 +224,6 @@ void 				Server::execCommand(int const & fd)
 			}
 		if ((*(this->getUser(fd)))->getToClose() == 1)
 			break;
-		// cout << _param[x][0] << endl;
 	}
 }
 
@@ -304,22 +303,6 @@ void				Server::deleteUser(vector<User *>::iterator user)
 	delete(*user);
 	this->_user.erase(user);
 }
-
-// void				Server::deleteUser(int fd)
-// {
-// 	for (vector<User *>::iterator it = this->_user.begin(); it != this->_user.end(); it++)
-// 	{
-// 		cout << "LAAAAAAAAAAAAAAAAAAAAA" << endl;
-//
-// 		if (it != this->_user.end() && (*it)->getFdUser() == fd)
-// 		{
-// 			cout << "LOOOOOOOOOOOOOOOOOOOOOOOO" << endl;
-// 			this->_user.erase(it);
-// 			// delete(*it);
-// 		}
-// 		cout << "LIIIIIIIIIIIIIIIIIIIIIIII" << endl;
-// 	}
-// }
 
 /******************** ACCESSORS **********************/
 
@@ -468,7 +451,9 @@ void 	Server::initReplyTree()
 	map_rep[RPL_CREATED] = ft_RPL_CREATED;
 	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
 	map_rep[RPL_WHOISUSER] = ft_RPL_WHOISUSER;
+	// map_rep[RPL_ENDOFWHOIS] = ft_RPL_ENDOFWHOIS;
 	map_rep[RPL_NAMREPLY] = ft_RPL_NAMREPLY;
+	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 }
 

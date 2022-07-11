@@ -51,21 +51,20 @@ void	who_user(Server & srv, User & usr, vector<string> params)
 	if (params.size() == 1 || (params.size() == 2 && params[1][0] == '#'))
 	{
 		vector<User *> users = srv.getUsers();
-		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
-		{
-			// if ( ((*it)->getNickname() == args[0] || (*it)->getHostname() == args[0] || (*it)->getServername() == args[0] || (*it)->getRealName() == args[0] ))
-			// send_reply(usr, 352, RPL_WHOREPLY((u->getCurrChan() ? u->getCurrChan()->getName() : "*"),
-			// 					u->getUsername(), u->getHostname(), u->getServername(), u->getNick(),
-			// 					(u->isIRCOper() ? "*" : ""), (u->isChanOper() ? "@" : ""), u->getRealName()));
-		}
+		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++);
+			// if ( ((*it)->getNickname() == params[0] || (*it)->getHostname() == params[0] || (*it)->getServername() == params[0] || (*it)->getRealName() == params[0] ))
+			// 	ft_reply(usr, 352, (*it)->getCurrChan(), (*it)->getUsername(), (*it)->getHostname(), (*it)->getServername(), (*it)->getNickname(), (*it)->getRealname());
 	}
-
-	// 	if (wild == true)
-	// 		send_reply(usr, 315, RPL_ENDOFWHO(string("*")));
-	// 	else
-	// 		send_reply(usr, 315, RPL_ENDOFWHO(args[0]));
+	// if (wild == true)
+	// 	ft_reply(usr, 315, "*");
+	// else
+	// 	ft_reply(usr, 315, params[0]);
 }
-
+//
+// void	who_channel(Server & srv, User & usr, vector<string> params)
+// {
+//
+// }
 
 void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
@@ -83,21 +82,12 @@ void	whois_cmd(Server & srv, User & usr, vector<string> params)
 	// 	who_chan(); // chan
 	// else if (params[0] == "*")
 	// 	who_wildcard();
-	// else
+	else
 		who_user(srv, usr, params);
 	// srv.ft_reply(NULL, &usr, RPL_WHOISUSER);
 	//std::cout << "whois command called" << std::endl;
 }
 
-// 	// I had to divide it in two because the ternary broke the output
-// 	if (wild == true)
-// 		send_reply(usr, 315, RPL_ENDOFWHO(string("*")));
-// 	else
-// 		send_reply(usr, 315, RPL_ENDOFWHO(args[0]));
-//
-// 	return 1;
-// }
-//
 // int				who_channel( const vector<string> args, User &usr, Server &srv, bool wild ) {
 //
 // 	ostringstream	s;

@@ -20,6 +20,7 @@ using namespace std;
 # define RPL_CREATED "003"
 # define RPL_MYINFO "004"
 # define RPL_WHOISUSER "311"
+# define RPL_ENDOFWHOIS "315"
 # define RPL_NOTOPIC "331"
 # define RPL_NAMREPLY "353"
 # define RPL_ENDOFNAMES "366"
@@ -94,13 +95,14 @@ using namespace std;
 # define NTC_INVITE(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
 # define NTC_CHANMODE_ARG(usr, channel) ("INVITE " + usr + " :" + channel)
 
-string ft_RPL_WELCOME(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_YOURHOST(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_CREATED(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_WHOISUSER(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_MYINFO(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_NAMREPLY(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_ENDOFNAMES(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-string ft_RPL_WHOREPLY(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_WELCOME(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_YOURHOST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_CREATED(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_WHOISUSER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_MYINFO(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_NAMREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_ENDOFNAMES(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_WHOREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+// string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

@@ -26,7 +26,6 @@ using namespace irc;
  //string ft_RPL_WHOISSERVER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getNickname() + " " + srv->getServername() + " :" + server info); }
  //string ft_RPL_WHOISOPERATOR(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getNickName() + " :is an IRC operator"); }
  //string ft_RPL_WHOISIDLE(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getNickName() + " " + integer + " :seconds idle"); }
- //string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getNickName() + " :End of /WHOIS list"); }
  //string ft_RPL_WHOISCHANNELS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) {}
  //string ft_RPL_UNIQOPIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getChannelName() + " " + usr->getNickName()); }
  //string ft_RPL_CHANNELMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getChannelName() + " +" + usr->getMode()); }
@@ -38,3 +37,4 @@ using namespace irc;
  //string RPL_ENDOFBANLIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (channel + " :End of channel ban list"); }
  //string RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (":You are now an IRC operator"); }
  string ft_RPL_WHOREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (arg1 + " " + arg2 + " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " :0 " + arg7); } //arg1 = channel, arg2 = user, arg3 =host, arg4 = server, arg5 = nick, arg6 = state, arg7 = real
+ // string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (arg1 + " :End of /WHOIS list"); } //arg1 = NickName

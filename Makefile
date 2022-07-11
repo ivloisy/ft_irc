@@ -38,7 +38,7 @@ DEPS = $(OBJS:.o=.d)
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -I $(INCDIR) -MMD -MP -std=c++98 -g #-fsanitize=address
+CXXFLAGS = -Wall -Wextra -Werror -I $(INCDIR) -MMD -MP -std=c++98# -g -fsanitize=address
 
 all: $(NAME)
 
