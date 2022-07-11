@@ -17,8 +17,6 @@
     <list default="true" id="a18fbff3-7fff-4b99-9015-409d082a427d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/reply.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/reply.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/reply.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/reply.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +60,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ft_irc" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="xxx" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" WORKING_DIR="file://$PROJECT_DIR$/../42-ft_irc" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ft_irc" TARGET_NAME="ft_irc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ft_irc" RUN_TARGET_NAME="ft_irc">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />

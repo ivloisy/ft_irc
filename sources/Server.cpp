@@ -68,6 +68,7 @@ void 					Server::initServer()
 	}
 	this->initCommand();
 	this->initReplyTree();
+	this->initErrorTree();
 }
 
 void					 Server::establishConnection(void)
@@ -147,16 +148,14 @@ void 					Server::welcome(int const & fd)
 
 	if ((*(this->getUser(fd)))->getRdySend() != 4)
 		return;
-	sending(fd, ben_reply(this->_serverName, RPL_WELCOME, (*(this->getUser(fd)))->getNickName(), "Welcome to the Internet Relay Network " + (*(this->getUser(fd)))->getPrefix()));
-	sending(fd, ben_reply(this->_serverName, RPL_YOURHOST, (*(this->getUser(fd)))->getNickName(), "Your host is localhost running version osef"));
-	sending(fd, ben_reply(this->_serverName, RPL_CREATED, (*(this->getUser(fd)))->getNickName(), "This server was created now"));
-	sending(fd, ben_reply(this->_serverName, RPL_MYINFO, (*(this->getUser(fd)))->getNickName(), "MYINFO"));
-	// cout << "Welcome my friends" << endl;
-	// ft_reply(*this->getUser(fd), NULL, RPL_WELCOME);
-	// ft_reply(*this->getUser(fd), NULL, RPL_YOURHOST);
-	// ft_reply(*this->getUser(fd), NULL, RPL_CREATED);
-	// ft_reply(*this->getUser(fd), NULL, RPL_MYINFO);
-	// cout << "Bye my friends" << endl;
+	//sending(fd, ft_reply(this->_serverName, RPL_WELCOME, this->getUser(fd)->getNickName(), "Welcome to the Internet Relay Network"));
+	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
+	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
+	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
+	ft_reply(*this->getUser(fd), NULL, RPL_WELCOME);
+	ft_reply(*this->getUser(fd), NULL, RPL_YOURHOST);
+	ft_reply(*this->getUser(fd), NULL, RPL_CREATED);
+	ft_reply(*this->getUser(fd), NULL, RPL_MYINFO);
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)

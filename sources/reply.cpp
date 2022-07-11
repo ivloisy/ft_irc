@@ -23,6 +23,10 @@ string ft_RPL_WELCOME(Server * srv, User * from, User * to) { (void)srv; (void)t
 string ft_RPL_YOURHOST(Server * srv, User * from, User * to) { (void)from; (void)to; return (":Your host is " + srv->getServerName() + ", running version " /*+ srv->getVersion()*/); }
 string ft_RPL_CREATED(Server * srv, User * from, User * to) { (void)srv; (void)to; (void)from; return (":This server was created ");} //function to get date); }
 string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)to; return (srv->getServerName() + " " /*+ srv->getVersion()*/  + " io 0o"); }// + //availables user modes + " " + //available channel modes); }
+// string ft_RPL_WELCOME(Server * srv, User * from, User * to) { (void)srv; (void)to; return (from->getNickName() + " :Welcome to the Internet Relay Network " + from->getNickName()); }
+// string ft_RPL_YOURHOST(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :Your host is " + srv->getServerName() + ", running version " /*+ srv->getVersion()*/); }
+// string ft_RPL_CREATED(Server * srv, User * from, User * to) { (void)srv; (void)to; (void)from; return (from->getNickName() + " :This server was created ");} //function to get date); }
+// string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :" + srv->getServerName() + " " /*+ srv->getVersion()*/  + " io 0o"); }// + //availables user modes + " " + //available channel modes); }
 
 //USELESS string RPL_BOUNCE(Server * srv) { return (":Try server " + srv->getServerName() + ", port " + //int to string > srv->getPortNum()); }
 //USELESS string RPL_USERHOST(string reply_list) { return (":" + //print all replies); }
@@ -102,92 +106,68 @@ string	ft_RPL_WHOISUSER(Server * srv, User * from, User * to) { (void)srv; (void
 //USELESS string RPL_TRACELOG(string file, string level) { return "File " + file + " " + level); }
 //USELESS string RPL_TRACEEND(string server, string version) { return server + " " + version + " :End of TRACE"); }
 
-// string ft_ERR_NOSUCHNICK() { return (nickname + " :No such nick/channel"); }
-// string ft_ERR_NOSUCHSERVER() { return (server + " :No such server"); }
-// string ft_ERR_NOSUCHCHANNEL() { return (channel + " :No such channel"); }
-// string ft_ERR_CANNOTSENDTOCHAN() { return (channel + " :Cannot send to channel"); }
-// string ft_ERR_TOOMANYCHANNELS() { return (channel + " :You have joined too many channels"); }
-// string ft_ERR_WASNOSUCHNICK() { return (nickname + " :There was no such nickname"); }
-// string ft_ERR_TOOMANYTARGETS() { return (target + " :Duplicate recipients. No message delivered"); }
-// string ft_ERR_NOSUCHSERVICE() { return (service + " :No such service"); }
-// string ft_ERR_NOORIGIN() { return (":No origin specified"; }
-// string ft_ERR_NORECIPIENT() { return (":No recipient given (" + command + ")"); }
-// string ft_ERR_NOTEXTTOSEND() { return (":No text to send"); }
-// string ft_ERR_NOTOPLEVEL() { return (mask + " :No toplevel domain specified"); }
-// string ft_ERR_WILDTOPLEVEL() { return (mask + " :Wildcard in toplevel domain"); }
-// string ft_ERR_BADMASK() { return (mask + " :Bad Server/host mask"); }
-// string ft_ERR_UNKNOWNCOMMAND() { return (command + " :Unknown command"); }
-// string ft_ERR_NOMOTD() { return (":MOTD File is missing"); }
-// string ft_ERR_NOADMININFO() { return (server + " :No administrative info available"); }
-// string ft_ERR_FILEERROR() { return (":File error doing " + op + " on " + file); }
-// string ft_ERR_NONICKNAMEGIVEN() { return (":No nickname given"); }
-// string ft_ERR_ERRONEUSNICKNAME() { return (srv->getNickName() + " :Erroneus nickname"); }
-string ft_ERR_NICKNAMEINUSE(Server *srv, User *from, User *to) { (void)srv; (void)to; return (from->getNickName() + " :Nickname is already in use"); }
-// string ft_ERR_NICKCOLLISION() { return (nick + " :Nickname collision KILL"); }
-// string ft_ERR_USERNOTINCHANNEL() { return (nick + " " + channel + " :They aren't on that channel"); }
-// string ft_ERR_NOTONCHANNEL() { return (channel + " :You're not on that channel"); }
-// string ft_ERR_USERONCHANNEL() { return (user + " " + channel + " :is already on channel"); }
-// string ft_ERR_NOLOGIN() { return (user + " :User not logged in"); }
-// string ft_ERR_SUMMONDISABLED() { return (":SUMMON has been disabled"); }
-// string ft_ERR_USERSDISABLED() { return (":USERS has been disabled"); }
-// string ft_ERR_NOTREGISTERED() { return (":You have not registered"); }
-// string ft_ERR_NEEDMOREPARAMS() { return (command + " :Not enough parameters"); }
-// string ft_ERR_ALREADYREGISTRED() { return (":You may not reregister"); }
-// string ft_ERR_NOPERMFORHOST() { return (":Your host isn't among the privileged"); }
-// string ft_ERR_PASSWDMISMATCH() { return (":Password incorrect"); }
-// string ft_ERR_YOUREBANNEDCREEP() { return (":You are banned from this server"); }
-// string ft_ERR_KEYSET() { return (channel + " :Channel key already set"); }
-// string ft_ERR_CHANNELISFULL() { return (channel + " :Cannot join channel (+l)"); }
-// string ft_ERR_UNKNOWNMODE() { return (c + " :is unknown mode char to me"); }
-// string ft_ERR_INVITEONLYCHAN() { return (channel + " :Cannot join channel (+i)"); }
-// string ft_ERR_BANNEDFROMCHAN() { return (channel + " :Cannot join channel (+b)"); }
-// string ft_ERR_BADCHANNELKEY() { return (channel + " :Cannot join channel (+k)"); }
-// string ft_ERR_BADCHANMASK() { return (channel + " :Bad Channel Mask"); }
-// string ft_ERR_NOCHANMODES() { return (channel + " :Channel doesn't support modes"); }
-// string ft_ERR_BANLISTFULL() { return (channel + " :Channel list is full"); }
-// string ft_ERR_NOPRIVILEGES() { return (":Permission Denied- You're not an IRC operator"); }
-// string ft_ERR_CANTKILLSERVER() { return (":You cant kill a server!"); }
-// string ft_ERR_RESTRICTED() { return (":Your connection is restricted!"); }
-// string ft_ERR_CHANOPRIVSNEEDED() { return (channel + " :You're not channel operator"); }
-// string ft_ERR_UNIQOPPRIVSNEEDED() { return (":You're not the original channel operator"); }
-// string ft_ERR_NOOPERHOST() { return (":No O-lines for your host"); }
-// string ft_ERR_UMODEUNKNOWNFLAG() { return (":Unknown MODE flag"); }
-// string ft_ERR_USERSDONTMATCH() { return (":Cant change mode for other users"); }
-string ft_NTC_NICK(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("NICK :" + from->getNickName()); }
-string ft_NTC_MODE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getNickName() + " :" /*+ from->getModeString()*/); }
-string ft_NTC_JOIN(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("JOIN :" + from->getCurrentChannelName()); }
-string ft_NTC_PART(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PART :" + from->getCurrentChannelName()); }
-string ft_NTC_PART_MSG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PART " + from->getCurrentChannelName() + " :" + from->getMsg()); }
-string ft_NTC_PRIVMSG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PRIVMSG " + to->getNickName() + " " + from->getMsg()); }
-string ft_NTC_NOTICE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("NOTICE " + to->getNickName() + " " + from->getMsg()); }
-string ft_NTC_QUIT(Server * srv, User * from, User * to) { (void)srv; (void)to; return (" QUIT :Quit: " + from->getMsg()); }
-string ft_NTC_TOPIC(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("TOPIC " + from->getCurrentChannelName() + " :" + "topic"); }
-string ft_NTC_CHANMODE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getCurrentChannelName() + " :" + "mode"); }
-string ft_NTC_CHANMODE_ARG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getCurrentChannelName() + " " + "mode" + " :" + "arg"); }
-string ft_NTC_KICK(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("KICK " + from->getCurrentChannelName()  + " " + "usr" + " " + "reason"); }
-string ft_NTC_INVITE(Server * srv, User * from, User * to) { (void)srv; (void)from; (void)to; return ("INVITE usr :channel"); }
+
 
 void 	Server::initReplyTree()
 {
-	map_rep["001"] = ft_RPL_WELCOME;
-	map_rep["002"] = ft_RPL_YOURHOST;
-	map_rep["003"] = ft_RPL_CREATED;
-	map_rep["004"] = ft_RPL_MYINFO;
-	map_rep["311"] = ft_RPL_WHOISUSER;
-	map_rep["433"] = ft_ERR_NICKNAMEINUSE;
-	map_rep["666"] = ft_NTC_NICK;
-	map_rep["667"] = ft_NTC_MODE;
-	map_rep["668"] = ft_NTC_JOIN;
-	map_rep["669"] = ft_NTC_PART;
-	map_rep["670"] = ft_NTC_PART_MSG;
-	map_rep["671"] = ft_NTC_PRIVMSG;
-	map_rep["672"] = ft_NTC_NOTICE;
-	map_rep["673"] = ft_NTC_QUIT;
-	map_rep["674"] = ft_NTC_TOPIC;
-	map_rep["675"] = ft_NTC_CHANMODE;
-	map_rep["676"] = ft_NTC_CHANMODE_ARG;
-	map_rep["677"] = ft_NTC_KICK;
-	map_rep["678"] = ft_NTC_INVITE;
+	map_rep[RPL_WELCOME] = ft_RPL_WELCOME;
+	map_rep[RPL_YOURHOST] = ft_RPL_YOURHOST;
+	map_rep[RPL_CREATED] = ft_RPL_CREATED;
+	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
+
+}
+
+void	Server::initErrorTree()
+{
+	map_err[ERR_NOSUCHNICK] = " :No such nick/channel";
+	map_err[ERR_NOSUCHSERVER] = " :No such server";
+	map_err[ERR_NOSUCHCHANNEL] = " :No such channel";
+	map_err[ERR_CANNOTSENDTOCHAN] = " :Cannot send to channel";
+	map_err[ERR_TOOMANYCHANNELS] = " :You have joined too many channels";
+	map_err[ERR_WASNOSUCHNICK] =  " :There was no such nickname";
+	map_err[ERR_TOOMANYTARGETS] = " :Duplicate recipients. No message delivered";
+	map_err[ERR_NOORIGIN] = ":No origin specified";
+	map_err[ERR_NORECIPIENT] = ":No recipient given";
+	map_err[ERR_NOTEXTTOSEND] = ":No text to send";
+	map_err[ERR_NOTOPLEVEL] = " :No toplevel domain specified";
+	map_err[ERR_WILDTOPLEVEL] = " :Wildcard in toplevel domain";
+	map_err[ERR_BADMASK] = " :Bad Server/host mask";
+	map_err[ERR_UNKNOWNCOMMAND] = " :Unknown command";
+	map_err[ERR_NOMOTD] = ":MOTD File is missing";
+	map_err[ERR_NOADMININFO] = " :No administrative info available";
+	map_err[ERR_NONICKNAMEGIVEN] = ":No nickname given";
+	map_err[ERR_ERRONEUSNICKNAME] = " :Erroneus nickname";
+	map_err[ERR_NICKNAMEINUSE] = " :Nickname is already in use";
+	map_err[ERR_NICKCOLLISION] = " :Nickname collision KILL";
+	map_err[ERR_USERNOTINCHANNEL] = " :You're not on that channel";
+	map_err[ERR_NOTONCHANNEL] = " :You're not on that channel";
+	map_err[ERR_USERONCHANNEL] = " :is already on channel";
+	map_err[ERR_NOLOGIN] = " :User not logged in";
+	map_err[ERR_SUMMONDISABLED] = ":SUMMON has been disabled";
+	map_err[ERR_USERSDISABLED] = ":USERS has been disabled";
+	map_err[ERR_NOTREGISTERED] = ":You have not registered";
+	map_err[ERR_NEEDMOREPARAMS] = " :Not enough parameters";
+	map_err[ERR_ALREADYREGISTRED] = ":You may not reregister";
+	map_err[ERR_NOPERMFORHOST] = ":Your host isn't among the privileged";
+	map_err[ERR_PASSWDMISMATCH] = ":Password incorrect";
+	map_err[ERR_YOUREBANNEDCREEP] = ":You are banned from this server";
+	map_err[ERR_KEYSET] = " :Channel key already set";
+	map_err[ERR_CHANNELISFULL] = " :Cannot join channel (+l)";
+	map_err[ERR_UNKNOWNMODE] = " :is unknown mode char to me";
+	map_err[ERR_INVITEONLYCHAN] = " :Cannot join channel (+i)";
+	map_err[ERR_BANNEDFROMCHAN] = " :Cannot join channel (+b)";
+	map_err[ERR_BADCHANNELKEY] = " :Cannot join channel (+k)";
+	map_err[ERR_BADCHANMASK] = " :Bad Channel Mask";
+	map_err[ERR_NOCHANMODES] = " :Channel doesn't support modes";
+	map_err[ERR_BANLISTFULL] = " :Channel list is full";
+	map_err[ERR_NOPRIVILEGES] = ":Permission Denied- You're not an IRC operator";
+	map_err[ERR_CANTKILLSERVER] = ":You cant kill a server!";
+	map_err[ERR_RESTRICTED] = ":Your connection is restricted!";
+	map_err[ERR_CHANOPRIVSNEEDED] = " :You're not channel operator";
+	map_err[ERR_UNIQOPPRIVSNEEDED] = ":You're not the original channel operator";
+	map_err[ERR_NOOPERHOST] = ":No O-lines for your host";
+	map_err[ERR_UMODEUNKNOWNFLAG] = ":Unknown MODE flag";
+	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
 }
 
 void 	Server::ft_reply(User * from, User * to, string code)
@@ -197,22 +177,32 @@ void 	Server::ft_reply(User * from, User * to, string code)
 	ret += " ";
 	ret += code;
 	ret += " ";
+	ret += from->getNickName();
+	ret += " ";
 	ret += map_rep.find(code)->second(this, from, to);
 	ret += "\r\n";
 	sendBuffer(from, ret);
 }
 
-
-string ben_reply(/*string prefix, */string servername, string code, string nick, string message)
+void	Server::ft_error(User * from, string code, string arg)
 {
-	string ret = /*prefix + */":";
-	ret += servername;
-	ret += " ";
+	string ret = ":";
+	ret += _serverName;
+	ret += " * "; // arg err[errn]
 	ret += code;
 	ret += " ";
-	ret += nick;
-	ret += " :";
-	ret += message;
+	ret += arg;
+	ret += " ";
+	ret += map_err.find(code)->second;
 	ret += "\r\n";
-	return (ret);
+	sendBuffer(from, ret);
+}
+
+void	Server::ft_notice(User * from, User * to, string notice)
+{
+	string ret = ":";
+	ret += from->getPrefix();
+	ret += " ";
+	ret += notice;
+	sendBuffer(to, ret);
 }

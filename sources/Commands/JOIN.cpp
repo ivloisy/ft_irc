@@ -110,8 +110,9 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 	string msg = usr.getPrefix() + " JOIN " + chan.getChannelName() + "\r\n";
 	//srv->sendBuffer(usr, msg);
 	//srv.sendToUser(usr.getNickName(), msg);
-	if (srv.searchChannel(chan.getChannelName()))
-		srv.sendToChan(chan.getChannelName(), msg);
+	if (srv.searchChannel(chan.getChannelName())) {
+
+	}
 	else
 		cout << "error channel not found" << endl;
 	//cout << msg << endl;

@@ -37,7 +37,7 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	{
 		usr.decreaseRdySend();
 		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NICKNAMEINUSE, usr.getNickName(), params[1] + " :Nickname is already in use"));
-		srv.sending(usr.getFdUser(), ben_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NICKNAMEINUSE, "* " + params[1], params[1] + " :Nickname is already in use"));
+		// srv.sending(usr.getFdUser(), ben_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NICKNAMEINUSE, "* " + params[1], params[1] + " :Nickname is already in use"));
 		// srv.ft_reply(&usr, (*(srv.getUser(params[1]))), ERR_NICKNAMEINUSE);
 		return ;
 	}
