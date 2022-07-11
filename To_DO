@@ -1,25 +1,23 @@
 Antoine :
--Mode 2h
 -Notice 2h
 -PRIVMSG 1h
 -Oper 2h
 
 
 Ivan :
--Names 2h
--Part 4h
 -User 2h
+-verifs params
 
 
 Benjamin:
 -List 1h
 -Whois 1h
--Wallops 4h
+-Tabulations dans password
 
 
 Vacant:
--SQuery
--Tabulations dans password
+-Mode 2h
+-Wallops 4h
 
 Verifier:
 -Join
@@ -28,6 +26,8 @@ Verifier:
 -Ping
 -User
 -NICK
+-Names
+-Part
 
 
 supprimer :

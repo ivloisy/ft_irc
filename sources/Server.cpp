@@ -170,9 +170,7 @@ void					Server::parse_buffer_command(string const & str)
 		size_t x = tmp.size() - 1;
 		size_t y = tmp[x].size() - 1;
 		if (tmp[x][y] == '\n')
-		{
 			tmp[x].replace(y, 1, "\0");
-		}
 		this->_param.push_back(tmp);
 		tmp.clear();
 		getline(ss, s, '\n');
