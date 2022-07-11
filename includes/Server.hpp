@@ -68,7 +68,6 @@ namespace irc
 		Channel*										addChannel(string const & name);
 		Channel*										searchChannel(string const & name);
 		void											delUserAllChannel(User * user);
-		void 											ft_reply(User * from, User * to, string code);
 		//string const									getDate() const;
 		//string const									getVersion() const;
 
@@ -104,8 +103,8 @@ namespace irc
 
 		/********************* REPLIES **************************/
 		void											initReplyTree();
-
-
+		void											ft_notice(User * from, string notice);
+		void 											ft_reply(User * from, User * to, string code);
 
 	};
 }

@@ -173,19 +173,6 @@ string ERR_NOOPERHOST() { return (":No O-lines for your host"); }
 string ERR_UMODEUNKNOWNFLAG() { return (":Unknown MODE flag"); }
 string ERR_USERSDONTMATCH() { return (":Cant change mode for other users"); }
 */
-string ft_NTC_NICK(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("NICK :" + from->getNickName()); }
-string ft_NTC_MODE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getNickName() + " :" /*+ from->getModeString()*/); }
-string ft_NTC_JOIN(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("JOIN :" + from->getCurrentChannelName()); }
-string ft_NTC_PART(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PART :" + from->getCurrentChannelName()); }
-string ft_NTC_PART_MSG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PART " + from->getCurrentChannelName() + " :" + from->getMsg()); }
-string ft_NTC_PRIVMSG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("PRIVMSG " + to->getNickName() + " " + from->getMsg()); }
-string ft_NTC_NOTICE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("NOTICE " + to->getNickName() + " " + from->getMsg()); }
-string ft_NTC_QUIT(Server * srv, User * from, User * to) { (void)srv; (void)to; return (" QUIT :Quit: " + from->getMsg()); }
-string ft_NTC_TOPIC(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("TOPIC " + from->getCurrentChannelName() + " :" + "topic"); }
-string ft_NTC_CHANMODE(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getCurrentChannelName() + " :" + "mode"); }
-string ft_NTC_CHANMODE_ARG(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("MODE " + from->getCurrentChannelName() + " " + "mode" + " :" + "arg"); }
-string ft_NTC_KICK(Server * srv, User * from, User * to) { (void)srv; (void)to; return ("KICK " + from->getCurrentChannelName()  + " " + "usr" + " " + "reason"); }
-string ft_NTC_INVITE(Server * srv, User * from, User * to) { (void)srv; (void)from; (void)to; return ("INVITE usr :channel"); }
 
 void 	Server::initReplyTree()
 {
@@ -193,19 +180,7 @@ void 	Server::initReplyTree()
 	map_rep["002"] = ft_RPL_YOURHOST;
 	map_rep["003"] = ft_RPL_CREATED;
 	map_rep["004"] = ft_RPL_MYINFO;
-	map_rep["666"] = ft_NTC_NICK;
-	map_rep["667"] = ft_NTC_MODE;
-	map_rep["668"] = ft_NTC_JOIN;
-	map_rep["669"] = ft_NTC_PART;
-	map_rep["670"] = ft_NTC_PART_MSG;
-	map_rep["671"] = ft_NTC_PRIVMSG;
-	map_rep["672"] = ft_NTC_NOTICE;
-	map_rep["673"] = ft_NTC_QUIT;
-	map_rep["674"] = ft_NTC_TOPIC;
-	map_rep["675"] = ft_NTC_CHANMODE;
-	map_rep["676"] = ft_NTC_CHANMODE_ARG;
-	map_rep["677"] = ft_NTC_KICK;
-	map_rep["678"] = ft_NTC_INVITE;
+
 }
 
 void 	Server::ft_reply(User * from, User * to, string code)
@@ -217,5 +192,14 @@ void 	Server::ft_reply(User * from, User * to, string code)
 	ret += " ";
 	ret += map_rep.find(code)->second(this, from, to);
 	ret += "\r\n";
+	sendBuffer(from, ret);
+}
+
+void	Server::ft_notice(User * from, string notice)
+{
+	string ret = ":";
+	ret += from->getPrefix();
+	ret += " ";
+	ret += notice;
 	sendBuffer(from, ret);
 }

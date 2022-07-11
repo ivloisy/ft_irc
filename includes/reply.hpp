@@ -79,37 +79,23 @@ using namespace std;
 # define ERR_UMODEUNKNOWNFLAG "501"
 # define ERR_USERSDONTMATCH "502"
 
-# define NTC_NICK "666"
-# define NTC_MODE "667"
-# define NTC_JOIN "668"
-# define NTC_PART "669"
-# define NTC_PART_MSG "670"
-# define NTC_PRIVMSG "671"
-# define NTC_NOTICE "672"
-# define NTC_QUIT "673"
-# define NTC_TOPIC "674"
-# define NTC_CHANMODE "675"
-# define NTC_KICK "677"
-# define NTC_INVITE "678"
-# define NTC_CHANMODE_ARG "676"
+# define NTC_NICK(to) ("NICK :" + from->getNickName())
+# define NTC_MODE(from) ("MODE " + from->getNickName() + " :" /*+ from->getModeString()*/); }
+# define NTC_JOIN(from)  ("JOIN :" + from->getCurrentChannelName()); }
+# define NTC_PART(from) ("PART :" + from->getCurrentChannelName()); }
+# define NTC_PART_MSG(from) ("PART " + from->getCurrentChannelName() + " :" + from->getMsg()); }
+# define NTC_PRIVMSG(from) ("PRIVMSG " + to->getNickName() + " " + from->getMsg()); }
+# define NTC_NOTICE(from) ("NOTICE " + to->getNickName() + " " + from->getMsg()); }
+# define NTC_QUIT(to) (" QUIT :Quit: " + from->getMsg()); }
+# define NTC_TOPIC(to) ("TOPIC " + from->getCurrentChannelName() + " :" + "topic"); }
+# define NTC_CHANMODE(to) ("MODE " + from->getCurrentChannelName() + " :" + "mode"); }
+# define NTC_KICK(to) ("MODE " + from->getCurrentChannelName() + " " + "mode" + " :" + "arg"); }
+# define NTC_INVITE(to) ("KICK " + from->getCurrentChannelName()  + " " + "usr" + " " + "reason"); }
+# define NTC_CHANMODE_ARG(to) ("INVITE usr :channel"); }
 
 string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
 string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);
 string 	ft_RPL_CREATED(Server * srv, User * from, User * to);
 string 	ft_RPL_MYINFO(Server * srv, User * from, User * to);
-
-string ft_NTC_NICK(Server * srv, User * from, User * to);
-string ft_NTC_MODE(Server * srv, User * from, User * to);
-string ft_NTC_JOIN(Server * srv, User * from, User * to);
-string ft_NTC_PART(Server * srv, User * from, User * to);
-string ft_NTC_PART_MSG(Server * srv, User * from, User * to);
-string ft_NTC_PRIVMSG(Server * srv, User * from, User * to);
-string ft_NTC_NOTICE(Server * srv, User * from, User * to);
-string ft_NTC_QUIT(Server * srv, User * from, User * to);
-string ft_NTC_TOPIC(Server * srv, User * from, User * to);
-string ft_NTC_CHANMODE(Server * srv, User * from, User * to);
-string ft_NTC_CHANMODE_ARG(Server * srv, User * from, User * to);
-string ft_NTC_KICK(Server * srv, User * from, User * to);
-string ft_NTC_INVITE(Server * srv, User * from, User * to);
 
 #endif //FT_IRC_REPLY_HPP
