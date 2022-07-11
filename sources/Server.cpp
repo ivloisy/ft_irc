@@ -151,10 +151,10 @@ void 					Server::welcome(int const & fd)
 	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
 	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
 	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
-	ft_reply(*this->getUser(fd), NULL, RPL_WELCOME);
-	ft_reply(*this->getUser(fd), NULL, RPL_YOURHOST);
-	ft_reply(*this->getUser(fd), NULL, RPL_CREATED);
-	ft_reply(*this->getUser(fd), NULL, RPL_MYINFO);
+	ft_reply(*this->getUser(fd), RPL_WELCOME, (*this->getUser(fd))->getPrefix());
+	ft_reply(*this->getUser(fd), RPL_YOURHOST, _serverName, _ver);
+	ft_reply(*this->getUser(fd), RPL_CREATED, "today");
+	ft_reply(*this->getUser(fd), RPL_MYINFO, _serverName, _ver, "io", "0o");
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)

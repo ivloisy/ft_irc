@@ -18,7 +18,7 @@ namespace irc
 	{
 
 	public:
-		typedef string (*function_reply)(Server * srv, User * from, User * to);
+		typedef string (*function_reply)(string arg1, string arg2, string arg3, string arg4, string arg5);
 		typedef void (*function_command)(Server & srv, User & usr, std::vector<std::string> params);
 
 	private:
@@ -109,7 +109,7 @@ namespace irc
 		void											initErrorTree();
 		void											ft_notice(User * from, User * to, string notice);
 		void											ft_notice_chan(User * from, Channel * to, string notice);
-		void 											ft_reply(User * from, User * to, string code);
+		void 											ft_reply(User * from, string code, string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
 		void											ft_error(User * from, string code, string arg);
 	};
 }
