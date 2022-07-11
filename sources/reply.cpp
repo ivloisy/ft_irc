@@ -30,7 +30,7 @@ string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)t
 //USELESS string RPL_AWAY(User * usr, Server * srv) { return (usr->nickName() + " :" + usr->getAwayMsg()); }
 //USELESS string RPL_UNAWAY() { return (":You are no longer marked as being away"); }
 //USELESS string RPL_NOWAWAY() { return (":You have been marked as being away"); }
-//string RPL_WHOISUSER(Server * srv) { return (usr->getNickName() + " " + user (usr->getUserName())? + " " + usr->getHostName() + " * :" + usr->getRealname()); }
+string	ft_RPL_WHOISUSER(Server * srv, User * from, User * to) { (void)srv; (void)to; return (from->getNickName() + " " + from->getUserName() + " " + from->getHostname() + " * :" + from->getRealName()); }
 //string RPL_WHOISSERVER(User * usr) { return (usr->getNickname() + " " + srv->getServername() + " :" + server info); }
 //string RPL_WHOISOPERATOR(User * usr) { return (usr->getNickName() + " :is an IRC operator"); }
 //string RPL_WHOISIDLE(User * usr) { return (usr->getNickName() + " " + integer + " :seconds idle"); }
@@ -125,7 +125,7 @@ string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)t
 // string RPL_TRYAGAIN() { return (cmd + " :Please wait a while and try again."); }
 // string RPL_NONE() { return (""); }
 //
-// string ERR_NOSUCHNICK() { return (nickname + " :No such nick/channel"); }
+// string ERR_NOSUCHNICK(Server * srv, User * from, User * to) { return (nickname + " :No such nick/channel"); }
 // string ERR_NOSUCHSERVER() { return (server + " :No such server"); }
 // string ERR_NOSUCHCHANNEL() { return (channel + " :No such channel"); }
 // string ERR_CANNOTSENDTOCHAN() { return (channel + " :Cannot send to channel"); }
@@ -183,6 +183,7 @@ void 	Server::initReplyTree()
 	map_rep["002"] = ft_RPL_YOURHOST;
 	map_rep["003"] = ft_RPL_CREATED;
 	map_rep["004"] = ft_RPL_MYINFO;
+	map_rep["311"] = ft_RPL_WHOISUSER;
 	map_rep["433"] = ft_ERR_NICKNAMEINUSE;
 }
 
