@@ -40,6 +40,10 @@ Command: WHOIS
 		RPL_ENDOFWHOIS
 */
 
+
+// irssi syntax :<server> 352 <user> <*|u.curr_channel> <u.realname> <u.hostname> <u.servername>
+//									 <u.nickname> <H|G>[*][@|+] :<hopcount> <u.realname>
+
 void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
 	(void)srv;

@@ -1,39 +1,34 @@
 Antoine :
-Join
-Mode
-Notice
-Oper
-PRIVMSG
-
-User
-
+-Mode
+-Notice
+-Oper
+-PRIVMSG
+-User
 
 
 Ivan :
-NICK
-Names
-User
-
+-NICK
+-Names
+-User
 
 
 Benjamin:
-List
-Whois
-
+-List
+-Whois
 
 
 Vacant:
-Part
-Wallops
-
+-Part
+-Wallops
 
 
 Verifier:
-Die
-Pass
-Ping
+-Join
+-Die
+-Pass
+-Ping
 
 
 supprimer :
-CAP
-Quit
+-CAP
+-Quit
