@@ -19,30 +19,24 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	string	tmp = usr.getNickName();
 	string	buf;
 
-	// if (ERR_RESTRICTED)////////////////////////////
 	if (params.size() == 1)
 	{
 		usr.resetRdySend();
-		// srv.sending(usr.getFdUser(), ft_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NONICKNAMEGIVEN, usr.getNickName(), ":No nickname given"));
+		srv.ft_error(&usr, ERR_NONICKNAMEGIVEN, params[1]);
 		return ;
 	}
-	if (/*params.size() > 2 || */params[1].length() > 9)
+	if (params.size() > 2 || params[1].length() > 9)
 	{
 		usr.resetRdySend();
-		// srv.sending(usr.getFdUser(), ft_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_ERRONEUSNICKNAME, usr.getNickName(), params[1] + " :Erroneous nickname"));
+		srv.ft_error(&usr, ERR_ERRONEUSNICKNAME, params[1]);
 		return ;
 	}
-	//cout << "NICKNAME FOUND = " << srv.getUser(usr.getFdUser())->getNickName() << endl;
 	if (srv.searchNick(params[1]))
 	{
 		usr.decreaseRdySend();
-		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NICKNAMEINUSE, usr.getNickName(), params[1] + " :Nickname is already in use"));
-		// srv.sending(usr.getFdUser(), ben_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NICKNAMEINUSE, "* " + params[1], params[1] + " :Nickname is already in use"));
-		// srv.ft_reply(&usr, (*(srv.getUser(params[1]))), ERR_NICKNAMEINUSE);
+		srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
 		return ;
 	}
-	//srv.getUser(usr.getFdUser())->setNickName(params[1]);
 	usr.setNickName(params[1]);
 	std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;
-	//cout << "nick command called" << endl;
 }

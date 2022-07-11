@@ -50,11 +50,20 @@ void	who_user(Server & srv, User & usr, vector<string> params)
 	(void)usr;
 	if (params.size() == 1 || (params.size() == 2 && params[1][0] == '#'))
 	{
-		for (vector<User *>::iterator it = srv.getUsers().begin(); it != srv.getUsers().end(); it++)
+		vector<User *> users = srv.getUsers();
+		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 		{
-			
+			// if ( ((*it)->getNickname() == args[0] || (*it)->getHostname() == args[0] || (*it)->getServername() == args[0] || (*it)->getRealName() == args[0] ))
+			// send_reply(usr, 352, RPL_WHOREPLY((u->getCurrChan() ? u->getCurrChan()->getName() : "*"),
+			// 					u->getUsername(), u->getHostname(), u->getServername(), u->getNick(),
+			// 					(u->isIRCOper() ? "*" : ""), (u->isChanOper() ? "@" : ""), u->getRealName()));
 		}
 	}
+
+	// 	if (wild == true)
+	// 		send_reply(usr, 315, RPL_ENDOFWHO(string("*")));
+	// 	else
+	// 		send_reply(usr, 315, RPL_ENDOFWHO(args[0]));
 }
 
 
@@ -70,42 +79,16 @@ void	whois_cmd(Server & srv, User & usr, vector<string> params)
 	}
 	//check if target_user exist
 
-	if (params[0][0] == '#')
-		who_chan(); // chan
-	else if (params[0] == "*")
-		who_wildcard();
-	else
-		who_user();
-	srv.ft_reply(NULL, &usr, RPL_WHOISUSER);
+	// if (params[0][0] == '#')
+	// 	who_chan(); // chan
+	// else if (params[0] == "*")
+	// 	who_wildcard();
+	// else
+		who_user(srv, usr, params);
+	// srv.ft_reply(NULL, &usr, RPL_WHOISUSER);
 	//std::cout << "whois command called" << std::endl;
 }
 
-//
-// static int		who_user( const vector<string> args, User &usr, Server &srv, bool wild )
-// {
-// 	ostringstream	s;
-//
-// 	// Works only if is only <name> or <name> + <channel> (<channel> is ignored)
-// 	if ( args.size() == 1 || (args.size() == 2 && args[1][0] == '#') )
-// 	{
-// 		vector<User*>	users = srv.getUsers();
-//
-// 		for ( vector<User*>::iterator it = users.begin(); it != users.end(); ++it )
-// 		{
-// 			User * u = *it;
-//
-// 			// irssi syntax :<server> 352 <user> <*|u.curr_channel> <u.realname> <u.hostname> <u.servername>
-// 			//									 <u.nickname> <H|G>[*][@|+] :<hopcount> <u.realname>
-// 			if ( (u->getNick() == args[0] || u->getHostname() == args[0] || u->getServername() == args[0]
-// 				|| u->getRealName() == args[0] ))
-// 			{
-// 				send_reply(usr, 352, RPL_WHOREPLY((u->getCurrChan() ? u->getCurrChan()->getName() : "*"),
-// 					u->getUsername(), u->getHostname(), u->getServername(), u->getNick(),
-// 					(u->isIRCOper() ? "*" : ""), (u->isChanOper() ? "@" : ""), u->getRealName()));
-// 			}
-// 		}
-// 	}
-//
 // 	// I had to divide it in two because the ternary broke the output
 // 	if (wild == true)
 // 		send_reply(usr, 315, RPL_ENDOFWHO(string("*")));

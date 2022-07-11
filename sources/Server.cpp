@@ -151,10 +151,10 @@ void 					Server::welcome(int const & fd)
 	//sending(fd, ft_reply(this->_serverName, RPL_YOURHOST, this->getUser(fd)->getNickName(), "Your host is localhost running version osef"));
 	//sending(fd, ft_reply(this->_serverName, RPL_CREATED, this->getUser(fd)->getNickName(), "This server was created now"));
 	//sending(fd, ft_reply(this->_serverName, RPL_MYINFO, this->getUser(fd)->getNickName(), "MYINFO"));
-	ft_reply(*this->getUser(fd), NULL, RPL_WELCOME);
-	ft_reply(*this->getUser(fd), NULL, RPL_YOURHOST);
-	ft_reply(*this->getUser(fd), NULL, RPL_CREATED);
-	ft_reply(*this->getUser(fd), NULL, RPL_MYINFO);
+	ft_reply(*this->getUser(fd), RPL_WELCOME, (*this->getUser(fd))->getPrefix());
+	ft_reply(*this->getUser(fd), RPL_YOURHOST, _serverName, _ver);
+	ft_reply(*this->getUser(fd), RPL_CREATED, "today");
+	ft_reply(*this->getUser(fd), RPL_MYINFO, _serverName, _ver, "io", "0o");
 }
 
 void					Server::parse_buffer_command(string const & str, int const & fd)
@@ -458,63 +458,65 @@ void 	Server::initReplyTree()
 	map_rep[RPL_YOURHOST] = ft_RPL_YOURHOST;
 	map_rep[RPL_CREATED] = ft_RPL_CREATED;
 	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
-
+	map_rep[RPL_WHOISUSER] = ft_RPL_WHOISUSER;
+	map_rep[RPL_NAMREPLY] = ft_RPL_NAMREPLY;
+	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 }
 
 void	Server::initErrorTree()
 {
-	map_err[ERR_NOSUCHNICK] = " :No such nick/channel";
-	map_err[ERR_NOSUCHSERVER] = " :No such server";
-	map_err[ERR_NOSUCHCHANNEL] = " :No such channel";
-	map_err[ERR_CANNOTSENDTOCHAN] = " :Cannot send to channel";
-	map_err[ERR_TOOMANYCHANNELS] = " :You have joined too many channels";
-	map_err[ERR_WASNOSUCHNICK] =  " :There was no such nickname";
-	map_err[ERR_TOOMANYTARGETS] = " :Duplicate recipients. No message delivered";
+	map_err[ERR_NOSUCHNICK] = ":No such nick/channel";
+	map_err[ERR_NOSUCHSERVER] = ":No such server";
+	map_err[ERR_NOSUCHCHANNEL] = ":No such channel";
+	map_err[ERR_CANNOTSENDTOCHAN] = ":Cannot send to channel";
+	map_err[ERR_TOOMANYCHANNELS] = ":You have joined too many channels";
+	map_err[ERR_WASNOSUCHNICK] =  ":There was no such nickname";
+	map_err[ERR_TOOMANYTARGETS] = ":Duplicate recipients. No message delivered";
 	map_err[ERR_NOORIGIN] = ":No origin specified";
 	map_err[ERR_NORECIPIENT] = ":No recipient given";
 	map_err[ERR_NOTEXTTOSEND] = ":No text to send";
-	map_err[ERR_NOTOPLEVEL] = " :No toplevel domain specified";
-	map_err[ERR_WILDTOPLEVEL] = " :Wildcard in toplevel domain";
-	map_err[ERR_BADMASK] = " :Bad Server/host mask";
-	map_err[ERR_UNKNOWNCOMMAND] = " :Unknown command";
+	map_err[ERR_NOTOPLEVEL] = ":No toplevel domain specified";
+	map_err[ERR_WILDTOPLEVEL] = ":Wildcard in toplevel domain";
+	map_err[ERR_BADMASK] = ":Bad Server/host mask";
+	map_err[ERR_UNKNOWNCOMMAND] = ":Unknown command";
 	map_err[ERR_NOMOTD] = ":MOTD File is missing";
-	map_err[ERR_NOADMININFO] = " :No administrative info available";
+	map_err[ERR_NOADMININFO] = ":No administrative info available";
 	map_err[ERR_NONICKNAMEGIVEN] = ":No nickname given";
-	map_err[ERR_ERRONEUSNICKNAME] = " :Erroneus nickname";
-	map_err[ERR_NICKNAMEINUSE] = " :Nickname is already in use";
-	map_err[ERR_NICKCOLLISION] = " :Nickname collision KILL";
-	map_err[ERR_USERNOTINCHANNEL] = " :You're not on that channel";
-	map_err[ERR_NOTONCHANNEL] = " :You're not on that channel";
-	map_err[ERR_USERONCHANNEL] = " :is already on channel";
-	map_err[ERR_NOLOGIN] = " :User not logged in";
+	map_err[ERR_ERRONEUSNICKNAME] = ":Erroneus nickname";
+	map_err[ERR_NICKNAMEINUSE] = ":Nickname is already in use";
+	map_err[ERR_NICKCOLLISION] = ":Nickname collision KILL";
+	map_err[ERR_USERNOTINCHANNEL] = ":You're not on that channel";
+	map_err[ERR_NOTONCHANNEL] = ":You're not on that channel";
+	map_err[ERR_USERONCHANNEL] = ":is already on channel";
+	map_err[ERR_NOLOGIN] = ":User not logged in";
 	map_err[ERR_SUMMONDISABLED] = ":SUMMON has been disabled";
 	map_err[ERR_USERSDISABLED] = ":USERS has been disabled";
 	map_err[ERR_NOTREGISTERED] = ":You have not registered";
-	map_err[ERR_NEEDMOREPARAMS] = " :Not enough parameters";
+	map_err[ERR_NEEDMOREPARAMS] = ":Not enough parameters";
 	map_err[ERR_ALREADYREGISTRED] = ":You may not reregister";
 	map_err[ERR_NOPERMFORHOST] = ":Your host isn't among the privileged";
 	map_err[ERR_PASSWDMISMATCH] = ":Password incorrect";
 	map_err[ERR_YOUREBANNEDCREEP] = ":You are banned from this server";
-	map_err[ERR_KEYSET] = " :Channel key already set";
-	map_err[ERR_CHANNELISFULL] = " :Cannot join channel (+l)";
-	map_err[ERR_UNKNOWNMODE] = " :is unknown mode char to me";
-	map_err[ERR_INVITEONLYCHAN] = " :Cannot join channel (+i)";
-	map_err[ERR_BANNEDFROMCHAN] = " :Cannot join channel (+b)";
-	map_err[ERR_BADCHANNELKEY] = " :Cannot join channel (+k)";
-	map_err[ERR_BADCHANMASK] = " :Bad Channel Mask";
-	map_err[ERR_NOCHANMODES] = " :Channel doesn't support modes";
-	map_err[ERR_BANLISTFULL] = " :Channel list is full";
+	map_err[ERR_KEYSET] = ":Channel key already set";
+	map_err[ERR_CHANNELISFULL] = ":Cannot join channel (+l)";
+	map_err[ERR_UNKNOWNMODE] = ":is unknown mode char to me";
+	map_err[ERR_INVITEONLYCHAN] = ":Cannot join channel (+i)";
+	map_err[ERR_BANNEDFROMCHAN] = ":Cannot join channel (+b)";
+	map_err[ERR_BADCHANNELKEY] = ":Cannot join channel (+k)";
+	map_err[ERR_BADCHANMASK] = ":Bad Channel Mask";
+	map_err[ERR_NOCHANMODES] = ":Channel doesn't support modes";
+	map_err[ERR_BANLISTFULL] = ":Channel list is full";
 	map_err[ERR_NOPRIVILEGES] = ":Permission Denied- You're not an IRC operator";
 	map_err[ERR_CANTKILLSERVER] = ":You cant kill a server!";
 	map_err[ERR_RESTRICTED] = ":Your connection is restricted!";
-	map_err[ERR_CHANOPRIVSNEEDED] = " :You're not channel operator";
+	map_err[ERR_CHANOPRIVSNEEDED] = ":You're not channel operator";
 	map_err[ERR_UNIQOPPRIVSNEEDED] = ":You're not the original channel operator";
 	map_err[ERR_NOOPERHOST] = ":No O-lines for your host";
 	map_err[ERR_UMODEUNKNOWNFLAG] = ":Unknown MODE flag";
 	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
 }
 
-void 	Server::ft_reply(User * from, User * to, string code)
+void 	Server::ft_reply(User * from, string code, string arg1, string arg2, string arg3, string arg4, string arg5)
 {
 	string ret = ":";
 	ret += _serverName;
@@ -523,7 +525,7 @@ void 	Server::ft_reply(User * from, User * to, string code)
 	ret += " ";
 	ret += from->getNickName();
 	ret += " ";
-	ret += map_rep.find(code)->second(this, from, to);
+	ret += map_rep.find(code)->second(arg1, arg2, arg3, arg4, arg5);
 	ret += "\r\n";
 	sendBuffer(from, ret);
 }
@@ -551,6 +553,7 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	ret += "\r\n";
 	sendBuffer(to, ret);
 }
+
 void	Server::ft_notice_chan(User * from, Channel * to, string notice)
 {
 	string ret = ":";
@@ -560,5 +563,8 @@ void	Server::ft_notice_chan(User * from, Channel * to, string notice)
 	ret += "\r\n";
 	vector<User *> tousr = to->getChannelUsers();
 	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
-		sendBuffer(*it, ret);
+	{
+		if ((*it)->getNickName() != from->getNickName())
+			sendBuffer(*it, ret);
+	}
 }

@@ -16,11 +16,13 @@ using namespace std;
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr.getFdUser() << endl;
+	//cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr.getFdUser() << endl;
 	(void)usr;
 	if (params.size() < 2)
 	{
 		//ERR wrong number arguments
+		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		return ;
 	}
 	else
 	{
@@ -34,15 +36,27 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-		if (srv.getChannelByName(params[1]))
+
+		//loop in many users in params
+		Channel * dstc;
+		User * dstu;
+		if ((dstc = srv.getChannelByName(params[1])))
 		{
 			//cout << "SEND TO CHAN = " << msg << "\n";
-			srv.sendToChan(params[1], msg);
+			//srv.sendToChan(params[1], msg);
+			cout << "sending channel message " << endl;
+			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg));
 		}
-		else if (*srv.getUser(params[1]))
+		else if ((dstu = *srv.getUser(params[1])))
 		{
 			//cout << "SEND TO USER = " << msg << "\n";
-			srv.sendToUser(params[1], msg);
+			//srv.sendToUser(params[1], msg);
+			cout << "sending private message " << endl;
+			srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
+		}
+		else
+		{
+			//srv.ft_error(&usr, ERR_NORECIPIENT, )
 		}
 	}
 	//cout << "privmsg command called" << endl;
