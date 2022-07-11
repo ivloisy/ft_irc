@@ -21,7 +21,9 @@ using namespace std;
 void	cap_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
-	(void)usr;
-	(void)params;
-	//std::cout << "cap command called" << std::endl;
+	cout << "coucou" << endl;
+	// (void)usr;
+	if (params.size() != 2 || !(params[0] == "CAP") || !(params[1] == "LS"))
+		usr.setToClose(1);
+	std::cout << "cap command called" << std::endl;
 }
