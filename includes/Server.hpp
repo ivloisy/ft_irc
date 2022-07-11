@@ -18,14 +18,15 @@ namespace irc
 	{
 
 	public:
-		typedef void (*function_command)(Server & srv, User & usr, std::vector<std::string> params);
-		map<string, function_command>					map_cmd;
 		typedef string (*function_reply)(Server * srv, User * from, User * to);
-		map<string, function_reply>						map_rep;
+		typedef void (*function_command)(Server & srv, User & usr, std::vector<std::string> params);
 
 	private:
+		map<string, function_command>					map_cmd;
+		map<string, function_reply>						map_rep;
+		map<string, string>								map_err;
 
-
+	private:
 		int 											_fd;
 		int												_fdMax;
 		struct sockaddr_in								_serverAddr;
@@ -39,7 +40,6 @@ namespace irc
 		string											_password;
 		vector<vector<string> >							_param;
 		int 											_maxChannels;
-		map<string, function_reply>						_replyTree;
 		string 											_date;
 		string 											_ver;
 
@@ -103,9 +103,10 @@ namespace irc
 
 		/********************* REPLIES **************************/
 		void											initReplyTree();
-		void											ft_notice(User * from, string notice);
+		void											initErrorTree();
+		void											ft_notice(User * from, User * to, string notice);
 		void 											ft_reply(User * from, User * to, string code);
-
+		void											ft_error(User * from, string code, string arg);
 	};
 }
 

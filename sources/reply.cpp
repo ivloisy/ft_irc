@@ -121,66 +121,69 @@ string RPL_ADMINEMAIL() { return (":" + info); }
 string RPL_TRYAGAIN() { return (cmd + " :Please wait a while and try again."); }
 string RPL_NONE() { return (""); }
 
-string ERR_NOSUCHNICK() { return (nickname + " :No such nick/channel"); }
-string ERR_NOSUCHSERVER() { return (server + " :No such server"); }
-string ERR_NOSUCHCHANNEL() { return (channel + " :No such channel"); }
-string ERR_CANNOTSENDTOCHAN() { return (channel + " :Cannot send to channel"); }
-string ERR_TOOMANYCHANNELS() { return (channel + " :You have joined too many channels"); }
-string ERR_WASNOSUCHNICK() { return (nickname + " :There was no such nickname"); }
-string ERR_TOOMANYTARGETS() { return (target + " :Duplicate recipients. No message delivered"); }
-string ERR_NOSUCHSERVICE() { return (service + " :No such service"); }
-string ERR_NOORIGIN() { return (":No origin specified"; }
-string ERR_NORECIPIENT() { return (":No recipient given (" + command + ")"); }
-string ERR_NOTEXTTOSEND() { return (":No text to send"); }
-string ERR_NOTOPLEVEL() { return (mask + " :No toplevel domain specified"); }
-string ERR_WILDTOPLEVEL() { return (mask + " :Wildcard in toplevel domain"); }
-string ERR_BADMASK() { return (mask + " :Bad Server/host mask"); }
-string ERR_UNKNOWNCOMMAND() { return (command + " :Unknown command"); }
-string ERR_NOMOTD() { return (":MOTD File is missing"); }
-string ERR_NOADMININFO() { return (server + " :No administrative info available"); }
-string ERR_FILEERROR() { return (":File error doing " + op + " on " + file); }
-string ERR_NONICKNAMEGIVEN() { return (":No nickname given"); }
-string ERR_ERRONEUSNICKNAME() { return (srv->getNickName() + " :Erroneus nickname"); }
-string ERR_NICKNAMEINUSE() { return (nick + " :Nickname is already in use"); }
-string ERR_NICKCOLLISION() { return (nick + " :Nickname collision KILL"); }
-string ERR_USERNOTINCHANNEL() { return (nick + " " + channel + " :They aren't on that channel"); }
-string ERR_NOTONCHANNEL() { return (channel + " :You're not on that channel"); }
-string ERR_USERONCHANNEL() { return (user + " " + channel + " :is already on channel"); }
-string ERR_NOLOGIN() { return (user + " :User not logged in"); }
-string ERR_SUMMONDISABLED() { return (":SUMMON has been disabled"); }
-string ERR_USERSDISABLED() { return (":USERS has been disabled"); }
-string ERR_NOTREGISTERED() { return (":You have not registered"); }
-string ERR_NEEDMOREPARAMS() { return (command + " :Not enough parameters"); }
-string ERR_ALREADYREGISTRED() { return (":You may not reregister"); }
-string ERR_NOPERMFORHOST() { return (":Your host isn't among the privileged"); }
-string ERR_PASSWDMISMATCH() { return (":Password incorrect"); }
-string ERR_YOUREBANNEDCREEP() { return (":You are banned from this server"); }
-string ERR_KEYSET() { return (channel + " :Channel key already set"); }
-string ERR_CHANNELISFULL() { return (channel + " :Cannot join channel (+l)"); }
-string ERR_UNKNOWNMODE() { return (c + " :is unknown mode char to me"); }
-string ERR_INVITEONLYCHAN() { return (channel + " :Cannot join channel (+i)"); }
-string ERR_BANNEDFROMCHAN() { return (channel + " :Cannot join channel (+b)"); }
-string ERR_BADCHANNELKEY() { return (channel + " :Cannot join channel (+k)"); }
-string ERR_BADCHANMASK() { return (channel + " :Bad Channel Mask"); }
-string ERR_NOCHANMODES() { return (channel + " :Channel doesn't support modes"); }
-string ERR_BANLISTFULL() { return (channel + " :Channel list is full"); }
-string ERR_NOPRIVILEGES() { return (":Permission Denied- You're not an IRC operator"); }
-string ERR_CANTKILLSERVER() { return (":You cant kill a server!"); }
-string ERR_RESTRICTED() { return (":Your connection is restricted!"); }
-string ERR_CHANOPRIVSNEEDED() { return (channel + " :You're not channel operator"); }
-string ERR_UNIQOPPRIVSNEEDED() { return (":You're not the original channel operator"); }
-string ERR_NOOPERHOST() { return (":No O-lines for your host"); }
-string ERR_UMODEUNKNOWNFLAG() { return (":Unknown MODE flag"); }
-string ERR_USERSDONTMATCH() { return (":Cant change mode for other users"); }
+
 */
 
 void 	Server::initReplyTree()
 {
-	map_rep["001"] = ft_RPL_WELCOME;
-	map_rep["002"] = ft_RPL_YOURHOST;
-	map_rep["003"] = ft_RPL_CREATED;
-	map_rep["004"] = ft_RPL_MYINFO;
+	map_rep[RPL_WELCOME] = ft_RPL_WELCOME;
+	map_rep[RPL_YOURHOST] = ft_RPL_YOURHOST;
+	map_rep[RPL_CREATED] = ft_RPL_CREATED;
+	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
 
+}
+
+void	Server::initErrorTree()
+{
+	map_err[ERR_NOSUCHNICK] = " :No such nick/channel";
+	map_err[ERR_NOSUCHSERVER] = " :No such server";
+	map_err[ERR_NOSUCHCHANNEL] = " :No such channel";
+	map_err[ERR_CANNOTSENDTOCHAN] = " :Cannot send to channel";
+	map_err[ERR_TOOMANYCHANNELS] = " :You have joined too many channels";
+	map_err[ERR_WASNOSUCHNICK] =  " :There was no such nickname";
+	map_err[ERR_TOOMANYTARGETS] = " :Duplicate recipients. No message delivered";
+	map_err[ERR_NOORIGIN] = ":No origin specified";
+	map_err[ERR_NORECIPIENT] = ":No recipient given";
+	map_err[ERR_NOTEXTTOSEND] = ":No text to send";
+	map_err[ERR_NOTOPLEVEL] = " :No toplevel domain specified";
+	map_err[ERR_WILDTOPLEVEL] = " :Wildcard in toplevel domain";
+	map_err[ERR_BADMASK] = " :Bad Server/host mask";
+	map_err[ERR_UNKNOWNCOMMAND] = " :Unknown command";
+	map_err[ERR_NOMOTD] = ":MOTD File is missing";
+	map_err[ERR_NOADMININFO] = " :No administrative info available";
+	map_err[ERR_NONICKNAMEGIVEN] = ":No nickname given";
+	map_err[ERR_ERRONEUSNICKNAME] = " :Erroneus nickname";
+	map_err[ERR_NICKNAMEINUSE] = " :Nickname is already in use";
+	map_err[ERR_NICKCOLLISION] = " :Nickname collision KILL";
+	map_err[ERR_USERNOTINCHANNEL] = " :You're not on that channel";
+	map_err[ERR_NOTONCHANNEL] = " :You're not on that channel";
+	map_err[ERR_USERONCHANNEL] = " :is already on channel";
+	map_err[ERR_NOLOGIN] = " :User not logged in";
+	map_err[ERR_SUMMONDISABLED] = ":SUMMON has been disabled";
+	map_err[ERR_USERSDISABLED] = ":USERS has been disabled";
+	map_err[ERR_NOTREGISTERED] = ":You have not registered";
+	map_err[ERR_NEEDMOREPARAMS] = " :Not enough parameters";
+	map_err[ERR_ALREADYREGISTRED] = ":You may not reregister";
+	map_err[ERR_NOPERMFORHOST] = ":Your host isn't among the privileged";
+	map_err[ERR_PASSWDMISMATCH] = ":Password incorrect";
+	map_err[ERR_YOUREBANNEDCREEP] = ":You are banned from this server";
+	map_err[ERR_KEYSET] = " :Channel key already set";
+	map_err[ERR_CHANNELISFULL] = " :Cannot join channel (+l)";
+	map_err[ERR_UNKNOWNMODE] = " :is unknown mode char to me";
+	map_err[ERR_INVITEONLYCHAN] = " :Cannot join channel (+i)";
+	map_err[ERR_BANNEDFROMCHAN] = " :Cannot join channel (+b)";
+	map_err[ERR_BADCHANNELKEY] = " :Cannot join channel (+k)";
+	map_err[ERR_BADCHANMASK] = " :Bad Channel Mask";
+	map_err[ERR_NOCHANMODES] = " :Channel doesn't support modes";
+	map_err[ERR_BANLISTFULL] = " :Channel list is full";
+	map_err[ERR_NOPRIVILEGES] = ":Permission Denied- You're not an IRC operator";
+	map_err[ERR_CANTKILLSERVER] = ":You cant kill a server!";
+	map_err[ERR_RESTRICTED] = ":Your connection is restricted!";
+	map_err[ERR_CHANOPRIVSNEEDED] = " :You're not channel operator";
+	map_err[ERR_UNIQOPPRIVSNEEDED] = ":You're not the original channel operator";
+	map_err[ERR_NOOPERHOST] = ":No O-lines for your host";
+	map_err[ERR_UMODEUNKNOWNFLAG] = ":Unknown MODE flag";
+	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
 }
 
 void 	Server::ft_reply(User * from, User * to, string code)
@@ -190,16 +193,32 @@ void 	Server::ft_reply(User * from, User * to, string code)
 	ret += " ";
 	ret += code;
 	ret += " ";
+	ret += from->getNickName();
+	ret += " ";
 	ret += map_rep.find(code)->second(this, from, to);
 	ret += "\r\n";
 	sendBuffer(from, ret);
 }
 
-void	Server::ft_notice(User * from, string notice)
+void	Server::ft_error(User * from, string code, string arg)
+{
+	string ret = ":";
+	ret += _serverName;
+	ret += " * "; // arg err[errn]
+	ret += code;
+	ret += " ";
+	ret += arg;
+	ret += " ";
+	ret += map_err.find(code)->second;
+	ret += "\r\n";
+	sendBuffer(from, ret);
+}
+
+void	Server::ft_notice(User * from, User * to, string notice)
 {
 	string ret = ":";
 	ret += from->getPrefix();
 	ret += " ";
 	ret += notice;
-	sendBuffer(from, ret);
+	sendBuffer(to, ret);
 }
