@@ -448,3 +448,106 @@ bool				Server::isUserEmpty()
 {
 	return (this->_user.empty());
 }
+
+
+/******************* REPLIES **********************/
+
+
+void 	Server::initReplyTree()
+{
+	map_rep[RPL_WELCOME] = ft_RPL_WELCOME;
+	map_rep[RPL_YOURHOST] = ft_RPL_YOURHOST;
+	map_rep[RPL_CREATED] = ft_RPL_CREATED;
+	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
+
+}
+
+void	Server::initErrorTree()
+{
+	map_err[ERR_NOSUCHNICK] = " :No such nick/channel";
+	map_err[ERR_NOSUCHSERVER] = " :No such server";
+	map_err[ERR_NOSUCHCHANNEL] = " :No such channel";
+	map_err[ERR_CANNOTSENDTOCHAN] = " :Cannot send to channel";
+	map_err[ERR_TOOMANYCHANNELS] = " :You have joined too many channels";
+	map_err[ERR_WASNOSUCHNICK] =  " :There was no such nickname";
+	map_err[ERR_TOOMANYTARGETS] = " :Duplicate recipients. No message delivered";
+	map_err[ERR_NOORIGIN] = ":No origin specified";
+	map_err[ERR_NORECIPIENT] = ":No recipient given";
+	map_err[ERR_NOTEXTTOSEND] = ":No text to send";
+	map_err[ERR_NOTOPLEVEL] = " :No toplevel domain specified";
+	map_err[ERR_WILDTOPLEVEL] = " :Wildcard in toplevel domain";
+	map_err[ERR_BADMASK] = " :Bad Server/host mask";
+	map_err[ERR_UNKNOWNCOMMAND] = " :Unknown command";
+	map_err[ERR_NOMOTD] = ":MOTD File is missing";
+	map_err[ERR_NOADMININFO] = " :No administrative info available";
+	map_err[ERR_NONICKNAMEGIVEN] = ":No nickname given";
+	map_err[ERR_ERRONEUSNICKNAME] = " :Erroneus nickname";
+	map_err[ERR_NICKNAMEINUSE] = " :Nickname is already in use";
+	map_err[ERR_NICKCOLLISION] = " :Nickname collision KILL";
+	map_err[ERR_USERNOTINCHANNEL] = " :You're not on that channel";
+	map_err[ERR_NOTONCHANNEL] = " :You're not on that channel";
+	map_err[ERR_USERONCHANNEL] = " :is already on channel";
+	map_err[ERR_NOLOGIN] = " :User not logged in";
+	map_err[ERR_SUMMONDISABLED] = ":SUMMON has been disabled";
+	map_err[ERR_USERSDISABLED] = ":USERS has been disabled";
+	map_err[ERR_NOTREGISTERED] = ":You have not registered";
+	map_err[ERR_NEEDMOREPARAMS] = " :Not enough parameters";
+	map_err[ERR_ALREADYREGISTRED] = ":You may not reregister";
+	map_err[ERR_NOPERMFORHOST] = ":Your host isn't among the privileged";
+	map_err[ERR_PASSWDMISMATCH] = ":Password incorrect";
+	map_err[ERR_YOUREBANNEDCREEP] = ":You are banned from this server";
+	map_err[ERR_KEYSET] = " :Channel key already set";
+	map_err[ERR_CHANNELISFULL] = " :Cannot join channel (+l)";
+	map_err[ERR_UNKNOWNMODE] = " :is unknown mode char to me";
+	map_err[ERR_INVITEONLYCHAN] = " :Cannot join channel (+i)";
+	map_err[ERR_BANNEDFROMCHAN] = " :Cannot join channel (+b)";
+	map_err[ERR_BADCHANNELKEY] = " :Cannot join channel (+k)";
+	map_err[ERR_BADCHANMASK] = " :Bad Channel Mask";
+	map_err[ERR_NOCHANMODES] = " :Channel doesn't support modes";
+	map_err[ERR_BANLISTFULL] = " :Channel list is full";
+	map_err[ERR_NOPRIVILEGES] = ":Permission Denied- You're not an IRC operator";
+	map_err[ERR_CANTKILLSERVER] = ":You cant kill a server!";
+	map_err[ERR_RESTRICTED] = ":Your connection is restricted!";
+	map_err[ERR_CHANOPRIVSNEEDED] = " :You're not channel operator";
+	map_err[ERR_UNIQOPPRIVSNEEDED] = ":You're not the original channel operator";
+	map_err[ERR_NOOPERHOST] = ":No O-lines for your host";
+	map_err[ERR_UMODEUNKNOWNFLAG] = ":Unknown MODE flag";
+	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
+}
+
+void 	Server::ft_reply(User * from, User * to, string code)
+{
+	string ret = ":";
+	ret += _serverName;
+	ret += " ";
+	ret += code;
+	ret += " ";
+	ret += from->getNickName();
+	ret += " ";
+	ret += map_rep.find(code)->second(this, from, to);
+	ret += "\r\n";
+	sendBuffer(from, ret);
+}
+
+void	Server::ft_error(User * from, string code, string arg)
+{
+	string ret = ":";
+	ret += _serverName;
+	ret += " * "; // arg err[errn]
+	ret += code;
+	ret += " ";
+	ret += arg;
+	ret += " ";
+	ret += map_err.find(code)->second;
+	ret += "\r\n";
+	sendBuffer(from, ret);
+}
+
+void	Server::ft_notice(User * from, User * to, string notice)
+{
+	string ret = ":";
+	ret += from->getPrefix();
+	ret += " ";
+	ret += notice;
+	sendBuffer(to, ret);
+}
