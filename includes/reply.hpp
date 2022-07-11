@@ -79,19 +79,19 @@ using namespace std;
 # define ERR_UMODEUNKNOWNFLAG "501"
 # define ERR_USERSDONTMATCH "502"
 
-# define NTC_NICK(to) ("NICK :" + from->getNickName())
-# define NTC_MODE(from) ("MODE " + from->getNickName() + " :" /*+ from->getModeString()*/); }
-# define NTC_JOIN(from)  ("JOIN :" + from->getCurrentChannelName()); }
-# define NTC_PART(from) ("PART :" + from->getCurrentChannelName()); }
-# define NTC_PART_MSG(from) ("PART " + from->getCurrentChannelName() + " :" + from->getMsg()); }
-# define NTC_PRIVMSG(from) ("PRIVMSG " + to->getNickName() + " " + from->getMsg()); }
-# define NTC_NOTICE(from) ("NOTICE " + to->getNickName() + " " + from->getMsg()); }
-# define NTC_QUIT(to) (" QUIT :Quit: " + from->getMsg()); }
-# define NTC_TOPIC(to) ("TOPIC " + from->getCurrentChannelName() + " :" + "topic"); }
-# define NTC_CHANMODE(to) ("MODE " + from->getCurrentChannelName() + " :" + "mode"); }
-# define NTC_KICK(to) ("MODE " + from->getCurrentChannelName() + " " + "mode" + " :" + "arg"); }
-# define NTC_INVITE(to) ("KICK " + from->getCurrentChannelName()  + " " + "usr" + " " + "reason"); }
-# define NTC_CHANMODE_ARG(to) ("INVITE usr :channel"); }
+# define NTC_NICK(nickname) ("NICK :" + NickName)
+# define NTC_MODE(nickname, modestring) ("MODE " + NickName+ " : ModeString")
+# define NTC_JOIN(CurrentChannelName)  ("JOIN :" + CurrentChannelName)
+# define NTC_PART(CurrentChannelName) ("PART :" + CurrentChannelName)
+# define NTC_PART_MSG(CurrentChannelName, Msg) ("PART " + CurrentChannelName+ " :" + Msg)
+# define NTC_PRIVMSG(nickname, msg) ("PRIVMSG " + NickNam+ " " + Msg())
+# define NTC_NOTICE(nickname, msg) ("NOTICE " + NickName+ " " + Msg())
+# define NTC_QUIT(msg) (" QUIT :Quit: " + Msg)
+# define NTC_TOPIC(CurrentChannelName, topic) ("TOPIC " + CurrentChannelName+ " :" + "topic")
+# define NTC_CHANMODE(CurrentChannelName, mode) ("MODE " + CurrentChannelName + " :" + "mode")
+# define NTC_KICK(CurrentChannelName, mode, arg) ("MODE " + CurrentChannelName + " " + "mode" + " :" + "arg")
+# define NTC_INVITE(CurrentChannelName, usr, reason) ("KICK " + CurrentChannelName  + " " + "usr" + " " + "reason")
+# define NTC_CHANMODE_ARG(usr, channel) ("INVITE usr :channel")
 
 string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
 string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);
