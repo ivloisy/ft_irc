@@ -48,6 +48,7 @@ namespace irc
 		bool					getInviteOnlyMode() const;
 
 		bool 					isMaxUsers();
+		bool					isUserHere(User const * usr);
 
 		void					setUserMode(User * user, bitset<3> const & mode);
 		void					setInviteOnlyMode(bool const & set);

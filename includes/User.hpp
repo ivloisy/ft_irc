@@ -49,6 +49,7 @@ namespace irc
 		void												clearAllChannels();
 		void												quitChannel(Channel * chan);
 		void												addChannel(Channel * chan);
+		//void												delChannel(Channel * chan);
 		bool												isMaxChannel();
 
 		/********************* GETTERS ***********************/

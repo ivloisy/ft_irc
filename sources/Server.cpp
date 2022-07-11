@@ -210,7 +210,6 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("PING");
 	test.push_back("PRIVMSG");
 	test.push_back("QUIT");
-	test.push_back("SQUERY");
 	test.push_back("USER");
 	test.push_back("WALLOPS");
 
@@ -266,6 +265,17 @@ Channel*			Server::addChannel(string const & name)
 {
 	this->_channel.push_back(new Channel(name));
 	return *(this->_channel.end() - 1);
+}
+
+void				Server::deleteChannel(Channel * chan)
+{
+	for (vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)
+	{
+		if (*it == chan)
+		{
+			this->_channel.erase(it);
+		}
+	}
 }
 
 Channel*			Server::searchChannel(string const & name)

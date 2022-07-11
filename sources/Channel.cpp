@@ -146,6 +146,18 @@ bool 					Channel::isMaxUsers()
 	return (cur >= this->_maxUsers);
 }
 
+bool					Channel::isUserHere(User const * usr)
+{
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		if (*it == usr)
+		{
+			return (true);
+		}
+	}
+	return (false);
+}
+
 /********************** SETTERS **************************/
 
 void					Channel::setUserMode(User * user, bitset<3> const & mode)

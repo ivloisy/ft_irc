@@ -70,6 +70,7 @@ namespace irc
 		void											delUserAllChannel(User * user);
 		// void 											ft_reply(User * from, User * to, string code);
 		void 											deleteUser(vector<User *>::iterator user);
+		void											deleteChannel(Channel * chan);
 		// void											deleteUser(int fd);
 		//string const									getDate() const;
 		//string const									getVersion() const;

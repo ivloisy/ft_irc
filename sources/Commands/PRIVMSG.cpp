@@ -12,16 +12,23 @@ using namespace std;
 /*
  * PRIVMSG
  * <msgtarget> <text to be sent>
+ *
+           ERR_NORECIPIENT                 ERR_NOTEXTTOSEND
+           ERR_CANNOTSENDTOCHAN            ERR_NOTOPLEVEL
+           ERR_WILDTOPLEVEL                ERR_TOOMANYTARGETS
+           ERR_NOSUCHNICK
+           RPL_AWAY
  */
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr.getFdUser() << endl;
 	(void)usr;
+	//if paramisize ERR_NOTEXTTOSEND
 	if (params.size() < 2)
 	{
-		//ERR wrong number arguments
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		//ERR_NORECIPIENT
+		//srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
 		return ;
 	}
 	else
@@ -37,21 +44,17 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 			msg.push_back(' ');
 		}
 
-		//loop in many users in params
+		//loop in many users, channels in params
+		//find dupricates ERR_TOOMANYTARGETS
+		//what happen if user,,user
 		Channel * dstc;
 		User * dstu;
 		if ((dstc = srv.getChannelByName(params[1])))
 		{
-			//cout << "SEND TO CHAN = " << msg << "\n";
-			//srv.sendToChan(params[1], msg);
-			cout << "sending channel message " << endl;
 			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg));
 		}
 		else if ((dstu = *srv.getUser(params[1])))
 		{
-			//cout << "SEND TO USER = " << msg << "\n";
-			//srv.sendToUser(params[1], msg);
-			cout << "sending private message to " << dstu->getNickName() << endl;
 			srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
 		}
 		else
