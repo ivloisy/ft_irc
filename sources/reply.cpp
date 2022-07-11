@@ -19,10 +19,10 @@ using namespace irc;
  */
 
 //usr == from
-string ft_RPL_WELCOME(Server * srv, User * from, User * to) { (void)srv; (void)to; return (":Welcome to the Internet Relay Network " + from->getNickName()); }
-string ft_RPL_YOURHOST(Server * srv, User * from, User * to) { (void)from; (void)to; return (":Your host is " + srv->getServerName() + ", running version " /*+ srv->getVersion()*/); }
-string ft_RPL_CREATED(Server * srv, User * from, User * to) { (void)srv; (void)to; (void)from; return (":This server was created ");} //function to get date); }
-string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)to; return (srv->getServerName() + " " /*+ srv->getVersion()*/  + " io 0o"); }// + //availables user modes + " " + //available channel modes); }
+string ft_RPL_WELCOME(Server * srv, User * from, User * to) { (void)srv; (void)to; return (from->getNickName() + " :Welcome to the Internet Relay Network " + from->getNickName()); }
+string ft_RPL_YOURHOST(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :Your host is " + srv->getServerName() + ", running version " /*+ srv->getVersion()*/); }
+string ft_RPL_CREATED(Server * srv, User * from, User * to) { (void)srv; (void)to; (void)from; return (from->getNickName() + " :This server was created ");} //function to get date); }
+string ft_RPL_MYINFO(Server * srv, User * from, User * to) { (void)from; (void)to; return (from->getNickName() + " :" + srv->getServerName() + " " /*+ srv->getVersion()*/  + " io 0o"); }// + //availables user modes + " " + //available channel modes); }
 
 //USELESS string RPL_BOUNCE(Server * srv) { return (":Try server " + srv->getServerName() + ", port " + //int to string > srv->getPortNum()); }
 //USELESS string RPL_USERHOST(string reply_list) { return (":" + //print all replies); }

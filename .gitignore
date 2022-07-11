@@ -30,11 +30,6 @@
 *.exe
 *.out
 *.app
-
-# Clion Antoine
-.idea
-
-
 ircserv
 
 # Clion antoine
