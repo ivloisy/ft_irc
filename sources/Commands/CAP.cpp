@@ -23,5 +23,7 @@ void	cap_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
+	if (usr.getRdySend() == 0)
+		usr.setRdySend();
 	//std::cout << "cap command called" << std::endl;
 }

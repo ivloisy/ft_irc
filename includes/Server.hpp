@@ -59,7 +59,7 @@ namespace irc
 		void											printParam();
 		void											initCommand();
 		void 											welcome(int const & fd);
-		void											parse_buffer_command(string const &  buffer, int const &  fd);
+		void											parse_buffer_command(string const &  buffer);
 		void 											execCommand(int const & fd);
 		int												searchNick(string const & nick);
 		void											sendToChan(string const & name, string const & msg);

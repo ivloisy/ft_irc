@@ -1,23 +1,25 @@
 Antoine :
--Mode
--Notice
--Oper
--User
+-Mode 2h
+-Notice 2h
+-PRIVMSG 1h
+-Oper 2h
 
 
 Ivan :
--Names
--Part
+-Names 2h
+-Part 4h
+-User 2h
 
 
 Benjamin:
--List
--Whois
+-List 1h
+-Whois 1h
+-Wallops 4h
 
 
 Vacant:
--Wallops
-
+-SQuery
+-Tabulations dans password
 
 Verifier:
 -Join
@@ -25,7 +27,6 @@ Verifier:
 -Pass
 -Ping
 -User
--PRIVMSG
 -NICK
 
 
