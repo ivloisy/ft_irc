@@ -294,6 +294,7 @@ void				Server::delUserAllChannel(User * user)
 
 void				Server::deleteUser(vector<User *>::iterator user)
 {
+	delete(*user);
 	this->_user.erase(user);
 }
 

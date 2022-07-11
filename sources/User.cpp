@@ -119,6 +119,11 @@ Channel*				User::getChannelByName(string name)
 	return (NULL);
 }
 
+string 					User::getCurrentChannelName()
+{
+	return (this->getCurrentChannel()->getChannelName());
+}
+
 bool					User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
@@ -149,12 +154,22 @@ Channel*				User::getCurrentChannel()
 	return (this->_currChan);
 }
 
-bool 				User::getToClose()
+bool 					User::getToClose()
 {
 	return (this->_toClose);
 }
 
+string 					User::getMsg() const
+{
+	return (this->_msg);
+}
+
 /********************** SETTERS ***********************/
+
+void					User::setMsg(string const & msg)
+{
+	this->_msg = msg;
+}
 
 void					User::setPrefix()
 {

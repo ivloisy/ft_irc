@@ -35,6 +35,7 @@ namespace irc
 		bool												_toClose;
 		int													_rdySend;
 		string 												_awayMsg;
+		string 												_msg; //stores buffer here for accessing it via reply functions
 
 		//if client send a cap command, ignore it
 
@@ -65,10 +66,13 @@ namespace irc
 		bitset<2> 											getMode() const;
 		bool												getInvisible() const;
 		Channel												*getCurrentChannel();
+		string 												getCurrentChannelName();
 		bool 												getToClose();
+		string 												getMsg() const;
 		//string											getAwayMsg();
 
 		/********************** SETTERS ***********************/
+		void												setMsg(string const & msg);
 		void												setPrefix();
 		void												setInvisible(bool const & inv);
 		void												setMode(bitset<2> const & mode);

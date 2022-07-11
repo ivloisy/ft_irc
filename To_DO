@@ -17,12 +17,8 @@ User
 
 
 Benjamin:
-Pass
 List
 Whois
-Irssi 1: lala good password	| -------\
-Irssi 2: lala bad password	| --------> close server
-Irssi 2: lala good password	| -------/
 
 
 
@@ -34,6 +30,7 @@ Wallops
 
 Verifier:
 Die
+Pass
 Ping
 
 

@@ -119,9 +119,9 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 	//cout << "USER NAMES = " << (*chan_usr.begin())->getNickName() << " " << usr->getNickName() << endl;
 	vector<User *>::iterator lst = chan_usr.end();
 	for (vector<User *>::iterator it = chan_usr.begin(); it != lst; it++) {
-		//srv.ft_reply(&usr, *it, RPL_NAMREPLY);
+		srv.ft_reply(&usr, *it, RPL_NAMREPLY);
 	}
-	//srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
+	srv.ft_reply(&usr, NULL, RPL_ENDOFNAMES);
 }
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
