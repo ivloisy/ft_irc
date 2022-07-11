@@ -96,13 +96,12 @@ using namespace std;
 # define NTC_CHANMODE_ARG(usr, channel) ("INVITE " + usr + " :" + channel)
 
 
-string ft_RPL_WELCOME(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_YOURHOST(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_CREATED(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_WHOISUSER(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_MYINFO(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_NAMREPLY(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-string ft_RPL_ENDOFNAMES(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "");
-
+string ft_RPL_WELCOME(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_YOURHOST(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_CREATED(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_WHOISUSER(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_MYINFO(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_NAMREPLY(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
+string ft_RPL_ENDOFNAMES(string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
 
 #endif //FT_IRC_REPLY_HPP

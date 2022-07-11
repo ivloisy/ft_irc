@@ -516,7 +516,7 @@ void	Server::initErrorTree()
 	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
 }
 
-void 	Server::ft_reply(User * from, string code, string arg1, string arg2, string arg3, string arg4, string arg5)
+void 	Server::ft_reply(User * from, string code, string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7)
 {
 	string ret = ":";
 	ret += _serverName;
@@ -525,7 +525,7 @@ void 	Server::ft_reply(User * from, string code, string arg1, string arg2, strin
 	ret += " ";
 	ret += from->getNickName();
 	ret += " ";
-	ret += map_rep.find(code)->second(arg1, arg2, arg3, arg4, arg5);
+	ret += map_rep.find(code)->second(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 	ret += "\r\n";
 	sendBuffer(from, ret);
 }
