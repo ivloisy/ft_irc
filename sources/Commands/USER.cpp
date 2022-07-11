@@ -30,6 +30,8 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	}
 	usr->setUserName(real);
 	*/
+	if (usr.getRdySend() == 3)
+		usr.setRdySend();
 	usr.setPrefix();
 	std::cout << "user command called = " << usr.getUserName() << std::endl;
 }

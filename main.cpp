@@ -66,7 +66,7 @@ void ft_run(int port, string password)
 					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
 						cout << "BUFFER RECEIVE = " << buffer << endl;
-						serv.parse_buffer_command(buffer, fd);
+						serv.parse_buffer_command(buffer);
 						//serv.printParam();
 						serv.execCommand(fd);
 						serv.welcome(fd);

@@ -38,5 +38,7 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 		return ;
 	}
 	usr.setNickName(params[1]);
+	if (usr.getRdySend() == 2)
+		usr.setRdySend();
 	std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;
 }
