@@ -222,3 +222,14 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	ret += notice;
 	sendBuffer(to, ret);
 }
+
+void	Server::ft_notice_chan(User * from, Channel * to, string notice)
+{
+	string ret = ":";
+	ret += from->getPrefix();
+	ret += " ";
+	ret += notice;
+	vector<User *> tousr = to->getChannelUsers();
+	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
+		sendBuffer(*it, ret);
+}

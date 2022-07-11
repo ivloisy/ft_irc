@@ -79,19 +79,19 @@ using namespace std;
 # define ERR_UMODEUNKNOWNFLAG "501"
 # define ERR_USERSDONTMATCH "502"
 
-# define NTC_NICK(nickname) ("NICK :" + NickName)
-# define NTC_MODE(nickname, modestring) ("MODE " + NickName+ " : ModeString")
-# define NTC_JOIN(CurrentChannelName)  ("JOIN :" + CurrentChannelName)
-# define NTC_PART(CurrentChannelName) ("PART :" + CurrentChannelName)
-# define NTC_PART_MSG(CurrentChannelName, Msg) ("PART " + CurrentChannelName+ " :" + Msg)
-# define NTC_PRIVMSG(nickname, msg) ("PRIVMSG " + NickNam+ " " + Msg())
-# define NTC_NOTICE(nickname, msg) ("NOTICE " + NickName+ " " + Msg())
+# define NTC_NICK(nickname) ("NICK :" + nickname)
+# define NTC_MODE(nickname, modestring) ("MODE " + nickname + " " + modestring)
+# define NTC_JOIN(channel)  ("JOIN :" + channel)
+# define NTC_PART(channel) ("PART :" + channel)
+# define NTC_PART_MSG(channel, msg) ("PART " + channel+ " :" + msg)
+# define NTC_PRIVMSG(nickname, msg) ("PRIVMSG " + nickname + " " + msg)
+# define NTC_NOTICE(nickname, msg) ("NOTICE " + nickname + " " + msg)
 # define NTC_QUIT(msg) (" QUIT :Quit: " + Msg)
-# define NTC_TOPIC(CurrentChannelName, topic) ("TOPIC " + CurrentChannelName+ " :" + "topic")
-# define NTC_CHANMODE(CurrentChannelName, mode) ("MODE " + CurrentChannelName + " :" + "mode")
-# define NTC_KICK(CurrentChannelName, mode, arg) ("MODE " + CurrentChannelName + " " + "mode" + " :" + "arg")
-# define NTC_INVITE(CurrentChannelName, usr, reason) ("KICK " + CurrentChannelName  + " " + "usr" + " " + "reason")
-# define NTC_CHANMODE_ARG(usr, channel) ("INVITE usr :channel")
+# define NTC_TOPIC(channel, topic) ("TOPIC " + channel + " :" + topic)
+# define NTC_CHANMODE(channel, mode) ("MODE " + channel + " :" + mode)
+# define NTC_KICK(channel, mode, arg) ("MODE " + channel + " " + mode + " :" + arg)
+# define NTC_INVITE(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
+# define NTC_CHANMODE_ARG(usr, channel) ("INVITE " + usr + " :" + channel)
 
 string 	ft_RPL_WELCOME(Server * srv, User * from, User * to);
 string 	ft_RPL_YOURHOST(Server * srv, User * from, User * to);

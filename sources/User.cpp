@@ -172,7 +172,7 @@ void					User::setMsg(string const & msg)
 
 void					User::setPrefix()
 {
-	this->_prefix = ":" + _nickname + "!" + _username + "@" + _hostname;
+	this->_prefix = _nickname + "!" + _username + "@" + _hostname;
 }
 
 void					User::setInvisible(bool const & inv)
