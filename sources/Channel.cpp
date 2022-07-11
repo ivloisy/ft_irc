@@ -268,6 +268,6 @@ string const 			Channel::printAllUsers()
 		result += " ";
 	}
 	result.erase(result.size());
-	cout << "MEMBERS = " << result << endl;
+	//cout << "MEMBERS = " << result << endl;
 	return (result);
 }
