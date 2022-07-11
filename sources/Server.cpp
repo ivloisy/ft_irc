@@ -563,8 +563,9 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	sendBuffer(to, ret);
 }
 
-void	Server::ft_notice_chan(User * from, Channel * to, string notice)
+void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
 {
+	(void)self;
 	string ret = ":";
 	ret += from->getPrefix();
 	ret += " ";
@@ -574,6 +575,10 @@ void	Server::ft_notice_chan(User * from, Channel * to, string notice)
 	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
 	{
 		if ((*it)->getNickName() != from->getNickName())
+		{
 			sendBuffer(*it, ret);
+		}
+
+
 	}
 }

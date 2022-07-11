@@ -51,7 +51,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 		User * dstu;
 		if ((dstc = srv.getChannelByName(params[1])))
 		{
-			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg));
+			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), false);
 		}
 		else if ((dstu = *srv.getUser(params[1])))
 		{

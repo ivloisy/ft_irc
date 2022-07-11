@@ -102,7 +102,7 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 {
 	if ((srv.searchChannel(chan.getChannelName())))
 	{
-		srv.ft_notice_chan(&usr, &chan, NTC_JOIN(chan.getChannelName()));
+		srv.ft_notice_chan(&usr, &chan, NTC_JOIN(chan.getChannelName()), false);
 	}
 	srv.ft_reply(&usr, RPL_NAMREPLY, chan.getChannelName(), chan.printAllUsers());
 	srv.ft_reply(&usr, RPL_ENDOFNAMES, chan.getChannelName());

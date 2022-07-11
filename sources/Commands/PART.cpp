@@ -50,15 +50,20 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 				if (chan->isUserHere(&usr))
 				{
 					if (msg.empty())
-						srv.ft_notice_chan(&usr, chan, NTC_PART(chan->getChannelName()));
+						srv.ft_notice_chan(&usr, chan, NTC_PART(chan->getChannelName()), true);
 					else
-						srv.ft_notice_chan(&usr, chan, NTC_PART_MSG(chan->getChannelName(), msg));
-					chan->delUser(&usr);
+						srv.ft_notice_chan(&usr, chan, NTC_PART_MSG(chan->getChannelName(), msg), true);
+					cout << "bye bye les amis" << endl;
 					usr.quitChannel(chan);
+					cout << "loulu" << endl;
+					chan->delUser(&usr);
+					cout << "lalal" << endl;
 					if (chan->getChannelUsers().empty())
 					{
+						cout << "gogo" << endl;
 						srv.deleteChannel(chan);
 					}
+					cout << "c finiiii" << endl;
 				}
 				else
 				{
