@@ -12,11 +12,11 @@ void ft_run(int port, string password)
 	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
-	int fin = 0;
+	// int fin = 0;
 
-	while (serv.getState() && fin < 30)
+	while (serv.getState())
 	{
-		fin++;
+		// fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
 
 		// list all users in the server
@@ -88,7 +88,6 @@ void ft_run(int port, string password)
 		else
 			perror("There were select failures: ");
 	}
-	// serv.closeUser(serv.getUser(4));
 	close(serv.getFdServer());
 }
 
