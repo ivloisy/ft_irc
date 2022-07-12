@@ -20,6 +20,8 @@ string		add_nick(vector<User *> & user)
 {
 	string	ret;
 
+	cout << "add begin" << endl;
+
 	for (size_t i = 0; i < user.size(); i++)
 	{
 		if (!user[i]->getInvisible())
@@ -29,6 +31,7 @@ string		add_nick(vector<User *> & user)
 				ret += ", ";
 		}
 	}
+	cout << "add end" << endl;
 	return ret;
 }
 
@@ -38,21 +41,26 @@ void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)usr;
 	// (void)params;
 	vector<User *>	user;
-	string			schan = "";
-	stringstream	ss(params[1]);
-	string			s;
 	string			ret = "\n";
+	if (!usr.getWelcome())
+		return ;
 	if (params.size() == 1)
 	{
 		user = srv.getUsers();
 		ret += srv.getServerName() + " = { ";
 		ret += add_nick(user);
 		ret += " }";
-		srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
+		srv.ft_reply(&usr, RPL_NAMREPLY, srv.getServerName(), ret);
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, srv.getServerName());
 	}
 	else if (params.size() == 2)
 	{
+		cout << "//////1" << endl;
+		stringstream	ss(params[1]);
+		string			s;
+		string			schan = "";
+		cout << "//////2" << endl;
+		int i = 0;
 		while (getline(ss, s, ','))
 		{
 			// bzero(ret, ret.length());
@@ -70,6 +78,8 @@ void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			// }
 			ret += " }";
 			srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
+			cout << "////// i = " << i << endl;
+			i++;
 		}
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, schan);
 	}
