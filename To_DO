@@ -1,25 +1,23 @@
 Antoine :
 -Notice 2h
--PRIVMSG 1h
--Oper 2h
 
 
 Ivan :
--User 2h
 -verifs params
 
 
 Benjamin:
 -List 1h
--Whois 1h
 -Tabulations dans password
 
 
 Vacant:
--Mode 2h
+-Mode + Oper 2h
 -Wallops 4h
 
 Verifier:
+-User
+-Oper
 -Join
 -Die
 -Pass
