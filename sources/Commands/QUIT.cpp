@@ -24,5 +24,6 @@ void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	// 	if ((*it)->getFdUser() == usr.getFdUser())
 	// 		srv.deleteUser(it);
 	usr.setToClose(1);
+	usr.setWelcome(0);
 	std::cout << "quit command called" << std::endl;
 }

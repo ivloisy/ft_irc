@@ -145,13 +145,14 @@ void					Server::initCommand()
 
 void 					Server::welcome(int const & fd)
 {
-	if ((*(this->getUser(fd)))->getRdySend() != 4)
+	User * usr = *this->getUser(fd);
+	if (usr->check_if_complete() == 0)
 		return;
-	(*(this->getUser(fd)))->setRdySend();
-	ft_reply(*this->getUser(fd), RPL_WELCOME, (*this->getUser(fd))->getPrefix());
-	ft_reply(*this->getUser(fd), RPL_YOURHOST, _serverName, _ver);
-	ft_reply(*this->getUser(fd), RPL_CREATED, "today");
-	ft_reply(*this->getUser(fd), RPL_MYINFO, _serverName, _ver, "io", "0o");
+	usr->setWelcome(1);
+	ft_reply(usr, RPL_WELCOME, usr->getPrefix());
+	ft_reply(usr, RPL_YOURHOST, _serverName, _ver);
+	ft_reply(usr, RPL_CREATED, "today");
+	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "io", "0o");
 }
 
 void					Server::parse_buffer_command(string const & str)

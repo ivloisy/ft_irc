@@ -34,6 +34,7 @@ namespace irc
 		bool												_isOper;
 		bool												_isInv;
 		bool												_toClose;
+		bool												_welcome;
 		int													_rdySend;
 		string 												_awayMsg;
 		string 												_msg; //stores buffer here for accessing it via reply functions
@@ -50,12 +51,14 @@ namespace irc
 		void												quitChannel(Channel * chan);
 		void												addChannel(Channel * chan);
 		bool												isMaxChannel();
+		bool												check_if_complete() const;
 
 		/********************* GETTERS ***********************/
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
 		string 												getPrefix() const;
 		string 												getHostname() const;
+		string 												getServerName() const;
 		string 												getNickName() const;
 		string 												getPassWord() const;
 		string 												getUserName() const;
@@ -85,14 +88,14 @@ namespace irc
 		void												setUserName(string const & username);
 		void												setRealName(string const & realname);
 		void												setHostName(string const & hostname);
-		void												setPassWord(string const & password);
+		void												setPassword(string const & password);
 		void 												setRdySend();
 		void 												decreaseRdySend();
 		void 												resetRdySend();
 		void 												setToClose(int const & x);
 		void												setCurrentChannel(Channel * chan);
 		void												setServerName(string const & name);
-
+		void 												setWelcome(bool value);
 
 	};
 }
