@@ -55,20 +55,20 @@ void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	}
 	else if (params.size() == 2)
 	{
-		cout << "//////1" << endl;
 		stringstream	ss(params[1]);
 		string			s;
 		string			schan = "";
-		cout << "//////2" << endl;
 		int i = 0;
 		while (getline(ss, s, ','))
 		{
 			// bzero(ret, ret.length());
 			user.clear();
 			schan += s + " ";
-			user = srv.getChannelByName(s)->getChannelUsers();
+			if (srv.getChannelByName(s))
+				user = srv.getChannelByName(s)->getChannelUsers();
 			ret += s + " = { ";
-			ret += add_nick(user);
+			cout << "add_nick = " << add_nick(user) << endl;
+			// ret += (*user.begin())->getNickName();//add_nick(user);
 			// for (int i = 0; i < user.size(); i++)
 			// {
 			// 	if (!user[i].getInvisible())
