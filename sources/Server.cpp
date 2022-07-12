@@ -238,6 +238,21 @@ void 				Server::execCommand(int const & fd)
 	}
 }
 
+bool				Server::check_command(User * u, size_t want, vector<string> command)
+{
+	if (!u->getWelcome())
+	{
+		ft_error(u, ERR_NOTREGISTERED, "");
+		return false;
+	}
+	if (command.size() < want)
+	{
+		ft_error(u, ERR_NEEDMOREPARAMS, command[0]);
+		return false;
+	}
+	return true;
+}
+
 int					Server::searchNick(string const & nick)
 {
 	vector<User *>::iterator last = this->_user.end();
@@ -359,6 +374,7 @@ vector<User *>::iterator				Server::getUser(string const & nick)
 Channel*			Server::getChannelByName(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
+	cout << "NAMMMMMME " << name << endl;
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
 			return (*it);
