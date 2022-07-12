@@ -50,25 +50,29 @@ void		names_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_reply(&usr, RPL_NAMREPLY, srv.getServerName(), ret);
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, srv.getServerName());
 	}
-	else if (params.size() == 2)
+	else if (params.size() > 1)
 	{
-		stringstream	ss(params[1]);
-		string			s;
 		string			schan = "";
-		int i = 0;
-		while (getline(ss, s, ','))
+		for (size_t i = 1; i < params.size(); i++)
 		{
-			users.clear();
-			schan += s + " ";
-			Channel * test = srv.getChannelByName(s);
-			if (test != NULL)
-				users = test->getChannelUsers();
-			ret += s + " = { ";
-			ret += add_nick(users);
-			ret += " }";
-			srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
-			cout << "////// i = " << i << endl;
-			i++;
+			stringstream	ss(params[i]);
+			string			s;
+			while (getline(ss, s, ','))
+			{
+				users.clear();
+				schan += s + " ";
+				Channel * test = srv.getChannelByName(s);
+				if (test != NULL)
+				{
+					users = test->getChannelUsers();
+					ret += s + " = { ";
+					ret += add_nick(users);
+					ret += " }\n";
+					srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
+				}
+				else
+					srv.ft_error(&usr, ERR_NOSUCHCHANNEL, s);
+			}
 		}
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, schan);
 	}
