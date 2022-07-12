@@ -77,7 +77,6 @@ void					 Server::establishConnection(void)
 	if (this->_fd < 0)
 	{
 		cout << "Error establishing connection..." << endl;
-		//=======================exit(1); //////////////////////////
 		return ;
 	}
 	cout << "Server Socket connection created..." << endl;
@@ -117,6 +116,7 @@ int						Server::bindServer()
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
 		cout << "Error binding socket..." << endl;
+		setState(0);
 		return (0);
 	}
 	return (1);

@@ -1,22 +1,20 @@
 Antoine :
--Notice 2h
-
 
 Ivan :
 -verifs params
 
-
 Benjamin:
--List 1h
+-Ctrl+D
 -Tabulations dans password
-
 
 Vacant:
 -Mode + Oper 2h
 -Wallops 4h
 
 Verifier:
+-Notice
 -User
+-List
 -Oper
 -Join
 -Die
@@ -26,8 +24,5 @@ Verifier:
 -NICK
 -Names
 -Part
-
-
-supprimer :
 -CAP
 -Quit
