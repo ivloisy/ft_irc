@@ -270,9 +270,11 @@ void				Server::deleteChannel(Channel * chan)
 {
 	for (vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)
 	{
-		if (*it == chan)
+		if ((*it)->getChannelName() == chan->getChannelName())
 		{
+			delete *it;
 			this->_channel.erase(it);
+			return ;
 		}
 	}
 }
@@ -332,6 +334,16 @@ vector<User *>::iterator				Server::getUser(int const & fd)
 	while (it != _user.end() && (*it)->getFdUser() != fd)
 		it++;
 	return (it);
+}
+
+User*									Server::getUserInstance(string const & nick)
+{
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		if ((*it)->getNickName() == nick)
+			return (*it);
+	}
+	return (NULL);
 }
 
 vector<User *>::iterator				Server::getUser(string const & nick)
@@ -563,7 +575,5 @@ void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
 		{
 			sendBuffer(*it, ret);
 		}
-
-
 	}
 }

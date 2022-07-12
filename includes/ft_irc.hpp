@@ -51,5 +51,6 @@ void	user_cmd(Server & srv, User & usr, vector<string> params);
 void	wallops_cmd(Server & srv, User & usr, vector<string> params);
 void	whois_cmd(Server & srv, User & usr, vector<string> params);
 
+string	isDouble(vector<string> str);
 
 #endif

@@ -85,7 +85,7 @@ using namespace std;
 # define NTC_MODE(nickname, modestring) ("MODE " + nickname + " " + modestring)
 # define NTC_JOIN(channel)  ("JOIN :" + channel)
 # define NTC_PART(channel) ("PART :" + channel)
-# define NTC_PART_MSG(channel, msg) ("PART " + channel+ " :" + msg)
+# define NTC_PART_MSG(channel, msg) ("PART " + channel + " :\"" + msg +"\"")
 # define NTC_PRIVMSG(nickname, msg) ("PRIVMSG " + nickname + " " + msg)
 # define NTC_NOTICE(nickname, msg) ("NOTICE " + nickname + " " + msg)
 # define NTC_QUIT(msg) (" QUIT :Quit: " + Msg)

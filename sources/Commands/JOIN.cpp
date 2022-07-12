@@ -56,7 +56,8 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 	existing.addUser(&usr);
 	//existing.addUserMode(&usr, dflt);
 	usr.addChannel(&existing);
-	usr.setCurrentChannel(&existing);
+	srv.ft_notice_chan(&usr, &existing, NTC_JOIN(existing.getChannelName()), true);
+	//usr.setCurrentChannel(&existing);
 }
 
 Channel*	user_create_channel(Server &srv, User &usr, string &name)
@@ -77,7 +78,7 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	//new_chan->addOper(&usr);
 	//new_chan->addUserMode(&usr, creator);
 	usr.addChannel(new_chan);
-	usr.setCurrentChannel(new_chan);
+	//usr.setCurrentChannel(new_chan);
 	//got channel operator mode
 	return (new_chan);
 }
@@ -100,10 +101,6 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 
 void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 {
-	if ((srv.searchChannel(chan.getChannelName())))
-	{
-		srv.ft_notice_chan(&usr, &chan, NTC_JOIN(chan.getChannelName()), false);
-	}
 	srv.ft_reply(&usr, RPL_NAMREPLY, chan.getChannelName(), chan.printAllUsers());
 	srv.ft_reply(&usr, RPL_ENDOFNAMES, chan.getChannelName());
 }
@@ -150,8 +147,8 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 				else
 				{
 					Channel * new_chan = user_create_channel(srv, usr, params[1]);
-					if (new_chan)
-						reply_channel_joined(srv, usr, *new_chan);
+					srv.ft_notice(&usr, &usr, NTC_JOIN(new_chan->getChannelName()));
+					reply_channel_joined(srv, usr, *new_chan);
 				}
 				x++;
 			}

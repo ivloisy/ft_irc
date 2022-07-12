@@ -80,6 +80,7 @@ namespace irc
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
 		vector<User *>									getUsers() const;
+		User*											getUserInstance(string const & nick);
 		vector<User *>::iterator						getUser(int const & fd);
 		vector<User *>::iterator						getUser(string const & nick);
 		Channel*										getChannelByName(string const & name);

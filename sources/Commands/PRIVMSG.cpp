@@ -22,17 +22,25 @@ using namespace std;
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
-	//cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr.getFdUser() << endl;
-	(void)usr;
-	//if paramisize ERR_NOTEXTTOSEND
 	if (params.size() < 2)
 	{
-		//ERR_NORECIPIENT
-		//srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
 		return ;
 	}
 	else
 	{
+		if (params[1].size() < 1)
+		{
+			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
+			return ;
+		}
+		vector<string> names;
+		stringstream ss(params[1]);
+		string str;
+		while (getline(ss, str,','))
+		{
+			names.push_back(str);
+		}
 		// convert vector into params
 		string msg;
 		vector<string>::iterator last = params.end();
@@ -44,22 +52,49 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 			msg.push_back(' ');
 		}
 
-		//loop in many users, channels in params
-		//find dupricates ERR_TOOMANYTARGETS
 		//what happen if user,,user
-		Channel * dstc;
-		User * dstu;
-		if ((dstc = srv.getChannelByName(params[1])))
+		string ret;
+		if ((ret = isDouble(names)) != "")
 		{
-			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), false);
+			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);
 		}
-		else if ((dstu = *srv.getUser(params[1])))
+		for (vector<string>::iterator memb = names.begin(); memb != names.end(); memb++)
 		{
-			srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
-		}
-		else
-		{
-			//srv.ft_error(&usr, ERR_NORECIPIENT, )
+			if ((*memb).size() < 1 || !srv.getUserInstance(*memb))
+			{
+				srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+				return ;
+			}
+			Channel * dstc;
+			User * dstu;
+			if (params[1][0] == '#')
+			{
+				if ((dstc = srv.getChannelByName(*memb)))
+				{
+					if (dstc->getUser(usr.getNickName()))
+						srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), true);
+					else
+					{
+						srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+						return ;
+					}
+				}
+				else
+				{
+					srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, *memb);
+					return ;
+				}
+
+			}
+			else if ((dstu = *srv.getUser(*memb)))
+			{
+				srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
+			}
+			else
+			{
+				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+				return ;
+			}
 		}
 	}
 	//cout << "privmsg command called" << endl;
