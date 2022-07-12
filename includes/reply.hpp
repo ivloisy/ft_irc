@@ -105,6 +105,6 @@ string ft_RPL_MYINFO(string arg1, string arg2, string arg3, string arg4, string 
 string ft_RPL_NAMREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_ENDOFNAMES(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_WHOREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
-// string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

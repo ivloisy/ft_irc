@@ -46,7 +46,7 @@ Command: WHOIS
 //									 <u.nickname> <H|G>[*][@|+] :<hopcount> <u.realname>
 
 
-void	who_user(Server & srv, User & usr, vector<string> params)
+void	who_user(Server & srv, User & usr, vector<string> params, bool wild)
 {
 	(void)usr;
 	if (params.size() == 1 || (params.size() == 2 && params[1][0] == '#'))
@@ -56,86 +56,53 @@ void	who_user(Server & srv, User & usr, vector<string> params)
 			if ( (*it)->getNickName() == params[0] || (*it)->getHostname() == params[0] || (*it)->getServerName() == params[0] || (*it)->getRealName() == params[0] )
 				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
 	}
-	// if (wild == true)
-	// 	ft_reply(usr, 315, "*");
-	// else
-	// 	ft_reply(usr, 315, params[0]);
+	if (wild == true)
+		srv.ft_reply(&usr, "315", "*");
+	else
+		srv.ft_reply(&usr, "315", params[0]);
 }
-//
-// void	who_channel(Server & srv, User & usr, vector<string> params)
-// {
-//
-// }
+
+void	who_chan(Server & srv, User & usr, vector<string> params, bool wild)
+{
+	// Channel *chan = srv.getChannelByName(params[1]);
+	if (usr.getChannelByName(params[1]))
+	{
+		if (params.size() == 1 || (params.size() == 2 && params[1][0] == '#'))
+		{
+			vector<User *> users = srv.getUsers();
+			for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
+				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
+
+		}
+	}
+	srv.ft_reply(&usr, "315",(wild == true ? "*" : params[0]));
+	// if (wild == true)
+	// 	srv.ft_reply(&usr, "315", "*");
+	// else
+	// 	srv.ft_reply(&usr, "315", params[0]);
+}
+
+void				who_wildcard(Server &srv, User &usr, vector<string> params)
+{
+	if (usr.getCurrentChannel() != NULL)
+	{
+		params[0] = usr.getCurrentChannelName();
+		who_chan(srv, usr, params, true);
+	}
+	else
+	{
+		params[0] = usr.getNickName();
+		who_user(srv, usr, params, true);
+	}
+}
 
 void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
-	(void)srv;
-	// (void)usr;
-	// (void)params;
-	if (params.size() == 1)
-	{
-		// srv.sending(usr.getFdUser(), ft_reply(/*usr.getPrefix(), */srv.getServerName(), ERR_NONICKNAMEGIVEN, usr.getNickName(), ":No nickname given"));
-		return ;
-	}
-	//check if target_user exist
-
-	// if (params[0][0] == '#')
-	// 	who_chan(); // chan
-	// else if (params[0] == "*")
-	// 	who_wildcard();
+	if (params[0][0] == '#')
+		who_chan(srv, usr, params, false); // chan
+	else if (params[0] == "*")
+		who_wildcard(srv, usr, params);
 	else
-		who_user(srv, usr, params);
-	// srv.ft_reply(NULL, &usr, RPL_WHOISUSER);
-	//std::cout << "whois command called" << std::endl;
+		who_user(srv, usr, params, false);
+	std::cout << "whois command called" << std::endl;
 }
-
-// int				who_channel( const vector<string> args, User &usr, Server &srv, bool wild ) {
-//
-// 	ostringstream	s;
-//
-// 	vector<Channel*>	chans = srv.getChannels();
-// 	Channel				*c = NULL;
-//
-// 	for (vector<Channel*>::iterator it = chans.begin(); it != chans.end(); it++)
-// 		if ((*it)->getName() == args[0])
-// 		{
-// 			c = *it;
-// 			break;
-// 		}
-//
-// 	// Works only if is only <channel> or <channel> + <channel2> (<channel2> is ignored)
-// 	if ( (args.size() == 1 || (args.size() == 2 && args[1][0] == '#')) && c
-// 		&& usr.isRegisteredToChan(*c) )
-// 	{
-// 		vector<User*>	users = c->getMembers();
-//
-// 		for ( vector<User*>::iterator it = users.begin(); it != users.end(); ++it )
-// 		{
-// 			User u = *(*it);
-// 			send_reply(usr, 352, RPL_WHOREPLY((u.getCurrChan() ? u.getCurrChan()->getName() : "*"),
-// 				u.getUsername(), u.getHostname(), u.getServername(), u.getNick(),
-// 				(u.isIRCOper() ? "*" : ""), (u.isChanOper() ? "@" : ""), u.getRealName()));
-// 		}
-// 	}
-//
-// 	send_reply(usr, 315, RPL_ENDOFWHO(wild == true ? "*" : args[0]));
-// 	return 1;
-// }
-//
-// int				who_wildcard( vector<string> args, User &usr, Server &srv)
-// {
-// 	Channel		*chan = usr.getCurrChan();
-//
-// 	if (chan != NULL)
-// 	{
-// 		args[0] = chan->getName();
-// 		who_channel(args, usr, srv, true);
-// 	}
-// 	else
-// 	{
-// 		args[0] = usr.getNick();
-// 		who_user(args, usr, srv, true);
-// 	}
-//
-// 	return 1;
-// }

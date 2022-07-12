@@ -135,13 +135,13 @@ vector<Channel *>		User::getChannel() const
 	return (this->_channel);
 }
 
-Channel*				User::getChannelByName(string name)
+bool					User::getChannelByName(string name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
-			return (*it);
-	return (NULL);
+			return (1);
+	return (0);
 }
 
 string 					User::getCurrentChannelName()

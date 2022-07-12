@@ -441,7 +441,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_CREATED] = ft_RPL_CREATED;
 	map_rep[RPL_MYINFO] = ft_RPL_MYINFO;
 	map_rep[RPL_WHOISUSER] = ft_RPL_WHOISUSER;
-	// map_rep[RPL_ENDOFWHOIS] = ft_RPL_ENDOFWHOIS;
+	map_rep[RPL_ENDOFWHOIS] = ft_RPL_ENDOFWHOIS;
 	map_rep[RPL_NAMREPLY] = ft_RPL_NAMREPLY;
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 }

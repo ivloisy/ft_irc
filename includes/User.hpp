@@ -64,7 +64,7 @@ namespace irc
 		string 												getUserName() const;
 		string												getRealName() const;
 		vector<Channel *>									getChannel() const;
-		Channel												*getChannelByName(string name);
+		bool												getChannelByName(string name);
 		bool												getAcceptConnect() const;
 		bool												getOper() const;
 		int 												getRdySend() const;
