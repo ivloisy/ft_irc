@@ -29,7 +29,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 	}
 	else
 	{
-		if (params[1].size() < 1)
+		if (params[2].size() < 1 || params.size() < 3)
 		{
 			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
 			return ;
@@ -54,15 +54,21 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 
 		//what happen if user,,user
 		string ret;
-		if ((ret = isDouble(names)) != "")
+		if (((ret = isDouble(names)) != "") && names.size() > 2)
 		{
 			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);
+			return ;
 		}
 		for (vector<string>::iterator memb = names.begin(); memb != names.end(); memb++)
 		{
-			if ((*memb).size() < 1 || !srv.getUserInstance(*memb))
+			if ((*memb).size() < 1)
 			{
-				srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+				srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+				return ;
+			}
+			if (!srv.isUserReal(*memb) || !srv.isChanReal(*memb))
+			{
+				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
 				return ;
 			}
 			Channel * dstc;
@@ -75,13 +81,13 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 						srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), true);
 					else
 					{
-						srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+						srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
 						return ;
 					}
 				}
 				else
 				{
-					srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, *memb);
+					srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *memb);
 					return ;
 				}
 

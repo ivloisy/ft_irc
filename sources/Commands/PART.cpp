@@ -21,7 +21,7 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 {
 	if (params.size() < 2)
 	{
-		srv.ft_reply(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
 	}
 	else
 	{
@@ -63,19 +63,17 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 					{
 						srv.deleteChannel(chan);
 					}
-
 				}
 				else
 				{
-					srv.ft_reply(&usr, ERR_NOTONCHANNEL, chan->getChannelName());
+					srv.ft_error(&usr, ERR_NOTONCHANNEL, chan->getChannelName());
 				}
 			}
 			else
 			{
-				srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, *it); //ERR NO SUCH CHANNEL
+				srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *it); //ERR NO SUCH CHANNEL
 			}
 		}
-
 	}
 	std::cout << "part command end" << std::endl;
 }

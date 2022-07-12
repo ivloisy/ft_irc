@@ -20,9 +20,14 @@ using namespace std;
 
 void		list_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
-	(void)usr;
-	(void)params;
-
+	if (params.size() == 1)
+	{
+		vector<Channel *> chans = srv.getChannels();
+		for (vector<Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
+		{
+			srv.ft_reply(&usr, RPL_LIST, (*it)->getChannelName(), "1", "no topic");
+		}
+		srv.ft_reply(&usr, RPL_LISTEND);
+	}
 	//std::cout << "list command called " << std::endl;
 }
