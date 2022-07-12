@@ -15,7 +15,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="885fb3cc-9bad-4a89-89bf-a4b89130b7dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ConnexionFile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/To_DO" beforeDir="false" afterPath="$PROJECT_DIR$/To_DO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/Server.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +79,7 @@
       <option name="presentableId" value="Default" />
       <updated>1657552614082</updated>
       <workItem from="1657552615716" duration="18596000" />
-      <workItem from="1657632780842" duration="13945000" />
+      <workItem from="1657632780842" duration="14735000" />
     </task>
     <servers />
   </component>

@@ -27,6 +27,6 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			return;
 		}
 	}
-	string buf = "ERROR: Closing link: (ben@127.0.0.1) [wrong password]";
-	srv.sending(usr.getFdUser(), buf);
+	usr.setToClose(1);
+	srv.ft_error(&usr, "464", params[1]);
 }
