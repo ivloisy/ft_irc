@@ -16,17 +16,72 @@ using namespace std;
  * parameters: [ <channel> *( "," <channel> ) [ <target> ] ]
  */
 
+string		add_nick(vector<User *> & user)
+{
+	string	ret;
+
+	cout << "add begin" << endl;
+
+	for (size_t i = 0; i < user.size(); i++)
+	{
+		if (!user[i]->getInvisible())
+		{
+			ret += user[i]->getNickName();
+			if (i + 1 != user.size())
+				ret += ", ";
+		}
+	}
+	cout << "add end" << endl;
+	return ret;
+}
+
 void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
+	// (void)srv;
 	(void)usr;
-	(void)params;
-	// vector<User *>	vec;
-	// if (params.size() == 1)
-	// 	vec = srv.getUsers();
-	// else
-	// {
-	//
-	// }
-	//std::cout << "names command called" << std::endl;
+	// (void)params;
+	vector<User *>	user;
+	string			ret = "\n";
+	if (!usr.getWelcome())
+		return ;
+	if (params.size() == 1)
+	{
+		user = srv.getUsers();
+		ret += srv.getServerName() + " = { ";
+		ret += add_nick(user);
+		ret += " }";
+		srv.ft_reply(&usr, RPL_NAMREPLY, srv.getServerName(), ret);
+		srv.ft_reply(&usr, RPL_ENDOFNAMES, srv.getServerName());
+	}
+	else if (params.size() == 2)
+	{
+		cout << "//////1" << endl;
+		stringstream	ss(params[1]);
+		string			s;
+		string			schan = "";
+		cout << "//////2" << endl;
+		int i = 0;
+		while (getline(ss, s, ','))
+		{
+			// bzero(ret, ret.length());
+			user.clear();
+			schan += s + " ";
+			user = srv.getChannelByName(s)->getChannelUsers();
+			ret += s + " = { ";
+			ret += add_nick(user);
+			// for (int i = 0; i < user.size(); i++)
+			// {
+			// 	if (!user[i].getInvisible())
+			// 		ret += user[i].getNickName();
+			// 		if (i != user.size() - 1)
+			// 			ret += ", ";
+			// }
+			ret += " }";
+			srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
+			cout << "////// i = " << i << endl;
+			i++;
+		}
+		srv.ft_reply(&usr, RPL_ENDOFNAMES, schan);
+	}
+	std::cout << "names command called" << std::endl;
 }

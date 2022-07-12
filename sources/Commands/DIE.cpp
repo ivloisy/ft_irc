@@ -11,8 +11,8 @@ using namespace std;
 
 void	die_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)usr;
 	(void)params;
-	srv.setState(0);
+	if (params.size() == 1 && usr.getWelcome())
+		srv.setState(0);
 	//std::cout << "die command called" << std::endl;
 }

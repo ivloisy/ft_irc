@@ -444,6 +444,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_ENDOFWHOIS] = ft_RPL_ENDOFWHOIS;
 	map_rep[RPL_NAMREPLY] = ft_RPL_NAMREPLY;
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
+	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 }
 
 void	Server::initErrorTree()

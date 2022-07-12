@@ -19,14 +19,14 @@ using namespace std;
 void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	cout << params[1] << " : " << srv.getPassword() << endl;
-	if (usr.getRdySend() != 1)
-		if (params.size() != 2 )
-			if (params[1] != srv.getPassword())
-			{
-				usr.setToClose(1);
-				string buf = "ERROR: Closing link: (ben@127.0.0.1) [wrong password]";
-				srv.sending(usr.getFdUser(), buf);
-			}
-	usr.setPassword(params[1]);
-	usr.setRdySend();
+	if (params.size() == 2 )
+	{
+		if (params[1] == srv.getPassword())
+		{
+			usr.setPassword(params[1]);
+			return;
+		}
+	}
+	string buf = "ERROR: Closing link: (ben@127.0.0.1) [wrong password]";
+	srv.sending(usr.getFdUser(), buf);
 }

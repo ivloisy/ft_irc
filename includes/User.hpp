@@ -74,6 +74,7 @@ namespace irc
 		string 												getCurrentChannelName();
 		bool 												getToClose();
 		string 												getMsg() const;
+		bool 												getWelcome() const;
 		//string											getAwayMsg();
 
 		/********************** SETTERS ***********************/
