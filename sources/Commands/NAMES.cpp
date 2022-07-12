@@ -32,14 +32,14 @@ string		add_nick(vector<User *> & users)
 	return ret;
 }
 
-void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
+void		names_cmd(Server & srv, User & usr, vector<string> params)
 {
 	(void)usr;
 
 	vector<User *>	users;
 	string			ret = "\n";
 
-	if (!usr.getWelcome())
+	if (!srv.check_command(&usr, 1, params))
 		return ;
 	if (params.size() == 1)
 	{

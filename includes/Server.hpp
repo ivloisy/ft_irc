@@ -61,6 +61,7 @@ namespace irc
 		void 											welcome(int const & fd);
 		void											parse_buffer_command(string const &  buffer);
 		void 											execCommand(int const & fd);
+		bool											check_command(User * u, size_t want, vector<string> command);
 		int												searchNick(string const & nick);
 		void											sendToChan(string const & name, string const & msg);
 		void											sendToUser(string const & name, string const & msg);
