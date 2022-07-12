@@ -27,6 +27,6 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			return;
 		}
 	}
-	usr.setToClose(1);
+	//usr.setToClose(1);
 	srv.ft_error(&usr, "464", params[1]);
 }

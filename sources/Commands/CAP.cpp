@@ -11,8 +11,6 @@ using namespace std;
 
 /********************* USER COMMAND **********************/
 
-
-
 //void	Command::cap_cmd(std::string &buf, std::list<User>::iterator it_user, Server & serv)
 //{
 //	std::cout << "cap command called" << std::endl;

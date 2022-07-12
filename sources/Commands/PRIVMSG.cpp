@@ -66,17 +66,17 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 				srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
 				return ;
 			}
-			if (!srv.isUserReal(*memb) || !srv.isChanReal(*memb))
-			{
-				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
-				return ;
-			}
 			Channel * dstc;
 			User * dstu;
 			if (params[1][0] == '#')
 			{
 				if ((dstc = srv.getChannelByName(*memb)))
 				{
+					if (!srv.isChanReal(*memb))
+					{
+						srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+						return ;
+					}
 					if (dstc->getUser(usr.getNickName()))
 						srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), true);
 					else
@@ -94,6 +94,11 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 			}
 			else if ((dstu = *srv.getUser(*memb)))
 			{
+				if (!srv.isUserReal(*memb))
+				{
+					srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+					return ;
+				}
 				srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
 			}
 			else
