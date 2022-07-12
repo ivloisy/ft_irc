@@ -25,6 +25,7 @@ User::User(int fd) :
 		_acceptConnect(1),
 		_isOper(0),
 		_toClose(0),
+		_welcome(0),
 		_rdySend(0)
 {
 	this->setPrefix();
@@ -77,6 +78,15 @@ bool					User::isMaxChannel()
 	return (nb >= _maxChan);
 }
 
+bool					User::check_if_complete() const
+{
+	cout << this->_nickname << " " << this->_password << " " << this->_username << endl;
+	if (this->_nickname.size() > 0 && this->_password.size() > 0 && this->_username.size() > 0 && this->_welcome != 1)
+		return (1);
+	return (0);
+}
+
+
 /********************* GETTERS ***********************/
 
 int 					User::getFdUser(void) const
@@ -93,6 +103,12 @@ string 					User::getHostname() const
 {
 	return (this->_hostname);
 }
+
+string 					User::getServerName() const
+{
+	return (this->_serverName);
+}
+
 
 string 					User::getNickName() const
 {
@@ -230,7 +246,7 @@ void					User::setHostName(string const & hostname)
 	this->_hostname = hostname;
 }
 
-void					User::setPassWord(string const & password)
+void					User::setPassword(string const & password)
 {
 	this->_password = password;
 }
@@ -266,4 +282,9 @@ void					User::setCurrentChannel(Channel * chan)
 void					User::setServerName(string const & name)
 {
 	this->_serverName = name;
+}
+
+void 					User::setWelcome(bool value)
+{
+	this->_welcome = value;
 }

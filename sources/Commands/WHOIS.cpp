@@ -1,6 +1,7 @@
 #include "../../includes/User.hpp"
 #include "../../includes/Server.hpp"
 #include <list>
+# include "../../includes/reply.hpp"
 #include "../../includes/ft_irc.hpp"
 
 using namespace irc;
@@ -51,9 +52,9 @@ void	who_user(Server & srv, User & usr, vector<string> params)
 	if (params.size() == 1 || (params.size() == 2 && params[1][0] == '#'))
 	{
 		vector<User *> users = srv.getUsers();
-		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++);
-			// if ( ((*it)->getNickname() == params[0] || (*it)->getHostname() == params[0] || (*it)->getServername() == params[0] || (*it)->getRealName() == params[0] ))
-			// 	ft_reply(usr, 352, (*it)->getCurrChan(), (*it)->getUsername(), (*it)->getHostname(), (*it)->getServername(), (*it)->getNickname(), (*it)->getRealname());
+		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
+			if ( (*it)->getNickName() == params[0] || (*it)->getHostname() == params[0] || (*it)->getServerName() == params[0] || (*it)->getRealName() == params[0] )
+				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
 	}
 	// if (wild == true)
 	// 	ft_reply(usr, 315, "*");
