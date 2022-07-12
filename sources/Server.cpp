@@ -209,8 +209,6 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("PING");
 	test.push_back("PRIVMSG");
 	test.push_back("QUIT");
-	test.push_back("RESTART");
-	test.push_back("SQUIT");
 	test.push_back("USER");
 	test.push_back("WALLOPS");
 
@@ -265,6 +263,19 @@ Channel*			Server::addChannel(string const & name)
 {
 	this->_channel.push_back(new Channel(name));
 	return *(this->_channel.end() - 1);
+}
+
+void				Server::deleteChannel(Channel * chan)
+{
+	for (vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)
+	{
+		if ((*it)->getChannelName() == chan->getChannelName())
+		{
+			delete *it;
+			this->_channel.erase(it);
+			return ;
+		}
+	}
 }
 
 Channel*			Server::searchChannel(string const & name)
@@ -322,6 +333,16 @@ vector<User *>::iterator				Server::getUser(int const & fd)
 	while (it != _user.end() && (*it)->getFdUser() != fd)
 		it++;
 	return (it);
+}
+
+User*									Server::getUserInstance(string const & nick)
+{
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		if ((*it)->getNickName() == nick)
+			return (*it);
+	}
+	return (NULL);
 }
 
 vector<User *>::iterator				Server::getUser(string const & nick)
@@ -538,8 +559,9 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	sendBuffer(to, ret);
 }
 
-void	Server::ft_notice_chan(User * from, Channel * to, string notice)
+void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
 {
+	(void)self;
 	string ret = ":";
 	ret += from->getPrefix();
 	ret += " ";
@@ -549,6 +571,8 @@ void	Server::ft_notice_chan(User * from, Channel * to, string notice)
 	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
 	{
 		if ((*it)->getNickName() != from->getNickName())
+		{
 			sendBuffer(*it, ret);
+		}
 	}
 }

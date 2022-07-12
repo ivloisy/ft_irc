@@ -12,20 +12,35 @@ using namespace std;
 /*
  * PRIVMSG
  * <msgtarget> <text to be sent>
+ *
+           ERR_NORECIPIENT                 ERR_NOTEXTTOSEND
+           ERR_CANNOTSENDTOCHAN            ERR_NOTOPLEVEL
+           ERR_WILDTOPLEVEL                ERR_TOOMANYTARGETS
+           ERR_NOSUCHNICK
+           RPL_AWAY
  */
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
-	//cout << "PRIVMSG COMMAND LAUNCHED\n" << "MESSAGE FROM USER FD = " << usr.getFdUser() << endl;
-	(void)usr;
 	if (params.size() < 2)
 	{
-		//ERR wrong number arguments
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
 		return ;
 	}
 	else
 	{
+		if (params[1].size() < 1)
+		{
+			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
+			return ;
+		}
+		vector<string> names;
+		stringstream ss(params[1]);
+		string str;
+		while (getline(ss, str,','))
+		{
+			names.push_back(str);
+		}
 		// convert vector into params
 		string msg;
 		vector<string>::iterator last = params.end();
@@ -37,26 +52,49 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 			msg.push_back(' ');
 		}
 
-		//loop in many users in params
-		Channel * dstc;
-		User * dstu;
-		if ((dstc = srv.getChannelByName(params[1])))
+		//what happen if user,,user
+		string ret;
+		if ((ret = isDouble(names)) != "")
 		{
-			//cout << "SEND TO CHAN = " << msg << "\n";
-			//srv.sendToChan(params[1], msg);
-			cout << "sending channel message " << endl;
-			srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg));
+			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);
 		}
-		else if ((dstu = *srv.getUser(params[1])))
+		for (vector<string>::iterator memb = names.begin(); memb != names.end(); memb++)
 		{
-			//cout << "SEND TO USER = " << msg << "\n";
-			//srv.sendToUser(params[1], msg);
-			cout << "sending private message " << endl;
-			srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
-		}
-		else
-		{
-			//srv.ft_error(&usr, ERR_NORECIPIENT, )
+			if ((*memb).size() < 1 || !srv.getUserInstance(*memb))
+			{
+				srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+				return ;
+			}
+			Channel * dstc;
+			User * dstu;
+			if (params[1][0] == '#')
+			{
+				if ((dstc = srv.getChannelByName(*memb)))
+				{
+					if (dstc->getUser(usr.getNickName()))
+						srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), true);
+					else
+					{
+						srv.ft_reply(&usr, ERR_NORECIPIENT, params[0]);
+						return ;
+					}
+				}
+				else
+				{
+					srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, *memb);
+					return ;
+				}
+
+			}
+			else if ((dstu = *srv.getUser(*memb)))
+			{
+				srv.ft_notice(&usr, dstu, NTC_PRIVMSG(dstu->getNickName(), msg));
+			}
+			else
+			{
+				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+				return ;
+			}
 		}
 	}
 	//cout << "privmsg command called" << endl;

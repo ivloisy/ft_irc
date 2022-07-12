@@ -31,6 +31,8 @@ using namespace irc;
  //string ft_RPL_CHANNELMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (usr->getChannelName() + " +" + usr->getMode()); }
  string ft_RPL_NAMREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + " :" + arg2); } //arg1 = target, arg2 = list
  string ft_RPL_ENDOFNAMES(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + " :End of /NAMES list"); } //arg2 = target
+ string ft_RPL_NOTONCHANNEL(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + ":You're not on that channel"); }
+ string ft_RPL_NOSUCHCHANNEL(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + ": No such channel"); }
  //string RPL_BANLIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (channel + " " + banip); }
  //string RPL_ENDOFBANLIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (channel + " :End of channel ban list"); }
  //string RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { return (":You are now an IRC operator"); }

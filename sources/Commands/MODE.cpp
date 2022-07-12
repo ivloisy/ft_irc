@@ -17,26 +17,26 @@ using namespace std;
  * parameters <nickname> *( ( "+" / "-" ) *( "i" / "w" / "o" / "O" / "r" ) )
  *
 USER MODES :						ADD IF WE HAVE TIME
-	- a : away
+	//- a : away
 	- i : invisible
-	- w : wallops
-	- r : restricted
+	//- w : wallops
+	//- r : restricted
 	- o : operator
 
 CHANNEL MODES :
 for users :
     - O : channel creator
-    - o : channel operator				i : invited
-    - v : voice							b : banned
+    //- o : channel operator			//i : invited
+    //- v : voice						b : banned
 for channels :
-    - i : invite only
-    - m : moderated
-    - n : outside privmsg
+    //- i : invite only
+    //- m : moderated
+    //- n : outside privmsg
 disabled
-    - p : private
-    - t : topic locked
-    - k : key locked
-    - l : user limit
+    //- p : private
+    //- t : topic locked
+    //- k : key locked
+    //- l : user limit
  */
 
 
