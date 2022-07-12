@@ -17,7 +17,8 @@ Channel::Channel(string name) :
 	_ban(),
 	_inviteOnlyMode(0),
 	_key(),
-	_name(name)
+	_name(name),
+	_topic("no topic defined")
 {
 
 	return ;
@@ -132,6 +133,11 @@ bitset<3>				Channel::getUserMode(User * user)
 	return (0);
 }
 
+string					Channel::getTopic() const
+{
+	return this->_topic;
+}
+
 /******************* CHECKERS ****************************/
 
 bool 					Channel::isMaxUsers()
@@ -191,6 +197,11 @@ void					Channel::setMode(bitset<2> const & mode)
 void					Channel::setKey(string const & key)
 {
 	this->_key = key;
+}
+
+void					Channel::setTopic(string const & topic)
+{
+	this->_topic = topic;
 }
 
 /******************** FUNCTIONS **************************/

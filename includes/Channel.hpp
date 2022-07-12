@@ -25,6 +25,7 @@ namespace irc
 		bool					_inviteOnlyMode;
 		string 					_key;
 		string 					_name; //begining with &#+| 50 char max and case insensitive, no spaces, no ^G, no coma, : is used for channel mask
+		string					_topic;
 		//channel modes, the modes affect the way servers manage the channels
 		//privilegied members (operators?)
 
@@ -46,6 +47,7 @@ namespace irc
 		string 					getKey() const;
 		string 					getChannelName() const;
 		bool					getInviteOnlyMode() const;
+		string					getTopic() const;
 
 		bool 					isMaxUsers();
 		bool					isUserHere(User const * usr);
@@ -55,6 +57,7 @@ namespace irc
 		void					setMode(bitset<2> const & mode);
 		void					setKey(string const & key);
 		void					setChannelName(string const & name);
+		void					setTopic(string const & topic);
 
 		void					addUserMode(User * user, bitset<3> const & mode);
 		void					addUser(User * user);

@@ -24,6 +24,7 @@ SRCS = 	main.cpp \
 		sources/Commands/PASS.cpp \
 		sources/Commands/PRIVMSG.cpp \
 		sources/Commands/QUIT.cpp \
+		sources/Commands/TOPIC.cpp \
 		sources/Commands/WALLOPS.cpp \
 		sources/Commands/WHOIS.cpp
 

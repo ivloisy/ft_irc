@@ -139,6 +139,7 @@ void					Server::initCommand()
 	map_cmd["PRIVMSG"] 	=	privmsg_cmd;
 	map_cmd["QUIT"] 	=	quit_cmd;
 	map_cmd["USER"] 	= 	user_cmd;
+	map_cmd["TOPIC"] 	= 	topic_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
 	map_cmd["WHOIS"] 	= 	whois_cmd;
 }
@@ -223,6 +224,7 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("PRIVMSG");
 	test.push_back("QUIT");
 	test.push_back("USER");
+	test.push_back("TOPIC");
 	test.push_back("WALLOPS");
 
 	for (size_t x = 0; x < this->_param.size(); x++)
@@ -511,6 +513,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 	map_rep[RPL_LIST] = ft_RPL_LIST;
 	map_rep[RPL_LISTEND] = ft_RPL_LISTEND;
+	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
 }
 
 void	Server::initErrorTree()
