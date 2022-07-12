@@ -16,39 +16,36 @@ using namespace std;
  * parameters: [ <channel> *( "," <channel> ) [ <target> ] ]
  */
 
-string		add_nick(vector<User *> & user)
+string		add_nick(vector<User *> & users)
 {
 	string	ret;
 
-	cout << "add begin" << endl;
-
-	for (size_t i = 0; i < user.size(); i++)
+	for (size_t i = 0; i < users.size(); i++)
 	{
-		if (!user[i]->getInvisible())
+		if (!users[i]->getInvisible())
 		{
-			ret += user[i]->getNickName();
-			if (i + 1 != user.size())
+			ret += users[i]->getNickName();
+			if (i + 1 != users.size())
 				ret += ", ";
 		}
 	}
-	cout << "add end" << endl;
 	return ret;
 }
 
 void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	// (void)srv;
 	(void)usr;
-	// (void)params;
-	vector<User *>	user;
+
+	vector<User *>	users;
 	string			ret = "\n";
+
 	if (!usr.getWelcome())
 		return ;
 	if (params.size() == 1)
 	{
-		user = srv.getUsers();
+		users = srv.getUsers();
 		ret += srv.getServerName() + " = { ";
-		ret += add_nick(user);
+		ret += add_nick(users);
 		ret += " }";
 		srv.ft_reply(&usr, RPL_NAMREPLY, srv.getServerName(), ret);
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, srv.getServerName());
@@ -61,21 +58,13 @@ void		names_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		int i = 0;
 		while (getline(ss, s, ','))
 		{
-			// bzero(ret, ret.length());
-			user.clear();
+			users.clear();
 			schan += s + " ";
-			if (srv.getChannelByName(s))
-				user = srv.getChannelByName(s)->getChannelUsers();
+			Channel * test = srv.getChannelByName(s);
+			if (test != NULL)
+				users = test->getChannelUsers();
 			ret += s + " = { ";
-			cout << "add_nick = " << add_nick(user) << endl;
-			// ret += (*user.begin())->getNickName();//add_nick(user);
-			// for (int i = 0; i < user.size(); i++)
-			// {
-			// 	if (!user[i].getInvisible())
-			// 		ret += user[i].getNickName();
-			// 		if (i != user.size() - 1)
-			// 			ret += ", ";
-			// }
+			ret += add_nick(users);
 			ret += " }";
 			srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
 			cout << "////// i = " << i << endl;

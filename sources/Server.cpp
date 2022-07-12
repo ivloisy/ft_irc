@@ -335,6 +335,7 @@ vector<User *>::iterator				Server::getUser(string const & nick)
 Channel*			Server::getChannelByName(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
+	cout << "NAMMMMMME " << name << endl; 
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
 			return (*it);
