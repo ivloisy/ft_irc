@@ -80,7 +80,7 @@ namespace irc
 		int												getFdServer() const;
 		struct sockaddr_in								getServerAddr() const;
 		vector<User *>									getUsers() const;
-		bool											isUserReal(string const & nick);
+
 		vector<User *>::iterator						getUser(int const & fd);
 		vector<User *>::iterator						getUser(string const & nick);
 		Channel*										getChannelByName(string const & name);
@@ -105,6 +105,8 @@ namespace irc
 		/******************* CHECKERS **********************/
 		bool											isMaxChannel();
 		bool											isUserEmpty();
+		bool											isUserReal(string const & nick);
+		bool											isChanReal(string const & nick);
 
 		/********************* REPLIES **************************/
 		void											initReplyTree();

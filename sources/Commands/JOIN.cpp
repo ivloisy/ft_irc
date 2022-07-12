@@ -138,14 +138,14 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		}
 		for (vector<string>::iterator it = chans.begin(); it != chans.end(); it++)
 		{
-			if ((*it)[0] != '#')
+			if (srv.getChannelByName(*it) && usr.getChannelByName(*it))
 			{
-				srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *it);//ERR_NOSUCHCHANNEL
+				srv.ft_error(&usr, ERR_BADCHANMASK, *it);
 				return ;
 			}
 			if ((*it)[0] != '#')
 			{
-				//ERR_BADCHANMASK
+				srv.ft_error(&usr, ERR_BADCHANMASK, *it);//ERR_NOSUCHCHANNEL
 				return ;
 			}
 			Channel *existing;

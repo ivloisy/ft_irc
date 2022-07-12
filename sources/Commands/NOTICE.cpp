@@ -15,10 +15,23 @@ void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	if (params.size() < 2)
 	{
-		//ERR wrong number arguments
+		srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+		return ;
 	}
 	else
 	{
+		if (params[2].size() < 1 || params.size() < 3)
+		{
+			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
+			return ;
+		}
+		vector<string> names;
+		stringstream ss(params[1]);
+		string str;
+		while (getline(ss, str,','))
+		{
+			names.push_back(str);
+		}
 		// convert vector into params
 		string msg;
 		vector<string>::iterator last = params.end();
@@ -29,14 +42,56 @@ void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
 				msg.push_back(*it_char);
 			msg.push_back(' ');
 		}
-		if (srv.getChannelByName(params[1]))
+
+		//what happen if user,,user
+		string ret;
+		if (((ret = isDouble(names)) != "") && names.size() > 2)
 		{
-			srv.sendToChan(usr.getNickName(), msg);
+			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);
+			return ;
 		}
-		else if (*srv.getUser(params[1]))
+		for (vector<string>::iterator memb = names.begin(); memb != names.end(); memb++)
 		{
-			srv.sendToUser(params[1], msg);
+			if ((*memb).size() < 1)
+			{
+				srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+				return ;
+			}
+			if (!srv.isUserReal(*memb))
+			{
+				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+				return ;
+			}
+			Channel * dstc;
+			User * dstu;
+			if (params[1][0] == '#')
+			{
+				if ((dstc = srv.getChannelByName(*memb)))
+				{
+					if (dstc->getUser(usr.getNickName()))
+						srv.ft_notice_chan(&usr, dstc, NTC_NOTICE(dstc->getChannelName(), msg), true);
+					else
+					{
+						srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+						return ;
+					}
+				}
+				else
+				{
+					srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *memb);
+					return ;
+				}
+
+			}
+			else if ((dstu = *srv.getUser(*memb)))
+			{
+				srv.ft_notice(&usr, dstu, NTC_NOTICE(dstu->getNickName(), msg));
+			}
+			else
+			{
+				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
+				return ;
+			}
 		}
 	}
-	//std::cout << "notice command called" << std::endl;
 }

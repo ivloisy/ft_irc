@@ -347,15 +347,6 @@ vector<User *>::iterator				Server::getUser(int const & fd)
 	return (it);
 }
 
-bool									Server::isUserReal(string const & nick)
-{
-	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
-	{
-		if ((*it)->getNickName() == nick)
-			return (true);
-	}
-	return (false);
-}
 
 vector<User *>::iterator				Server::getUser(string const & nick)
 {
@@ -461,6 +452,29 @@ bool				Server::isMaxChannel()
 bool				Server::isUserEmpty()
 {
 	return (this->_user.empty());
+}
+
+bool				Server::isUserReal(string const & nick)
+{
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		if ((*it)->getNickName() == nick)
+			return (true);
+	}
+	return (false);
+}
+
+
+bool				Server::isChanReal(string const & name)
+{
+	for (vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)
+	{
+		if ((*it)->getChannelName() == name)
+		{
+			return (true);
+		}
+	}
+	return (false);
 }
 
 

@@ -29,7 +29,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 	}
 	else
 	{
-		if (params[2].size() < 1)
+		if (params[2].size() < 1 || params.size() < 3)
 		{
 			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
 			return ;
@@ -66,7 +66,7 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 				srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
 				return ;
 			}
-			if (!srv.isUserReal(*memb))
+			if (!srv.isUserReal(*memb) || !srv.isChanReal(*memb))
 			{
 				srv.ft_error(&usr, ERR_NOSUCHNICK, *memb);
 				return ;
