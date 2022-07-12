@@ -192,6 +192,18 @@ void				Server::printParam()
 	}
 }
 
+string 				Server::printListChannels()
+{
+	string ret;
+	for (vector<Channel *>::iterator it = _channel.begin(); it != _channel.end(); it++)
+	{
+		ret += (*it)->getChannelName();
+		ret += ' ';
+	}
+	ret.erase(ret.size());
+	return (ret);
+}
+
 void 				Server::execCommand(int const & fd)
 {
 	vector<string> test;
@@ -335,14 +347,14 @@ vector<User *>::iterator				Server::getUser(int const & fd)
 	return (it);
 }
 
-User*									Server::getUserInstance(string const & nick)
+bool									Server::isUserReal(string const & nick)
 {
 	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
 	{
 		if ((*it)->getNickName() == nick)
-			return (*it);
+			return (true);
 	}
-	return (NULL);
+	return (false);
 }
 
 vector<User *>::iterator				Server::getUser(string const & nick)
@@ -466,6 +478,8 @@ void 	Server::initReplyTree()
 	map_rep[RPL_NAMREPLY] = ft_RPL_NAMREPLY;
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
+	map_rep[RPL_LIST] = ft_RPL_LIST;
+	map_rep[RPL_LISTEND] = ft_RPL_LISTEND;
 }
 
 void	Server::initErrorTree()

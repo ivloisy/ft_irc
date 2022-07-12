@@ -24,6 +24,8 @@ using namespace std;
 # define RPL_NOTOPIC "331"
 # define RPL_NAMREPLY "353"
 # define RPL_ENDOFNAMES "366"
+# define RPL_LIST "322"
+# define RPL_LISTEND "323"
 
 /* Error Replies */
 
@@ -104,5 +106,7 @@ string ft_RPL_NAMREPLY(string arg1, string arg2, string arg3, string arg4, strin
 string ft_RPL_ENDOFNAMES(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_WHOREPLY(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_ENDOFWHOIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_LIST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_LISTEND(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

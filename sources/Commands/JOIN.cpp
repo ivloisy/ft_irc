@@ -49,8 +49,8 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 		return ;
 	}
 	//join channel
-	bitset<3> dflt(string("101"));
-	bitset<2> mode(string("10"));
+	//bitset<3> dflt(string("101"));
+	//bitset<2> mode(string("10"));
 
 	//usr.setMode(mode);
 	existing.addUser(&usr);
@@ -70,8 +70,8 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	}
 	//create channel
 	Channel * new_chan = srv.addChannel(name);
-	bitset<3> creator(string("101"));
-	bitset<2> mode(string("10"));
+	//bitset<3> creator(string("101"));
+	//bitset<2> mode(string("10"));
 
 	//usr.setMode(mode);
 	new_chan->addUser(&usr);
@@ -108,49 +108,58 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//need to implement key
-	if (params[0] == "JOIN")
+	for (size_t i = 0; i < params.size(); i++)
 	{
-		if (params.size() < 1)
+		cout << "params " << i << " " << params[i] << endl;
+	}
+	if (params.size() < 1)
+	{
+		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+		return ; //ERR_NEEDMOREPARAMS
+	}
+	else
+	{
+		//check is user is registered
+		if (quit_all_chan(srv, usr,params))
+			return ;
+		stringstream ss(params[1]);
+		string str;
+		vector<string> chans;
+		while (getline(ss, str, ','))
 		{
-			srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
-			return ; //ERR_NEEDMOREPARAMS
+			chans.push_back(str);
 		}
-		else
+		//cout << "chan name = " << *chans.begin() << endl;
+		string ret;
+		if (((ret = isDouble(chans)) == "") && chans.size() > 2)
 		{
-			if (quit_all_chan(srv, usr,params))
-				return ;
-			unsigned long x = 1;
-			while (x < params.size())
+			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);//ERR_TOOMANYTARGETS
+			return ;
+		}
+		for (vector<string>::iterator it = chans.begin(); it != chans.end(); it++)
+		{
+			if ((*it)[0] != '#')
 			{
-				if (x >= 1 && srv.getChannelByName(params[x - 1]))
-				{
-					for (string::iterator i = params[x].begin(); i != params[x].end(); i++)
-					{
-						if ((*i) == ',')
-						{
-							string key;
-							for (; i != params[x].end(); i++)
-							{
-								if (*i != ' ' && *i != ',')
-									key.push_back(*i);
-							}
-							srv.getChannelByName(params[x - 1])->setKey(key);
-						}
-					}
-				}
-				Channel *existing;
-				if ((existing = srv.searchChannel(params[x])))
-				{
-					user_join_channel(srv, usr, *existing);
-					reply_channel_joined(srv, usr, *existing);
-				}
-				else
-				{
-					Channel * new_chan = user_create_channel(srv, usr, params[1]);
-					srv.ft_notice(&usr, &usr, NTC_JOIN(new_chan->getChannelName()));
-					reply_channel_joined(srv, usr, *new_chan);
-				}
-				x++;
+				srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *it);//ERR_NOSUCHCHANNEL
+				return ;
+			}
+			if ((*it)[0] != '#')
+			{
+				//ERR_BADCHANMASK
+				return ;
+			}
+			Channel *existing;
+			if ((existing = srv.searchChannel(*it)))
+			{
+				user_join_channel(srv, usr, *existing);
+				reply_channel_joined(srv, usr, *existing);
+			}
+			else
+			{
+				cout << "create chan = " << *it << endl;
+				Channel * new_chan = user_create_channel(srv, usr, *it);
+				srv.ft_notice(&usr, &usr, NTC_JOIN(new_chan->getChannelName()));
+				reply_channel_joined(srv, usr, *new_chan);
 			}
 		}
 	}
