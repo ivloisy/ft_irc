@@ -8,4 +8,5 @@ int main()
 	testfile << "pass pass" << "\r\n";
 	testfile << "nick surLeFil" << "\r\n";
 	testfile << "user Ivan Antoine localhost :Ben Antoine Ivan" << "\r\n";
+	testfile << "die" << "\r\n";
 }
