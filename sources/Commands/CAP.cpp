@@ -19,6 +19,7 @@ using namespace std;
 void	cap_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
+	transform(params[1].begin(), params[1].end(), params[1].begin(), ::toupper);
 	if (params.size() != 2 || !(params[1] == "LS"))
 		return;
 	if (usr.getRdySend() == 0)

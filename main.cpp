@@ -15,35 +15,19 @@ void	sighand(int sig)
 void ft_run(int port, string password)
 {
 	char buffer[512];
+	string save = "";
 	Server serv(port, password);
 	int poll_ret, fd, test, receive;
 	int fd_count = 1;
 	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
-	// int fin = 0;
 
 	signal(SIGINT, sighand);
 
 	while (serv.getState())
 	{
-		//while (1);
-		// fin++;
-		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
-
-		// list all users in the server
-		/*
-		vector<User *> users = serv.getUser();
-		vector<User *>::iterator last = users.end();
-		for (vector<User *>::iterator it = users.begin(); it != last; it++)
-		{
-			cout << (*it)->getNickName() << endl;
-		}
-		 */
-		// ----------------------------
-
 		test = 0;
-
 		poll_ret = poll(_poll, fd_count, -1);
 
 		if (poll_ret < 0)
@@ -79,10 +63,20 @@ void ft_run(int port, string password)
 					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
 						cout << "BUFFER RECEIVE = " << buffer << endl;
-						serv.parse_buffer_command(buffer);
-						//serv.printParam();
-						serv.execCommand(fd);
-						serv.welcome(fd);
+						if (buffer[strlen(buffer) - 1] == '\n')
+						{
+							cout << "=============ENVOI COMMANDE===============" << endl;
+							save += buffer;
+							serv.parse_buffer_command(save);
+							serv.execCommand(fd);
+							serv.welcome(fd);
+							save.clear();
+						}
+						else
+						{
+							save += buffer;
+							cout << "in wait : " << save << endl;
+						}
 					}
 					if (test != 1 && (receive < 1 || (*(serv.getUser(fd)))->getToClose() == 1))
 					{
@@ -107,15 +101,6 @@ void ft_run(int port, string password)
 
 int main(int argc, char **argv)
 {
-
-
-	// (void)argv;
-	// if (argc == 2) // without password
-	// {
-	// 	// if ((port = atoi(argv[1])) > 0)
-	// 	ft_run(6667);
-	// 	cout << "sortie propre" << endl;
-	// }
 	int port;
 	if (argc == 3) //with password
 	{
