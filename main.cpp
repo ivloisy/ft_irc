@@ -1,7 +1,16 @@
 #include "./includes/ft_irc.hpp"
+#include <signal.h>
 
 using namespace std;
 using namespace irc;
+
+void	sighand(int sig)
+{
+	if (sig == SIGINT)
+	{
+		exit(0);
+	}
+}
 
 void ft_run(int port, string password)
 {
@@ -14,8 +23,11 @@ void ft_run(int port, string password)
 	_poll[0].events = POLLIN;
 	// int fin = 0;
 
+	signal(SIGINT, sighand);
+
 	while (serv.getState())
 	{
+		//while (1);
 		// fin++;
 		//cout << "fdserver = " << serv.getFdServer() << " " << "Connect to server..." << endl;
 
@@ -43,6 +55,7 @@ void ft_run(int port, string password)
 		{
 			for (int x = 0; x < fd_count; x++)
 			{
+
 				bzero(buffer, 512);
 				if (_poll[x].revents & POLLIN)
 				{
@@ -88,11 +101,14 @@ void ft_run(int port, string password)
 		else
 			perror("There were select failures: ");
 	}
+	cout << "finallllll" << endl;
 	close(serv.getFdServer());
 }
 
 int main(int argc, char **argv)
 {
+
+
 	// (void)argv;
 	// if (argc == 2) // without password
 	// {

@@ -131,7 +131,7 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		}
 		//cout << "chan name = " << *chans.begin() << endl;
 		string ret;
-		if (((ret = isDouble(chans)) == "") && chans.size() > 2)
+		if (((ret = isDouble(chans)) == "") && chans.size() > 1)
 		{
 			srv.ft_error(&usr, ERR_TOOMANYTARGETS, ret);//ERR_TOOMANYTARGETS
 			return ;
@@ -143,7 +143,7 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 				srv.ft_error(&usr, ERR_BADCHANMASK, *it);
 				return ;
 			}
-			if ((*it)[0] != '#')
+			if ((*it)[0] != '#' || (*it).size() < 2 || (*it).size() > 30)
 			{
 				srv.ft_error(&usr, ERR_BADCHANMASK, *it);//ERR_NOSUCHCHANNEL
 				return ;
@@ -156,8 +156,8 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			}
 			else
 			{
-				cout << "create chan = " << *it << endl;
-				Channel * new_chan = user_create_channel(srv, usr, *it);
+				Channel * new_chan;
+				new_chan = user_create_channel(srv, usr, *it);
 				srv.ft_notice(&usr, &usr, NTC_JOIN(new_chan->getChannelName()));
 				reply_channel_joined(srv, usr, *new_chan);
 			}
