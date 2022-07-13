@@ -19,7 +19,7 @@ void	who_user(Server & srv, User & usr, vector<string> params, bool wild)
 				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
 	}
 	if (wild == true)
-		srv.ft_reply(&usr, "315", "*");
+		srv.ft_reply(&usr, RPL_ENDOFWHO, "*");
 	else
 		srv.ft_reply(&usr, "315", params[0]);
 }
