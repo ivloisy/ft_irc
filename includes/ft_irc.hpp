@@ -33,6 +33,7 @@ using namespace irc;
 void	cap_cmd(Server & srv, User & usr, vector<string> params);
 void	die_cmd(Server & srv, User & usr, vector<string> params);
 void	join_cmd(Server & srv, User & usr, vector<string> params);
+void	kick_cmd(Server & srv, User & usr, vector<string> params);
 void	list_cmd(Server & srv, User & usr, vector<string> params);
 void	mode_cmd(Server & srv, User & usr, vector<string> params);
 void	msg_cmd(Server & srv, User & usr, vector<string> params);

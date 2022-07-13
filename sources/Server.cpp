@@ -127,6 +127,7 @@ void					Server::initCommand()
 	map_cmd["CAP"] 		= 	cap_cmd;
 	map_cmd["DIE"] 		= 	die_cmd;
 	map_cmd["JOIN"] 	= 	join_cmd;
+	map_cmd["KICK"] 	= 	kick_cmd;
 	map_cmd["LIST"] 	= 	list_cmd;
 	map_cmd["MODE"] 	= 	mode_cmd;
 	map_cmd["NAMES"] 	= 	names_cmd;
@@ -213,6 +214,7 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("CAP");
 	test.push_back("DIE");
 	test.push_back("JOIN");
+	test.push_back("KICK");
 	test.push_back("LIST");
 	test.push_back("MODE");
 	test.push_back("NAMES");
@@ -383,7 +385,7 @@ vector<User *>::iterator				Server::getUser(string const & nick)
 Channel*			Server::getChannelByName(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
-	cout << "NAMMMMMME " << name << endl;
+	// cout << "NAMMMMMME " << name << endl;
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
 			return (*it);

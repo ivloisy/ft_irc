@@ -14,6 +14,7 @@ SRCS = 	main.cpp \
 		sources/Commands/USER.cpp \
 		sources/Commands/DIE.cpp \
 		sources/Commands/JOIN.cpp \
+		sources/Commands/KICK.cpp \
 		sources/Commands/LIST.cpp \
 		sources/Commands/PING.cpp \
 		sources/Commands/MODE.cpp \
