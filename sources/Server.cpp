@@ -562,6 +562,7 @@ void	Server::initErrorTree()
 	map_err[ERR_CHANOPRIVSNEEDED] = ":You're not channel operator";
 	map_err[ERR_UNIQOPPRIVSNEEDED] = ":You're not the original channel operator";
 	map_err[ERR_NOOPERHOST] = ":No O-lines for your host";
+	map_err[ERR_ERRSYNTAX] = ":Error Syntaxe";
 	map_err[ERR_UMODEUNKNOWNFLAG] = ":Unknown MODE flag";
 	map_err[ERR_USERSDONTMATCH] = ":Cant change mode for other users";
 }

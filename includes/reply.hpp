@@ -28,7 +28,6 @@ using namespace std;
 # define RPL_LISTEND "323"
 
 /* Error Replies */
-
 # define ERR_NOSUCHNICK "401"
 # define ERR_NOSUCHSERVER "402"
 # define ERR_NOSUCHCHANNEL "403"
@@ -80,6 +79,7 @@ using namespace std;
 # define ERR_RESTRICTED "484"
 # define ERR_UNIQOPPRIVSNEEDED "485"
 # define ERR_NOOPERHOST "491"
+# define ERR_ERRSYNTAX "492"
 # define ERR_UMODEUNKNOWNFLAG "501"
 # define ERR_USERSDONTMATCH "502"
 

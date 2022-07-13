@@ -12,6 +12,22 @@ void	sighand(int sig)
 	}
 }
 
+bool check_buffer(string buf)
+{
+	size_t x = 0;
+	while (x < buf.size())
+	{
+		cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
+		if (!isprint(buf[x]) && buf[x] != '\n')
+		{
+			cout << "FAAAALSE" << endl;
+			return false;
+		}
+		x++;
+	}
+	return true;
+}
+
 void ft_run(int port, string password)
 {
 	char buffer[512];
@@ -63,20 +79,30 @@ void ft_run(int port, string password)
 					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
 						cout << "BUFFER RECEIVE = " << buffer << endl;
-						if (buffer[strlen(buffer) - 1] == '\n')
-						{
-							cout << "=============ENVOI COMMANDE===============" << endl;
-							save += buffer;
-							serv.parse_buffer_command(save);
-							serv.execCommand(fd);
-							serv.welcome(fd);
-							save.clear();
-						}
-						else
-						{
-							save += buffer;
-							cout << "in wait : " << save << endl;
-						}
+
+							if (buffer[strlen(buffer) - 1] == '\n')
+							{
+								cout << "=============ENVOI COMMANDE===============" << endl;
+								save += buffer;
+								if (check_buffer(save))
+								{
+									serv.parse_buffer_command(save);
+									serv.execCommand(fd);
+									serv.welcome(fd);
+								}
+								else
+								{
+									cout << "OOOOOOOKKKKKKKK" << endl;
+									serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
+								}
+								save.clear();
+							}
+							else
+							{
+								save += buffer;
+								cout << "in wait : " << save << endl;
+							}
+
 					}
 					if (test != 1 && (receive < 1 || (*(serv.getUser(fd)))->getToClose() == 1))
 					{
