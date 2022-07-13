@@ -52,6 +52,9 @@
 // Reset
 # define RESET		"\033[0m"
 
+// Low Colors
+# define LWHITE		"\033[2;37m"
+
 // Regular Colors
 # define BLACK		"\033[0;30m"
 # define RED		"\033[0;31m"
