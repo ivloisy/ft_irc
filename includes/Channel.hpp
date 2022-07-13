@@ -31,7 +31,7 @@ namespace irc
 
 
 	public:
-		Channel(string name);
+		Channel(User * user, string name);
 
 		vector<User *>			getChannelUsers() const;
 		User					*getUser(string const & nickname);
@@ -62,9 +62,12 @@ namespace irc
 		bool					isOperator(User * user);
 		bool					isBanned(User * user);
 
+		void					setUserOperator(User * user, bool set);
+		void					setUserBanned(User * user, bool set);
+
 		void					addUserMode(User * user, string const & mode);
 		void					addUser(User * user);
-		void					addOper(User * user);
+		//void					addOper(User * user);
 		//void					addInvite(User * user);
 		//void					addBanned(User * user);
 

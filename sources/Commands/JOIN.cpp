@@ -70,7 +70,7 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 		return (NULL);
 	}
 	//create channel
-	Channel * new_chan = srv.addChannel(name);
+	Channel * new_chan = srv.addChannel(&usr, name);
 	//bitset<3> creator(string("101"));
 	//bitset<2> mode(string("10"));
 

@@ -289,9 +289,9 @@ void				Server::sending(int fd, string toSend)
 	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 
-Channel*			Server::addChannel(string const & name)
+Channel*			Server::addChannel(User * user, string const & name)
 {
-	this->_channel.push_back(new Channel(name));
+	this->_channel.push_back(new Channel(user, name));
 	return *(this->_channel.end() - 1);
 }
 

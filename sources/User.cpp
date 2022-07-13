@@ -316,3 +316,37 @@ void 					User::setWelcome(bool value)
 {
 	this->_welcome = value;
 }
+
+void					User::setOperator(bool set)
+{
+	for (size_t i = 0; i < _mode.size(); i++)
+	{
+		if (_mode[i] == 'o')
+		{
+			if (set)
+				return ;
+			else
+				_mode.erase(i);
+		}
+
+	}
+	if (set)
+		_mode.push_back('o');
+}
+
+void					User::setInvisible(bool set)
+{
+	for (size_t i = 0; i < _mode.size(); i++)
+	{
+		if (_mode[i] == 'i')
+		{
+			if (set)
+				return ;
+			else
+				_mode.erase(i);
+		}
+
+	}
+	if (set)
+		_mode.push_back('i');
+}
