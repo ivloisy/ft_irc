@@ -12,16 +12,13 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
 		{
-			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
 			if (!usr.getChannelByName(params[1]))
 			{
-				cout << "DDDDDDDDDDD" << endl;
 				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
 				return ;
 			}
 			else
 			{
-				cout << "HHHHHHHHHHHH" << endl;
 				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
 				return ;
 			}
@@ -38,16 +35,13 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
 		{
-			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
 			if (!usr.getChannelByName(params[1]))
 			{
-				cout << "DDDDDDDDDDD" << endl;
 				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
 				return ;
 			}
 			else
 			{
-				cout << "HHHHHHHHHHHH" << endl;
 				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
 				return ;
 			}
