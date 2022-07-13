@@ -336,6 +336,7 @@ void					User::setOperator(bool set)
 
 void					User::setInvisible(bool set)
 {
+	string str("");
 	for (size_t i = 0; i < _mode.size(); i++)
 	{
 		if (_mode[i] == 'i')

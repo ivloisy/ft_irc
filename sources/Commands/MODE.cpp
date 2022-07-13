@@ -37,25 +37,6 @@ disabled
     //- l : user limit
  */
 
-
-string			chanMode(Server & srv, User & usr, string mode)
-{
-	(void)mode;
-	(void)srv;
-	(void)usr;
-	//Channel * chan;
-	//if ((chan = srv.getChannelByName()))
-	//{
-		//ERR_USERNOTINCHANNEL
-		//RPL_CHANNELMODEIS
-		//RPL_BANLIST
-		//if ((usr->getChannlByName))
-		//bitset<2> chn_mode = chanMode(usr, params[2]);
-		//chan->setMode(chn_mode);
-	//}
-	return (0);
-}
-
 char				isUnknown(string content)
 {
 	if (content[0] != '+' && content[0] != '-')
@@ -75,28 +56,14 @@ char				isUnknown(string content)
 	return (0);
 }
 
-string	userMode(Server & srv, User & usr, string mode)
-{
-	char c;
-	if ((c = isUnknown(mode)))
-	{
-		//ERR_UNKNOWNMODE
-		string ret(1, c);
-		srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
-		return (0);
-	}
-	if (mode[0] == '+')
-	{
-
-	}
-	//if (mode[0] == '-')
-	return ("usr_mode");
-}
-
 void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	(void)srv;
+	(void)usr;
+	(void)params;
+	/*
 	cout << "mode before = " << usr.getMode() << endl;
-	if (params.size() < 3)
+	if (params.size() < 2)
 	{
 		//ERR_NEEDMOREPARAMS
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
@@ -104,23 +71,137 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	}
 	else
 	{
-		if (params[2].size() > 3 || (params[2][0] != '+' && params[2][0] != '-'))
-		{
-			srv.ft_error(&usr, ERR_UNKNOWNMODE, params[2]);
-			return ;
-		}
+
+		//char c;
+		//if ((c = isUnknown(params[2])))
+		//{
+		//	//ERR_UNKNOWNMODE
+		//	string ret(1, c);
+		//	srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
+		//	return ;
+		//}
+		//if (params[2].size() > 3 || (params[2][0] != '+' && params[2][0] != '-'))
+		//{
+		//	srv.ft_error(&usr, ERR_UNKNOWNMODE, params[2]);
+		//	return ;
+		//}
+
+
+
+
 		if (params[1][0] == '#')
 		{
-			string chan_mode = chanMode(srv, usr, params[2]);
-			Channel * chan = srv.getChannelByName(params[1]);
-			chan->setUserMode(&usr, chan_mode);
+			Channel * chan;
+			if ((chan = srv.getChannelByName(params[1])))
+			{
+				if (params.size() > 3)
+				{
+					User * to;
+					if ((to = chan->getUser(params[3])))
+					{
+						if (!chan->isOperator(&usr))
+							;//ERR NO RIGHTS
+						bool set;
+						if (params[2][0] == '-') {
+							set = false;
+							if (params[2][1] == 'o')
+							{
+								chan->setUserOperator(to, set);
+								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + chan->getUserMode(to)));
+							}
+							if (params[2][1] == 'b')
+							{
+								chan->setUserBanned(to, set);
+								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + chan->getUserMode(to)));
+							}
+						}
+						if (params[2][0] == '+')
+						{
+							set = true;
+							if (params[2][1] == 'o')
+							{
+								chan->setUserOperator(to, set);
+								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + chan->getUserMode(to)));
+							}
+							if (params[2][1] == 'b')
+							{
+								chan->setUserBanned(to, set);
+								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + chan->getUserMode(to)));
+							}
+						}
+					}
+					else
+					{
+						//ERR NO NICKNAME
+					}
+				}
+				else
+				{
+					//ERR NO NICKNAME
+				}
+			}
+			else
+			{
+				//ERR_NOSUCHCHANNEL
+				srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, params[3]);
+				return ;
+			}
 		}
-		if (usr.getNickName() == params[1])
+
+
+		if (srv.isUserReal(params[1]))
 		{
-			string usr_mode = userMode(srv, usr, params[2]);
-			usr.setMode(usr_mode);
-			//srv.ft_reply(RPL_)
-			//USR MODE SET
+			if (params.size() < 3)
+			{
+				srv.ft_reply(&usr, RPL_UMODEIS, usr.getMode());
+				return ;
+			}
+			char c;
+			if ((c = isUnknown(params[2])))
+			{
+				//ERR_UNKNOWNMODE
+				string ret(1, c);
+				srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
+				return ;
+			}
+			if (params[2].size() > 3 || (params[2][0] != '+' && params[2][0] != '-'))
+			{
+				srv.ft_error(&usr, ERR_UNKNOWNMODE, params[2]);
+				return ;
+			}
+			bool set;
+			if (params[2][0] == '-')
+			{
+				set = false;
+				if (params[2][1] == 'o')
+				{
+					usr.setOperator(set);
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + usr.getMode()));
+				}
+				if (params[2][1] == 'i')
+				{
+					usr.setInvisible(set);
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + usr.getMode()));
+				}
+			}
+			if (params[2][0] == '+')
+			{
+				set = true;
+				if (params[2][1] == 'o')
+				{
+					usr.setOperator(set);
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + usr.getMode()));
+				}
+				if (params[2][1] == 'i')
+				{
+					usr.setInvisible(set);
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + usr.getMode()));
+
+				}
+			}
+
+
+
 		}
 		else
 		{
@@ -130,5 +211,6 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		}
 
 	}
+	*/
 	//cout << "mode after = " << usr.getModeString() << " " << usr.getModeBitset().test(0) << usr.getModeBitset().test(1) << endl;
 }

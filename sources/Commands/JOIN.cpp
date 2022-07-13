@@ -52,6 +52,8 @@ bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 	//bitset<3> dflt(string("101"));
 	//bitset<2> mode(string("10"));
 
+	if (usr.isInvisible())
+		usr.setInvisible(0);
 	//usr.setMode(mode);
 	existing.addUser(&usr);
 	//existing.addUserMode(&usr, dflt);
@@ -79,6 +81,8 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	//new_chan->addOper(&usr);
 	//new_chan->addUserMode(&usr, creator);
 	usr.addChannel(new_chan);
+	if (usr.isInvisible())
+		usr.setInvisible(0);
 	//usr.setCurrentChannel(new_chan);
 	//got channel operator mode
 	return (new_chan);

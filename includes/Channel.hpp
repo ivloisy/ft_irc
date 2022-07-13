@@ -39,14 +39,14 @@ namespace irc
 		//User					*getOper(string const & nickname);
 		//vector<User *>		getChannelInvite() const;
 		//User					*getInvite(string const & nickname);
-		//vector<User *>			getBanned() const;
+		//vector<User *>		getBanned() const;
 		//User					*getBanned(string const & nickname);
 		map<User *, string>		getChannelUserMode() const;
 		string 					getUserMode(User * user);
 		//string 				getMode() const;
 		//string 				getKey() const;
 		string 					getChannelName() const;
-		bool					getInviteOnlyMode() const;
+		//bool					getInviteOnlyMode() const;
 		string					getTopic() const;
 
 		bool 					isMaxUsers();
