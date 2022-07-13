@@ -55,7 +55,12 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 						if (msg.empty())
 							srv.ft_notice(&usr, *i, NTC_PART(chan->getChannelName()));
 						else
+						{
+							if (msg[0] == ':')
+								msg.erase(0);
 							srv.ft_notice(&usr, *i, NTC_PART_MSG(chan->getChannelName(), msg));
+						}
+
 					}
 					usr.quitChannel(chan);
 					chan->delUser(&usr);

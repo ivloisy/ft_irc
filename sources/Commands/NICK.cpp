@@ -37,6 +37,11 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
 		return ;
 	}
+	if (srv.isUserReal(params[1]))
+	{
+		srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
+		return ;
+	}
 
 //////////////ERR_UNAVAILRESOURCE
 

@@ -29,10 +29,10 @@ namespace irc
 		vector<Channel *>									_channel;
 		int 												_maxChan;
 		Channel												*_currChan;
-		bitset<2> 											_mode;
+		string  											_mode;
 		bool												_acceptConnect;
-		bool												_isOper;
-		bool												_isInv;
+		//bool												_isOper;
+		//bool												_isInv;
 		bool												_toClose;
 		bool												_welcome;
 		int													_rdySend;
@@ -52,6 +52,8 @@ namespace irc
 		void												addChannel(Channel * chan);
 		//void												delChannel(Channel * chan);
 		bool												isMaxChannel();
+		bool												isOperator();
+		bool												isInvisible();
 		bool												check_if_complete() const;
 
 		/********************* GETTERS ***********************/
@@ -67,10 +69,10 @@ namespace irc
 		vector<Channel *>									getChannel() const;
 		bool												getChannelByName(string name);
 		bool												getAcceptConnect() const;
-		bool												getOper() const;
+		//bool												getOper() const;
 		int 												getRdySend() const;
-		bitset<2> 											getMode() const;
-		bool												getInvisible() const;
+		string 												getMode();
+		//bool												getInvisible() const;
 		Channel												*getCurrentChannel();
 		string 												getCurrentChannelName();
 		bool 												getToClose();
@@ -81,9 +83,9 @@ namespace irc
 		/********************** SETTERS ***********************/
 		void												setMsg(string const & msg);
 		void												setPrefix();
-		void												setInvisible(bool const & inv);
-		void												setMode(bitset<2> const & mode);
-		void												setOper(bool const & op);
+		//void												setInvisible(bool const & inv);
+		void												setMode(string const & mode);
+		//void												setOper(bool const & op);
 		void												setAcceptConnect(bool const & ac);
 		void 												setFdUser(int const & fd);
 		void												setNickName(string const & nickname);
@@ -101,7 +103,5 @@ namespace irc
 
 	};
 }
-
-
 
 #endif //FT_IRC_CLIENT_HPP

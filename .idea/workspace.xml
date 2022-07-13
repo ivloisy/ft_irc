@@ -15,7 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="885fb3cc-9bad-4a89-89bf-a4b89130b7dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1657552614082</updated>
       <workItem from="1657552615716" duration="18596000" />
-      <workItem from="1657632780842" duration="20324000" />
+      <workItem from="1657632780842" duration="22005000" />
     </task>
     <servers />
   </component>

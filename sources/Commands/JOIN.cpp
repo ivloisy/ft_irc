@@ -33,21 +33,21 @@ using namespace std;
 bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 {
 	(void)srv;
-	if (existing.getInviteOnlyMode())
-	{
-		srv.ft_error(&usr, ERR_INVITEONLYCHAN, existing.getChannelName());
-		return (false);
-	}
-	else if (existing.isMaxUsers())
+	//if (existing.getInviteOnlyMode())
+	//{
+	//	srv.ft_error(&usr, ERR_INVITEONLYCHAN, existing.getChannelName());
+	//	return (false);
+	//}
+	if (existing.isMaxUsers())
 	{
 		srv.ft_error(&usr, ERR_CHANNELISFULL, existing.getChannelName());
 		return (false);
 	}
-	else if (existing.getBanned(usr.getNickName()))
-	{
-		srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
-		return (false);
-	}
+	//else if (existing.getBanned(usr.getNickName()))
+	//{
+	//	srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
+	//	return (false);
+	//}
 	//join channel
 	//bitset<3> dflt(string("101"));
 	//bitset<2> mode(string("10"));
@@ -109,10 +109,6 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//need to implement key
-	for (size_t i = 0; i < params.size(); i++)
-	{
-		cout << "params " << i << " " << params[i] << endl;
-	}
 	if (params.size() < 1)
 	{
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);

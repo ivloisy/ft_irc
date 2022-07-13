@@ -321,9 +321,9 @@ void				Server::delUserAllChannel(User * user)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		(*it)->delUser(user);
-		(*it)->delOper(user);
+		//(*it)->delOper(user);
 		(*it)->delUserMode(user);
-		(*it)->delInvite(user);
+		//(*it)->delInvite(user);
 	}
 }
 
@@ -511,6 +511,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_ENDOFNAMES] = ft_RPL_ENDOFNAMES;
 	map_rep[RPL_LIST] = ft_RPL_LIST;
 	map_rep[RPL_LISTEND] = ft_RPL_LISTEND;
+	map_rep[RPL_YOUREOPER] = ft_RPL_YOUREOPER;
 }
 
 void	Server::initErrorTree()
