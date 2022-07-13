@@ -56,6 +56,7 @@ namespace irc
 		bool												isInvisible();
 		bool												check_if_complete() const;
 
+
 		/********************* GETTERS ***********************/
 		//int 												getIdUser(void) const;
 		int 												getFdUser(void) const;
@@ -100,6 +101,8 @@ namespace irc
 		void												setCurrentChannel(Channel * chan);
 		void												setServerName(string const & name);
 		void 												setWelcome(bool value);
+		void												setOperator(bool set);
+		void												setInvisible(bool set);
 
 	};
 }

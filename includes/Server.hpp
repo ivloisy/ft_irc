@@ -66,7 +66,7 @@ namespace irc
 		void											sendToChan(string const & name, string const & msg);
 		void											sendToUser(string const & name, string const & msg);
 		void											sending(int fd, string toSend);
-		Channel*										addChannel(string const & name);
+		Channel*										addChannel(User * user, string const & name);
 		Channel*										searchChannel(string const & name);
 		void											delUserAllChannel(User * user);
 		void 											deleteUser(vector<User *>::iterator user);

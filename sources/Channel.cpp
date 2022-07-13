@@ -9,7 +9,7 @@ using namespace std;
 
 /******************** CONSTRUCTORS ***********************/
 
-Channel::Channel(string name) :
+Channel::Channel(User * user, string name) :
 	_maxUsers(10),
 	_user(),
 	//_oper(),
@@ -19,7 +19,7 @@ Channel::Channel(string name) :
 	//_key(),
 	_name(name)
 {
-
+	_userMode[user] = "0";
 	return ;
 }
 
@@ -212,21 +212,56 @@ void					Channel::setInviteOnlyMode(bool const & set)
 	this->_inviteOnlyMode = set;
 }
 */
+
 void					Channel::setChannelName(string const & name)
 {
 	this->_name = name;
 }
-/*
-void					Channel::setMode(string const & mode)
+
+void					Channel::setUserOperator(User * user, bool set)
 {
-	this->_mode = mode;
+	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.begin(); it++)
+	{
+		if ((*it).first->getNickName() == user->getNickName())
+		{
+			for (size_t i = 0; i < (*it).second.size(); i++)
+			{
+				if ((*it).second[i] == 'o')
+				{
+					if (set)
+						return ;
+					else
+						(*it).second.erase(i);
+				}
+			}
+			if (set)
+				(*it).second.push_back('o');
+		}
+	}
 }
 
-void					Channel::setKey(string const & key)
+void					Channel::setUserBanned(User * user, bool set)
 {
-	this->_key = key;
+	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.begin(); it++)
+	{
+		if ((*it).first->getNickName() == user->getNickName())
+		{
+			for (size_t i = 0; i < (*it).second.size(); i++)
+			{
+				if ((*it).second[i] == 'b')
+				{
+					if (set)
+						return ;
+					else
+						(*it).second.erase(i);
+				}
+			}
+			if (set)
+				(*it).second.push_back('b');
+		}
+	}
 }
-*/
+
 /******************** FUNCTIONS **************************/
 
 void					Channel::addUserMode(User * user, string const & mode)
