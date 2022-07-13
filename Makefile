@@ -26,6 +26,7 @@ SRCS = 	main.cpp \
 		sources/Commands/QUIT.cpp \
 		sources/Commands/TOPIC.cpp \
 		sources/Commands/WALLOPS.cpp \
+		sources/Commands/INVITE.cpp \
 		sources/Commands/WHOIS.cpp
 
 INCDIR = ./includes
