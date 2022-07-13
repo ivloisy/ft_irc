@@ -31,6 +31,7 @@ using namespace std;
 # define RPL_UMODEIS "221"
 # define RPL_INVITING "341"
 # define RPL_ENDOFWHO "315"
+# define RPL_WHOREPLY "352"
 
 /* Error Replies */
 # define ERR_NOSUCHNICK "401"

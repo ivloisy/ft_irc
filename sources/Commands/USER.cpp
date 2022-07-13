@@ -12,11 +12,15 @@ using namespace std;
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	cout << "*** User command called ***" << endl;
-	(void)srv;
 	if (params.size() < 5)
 	{
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
 		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
+		return ;
+	}
+	if (usr.getUserName() != "" && usr.getHostname() != "" && usr.getServerName() != "" && usr.getRealName() != "")
+	{
+		srv.ft_error(&usr, ERR_ALREADYREGISTRED);
 		return ;
 	}
 	if (params[1].length())

@@ -44,4 +44,4 @@ string ft_RPL_TOPIC(string arg1, string arg2, string arg3, string arg4, string a
 string ft_RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg1; (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (":You are now an IRC operator"); } //no arg
 string ft_RPL_UMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1); } // arg1 = user mode string
 string ft_RPL_INVITING(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + " " + arg2); } // arg1 = channel , arg2 = nick
-string ft_RPL_ENDOFWHO(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { }
+string ft_RPL_ENDOFWHO(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7) { (void)arg2; (void)arg3; (void)arg4; (void)arg5; (void)arg6; (void)arg7; return (arg1 + ":End of WHO list"); } // arg1 = name

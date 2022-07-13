@@ -14,8 +14,13 @@ using namespace std;
 void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
 	cout << "*** Wallops command called ***" << endl;
-	if (!srv.check_command(&usr, 1, params) || (usr.isOperator()))
+	if (!srv.check_command(&usr, 1, params))
 		return ;
+	if (!usr.isOperator())
+	{
+		srv.ft_reply(&usr, ERR_NOPRIVILEGES);
+		return ;
+	}
 	string msg;
 	if (params.size() >= 2)
 	{

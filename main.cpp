@@ -12,14 +12,13 @@ void	sighand(int sig)
 
 bool check_buffer(string buf)
 {
-	cout << "checkinbuffer " << endl;
 	size_t x = 0;
 	while (x <= buf.size())
 	{
-		cout << "check this char : " << static_cast<int>(buf[x]) << endl;
+		//cout << "check this char : " << static_cast<int>(buf[x]) << endl;
 		if (!isprint(buf[x]) && buf[x] != '\n' && buf[x] != '\r' && buf[x] != '\0')
 		{
-			cout << "this char is nonprintable : " << static_cast<int>(buf[x]) << endl;
+			//cout << RED << "this char is nonprintable : " << static_cast<int>(buf[x]) << RESET << endl;
 			return false;
 		}
 
@@ -30,7 +29,7 @@ bool check_buffer(string buf)
 
 void exit_error(string msg, Server & serv)
 {
-	cout << msg << endl;
+	cout << RED << msg << RESET << endl;
 	close(serv.getFdServer());
 	exit(1);
 }
@@ -122,6 +121,6 @@ int main(int argc, char **argv)
 			ft_run(port, password);
 	}
 	else
-		cout << "error wrong number arguments" << endl;
+		cout << RED << "Error: wrong number arguments" << RESET << endl;
 	return 0;
 }

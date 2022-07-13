@@ -14,7 +14,7 @@ Server::Server(int const & portNum) :
 	map_cmd(),
 	_fd(-1),
 	_fdMax(-1),
-	_serverName("irc.sample.com"),
+	_serverName(SERVER_NAME),
 	_size(0),
 	_user(),
 	_oper(),
@@ -29,7 +29,7 @@ Server::Server(int const & portNum) :
 }
 
 Server::Server(int const & portNum, string const & passw) :
-	_serverName("irc.sample.com"),
+	_serverName(SERVER_NAME),
 	_portNum(portNum),
 	_state(1),
 	_password(passw)
@@ -59,7 +59,8 @@ void 					Server::initServer()
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
 	{
-		cout << "error setting socket option..." << endl;
+		cout << RED << "Error: setting socket failed..." << RESET << endl;
+		this->setState(0);
 		return ;
 	}
 	fcntl(this->_fd, F_SETFL, O_NONBLOCK);
@@ -67,8 +68,9 @@ void 					Server::initServer()
 	this->_size = sizeof(this->getServerAddr());
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
-		//===========================error //////////////////////////
-		;
+		cout << RED << "Error: listen failed..." << RESET << endl;
+		this->setState(0);
+		return ;
 	}
 	this->initCommand();
 	this->initReplyTree();
@@ -80,10 +82,11 @@ void					 Server::establishConnection(void)
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
 	{
-		cout << "Error establishing connection..." << endl;
+		cout << RED << "Error: connection failed..." << RESET << endl;
+		this->setState(0);
 		return ;
 	}
-	cout << "Server Socket connection created..." << endl;
+	cout << GREEN << "Server Socket connection created..." << RESET << endl;
 }
 
 void					Server::createServerAddr(int const & portNum)
@@ -99,7 +102,7 @@ int						Server::acceptUser(socklen_t size)
 						  reinterpret_cast<socklen_t *>(&size));
 	if (fd < 0)
 	{
-		cout << "Error on accepting..." << endl;
+		cout << RED << "Error: accept failed..." << RESET << endl;
 		return (-1);
 	}
 	vector<User *>::iterator it = _user.begin();
@@ -119,7 +122,7 @@ int						Server::bindServer()
 {
 	if (bind(this->_fd, (struct sockaddr*)&this->_serverAddr, sizeof(this->_serverAddr)) < 0 )
 	{
-		cout << "Error binding socket..." << endl;
+		cout << RED <<  "Error: binding socket failed..." << RESET << endl;
 		setState(0);
 		return (0);
 	}
@@ -169,7 +172,6 @@ void					Server::parse_buffer_command(string const & str)
 	string					s;
 	vector<string>			tmp;
 
-	//cout << "entree parse" << endl;
 	while (getline(ss, s, '\r'))
 	{
 		stringstream o(s);
@@ -299,7 +301,7 @@ void				Server::sendBuffer(User * dest, string const & content)
 
 void				Server::sending(int fd, string toSend)
 {
-	cout << "Sending : " << toSend << endl;
+	cout << LMAGENTA << "Sending : " << toSend << RESET << endl;
 	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 
@@ -531,6 +533,8 @@ void 	Server::initReplyTree()
 	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
 	map_rep[RPL_UMODEIS] = ft_RPL_UMODEIS;
 	map_rep[RPL_INVITING] = ft_RPL_INVITING;
+	map_rep[RPL_WHOREPLY] = ft_RPL_WHOREPLY;
+	map_rep[RPL_ENDOFWHO] = ft_RPL_ENDOFWHO;
 }
 
 void	Server::initErrorTree()
