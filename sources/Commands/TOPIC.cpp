@@ -5,7 +5,6 @@ using namespace std;
 
 void		topic_cmd(Server & srv, User & usr, vector<string> params)
 {
-	(void)usr;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
 	if (params.size() == 2)
@@ -27,13 +26,18 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		}
 		else
 		{
-			// srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
-			// if (!usr.isChanop())
-			// {
-			// 	srv.ft_error(&usr, ERR_CHANOPRIVSNEEDED, params[1]);
-			// 	return ;
-			// }
-			// if ()
+			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
+			return ;
+		}
+		// if (!usr.isChanop())
+		// {
+		// 	srv.ft_error(&usr, ERR_CHANOPRIVSNEEDED, params[1]);
+		// 	return ;
+		// }
+		if (!usr.getChannelByName(params[1]))
+		{
+			srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
+			return ;
 		}
 	}
 }
