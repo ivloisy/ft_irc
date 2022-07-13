@@ -84,7 +84,7 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	//new_chan->addOper(&usr);
 	//new_chan->addUserMode(&usr, creator);
 	usr.addChannel(new_chan);
-	cout << "IS IT INVISIBLE ?? " << usr.isInvisible() << endl;
+	//cout << "IS IT INVISIBLE ?? " << usr.isInvisible() << endl;
 	if (usr.isInvisible())
 	{
 		usr.setInvisible(false);
@@ -119,6 +119,7 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
+	cout << "join command called" << endl;
 	//need to implement key
 	if (!srv.check_command(&usr, 2, params))
 		return ;
@@ -177,5 +178,5 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			}
 		}
 	}
-	cout << "join command called" << endl;
+	cout << "join command exit" << endl;
 }

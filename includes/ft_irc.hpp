@@ -51,6 +51,7 @@ void	user_cmd(Server & srv, User & usr, vector<string> params);
 void	topic_cmd(Server & srv, User & usr, vector<string> params);
 void	wallops_cmd(Server & srv, User & usr, vector<string> params);
 void	whois_cmd(Server & srv, User & usr, vector<string> params);
+void	invite_cmd(Server & srv, User & usr, vector<string> params);
 
 string	isDouble(vector<string> str);
 

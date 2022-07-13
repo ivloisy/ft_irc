@@ -17,11 +17,11 @@ bool check_buffer(string buf)
 	size_t x = 0;
 	while (x < buf.size())
 	{
-		// cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
+		//cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
 		if (!isprint(buf[x]) && buf[buf.size() - 1] != '\n')
 			if (buf[buf.size() - 2] != '\r')
 			{
-				cout << "FAAAALSE" << endl;
+				//cout << "FAAAALSE" << endl;
 				return false;
 			}
 		x++;
@@ -79,11 +79,11 @@ void ft_run(int port, string password)
 					}
 					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
-						cout << "BUFFER RECEIVE = " << buffer << endl;
+						//cout << "BUFFER RECEIVE = " << buffer << endl;
 
 							if (buffer[strlen(buffer) - 1] == '\n')
 							{
-								cout << "=============ENVOI COMMANDE===============" << endl;
+								//cout << "=============ENVOI COMMANDE===============" << endl;
 								save += buffer;
 								if (check_buffer(save))
 								{
@@ -93,7 +93,7 @@ void ft_run(int port, string password)
 								}
 								else
 								{
-									cout << "OOOOOOOKKKKKKKK" << endl;
+									//cout << "OOOOOOOKKKKKKKK" << endl;
 									serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
 								}
 								save.clear();
@@ -101,13 +101,13 @@ void ft_run(int port, string password)
 							else
 							{
 								save += buffer;
-								cout << "in wait : " << save << endl;
+								//cout << "in wait : " << save << endl;
 							}
 
 					}
 					if (test != 1 && (receive < 1 || (*(serv.getUser(fd)))->getToClose() == 1))
 					{
-						cout << "CLOSE FD" << endl;
+						//cout << "CLOSE FD" << endl;
 						_poll[x] = _poll[fd_count - 1];
 						_poll[x].events = POLLIN;
 						serv.deleteUser(serv.getUser(fd));
@@ -122,7 +122,7 @@ void ft_run(int port, string password)
 		else
 			perror("There were select failures: ");
 	}
-	cout << "finallllll" << endl;
+	//cout << "finallllll" << endl;
 	close(serv.getFdServer());
 }
 
