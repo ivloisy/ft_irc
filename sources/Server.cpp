@@ -52,18 +52,38 @@ Server::~Server()
 
 void 					Server::initServer()
 {
-	this->establishConnection();
+
+
+	int optval = 1;
+	struct addrinfo * p;
+
+	this->setServinfo();
+	for ( p = _test; p != NULL; p = p->ai_next ) {
+		this->establishConnection();
+		if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) < 0)
+		{
+			cout << "error setting socket option..." << endl;
+			return ;
+		}
+		if (fcntl(this->_fd, F_SETFL, O_NONBLOCK) == -1)
+		{
+			cout << "error..." << endl;
+			return ;
+		}
+		if (this->bindServer())
+			continue ;
+		break ;
+	}
+	freeaddrinfo(_test);
+
+
 	this->_fdMax = this->_fd;
 	this->createServerAddr(this->_portNum);
 
-	int optval = 1;
-	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
-	{
-		cout << "error setting socket option..." << endl;
-		return ;
-	}
-	fcntl(this->_fd, F_SETFL, O_NONBLOCK);
-	this->bindServer();
+
+//===============
+
+
 	this->_size = sizeof(this->getServerAddr());
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
 	{
