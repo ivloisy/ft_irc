@@ -16,18 +16,10 @@
   <component name="ChangeListManager">
     <list default="true" id="885fb3cc-9bad-4a89-89bf-a4b89130b7dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/ft_irc.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/ft_irc.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/reply.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/reply.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/USER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/USER.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WHOIS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/reply.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/reply.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +72,7 @@
       <updated>1657552614082</updated>
       <workItem from="1657552615716" duration="18596000" />
       <workItem from="1657632780842" duration="50401000" />
-      <workItem from="1657690143123" duration="14415000" />
+      <workItem from="1657690143123" duration="15966000" />
     </task>
     <servers />
   </component>

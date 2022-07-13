@@ -131,6 +131,11 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		//check is user is registered
 		if (quit_all_chan(srv, usr,params))
 			return ;
+		if (params[1][0] != '#')
+		{
+			srv.ft_error(&usr, ERR_BADCHANMASK);
+			return ;
+		}
 		stringstream ss(params[1]);
 		string str;
 		vector<string> chans;

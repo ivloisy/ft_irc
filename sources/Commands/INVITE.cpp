@@ -26,7 +26,7 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
 		return;
 	}
-	User * user = *srv.getUser(params[1]);
+
 	//set current channel
 	Channel * chan = srv.getChannelByName(params[2]);
 	if (!chan)
@@ -35,6 +35,7 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		return ;
 	}
 	//cout << "user nick = " << user->getNickName() << endl;
+	User * user = *srv.getUser(params[1]);
 	if (chan->getUser(user->getNickName()))
 	{
 		srv.ft_error(&usr, ERR_USERONCHANNEL, user->getNickName());

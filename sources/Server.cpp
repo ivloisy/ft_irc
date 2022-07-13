@@ -162,7 +162,7 @@ void 					Server::welcome(int const & fd)
 	ft_reply(usr, RPL_WELCOME, usr->getPrefix());
 	ft_reply(usr, RPL_YOURHOST, _serverName, _ver);
 	ft_reply(usr, RPL_CREATED, "today");
-	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "io", "0o");
+	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "user modes: io");
 }
 
 void					Server::parse_buffer_command(string const & str)

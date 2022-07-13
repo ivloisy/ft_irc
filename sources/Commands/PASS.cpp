@@ -37,6 +37,8 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		if (params[1] == srv.getPassword())
 		{
 			usr.setPassword(params[1]);
+			string msg(":" + usr.getPrefix() + " PASS : ¯\\_(ツ)_/¯\r\n");
+			srv.sendBuffer(&usr, msg);
 			return;
 		}
 		else
