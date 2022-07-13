@@ -92,6 +92,7 @@ void ft_run(int port, string password)
 						serv.deleteUser(serv.getUser(fd));
 						close(fd);
 						fd_count--;
+						save.clear();
 					}
 					if (creation == 1)
 						break ;
