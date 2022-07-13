@@ -21,6 +21,13 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
 		return;
 	}
+	User * user = *srv.getUser(params[1]);
+	Channel * chan = srv.getChannelByName(params[2]);
+	if (chan->getUser(user->getNickName()))
+	{
+		srv.ft_error(&usr, ERR_USERONCHANNEL, user->getNickName());
+		return ;
+	}
 	vector<string> newParams;
 	newParams.push_back(string("JOIN"));
 	size_t x = 2;
@@ -34,7 +41,7 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		newParams.push_back(params[x]);
 		x++;
 	}
-	User * user = *srv.getUser(params[1]);
+
 	//cout << "params size = " << newParams.size() << endl;
 	join_cmd(srv, *user, newParams);
 	//cout << "invite command exit" << cout;
