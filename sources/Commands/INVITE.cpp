@@ -14,7 +14,7 @@ using namespace std;
 void	invite_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//cout << "invite fonction called" << endl;
-	if (!srv.check_command(&usr, 1, params) || (usr.isOperator()))
+	if (!srv.check_command(&usr, 1, params) || !(usr.isOperator()))
 		return ;
 	if (srv.getUser(params[1]) == srv.getUsers().end())
 	{
