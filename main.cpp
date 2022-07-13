@@ -18,7 +18,7 @@ bool check_buffer(string buf)
 	while (x < buf.size())
 	{
 		cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
-		if (!isprint(buf[x]) && buf[x] != '\n')
+		if (!isprint(buf[x]) && buf[x] != '\n' && (buf[x - 1] != '\r' && buf[x] != '\n'))
 		{
 			cout << "FAAAALSE" << endl;
 			return false;
