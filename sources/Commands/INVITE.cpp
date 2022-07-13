@@ -14,18 +14,18 @@ using namespace std;
 void	invite_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//cout << "*** Invite command called ***" << endl;
-	if (!srv.check_command(&usr, 1, params))
+	if (!srv.check_command(&usr, 3, params))
 		return ;
 	if (!usr.isOperator())
 	{
 		srv.ft_error(&usr, ERR_NOPRIVILEGES);
 		return ;
 	}
-	if (srv.getUser(params[1]) == srv.getUsers().end())
-	{
-		srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
-		return;
-	}
+	//if (srv.getUser(params[1]) == srv.getUsers().end())
+	//{
+	//	srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
+	//	return;
+	//}
 
 	//set current channel
 	Channel * chan = srv.getChannelByName(params[2]);
@@ -36,6 +36,11 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 	}
 	//cout << "user nick = " << user->getNickName() << endl;
 	User * user = *srv.getUser(params[1]);
+	if (!user)
+	{
+		srv.ft_error(&usr, ERR_NOSUCHNICK);
+		return ;
+	}
 	if (chan->getUser(user->getNickName()))
 	{
 		srv.ft_error(&usr, ERR_USERONCHANNEL, user->getNickName());

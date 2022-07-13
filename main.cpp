@@ -1,14 +1,7 @@
 #include "./includes/ft_irc.hpp"
-#include <signal.h>
 
 using namespace std;
 using namespace irc;
-
-void	sighand(int sig)
-{
-	if (sig == SIGINT)
-		exit(0);
-}
 
 bool check_buffer(string buf)
 {
@@ -44,8 +37,6 @@ void ft_run(int port, string password)
 	struct pollfd			_poll[1025];
 	_poll[0].fd = serv.getFdServer();
 	_poll[0].events = POLLIN;
-
-	signal(SIGINT, sighand);
 
 	while (serv.getState())
 	{
