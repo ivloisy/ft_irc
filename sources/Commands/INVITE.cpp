@@ -13,7 +13,7 @@ using namespace std;
 
 void	invite_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Invite command called ***" << endl;
+	//cout << "*** Invite command called ***" << endl;
 	if (!srv.check_command(&usr, 1, params))
 		return ;
 	if (!usr.isOperator())

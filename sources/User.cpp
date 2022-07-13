@@ -103,7 +103,7 @@ bool					User::isOperator()
 
 bool					User::check_if_complete() const
 {
-	cout << this->_nickname << " " << this->_password << " " << this->_username << endl;
+	//cout << this->_nickname << " " << this->_password << " " << this->_username << endl;
 	if (this->_nickname.size() > 0 && this->_password.size() > 0 && this->_username.size() > 0 && this->_welcome != 1)
 		return (1);
 	return (0);
@@ -338,7 +338,7 @@ void					User::setOperator(bool set)
 
 void					User::setInvisible(bool set)
 {
-	cout << "mode = " << _mode << endl;
+	//cout << "mode = " << _mode << endl;
 	for (size_t i = 0; i < _mode.size(); i++)
 	{
 		if (_mode[i] == 'i')

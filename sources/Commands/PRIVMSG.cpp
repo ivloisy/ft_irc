@@ -22,7 +22,7 @@ using namespace std;
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Privmsg command called ***" << endl;
+	//cout << "*** Privmsg command called ***" << endl;
 	if (!srv.check_command(&usr, 3, params))
 		return ;
 	else

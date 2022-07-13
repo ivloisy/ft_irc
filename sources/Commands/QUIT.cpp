@@ -16,7 +16,7 @@ using namespace std;
 
 void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** Quit command called ***" << endl;
+	//cout << "*** Quit command called ***" << endl;
 	if (!srv.check_command(&usr, 1, params))
 		return ;
 	string msg = "";

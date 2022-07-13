@@ -16,7 +16,7 @@ using namespace std;
 
 void	nick_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Nick command called ***" << endl;
+	//cout << "*** Nick command called ***" << endl;
 	string	tmp = usr.getNickName();
 	string	buf;
 
@@ -57,5 +57,5 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	srv.ft_notice(&usr, &usr, NTC_NICK(usr.getNickName()));
 	if (usr.getRdySend() == 2)
 		usr.setRdySend();
-	std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;
+	//std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;
 }

@@ -36,7 +36,6 @@
 # define YELLOW			"\033[33m"
 # define BLUE			"\033[34m"
 # define MAGENTA		"\033[35m"
-# define LMAGENTA		"\033[45m"
 # define CYAN			"\033[36m"
 # define WHITE			"\033[37m"
 # define BOLDBLACK		"\033[1m\033[30m"

@@ -13,7 +13,7 @@ using namespace std;
 
 void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Wallops command called ***" << endl;
+	//cout << "*** Wallops command called ***" << endl;
 	if (!srv.check_command(&usr, 1, params))
 		return ;
 	if (!usr.isOperator())

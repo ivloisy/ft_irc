@@ -16,9 +16,25 @@
   <component name="ChangeListManager">
     <list default="true" id="885fb3cc-9bad-4a89-89bf-a4b89130b7dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/ft_irc.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/includes/ft_irc.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/CAP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/CAP.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/DIE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/DIE.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/INVITE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/INVITE.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/JOIN.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/LIST.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/LIST.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/MODE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/MODE.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NAMES.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/NICK.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NICK.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/NOTICE.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/OPER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/OPER.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/PART.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PART.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/PASS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PASS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/PING.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PING.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/PRIVMSG.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/QUIT.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/TOPIC.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/TOPIC.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Commands/USER.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/USER.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Commands/WALLOPS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sources/Server.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +88,7 @@
       <updated>1657552614082</updated>
       <workItem from="1657552615716" duration="18596000" />
       <workItem from="1657632780842" duration="50401000" />
-      <workItem from="1657690143123" duration="15966000" />
+      <workItem from="1657690143123" duration="17654000" />
     </task>
     <servers />
   </component>

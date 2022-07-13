@@ -301,7 +301,7 @@ void				Server::sendBuffer(User * dest, string const & content)
 
 void				Server::sending(int fd, string toSend)
 {
-	cout << LMAGENTA << "Sending : " << toSend << RESET << endl;
+	cout << MAGENTA << "Sending : " << toSend << RESET << endl;
 	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 
