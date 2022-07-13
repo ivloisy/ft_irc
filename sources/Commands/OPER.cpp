@@ -42,11 +42,11 @@ void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 				return ;
 			}
 			//ERR_PASSWDMISMATCH
-			srv.ft_reply(&usr, ERR_PASSWDMISMATCH);
+			srv.ft_error(&usr, ERR_PASSWDMISMATCH);
 			return ;
 		}
 		//ERR_NOOPERHOST
-		srv.ft_reply(&usr, ERR_NOOPERHOST);
+		srv.ft_error(&usr, ERR_NOOPERHOST);
 		return ;
 
 		//Channel Operator
