@@ -563,6 +563,8 @@ void 	Server::initReplyTree()
 	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
 	map_rep[RPL_UMODEIS] = ft_RPL_UMODEIS;
 	map_rep[RPL_INVITING] = ft_RPL_INVITING;
+	map_rep[RPL_WHOREPLY] = ft_RPL_WHOREPLY;
+	map_rep[RPL_ENDOFWHO] = ft_RPL_ENDOFWHO;
 }
 
 void	Server::initErrorTree()

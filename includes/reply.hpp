@@ -30,6 +30,8 @@ using namespace std;
 # define RPL_YOUREOPER "381"
 # define RPL_UMODEIS "221"
 # define RPL_INVITING "341"
+# define RPL_ENDOFWHO "315"
+# define RPL_WHOREPLY "352"
 
 /* Error Replies */
 # define ERR_NOSUCHNICK "401"
@@ -117,5 +119,6 @@ string ft_RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, stri
 string ft_RPL_TOPIC(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_UMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_INVITING(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_ENDOFWHO(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

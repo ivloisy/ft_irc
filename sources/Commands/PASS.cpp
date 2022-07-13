@@ -20,15 +20,34 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	cout << "*** Pass command called ***" << endl;
 	cout << params[1] << " : " << srv.getPassword() << endl;
-	if (params.size() == 2 )
+	//if (!srv.check_command(&usr, 2, params))
+	//	return ;
+	if (usr.getNickName() == "")
+	{
+		srv.ft_error(&usr, ERR_NOLOGIN);
+		return ;
+	}
+	if (!(usr.getPassWord() == ""))
+	{
+		srv.ft_error(&usr, ERR_ALREADYREGISTRED);
+		return ;
+	}
+	if (params.size() == 2)
 	{
 		if (params[1] == srv.getPassword())
 		{
 			usr.setPassword(params[1]);
+			string msg(":" + usr.getPrefix() + " PASS : ¯\\_(ツ)_/¯\r\n");
+			srv.sendBuffer(&usr, msg);
 			return;
+		}
+		else
+		{
+			srv.ft_error(&usr, ERR_PASSWDMISMATCH);
+			return ;
 		}
 	}
 	//usr.setToClose(1);
-	srv.ft_error(&usr, "464", params[1]);
+	srv.ft_error(&usr, ERR_ALREADYREGISTRED);
 	return ;
 }

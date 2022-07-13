@@ -23,7 +23,7 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	if (params.size() == 1)
 	{
 		usr.resetRdySend();
-		srv.ft_error(&usr, ERR_NONICKNAMEGIVEN, "");
+		srv.ft_error(&usr, ERR_NEEDMOREPARAMS);
 		return ;
 	}
 	if (params.size() > 2 || params[1].length() > 9 || params[1].length() == 0

@@ -7,7 +7,6 @@
 using namespace irc;
 using namespace std;
 
-
 void	who_user(Server & srv, User & usr, vector<string> params, bool wild)
 {
 	(void)usr;
@@ -16,12 +15,12 @@ void	who_user(Server & srv, User & usr, vector<string> params, bool wild)
 		vector<User *> users = srv.getUsers();
 		for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 			if ( (*it)->getNickName() == params[0] || (*it)->getHostname() == params[0] || (*it)->getServerName() == params[0] || (*it)->getRealName() == params[0] )
-				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
+				srv.ft_reply(&usr, RPL_WHOREPLY, (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
 	}
 	if (wild == true)
-		srv.ft_reply(&usr, "315", "*");
+		srv.ft_reply(&usr, RPL_ENDOFWHO, "*");
 	else
-		srv.ft_reply(&usr, "315", params[0]);
+		srv.ft_reply(&usr, RPL_ENDOFWHO, params[0]);
 }
 
 void	who_chan(Server & srv, User & usr, vector<string> params, bool wild)
@@ -32,11 +31,11 @@ void	who_chan(Server & srv, User & usr, vector<string> params, bool wild)
 		{
 			vector<User *> users = srv.getUsers();
 			for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
-				srv.ft_reply(&usr, "352", (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
+				srv.ft_reply(&usr, RPL_WHOREPLY, (*it)->getCurrentChannelName(), (*it)->getUserName(), (*it)->getHostname(), (*it)->getServerName(), (*it)->getNickName(), (*it)->getRealName());
 
 		}
 	}
-	srv.ft_reply(&usr, "315",(wild == true ? "*" : params[0]));
+	srv.ft_reply(&usr, RPL_ENDOFWHO,(wild == true ? "*" : params[0]));
 }
 
 void				who_wildcard(Server &srv, User &usr, vector<string> params)

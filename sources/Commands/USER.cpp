@@ -12,11 +12,15 @@ using namespace std;
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	cout << "*** User command called ***" << endl;
-	(void)srv;
 	if (params.size() < 5)
 	{
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
 		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
+		return ;
+	}
+	if (usr.getUserName() != "" && usr.getHostname() != "" && usr.getServerName() != "" && usr.getRealName() != "")
+	{
+		srv.ft_error(&usr, ERR_ALREADYREGISTRED);
 		return ;
 	}
 	if (params[1].length())
@@ -26,11 +30,21 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	if (params[2].length())
 		usr.setServerName(params[3]);
 
-	string	real = params[4].substr(1, params[4].length() - 1);
-	for (vector<string>::iterator it = params.begin() + 5; it != params.end(); it++)
+	//string	real = params[4].substr(1, params[4].length() - 1);
+	//for (vector<string>::iterator it = params.begin() + 5; it != params.end(); it++)
+	//{
+	//	real += " ";
+	//	real += *it;
+	//}
+	string real = "";
+	if (params.size() >= 5)
 	{
-		real += " ";
-		real += *it;
+		for (vector<string>::iterator it = params.begin() + 2; it != params.end();it++)
+		{
+			for (size_t i = 0; i < (*it).size(); i++)
+				real.push_back((*it)[i]);
+			real.push_back(' ');
+		}
 	}
 	usr.setRealName(real);
 
