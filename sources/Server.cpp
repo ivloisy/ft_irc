@@ -44,6 +44,7 @@ Server::Server(int const & portNum, string const & passw) :
 	_maxChannels(10),
 	_ver(VERSION)
 {
+	this->setDate();
 	this->initServer();
 }
 
@@ -502,9 +503,7 @@ void				Server::setDate()
 	char *	dt = ctime(&now);
 	string	s = dt;
 
-	cout << s << "//////////////////////////" << endl;
-
-	this->_date = s;
+	this->_date = s.substr(0, s.length() - 1);
 	return ;
 }
 
