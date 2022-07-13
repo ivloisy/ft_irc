@@ -8,10 +8,8 @@ bool check_buffer(string buf)
 	size_t x = 0;
 	while (x <= buf.size())
 	{
-		//cout << "check this char : " << static_cast<int>(buf[x]) << endl;
 		if (!isprint(buf[x]) && buf[x] != '\n' && buf[x] != '\r' && buf[x] != '\0')
 		{
-			//cout << RED << "this char is nonprintable : " << static_cast<int>(buf[x]) << RESET << endl;
 			return false;
 		}
 

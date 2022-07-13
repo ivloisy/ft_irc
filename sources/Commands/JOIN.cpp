@@ -33,33 +33,17 @@ using namespace std;
 bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 {
 	(void)srv;
-	//if (existing.getInviteOnlyMode())
-	//{
-	//	srv.ft_error(&usr, ERR_INVITEONLYCHAN, existing.getChannelName());
-	//	return (false);
-	//}
 	if (existing.isMaxUsers())
 	{
 		srv.ft_error(&usr, ERR_CHANNELISFULL, existing.getChannelName());
 		return (false);
 	}
-	//else if (existing.getBanned(usr.getNickName()))
-	//{
-	//	srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
-	//	return (false);
-	//}
-	//join channel
-	//bitset<3> dflt(string("101"));
-	//bitset<2> mode(string("10"));
-
 	if (usr.isInvisible())
 	{
 		usr.setInvisible(0);
 		srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-i"));
 	}
-	//usr.setMode(mode);
 	existing.addUser(&usr);
-	//existing.addUserMode(&usr, dflt);
 	usr.addChannel(&existing);
 	vector<User *> memb = existing.getChannelUsers();
 	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
@@ -67,7 +51,6 @@ bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 		if ((*it)->getNickName() != usr.getNickName())
 			srv.ft_notice(&usr, *it, NTC_JOIN(existing.getChannelName()));
 	}
-	//usr.setCurrentChannel(&existing);
 	return (true);
 }
 
@@ -79,24 +62,14 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 		srv.ft_error(&usr, ERR_TOOMANYCHANNELS, name);
 		return (NULL);
 	}
-	//create channel
 	Channel * new_chan = srv.addChannel(&usr, name);
-	//bitset<3> creator(string("101"));
-	//bitset<2> mode(string("10"));
-
-	//usr.setMode(mode);
 	new_chan->addUser(&usr);
-	//new_chan->addOper(&usr);
-	//new_chan->addUserMode(&usr, creator);
 	usr.addChannel(new_chan);
-	//cout << "IS IT INVISIBLE ?? " << usr.isInvisible() << endl;
 	if (usr.isInvisible())
 	{
 		usr.setInvisible(false);
 		srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-i"));
 	}
-	//usr.setCurrentChannel(new_chan);
-	//got channel operator mode
 	return (new_chan);
 }
 
@@ -104,11 +77,6 @@ bool	quit_all_chan(Server &srv, User &usr, vector<string> &params)
 {
 	if (params[1] == "0" && params.size() < 2)
 	{
-		//quit all joined channels
-		//string msg(params[1] + " left!");
-		//msg.clear();
-		//msg = usr.getNickName() + " left " + params[1];
-		//srv.sendToChan(params[1], msg);
 		usr.clearAllChannels();
 		srv.delUserAllChannel(&usr);
 		return (true);
@@ -150,7 +118,6 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 				return ;
 			}
 		}
-		//cout << "chan name = " << *chans.begin() << endl;
 		string ret;
 		if (((ret = isDouble(chans)) == "") && chans.size() > 1)
 		{

@@ -19,19 +19,6 @@ using namespace std;
 void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	//cout << "*** Pass command called ***" << endl;
-	//cout << params[1] << " : " << srv.getPassword() << endl;
-	//if (!srv.check_command(&usr, 2, params))
-	//	return ;
-	//if (usr.getNickName() == "")
-	//{
-	//	srv.ft_error(&usr, ERR_NOLOGIN);
-	//	return ;
-	//}
-	//if (!(usr.getPassWord() == ""))
-	//{
-	//	srv.ft_error(&usr, ERR_);
-	//	return ;
-	//}
 	if (params.size() == 2)
 	{
 		if (params[1] == srv.getPassword())

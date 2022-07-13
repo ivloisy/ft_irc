@@ -26,7 +26,6 @@ User::User(int fd) :
 		_currChan(NULL),
 		_mode(""),
 		_acceptConnect(1),
-		//_isOper(0),
 		_toClose(0),
 		_welcome(0),
 		_rdySend(0)
@@ -103,7 +102,6 @@ bool					User::isOperator()
 
 bool					User::check_if_complete() const
 {
-	//cout << this->_nickname << " " << this->_password << " " << this->_username << endl;
 	if (this->_nickname.size() > 0 && this->_password.size() > 0 && this->_username.size() > 0 && this->_welcome != 1)
 		return (1);
 	return (0);
@@ -175,12 +173,7 @@ bool					User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
 }
-/*
-bool					User::getOper() const
-{
-	return (this->_isOper);
-}
-*/
+
 int 					User::getRdySend() const
 {
 	return this->_rdySend;
@@ -191,12 +184,7 @@ string 					User::getMode()
 {
 	return (this->_mode);
 }
-/*
-bool					User::getInvisible() const
-{
-	return (this->_isInv);
-}
-*/
+
 Channel*				User::getCurrentChannel()
 {
 	return (this->_currChan);
@@ -230,22 +218,12 @@ void					User::setPrefix()
 {
 	this->_prefix = _nickname + "!" + _username + "@" + _hostname;
 }
-/*
-void					User::setInvisible(bool const & inv)
-{
-	this->_isInv = inv;
-}
-*/
+
 void					User::setMode(string const & mode)
 {
 	this->_mode = mode;
 }
-/*
-void					User::setOper(bool const & op)
-{
-	this->_isOper = op;
-}
-*/
+
 void					User::setAcceptConnect(bool const & ac)
 {
 	this->_acceptConnect = ac;
@@ -340,7 +318,6 @@ void					User::setOperator(bool set)
 
 void					User::setInvisible(bool set)
 {
-	//cout << "mode = " << _mode << endl;
 	for (size_t i = 0; i < _mode.size(); i++)
 	{
 		if (_mode[i] == 'i')

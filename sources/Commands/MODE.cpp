@@ -21,20 +21,6 @@ USER MODES :						ADD IF WE HAVE TIME
 	//- r : restricted
 	- o : operator
 
-CHANNEL MODES :
-for users :
-    - O : channel creator
-    //- o : channel operator			//i : invited
-    //- v : voice						b : banned
-for channels :
-    //- i : invite only
-    //- m : moderated
-    //- n : outside privmsg
-disabled
-    //- p : private
-    //- t : topic locked
-    //- k : key locked
-    //- l : user limit
  */
 
 char				isUnknown(string content)
@@ -58,20 +44,6 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		return ;
 	else
 	{
-		//char c;
-		//if ((c = isUnknown(params[2])))
-		//{
-		//	//ERR_UNKNOWNMODE
-		//	string ret(1, c);
-		//	srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
-		//	return ;
-		//}
-		//if (params[2].size() > 3 || (params[2][0] != '+' && params[2][0] != '-'))
-		//{
-		//	srv.ft_error(&usr, ERR_UNKNOWNMODE, params[2]);
-		//	return ;
-		//}
-
 		if (srv.isUserReal(params[1]))
 		{
 			if (params.size() < 3)
@@ -88,7 +60,6 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			char c;
 			if ((c = isUnknown(params[2])) != 0)
 			{
-				//ERR_UNKNOWNMODE
 				string ret(1, c);
 				srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
 				return ;
@@ -130,7 +101,6 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		}
 		else
 		{
-			//ERR_USERDONTMATCH
 			srv.ft_error(&usr, ERR_USERSDONTMATCH);
 			return ;
 		}

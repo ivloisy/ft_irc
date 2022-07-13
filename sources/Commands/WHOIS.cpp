@@ -54,7 +54,7 @@ void				who_wildcard(Server &srv, User &usr, vector<string> params)
 
 void	whois_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Whois command called ***" << endl;
+	// cout << "*** Whois command called ***" << endl;
 	if (params[0][0] == '#')
 		who_chan(srv, usr, params, false); // chan
 	else if (params[0] == "*")

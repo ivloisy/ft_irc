@@ -20,19 +20,15 @@ using namespace std;
 void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	//cout << "*** Oper command called ***" << endl;
-	//cout << "oper cmd called" << endl;
 	if (!srv.check_command(&usr, 3, params))
 		return ;
 	else
 	{
 		//IRCOperator
-		//cout << "oper cmd check" << endl;
 		if (params[1] == OPER_NAME)
 		{
-			//cout << "oper name ok" << endl;
 			if (params[2] == OPER_PASS)
 			{
-			//	cout << "oper pass ok" << endl;
 				//RPL_YOUREOPER
 				usr.setOperator(1);
 				srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "+o"));
@@ -46,12 +42,6 @@ void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		//ERR_NOOPERHOST
 		srv.ft_error(&usr, ERR_NOOPERHOST);
 		return ;
-
-		//Channel Operator
-		//if (srv->getUser(params[1]) == srv->getChannel())
-		//{
-			//if (params[2])
-		//}
 	}
 	//std::cout << "oper command called" << std::endl;
 }

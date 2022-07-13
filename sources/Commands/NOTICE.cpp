@@ -86,7 +86,6 @@ void	notice_cmd(Server & srv, User & usr, vector<string> params)
 					srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *memb);
 					return ;
 				}
-
 			}
 			else if ((dstu = *srv.getUser(*memb)))
 			{

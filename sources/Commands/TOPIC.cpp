@@ -42,8 +42,6 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 			}
 			else
 			{
-				// srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
-				// return ;
 				if (usr.isOperator())
 				{
 					string	ret = "";
@@ -75,11 +73,6 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
 			return ;
 		}
-		// if (!usr.isChanop())
-		// {
-		// 	srv.ft_error(&usr, ERR_CHANOPRIVSNEEDED, params[1]);
-		// 	return ;
-		// }
 	}
 }
 

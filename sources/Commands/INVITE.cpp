@@ -21,12 +21,6 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NOPRIVILEGES);
 		return ;
 	}
-	//if (srv.getUser(params[1]) == srv.getUsers().end())
-	//{
-	//	srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
-	//	return;
-	//}
-
 	//set current channel
 	Channel * chan = srv.getChannelByName(params[2]);
 	if (!chan)
@@ -34,13 +28,6 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[2]);
 		return ;
 	}
-	//cout << "user nick = " << user->getNickName() << endl;
-	//if (srv.isUserReal(params[1]))
-	//{
-	//	srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
-	//	return ;
-	//}
-	//cout << "user nickname = " << params[1] << endl;
 	User * user = srv.getUserInstance(params[1]);
 	if (!user)
 	{
@@ -52,26 +39,8 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_USERONCHANNEL, user->getNickName());
 		return ;
 	}
-	/*
-	vector<string> newParams;
-	newParams.push_back(string("JOIN"));
-	size_t x = 2;
-	while (x < params.size())
-	{
-		if (srv.getChannelByName(params[x]) == *srv.getChannels().end())
-		{
-			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[x]);
-			return;
-		}
-		newParams.push_back(params[x]);
-		x++;
-	}
-	*/
-	//cout << "params size = " << newParams.size() << endl;
 	srv.ft_notice(&usr, user, NTC_INVITE(chan->getChannelName(), user->getNickName()));
 	srv.ft_reply(&usr, RPL_INVITING, user->getNickName(), chan->getChannelName());
 
-	//join_cmd(srv, *user, newParams);
-	//cout << "invite command exit" << cout;
 	//cout << "*** Cap command success ***" << endl;
 }

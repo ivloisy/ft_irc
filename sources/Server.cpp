@@ -313,11 +313,6 @@ bool				Server::check_command(User * u, size_t want, vector<string> command)
 		ft_error(u, ERR_NEEDMOREPARAMS, command[0]);
 		return false;
 	}
-	// for (size_t i = 0; i < command.size(); i++)
-	// {
-	// 	if (command[i] == "")
-	// 		return false;
-	// }
 	return true;
 }
 
@@ -388,9 +383,6 @@ void				Server::delUserAllChannel(User * user)
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 	{
 		(*it)->delUser(user);
-		//(*it)->delOper(user);
-		//(*it)->delUserMode(user);
-		//(*it)->delInvite(user);
 	}
 }
 
@@ -453,7 +445,6 @@ vector<User *>::iterator				Server::getUser(string const & nick)
 Channel*			Server::getChannelByName(string const & name)
 {
 	vector<Channel *>::iterator last = this->_channel.end();
-	// cout << "NAMMMMMME " << name << endl;
 	for (vector<Channel *>::iterator it = this->_channel.begin(); it != last; it++)
 		if ((*it)->getChannelName() == name)
 			return (*it);
@@ -703,22 +694,3 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	ret += "\r\n";
 	sendBuffer(to, ret);
 }
-/*
-void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
-{
-	(void)self;
-	string ret = ":";
-	ret += from->getPrefix();
-	ret += " ";
-	ret += notice;
-	ret += "\r\n";
-	vector<User *> tousr = to->getChannelUsers();
-	for (vector<User *>::iterator it = tousr.begin(); it != tousr.end(); it++)
-	{
-		if ((*it)->getNickName() != from->getNickName())
-		{
-			sendBuffer(*it, ret);
-		}
-	}
-}
-*/
