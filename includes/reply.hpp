@@ -28,6 +28,7 @@ using namespace std;
 # define RPL_NAMREPLY "353"
 # define RPL_ENDOFNAMES "366"
 # define RPL_YOUREOPER "381"
+# define RPL_UMODEIS "221"
 
 /* Error Replies */
 # define ERR_NOSUCHNICK "401"
@@ -112,5 +113,6 @@ string ft_RPL_LIST(string arg1, string arg2, string arg3, string arg4, string ar
 string ft_RPL_LISTEND(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_TOPIC(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_UMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

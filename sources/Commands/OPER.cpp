@@ -22,25 +22,32 @@ void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
-	if (params.size() < 3)
-	{
-		return ;//ERR_NEEDMOREPARAMS
-	}
+	cout << "oper cmd called" << endl;
+	if (!srv.check_command(&usr, 3, params))
+		return ;
 	else
 	{
 		//IRCOperator
-		if (params[1] == usr.getNickName() && params[1] == OPER_NAME)
+		cout << "oper cmd check" << endl;
+		if (params[1] == OPER_NAME)
 		{
+			cout << "oper name ok" << endl;
 			if (params[2] == OPER_PASS)
 			{
+				cout << "oper pass ok" << endl;
 				//RPL_YOUREOPER
+				usr.setOperator(1);
+				srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "+o"));
 				srv.ft_reply(&usr, RPL_YOUREOPER);
 				return ;
 			}
 			//ERR_PASSWDMISMATCH
+			srv.ft_reply(&usr, ERR_PASSWDMISMATCH);
+			return ;
 		}
 		//ERR_NOOPERHOST
-		//srv->reply()
+		srv.ft_reply(&usr, ERR_NOOPERHOST);
+		return ;
 
 		//Channel Operator
 		//if (srv->getUser(params[1]) == srv->getChannel())

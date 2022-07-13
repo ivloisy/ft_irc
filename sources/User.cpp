@@ -24,7 +24,7 @@ User::User(int fd) :
 		_channel(),
 		_maxChan(10),
 		_currChan(NULL),
-		_mode("i"),
+		_mode(""),
 		_acceptConnect(1),
 		//_isOper(0),
 		_toClose(0),
@@ -326,9 +326,11 @@ void					User::setOperator(bool set)
 			if (set)
 				return ;
 			else
+			{
 				_mode.erase(i);
+				return;
+			}
 		}
-
 	}
 	if (set)
 		_mode.push_back('o');
@@ -336,6 +338,7 @@ void					User::setOperator(bool set)
 
 void					User::setInvisible(bool set)
 {
+	cout << "mode = " << _mode << endl;
 	for (size_t i = 0; i < _mode.size(); i++)
 	{
 		if (_mode[i] == 'i')
@@ -343,9 +346,11 @@ void					User::setInvisible(bool set)
 			if (set)
 				return ;
 			else
+			{
 				_mode.erase(i);
+				return ;
+			}
 		}
-
 	}
 	if (set)
 		_mode.push_back('i');

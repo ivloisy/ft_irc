@@ -22,11 +22,8 @@ using namespace std;
 
 void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 {
-	if (params.size() < 2)
-	{
-		srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+	if (!srv.check_command(&usr, 3, params))
 		return ;
-	}
 	else
 	{
 		if (params[2].size() < 1 || params.size() < 3)

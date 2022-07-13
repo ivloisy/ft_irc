@@ -11,18 +11,15 @@ using namespace std;
 
 /*********************** SEND MESSAGES ********************/
 
-void	notice_cmd(Server & srv, User & usr, std::vector<std::string> params)
+void	notice_cmd(Server & srv, User & usr, vector<string> params)
 {
-	if (params.size() < 2)
-	{
-		srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);
+	if (!srv.check_command(&usr, 2, params))
 		return ;
-	}
 	else
 	{
 		if (params[2].size() < 1 || params.size() < 3)
 		{
-			srv.ft_error(&usr, ERR_NOTEXTTOSEND, NULL);
+			srv.ft_error(&usr, ERR_NOTEXTTOSEND);
 			return ;
 		}
 		vector<string> names;

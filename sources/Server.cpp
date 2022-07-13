@@ -324,7 +324,7 @@ void				Server::delUserAllChannel(User * user)
 	{
 		(*it)->delUser(user);
 		//(*it)->delOper(user);
-		(*it)->delUserMode(user);
+		//(*it)->delUserMode(user);
 		//(*it)->delInvite(user);
 	}
 }
@@ -515,6 +515,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_LISTEND] = ft_RPL_LISTEND;
 	map_rep[RPL_YOUREOPER] = ft_RPL_YOUREOPER;
 	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
+	map_rep[RPL_UMODEIS] = ft_RPL_UMODEIS;
 }
 
 void	Server::initErrorTree()
@@ -587,6 +588,7 @@ void 	Server::ft_reply(User * from, string code, string arg1, string arg2, strin
 
 void	Server::ft_error(User * from, string code, string arg)
 {
+	cout << "hn" << endl;
 	string ret = ":";
 	ret += _serverName;
 	ret += " ";
@@ -597,6 +599,7 @@ void	Server::ft_error(User * from, string code, string arg)
 	ret += map_err.find(code)->second;
 	ret += "\r\n";
 	sendBuffer(from, ret);
+	cout << "sentttt" << endl;
 }
 
 void	Server::ft_notice(User * from, User * to, string notice)

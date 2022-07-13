@@ -11,7 +11,7 @@ using namespace std;
 
 /*********************** OPERATOR COMMAND ************************/
 
-void	wallops_cmd(Server & srv, User & usr, std::vector<std::string> params)
+void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
 	(void)srv;
 	(void)usr;
@@ -19,12 +19,13 @@ void	wallops_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	if (!srv.check_command(&usr, 1, params) || (usr.isOperator()))
 		return ;
 	cout << params[0] << endl;
-	params[0].replace("NOTICE");
+	params.erase(params.begin());
+	params.insert(params.begin(), string("NOTICE"));
 	cout << params[0] << endl;
 	vector<User *> users = srv.getUsers();
 	for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 	{
-		notice_cmd(srv, *it, params);
+		notice_cmd(srv, *(*it), params);
 	}
-	//std::cout << "wallops command called" << std::cout;
+	//cout << "wallops command called" << cout;
 }

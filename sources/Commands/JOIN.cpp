@@ -52,6 +52,11 @@ bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 	//bitset<3> dflt(string("101"));
 	//bitset<2> mode(string("10"));
 
+	if (usr.isInvisible())
+	{
+		usr.setInvisible(0);
+		srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-i"));
+	}
 	//usr.setMode(mode);
 	existing.addUser(&usr);
 	//existing.addUserMode(&usr, dflt);
@@ -79,6 +84,12 @@ Channel*	user_create_channel(Server &srv, User &usr, string &name)
 	//new_chan->addOper(&usr);
 	//new_chan->addUserMode(&usr, creator);
 	usr.addChannel(new_chan);
+	cout << "IS IT INVISIBLE ?? " << usr.isInvisible() << endl;
+	if (usr.isInvisible())
+	{
+		usr.setInvisible(false);
+		srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-i"));
+	}
 	//usr.setCurrentChannel(new_chan);
 	//got channel operator mode
 	return (new_chan);
@@ -109,11 +120,8 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//need to implement key
-	if (params.size() < 1)
-	{
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
-		return ; //ERR_NEEDMOREPARAMS
-	}
+	if (!srv.check_command(&usr, 2, params))
+		return ;
 	else
 	{
 		//check is user is registered
@@ -163,5 +171,5 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			}
 		}
 	}
-	//cout << "join command called" << endl;
+	cout << "join command called" << endl;
 }
