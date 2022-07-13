@@ -26,7 +26,7 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 		return ;
 	}
 	if (params.size() > 2 || params[1].length() > 9 || params[1].length() == 0
-		|| (params[1].find(',') != params[1].npos) || (params[1].find('#') != params[1].npos)))
+		|| (params[1].find(',') != params[1].npos) || (params[1].find('#') != params[1].npos))
 	{
 		usr.resetRdySend();
 		srv.ft_error(&usr, ERR_ERRONEUSNICKNAME, params[1]);

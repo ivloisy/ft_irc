@@ -132,8 +132,13 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		vector<string> chans;
 		while (getline(ss, str, ','))
 		{
-			if (str.find('#') == params[1].begin() && str.find('#') == params[1].npos)
+			if (str.rfind('#') == 0)
 				chans.push_back(str);
+			else
+			{
+				srv.ft_error(&usr, ERR_BADCHANMASK, str);//ERR_NOSUCHCHANNEL
+				return ;
+			}
 		}
 		//cout << "chan name = " << *chans.begin() << endl;
 		string ret;

@@ -17,7 +17,7 @@ bool check_buffer(string buf)
 	size_t x = 0;
 	while (x < buf.size())
 	{
-		cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
+		// cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
 		if (!isprint(buf[x]) && buf[buf.size() - 1] != '\n')
 			if (buf[buf.size() - 2] != '\r')
 			{
