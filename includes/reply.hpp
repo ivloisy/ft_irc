@@ -27,12 +27,7 @@ using namespace std;
 # define RPL_TOPIC "332"
 # define RPL_NAMREPLY "353"
 # define RPL_ENDOFNAMES "366"
-<<<<<<< HEAD
-# define RPL_LIST "322"
-# define RPL_LISTEND "323"
 # define RPL_YOUREOPER "381"
-=======
->>>>>>> origin/user_ivloisy
 
 /* Error Replies */
 # define ERR_NOSUCHNICK "401"
