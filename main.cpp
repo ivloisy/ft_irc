@@ -84,17 +84,17 @@ void ft_run(int port, string password)
 							{
 								cout << "=============ENVOI COMMANDE===============" << endl;
 								save += buffer;
-								if (check_buffer(save))
-								{
+								// if (check_buffer(save))
+								// {
 									serv.parse_buffer_command(save);
 									serv.execCommand(fd);
 									serv.welcome(fd);
-								}
-								else
-								{
-									cout << "OOOOOOOKKKKKKKK" << endl;
-									serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
-								}
+								// }
+								// else
+								// {
+								// 	cout << "OOOOOOOKKKKKKKK" << endl;
+								// 	serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
+								// }
 								save.clear();
 							}
 							else

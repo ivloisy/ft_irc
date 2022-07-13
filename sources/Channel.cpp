@@ -16,7 +16,7 @@ Channel::Channel(User * user, string name) :
 	//_invite(),
 	//_ban(),
 	_inviteOnlyMode(0),
-	_key(),
+	// _key(),
 	_name(name),
 	_topic("no topic defined")
 {
