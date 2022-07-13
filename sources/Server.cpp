@@ -183,6 +183,7 @@ void 					Server::welcome(int const & fd)
 	sendBuffer(*getUser(fd), "                ░ ░      ░          ▒ ░  ░░   ░ ░          \r\n");
 	sendBuffer(*getUser(fd), "                                    ░     ░     ░ ░        \r\n");
 	sendBuffer(*getUser(fd), "                                                ░          \r\n");
+	sendBuffer(*getUser(fd), "                    By Ivan, Benjamin and Antoine          \r\n");
 	sendBuffer(*getUser(fd), "--------------------------------------------------------------------------\r\n");
 	sendBuffer(*getUser(fd), "- LIST OF COMMANDS :              - ACTION                    - OPERATOR -\r\n");
 	sendBuffer(*getUser(fd), "--------------------------------------------------------------------------\r\n");
