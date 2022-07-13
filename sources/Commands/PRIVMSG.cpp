@@ -76,7 +76,13 @@ void	privmsg_cmd(Server & srv, User & usr, vector<string> params)
 						return ;
 					}
 					if (dstc->getUser(usr.getNickName()))
-						srv.ft_notice_chan(&usr, dstc, NTC_PRIVMSG(dstc->getChannelName(), msg), true);
+					{
+						vector<User *> usrs = dstc->getChannelUsers();
+						for (vector<User *>::iterator it = usrs.begin(); it != usrs.end(); it++)
+						{
+							srv.ft_notice(&usr, *it, NTC_PRIVMSG(dstc->getChannelName(), msg));
+						}
+					}
 					else
 					{
 						srv.ft_error(&usr, ERR_NORECIPIENT, params[0]);

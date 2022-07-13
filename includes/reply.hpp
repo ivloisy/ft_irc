@@ -100,6 +100,7 @@ using namespace std;
 # define NTC_CHANMODE_ARG(channel, mode, arg) ("MODE " + channel + " " + mode + " :" + arg)
 # define NTC_KICK(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
 # define NTC_INVITE(channel, usr) ("INVITE " + usr  + " :" + channel)
+# define NTC_WALLOPS(nick, msg) ("WALLOPS " + nick + " :" + msg)
 
 string ft_RPL_WELCOME(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_YOURHOST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);

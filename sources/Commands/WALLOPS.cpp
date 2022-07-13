@@ -14,19 +14,22 @@ using namespace std;
 void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
 	cout << "*** Wallops command called ***" << endl;
-	(void)srv;
-	(void)usr;
-	(void)params;
 	if (!srv.check_command(&usr, 1, params) || (usr.isOperator()))
 		return ;
-	cout << params[0] << endl;
-	params.erase(params.begin());
-	params.insert(params.begin(), string("NOTICE"));
-	cout << params[0] << endl;
+	string msg;
+	if (params.size() >= 2)
+	{
+		for (vector<string>::iterator it = params.begin() + 2; it != params.end();it++)
+		{
+			for (size_t i = 0; i < (*it).size(); i++)
+				msg.push_back((*it)[i]);
+			msg.push_back(' ');
+		}
+	}
 	vector<User *> users = srv.getUsers();
 	for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 	{
-		notice_cmd(srv, *(*it), params);
+		srv.ft_notice(&usr, *it, NTC_WALLOPS((*it)->getNickName(), msg));
 	}
 	//cout << "wallops command called" << cout;
 }

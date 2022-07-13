@@ -61,7 +61,11 @@ bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 	existing.addUser(&usr);
 	//existing.addUserMode(&usr, dflt);
 	usr.addChannel(&existing);
-	srv.ft_notice_chan(&usr, &existing, NTC_JOIN(existing.getChannelName()), true);
+	vector<User *> memb = existing.getChannelUsers();
+	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
+	{
+		srv.ft_notice(&usr, *it, NTC_JOIN(existing.getChannelName()));
+	}
 	//usr.setCurrentChannel(&existing);
 	return (true);
 }

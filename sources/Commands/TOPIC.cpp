@@ -8,6 +8,11 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 	cout << "*** Topic command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
+	if (!usr.isOperator())
+	{
+		srv.ft_reply(&usr, ERR_NOPRIVILEGES);
+		return ;
+	}
 	if (params.size() == 2)
 	{
 		Channel * test = srv.getChannelByName(params[1]);
@@ -55,6 +60,11 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 							ret += " ";
 					}
 					test->setTopic(ret);
+					vector<User *> memb = test->getChannelUsers();
+					for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
+					{
+						srv.ft_notice(&usr, *it, NTC_TOPIC(test->getChannelName(), ret));
+					}
 					srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
 					return ;
 				}

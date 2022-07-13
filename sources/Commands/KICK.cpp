@@ -16,10 +16,49 @@ using namespace std;
 
 void	kick_cmd(Server & srv, User & usr, vector<string> params)
 {
-	(void)srv;
-	(void)usr;
-	(void)params;
 	if (!srv.check_command(&usr, 3, params))
 		return ;
-	cout << "command kick called" << endl;
+	if (!usr.isOperator())
+	{
+		srv.ft_error(&usr, ERR_NOPRIVILEGES);
+		return ;
+	}
+	Channel * chan = srv.getChannelByName(params[1]);
+	if (!chan)
+	{
+		srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
+		return ;
+	}
+	User * user = chan->getUser(params[2]);
+	if (!user)
+	{
+		srv.ft_error(&usr, ERR_NOSUCHNICK, params[2]);
+		return ;
+	}
+	if (!chan->isUserHere(user))
+	{
+		srv.ft_error(&usr, ERR_NOTONCHANNEL, chan->getChannelName());
+		return ;
+	}
+	string msg;
+	if (params.size() >= 3)
+	{
+		for (vector<string>::iterator it = params.begin() + 2; it != params.end();it++)
+		{
+			for (size_t i = 0; i < (*it).size(); i++)
+				msg.push_back((*it)[i]);
+			msg.push_back(' ');
+		}
+	}
+	vector<User *> memb = chan->getChannelUsers();
+	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
+	{
+		srv.ft_notice(&usr, *it, NTC_KICK(chan->getChannelName(), user->getNickName(), msg));
+	}
+	chan->delUser(user);
+	user->quitChannel(chan);
+	if (chan->getChannelUsers().empty())
+	{
+		srv.deleteChannel(chan);
+	}
 }

@@ -624,7 +624,7 @@ void	Server::ft_notice(User * from, User * to, string notice)
 	ret += "\r\n";
 	sendBuffer(to, ret);
 }
-
+/*
 void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
 {
 	(void)self;
@@ -642,3 +642,4 @@ void	Server::ft_notice_chan(User * from, Channel * to, string notice, bool self)
 		}
 	}
 }
+*/
