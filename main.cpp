@@ -70,12 +70,14 @@ void ft_run(int port, string password)
 							creation = 1;
 							serv.setUpFdMax(fd);
 							fd_count++;
+							break ;
 						}
 						else
 							exit_error("Accept failed: ", serv);
 					}
 					if ((receive = recv(fd, &buffer, 255, 0)) >= 1)
 					{
+						cout << "buffer = " << buffer << endl;
 						if (buffer[strlen(buffer) - 1] == '\n')
 						{
 							save += buffer;
