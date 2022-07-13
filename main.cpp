@@ -113,7 +113,7 @@ void ft_run(int port, string password)
 
 int main(int argc, char **argv)
 {
-	cout << LWHITE << "FT_IRC" << RESET << endl;
+	cout << DWHITE << "FT_IRC" << RESET << endl;
 	int port;
 	if (argc == 3)
 	{

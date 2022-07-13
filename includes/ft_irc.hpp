@@ -34,8 +34,15 @@
 // Reset
 # define RESET		"\033[0m"
 
-// Low Colors
-# define LWHITE		"\033[2;37m"
+// DarkColors
+# define DBLACK		"\033[2;30m"
+# define DRED		"\033[2;31m"
+# define DGREEN		"\033[2;32m"
+# define DYELLOW	"\033[2;33m"
+# define DBLUE		"\033[2;34m"
+# define DPURPLE	"\033[2;35m"
+# define DCYAN		"\033[2;36m"
+# define DWHITE		"\033[2;37m"
 
 // Regular Colors
 # define BLACK		"\033[0;30m"
