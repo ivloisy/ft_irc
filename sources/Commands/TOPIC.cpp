@@ -42,8 +42,26 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 			}
 			else
 			{
-				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
-				return ;
+				// srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+				// return ;
+				if (usr.isOperator())
+				{
+					string	ret = "";
+					for (size_t i = 2; i < params.size(); i++)
+					{
+						ret += params[i];
+						if (i + 1 != params.size())
+							ret += " ";
+					}
+					test->setTopic(ret);
+					srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+					return ;
+				}
+				else
+				{
+					srv.ft_error(&usr, ERR_NOPRIVILEGES);
+					return ;
+				}
 			}
 		}
 		else
