@@ -10,7 +10,25 @@ using namespace std;
 
 /******************** CONSTRUCTORS **********************/
 
-Server::Server(int const & portNum) :
+// Server::Server(int const & portNum) :
+// 	map_cmd(),
+// 	_fd(-1),
+// 	_fdMax(-1),
+// 	_serverName(SERVER_NAME),
+// 	_size(0),
+// 	_user(),
+// 	_oper(),
+// 	_channel(),
+// 	_portNum(portNum),
+// 	_state(1),
+// 	_password(),
+// 	_param(),
+// 	_maxChannels(10)
+// {
+// 	this->initServer();
+// }
+
+Server::Server(int const & portNum, string const & passw) :
 	map_cmd(),
 	_fd(-1),
 	_fdMax(-1),
@@ -21,18 +39,10 @@ Server::Server(int const & portNum) :
 	_channel(),
 	_portNum(portNum),
 	_state(1),
-	_password(),
+	_password(passw),
 	_param(),
-	_maxChannels(10)
-{
-	this->initServer();
-}
-
-Server::Server(int const & portNum, string const & passw) :
-	_serverName(SERVER_NAME),
-	_portNum(portNum),
-	_state(1),
-	_password(passw)
+	_maxChannels(10),
+	_ver(VERSION)
 {
 	this->initServer();
 }
@@ -160,7 +170,7 @@ void 					Server::welcome(int const & fd)
 	usr->setWelcome(1);
 	ft_reply(usr, RPL_WELCOME, usr->getPrefix());
 	ft_reply(usr, RPL_YOURHOST, _serverName, _ver);
-	ft_reply(usr, RPL_CREATED, "today");
+	ft_reply(usr, RPL_CREATED, this->getDate());
 	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "io", "0o");
 }
 
@@ -457,6 +467,11 @@ string				Server::getPassword() const
 	return (this->_password);
 }
 
+string				Server::getDate() const
+{
+	return this->_date;
+}
+
 /********************* MUTATORS *************************/
 
 void				Server::setFdServer(int const & fd)
@@ -473,6 +488,18 @@ void 				Server::setUpFdMax(int const & fdCurrent)
 {
 	if (fdCurrent > this->_fdMax)
 		this->_fdMax = fdCurrent;
+}
+
+void				Server::setDate()
+{
+	time_t	now = time(0);
+	char *	dt = ctime(&now);
+	string	s = dt;
+
+	cout << s << "//////////////////////////" << endl;
+
+	this->_date = s;
+	return ;
 }
 
 

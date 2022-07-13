@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <vector>
+# include <ctime>
 
 # include "Channel.hpp"
 # include "reply.hpp"
@@ -28,6 +29,7 @@
 # define OPER_PASS		"hackme"
 # define OPER_NAME		"admin"
 # define SERVER_NAME	"surLeFil"
+# define VERSION		"1.0"
 
 // # define RESET			"\033[0m"
 // # define BLACK			"\033[30m"

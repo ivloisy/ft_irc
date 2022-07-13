@@ -44,7 +44,7 @@ namespace irc
 		string 											_ver;
 
 	public:
-		Server(int const & portNum);
+		// Server(int const & portNum);
 		Server(int const & portNum, string const & passw);
 		virtual ~Server();
 
@@ -72,6 +72,7 @@ namespace irc
 		void 											deleteUser(vector<User *>::iterator user);
 		void											deleteChannel(Channel * chan);
 		string 											printListChannels();
+
 		// void											deleteUser(int fd);
 		//string const									getDate() const;
 		//string const									getVersion() const;
@@ -95,12 +96,14 @@ namespace irc
 		bool											getState() const;
 		string											getServerName() const;
 		string											getPassword() const;
+		string											getDate() const;
 
 		/********************* MUTATORS *************************/
 		void											setFdServer(int const & fd);
 		void											setState(bool const & st);
 		void											setUpFdMax(int const & fdCurrent);
 		// void											setDownFdMax(int const & fdCurrent);
+		void											setDate();
 
 
 		/******************* CHECKERS **********************/
