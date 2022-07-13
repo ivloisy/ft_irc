@@ -18,11 +18,12 @@ bool check_buffer(string buf)
 	while (x < buf.size())
 	{
 		cout << "is print : " << isprint(buf[x]) << " : " << buf[x] << endl;
-		if (!isprint(buf[x]) && buf[x] != '\n' && (buf[x - 1] != '\r' && buf[x] != '\n'))
-		{
-			cout << "FAAAALSE" << endl;
-			return false;
-		}
+		if (!isprint(buf[x]) && buf[buf.size() - 1] != '\n')
+			if (buf[buf.size() - 2] != '\r')
+			{
+				cout << "FAAAALSE" << endl;
+				return false;
+			}
 		x++;
 	}
 	return true;
@@ -84,17 +85,17 @@ void ft_run(int port, string password)
 							{
 								cout << "=============ENVOI COMMANDE===============" << endl;
 								save += buffer;
-								// if (check_buffer(save))
-								// {
+								if (check_buffer(save))
+								{
 									serv.parse_buffer_command(save);
 									serv.execCommand(fd);
 									serv.welcome(fd);
-								// }
-								// else
-								// {
-								// 	cout << "OOOOOOOKKKKKKKK" << endl;
-								// 	serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
-								// }
+								}
+								else
+								{
+									cout << "OOOOOOOKKKKKKKK" << endl;
+									serv.ft_error(*serv.getUser(fd), ERR_ERRSYNTAX, "");
+								}
 								save.clear();
 							}
 							else
