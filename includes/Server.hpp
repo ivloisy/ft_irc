@@ -85,6 +85,7 @@ namespace irc
 
 		vector<User *>::iterator						getUser(int const & fd);
 		vector<User *>::iterator						getUser(string const & nick);
+		User*											getUserInstance(string const & name);
 		Channel*										getChannelByName(string const & name);
 		vector<Channel *>								getChannels() const;
 		string 											getVersion() const;

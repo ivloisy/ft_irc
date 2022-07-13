@@ -217,6 +217,8 @@ bool 					User::getWelcome() const
 	return this->_welcome;
 }
 
+
+
 /********************** SETTERS ***********************/
 
 void					User::setMsg(string const & msg)

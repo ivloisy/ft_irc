@@ -14,7 +14,7 @@ using namespace std;
 void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//cout << "*** Wallops command called ***" << endl;
-	if (!srv.check_command(&usr, 1, params))
+	if (!srv.check_command(&usr, 2, params))
 		return ;
 	if (!usr.isOperator())
 	{
@@ -31,6 +31,7 @@ void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 			msg.push_back(' ');
 		}
 	}
+	cout << "msg = " << msg << endl;
 	vector<User *> users = srv.getUsers();
 	for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 	{

@@ -29,11 +29,11 @@ void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 			msg.push_back(' ');
 		}
 	}
-	vector<User *> memb = srv.getUsers();
-	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
-	{
-		srv.ft_notice(&usr, *it, NTC_QUIT(msg));
-	}
+	//vector<User *> memb = srv.getUsers();
+	//for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
+	//{
+	//	srv.ft_notice(&usr, *it, NTC_QUIT(msg));
+	//}
 	usr.setToClose(1);
 	//std::cout << "quit command called" << std::endl;
 }

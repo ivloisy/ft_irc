@@ -401,6 +401,17 @@ vector<User *>::iterator				Server::getUser(int const & fd)
 	return (it);
 }
 
+User*					Server::getUserInstance(string const & name)
+{
+	for (vector<User *>::iterator it = _user.begin(); it != _user.end(); it++)
+	{
+		if ((*it)->getNickName() == name)
+			return (*it);
+	}
+	return (NULL);
+}
+
+
 
 vector<User *>::iterator				Server::getUser(string const & nick)
 {

@@ -8,15 +8,10 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 	//cout << "*** Topic command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
-	if (!usr.isOperator())
-	{
-		srv.ft_reply(&usr, ERR_NOPRIVILEGES);
-		return ;
-	}
 	if (params.size() == 2)
 	{
 		Channel * test = srv.getChannelByName(params[1]);
-		if (test != NULL)
+		if (test)
 		{
 			if (!usr.getChannelByName(params[1]))
 			{
@@ -34,7 +29,6 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
 			return ;
 		}
-		return ;
 	}
 	else if (params.size() > 2)
 	{

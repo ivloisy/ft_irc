@@ -35,10 +35,16 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 		return ;
 	}
 	//cout << "user nick = " << user->getNickName() << endl;
-	User * user = *srv.getUser(params[1]);
+	//if (srv.isUserReal(params[1]))
+	//{
+	//	srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
+	//	return ;
+	//}
+	cout << "user nickname = " << params[1] << endl;
+	User * user = srv.getUserInstance(params[1]);
 	if (!user)
 	{
-		srv.ft_error(&usr, ERR_NOSUCHNICK);
+		srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
 		return ;
 	}
 	if (chan->getUser(user->getNickName()))

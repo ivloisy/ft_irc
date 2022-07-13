@@ -14,7 +14,7 @@ using namespace std;
 void	notice_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//cout << "*** Notice command called ***" << endl;
-	if (!srv.check_command(&usr, 2, params))
+	if (!srv.check_command(&usr, 3, params))
 		return ;
 	else
 	{
