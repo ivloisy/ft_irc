@@ -119,8 +119,7 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "join command called" << endl;
-	//need to implement key
+	cout << "*** Join command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
 	else
@@ -133,7 +132,13 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		vector<string> chans;
 		while (getline(ss, str, ','))
 		{
-			chans.push_back(str);
+			if (str.rfind('#') == 0)
+				chans.push_back(str);
+			else
+			{
+				srv.ft_error(&usr, ERR_BADCHANMASK, str);//ERR_NOSUCHCHANNEL
+				return ;
+			}
 		}
 		//cout << "chan name = " << *chans.begin() << endl;
 		string ret;
@@ -172,5 +177,5 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			}
 		}
 	}
-	cout << "join command exit" << endl;
+	//cout << "join command exit" << endl;
 }

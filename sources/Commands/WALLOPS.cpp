@@ -13,6 +13,7 @@ using namespace std;
 
 void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 {
+	cout << "*** Wallops command called ***" << endl;
 	(void)srv;
 	(void)usr;
 	(void)params;

@@ -524,6 +524,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_YOUREOPER] = ft_RPL_YOUREOPER;
 	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
 	map_rep[RPL_UMODEIS] = ft_RPL_UMODEIS;
+	map_rep[RPL_INVITING] = ft_RPL_INVITING;
 }
 
 void	Server::initErrorTree()

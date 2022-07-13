@@ -5,6 +5,7 @@ using namespace std;
 
 void		topic_cmd(Server & srv, User & usr, vector<string> params)
 {
+	cout << "*** Topic command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
 	if (params.size() == 2)
@@ -12,16 +13,13 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
 		{
-			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
 			if (!usr.getChannelByName(params[1]))
 			{
-				cout << "DDDDDDDDDDD" << endl;
 				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
 				return ;
 			}
 			else
 			{
-				cout << "HHHHHHHHHHHH" << endl;
 				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
 				return ;
 			}
@@ -38,18 +36,33 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
 		{
-			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
 			if (!usr.getChannelByName(params[1]))
 			{
-				cout << "DDDDDDDDDDD" << endl;
 				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
 				return ;
 			}
 			else
 			{
-				cout << "HHHHHHHHHHHH" << endl;
-				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
-				return ;
+				// srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+				// return ;
+				if (usr.isOperator())
+				{
+					string	ret = "";
+					for (size_t i = 2; i < params.size(); i++)
+					{
+						ret += params[i];
+						if (i + 1 != params.size())
+							ret += " ";
+					}
+					test->setTopic(ret);
+					srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+					return ;
+				}
+				else
+				{
+					srv.ft_error(&usr, ERR_NOPRIVILEGES);
+					return ;
+				}
 			}
 		}
 		else

@@ -9,8 +9,9 @@ using namespace std;
 
 void	ping_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
-	(void)params;
+	cout << "*** Ping command called ***" << endl;
+	if (!srv.check_command(&usr, 1, params))
+		return ;
 	srv.sending(usr.getFdUser(), "PONG\r\n");
-	std::cout << "ping command called" << std::endl;
+	//std::cout << "ping command called" << std::endl;
 }

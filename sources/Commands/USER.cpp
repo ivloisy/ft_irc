@@ -11,6 +11,7 @@ using namespace std;
 
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	cout << "*** User command called ***" << endl;
 	(void)srv;
 	if (params.size() < 5)
 	{
@@ -36,7 +37,7 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	if (usr.getRdySend() == 3)
 		usr.setRdySend();
 	usr.setPrefix();
-	std::cout << "user command called = " << usr.getUserName() << std::endl;
+	//std::cout << "user command called = " << usr.getUserName() << std::endl;
 }
 
 /*
