@@ -44,7 +44,6 @@ Server::~Server()
 	for (vector<User *>::iterator it = this->_user.begin(); it != this->_user.end(); it++)
 		delete(*it);
 	this->_user.clear();
-	cout << "================== CALL DESTRUCTORS =============" << endl;
 	return;
 }
 
