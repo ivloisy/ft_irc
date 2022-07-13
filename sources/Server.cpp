@@ -173,6 +173,7 @@ void 					Server::welcome(int const & fd)
 	ft_reply(usr, RPL_YOURHOST, _serverName, _ver);
 	ft_reply(usr, RPL_CREATED, this->getDate());
 	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "io", "0o");
+	sendBuffer(*getUser(fd), "                                                           \r\n");
 	sendBuffer(*getUser(fd), "                 █████▒▄▄▄█████▓    ██▓ ██▀███   ▄████▄    \r\n");
 	sendBuffer(*getUser(fd), "               ▓██   ▒ ▓  ██▒ ▓▒   ▓██▒▓██ ▒ ██▒▒██▀ ▀█    \r\n");
 	sendBuffer(*getUser(fd), "               ▒████ ░ ▒ ▓██░ ▒░   ▒██▒▓██ ░▄█ ▒▒▓█    ▄   \r\n");
