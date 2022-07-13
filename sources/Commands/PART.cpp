@@ -69,11 +69,13 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 			else
 			{
 				srv.ft_error(&usr, ERR_NOTONCHANNEL, chan->getChannelName());
+				return ;
 			}
 		}
 		else
 		{
 			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *it); //ERR NO SUCH CHANNEL
+			return ;
 		}
 	}
 	//std::cout << "part command end" << std::endl;

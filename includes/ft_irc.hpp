@@ -2,16 +2,17 @@
 # define FT_IRC_HPP
 
 # include <algorithm>
+# include <arpa/inet.h>
 # include <bitset>
 # include <iostream>
 # include <string>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
-# include <arpa/inet.h>
 # include <stdlib.h>
 # include <map>
 # include <netinet/ip.h>
+# include <fcntl.h>
 # include <poll.h>
 # include <string.h>
 # include <sstream>

@@ -39,15 +39,22 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
 		return ;
 	}
-	if (srv.isUserReal(params[1]))
-	{
-		srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
-		return ;
-	}
+	//if (srv.isUserReal(params[1]))
+	//{
+	//	srv.ft_error(&usr, ERR_NICKNAMEINUSE, params[1]);
+	//	return ;
+	//}
 
 //////////////ERR_UNAVAILRESOURCE
 
+	//for (string::iterator it = params[1].begin(); it != params[1].end(); it++)
+	//{
+	//	if ()
+	//	srv.ft_error(&usr, ERR_ERRONEUSNICKNAME);
+	//	return ;
+	//}
 	usr.setNickName(params[1]);
+	srv.ft_notice(&usr, &usr, NTC_NICK(usr.getNickName()));
 	if (usr.getRdySend() == 2)
 		usr.setRdySend();
 	std::cout << tmp << "'s nickname becomes " << usr.getNickName() << std::endl;

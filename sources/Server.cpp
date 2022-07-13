@@ -58,7 +58,11 @@ void 					Server::initServer()
 
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
+	{
 		cout << "error setting socket option..." << endl;
+		return ;
+	}
+	fcntl(this->_fd, F_SETFL, O_NONBLOCK);
 	this->bindServer();
 	this->_size = sizeof(this->getServerAddr());
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
