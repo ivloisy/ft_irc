@@ -163,12 +163,13 @@ void					Server::parse_buffer_command(string const & str)
 	string					s;
 	vector<string>			tmp;
 
+	cout << "entree parse" << endl;
 	while (getline(ss, s, '\r'))
 	{
 		stringstream o(s);
 		string u;
 		while (getline(o, u, ' '))
-			if (u.length())
+			if (u.length() && u != "\n")
 				tmp.push_back(u);
 		size_t x = tmp.size() - 1;
 		size_t y = tmp[x].size() - 1;
@@ -253,6 +254,11 @@ bool				Server::check_command(User * u, size_t want, vector<string> command)
 		ft_error(u, ERR_NEEDMOREPARAMS, command[0]);
 		return false;
 	}
+	// for (size_t i = 0; i < command.size(); i++)
+	// {
+	// 	if (command[i] == "")
+	// 		return false;
+	// }
 	return true;
 }
 

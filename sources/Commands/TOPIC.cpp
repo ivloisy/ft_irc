@@ -11,9 +11,26 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 	{
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
-			srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+		{
+			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
+			if (!usr.getChannelByName(params[1]))
+			{
+				cout << "DDDDDDDDDDD" << endl;
+				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
+				return ;
+			}
+			else
+			{
+				cout << "HHHHHHHHHHHH" << endl;
+				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+				return ;
+			}
+		}
 		else
+		{
 			srv.ft_error(&usr, ERR_NOSUCHCHANNEL, params[1]);
+			return ;
+		}
 		return ;
 	}
 	else if (params.size() > 2)
@@ -21,8 +38,19 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		Channel * test = srv.getChannelByName(params[1]);
 		if (test != NULL)
 		{
-			srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
-			return ;
+			cout << "aaaaaaaaaaaaaaaaaaaaaaa" << endl;
+			if (!usr.getChannelByName(params[1]))
+			{
+				cout << "DDDDDDDDDDD" << endl;
+				srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
+				return ;
+			}
+			else
+			{
+				cout << "HHHHHHHHHHHH" << endl;
+				srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
+				return ;
+			}
 		}
 		else
 		{
@@ -34,11 +62,6 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 		// 	srv.ft_error(&usr, ERR_CHANOPRIVSNEEDED, params[1]);
 		// 	return ;
 		// }
-		if (!usr.getChannelByName(params[1]))
-		{
-			srv.ft_error(&usr, ERR_NOTONCHANNEL, params[1]);
-			return ;
-		}
 	}
 }
 
