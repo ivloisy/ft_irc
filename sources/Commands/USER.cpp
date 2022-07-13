@@ -12,12 +12,8 @@ using namespace std;
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
 	(void)srv;
-	if (params.size() < 5)
-	{
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
-		//srv.sending(usr.getFdUser(), ft_reply(srv.getServerName(), ERR_NEEDMOREPARAMS, usr.getNickName(), params[0] + " :Not enough parameters"));
+	if (!srv.check_command(&usr, 5, params))
 		return ;
-	}
 	if (params[1].length())
 		usr.setUserName(params[1]);
 	if (params[2].length())

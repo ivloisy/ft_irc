@@ -132,7 +132,8 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 		vector<string> chans;
 		while (getline(ss, str, ','))
 		{
-			chans.push_back(str);
+			if (str.find('#') == params[1].begin() && str.find('#') == params[1].npos)
+				chans.push_back(str);
 		}
 		//cout << "chan name = " << *chans.begin() << endl;
 		string ret;

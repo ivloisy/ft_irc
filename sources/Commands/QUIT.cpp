@@ -19,6 +19,8 @@ void	quit_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	(void)srv;
 	(void)usr;
 	(void)params;
+	if (!srv.check_command(&usr, 1, params))
+		return ;
 	usr.setToClose(1);
 	std::cout << "quit command called" << std::endl;
 }
