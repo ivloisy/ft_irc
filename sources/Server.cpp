@@ -242,11 +242,15 @@ void 				Server::execCommand(int const & fd)
 	{
 		transform(this->_param[x][0].begin(), this->_param[x][0].end(), this->_param[x][0].begin(), ::toupper);
 		for (size_t y = 0; y < test.size(); y++)
+		{
 			if (this->_param[x][0] == test[y])
 			{
 				this->map_cmd.find(this->_param[x][0])->second(*this, *(*(this->getUser(fd))), this->_param[x]);
 				break;
 			}
+			if (y + 1 == test.size())
+				this->ft_error((*this->getUser(fd)), ERR_UNKNOWNCOMMAND, this->_param[x][0]);
+		}
 		if ((*(this->getUser(fd)))->getToClose() == 1)
 			break;
 	}
@@ -301,7 +305,7 @@ void				Server::sendBuffer(User * dest, string const & content)
 
 void				Server::sending(int fd, string toSend)
 {
-	cout << LMAGENTA << "Sending : " << toSend << RESET << endl;
+	cout << YELLOW << "Sending : " << toSend << RESET << endl;
 	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 
