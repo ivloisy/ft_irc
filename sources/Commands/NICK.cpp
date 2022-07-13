@@ -54,7 +54,7 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	//	return ;
 	//}
 	usr.setNickName(params[1]);
-	vector<Channel *> chans = srv.getChannels();
+	vector<Channel *> chans = usr.getChannel();
 	for (vector<Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
 	{
 		User * user = (*it)->getUser(usr.getNickName());

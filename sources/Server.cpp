@@ -173,6 +173,32 @@ void 					Server::welcome(int const & fd)
 	ft_reply(usr, RPL_YOURHOST, _serverName, _ver);
 	ft_reply(usr, RPL_CREATED, this->getDate());
 	ft_reply(usr, RPL_MYINFO, _serverName, _ver, "io", "0o");
+	sendBuffer(*getUser(fd), "  █████▒▄▄▄█████▓    ██▓ ██▀███   ▄████▄    \r\n");
+	sendBuffer(*getUser(fd), "▓██   ▒ ▓  ██▒ ▓▒   ▓██▒▓██ ▒ ██▒▒██▀ ▀█    \r\n");
+	sendBuffer(*getUser(fd), "▒████ ░ ▒ ▓██░ ▒░   ▒██▒▓██ ░▄█ ▒▒▓█    ▄   \r\n");
+	sendBuffer(*getUser(fd), "░▓█▒  ░ ░ ▓██▓ ░    ░██░▒██▀▀█▄  ▒▓▓▄ ▄██▒  \r\n");
+	sendBuffer(*getUser(fd), "░▒█░      ▒██▒ ░    ░██░░██▓ ▒██▒▒ ▓███▀ ░  \r\n");
+	sendBuffer(*getUser(fd), " ▒ ░      ▒ ░░      ░▓  ░ ▒▓ ░▒▓░░ ░▒ ▒  ░  \r\n");
+	sendBuffer(*getUser(fd), " ░          ░        ▒ ░  ░▒ ░ ▒░  ░  ▒     \r\n");
+	sendBuffer(*getUser(fd), " ░ ░      ░          ▒ ░  ░░   ░ ░          \r\n");
+	sendBuffer(*getUser(fd), "                     ░     ░     ░ ░        \r\n");
+	sendBuffer(*getUser(fd), "                                 ░          \r\n");
+	sendBuffer(*getUser(fd), "------------------------------------------------------\r\n");
+	sendBuffer(*getUser(fd), "- LIST OF COMMANDS :                                 -\r\n");
+	sendBuffer(*getUser(fd), "- DIE                                  OPERATOR ONLY -\r\n");
+	sendBuffer(*getUser(fd), "- INVITE <User> <Channel>              OPERATOR ONLY -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- KICK <Channel> <User> <Text>                       -\r\n");
+	sendBuffer(*getUser(fd), "- LIST                                               -\r\n");
+	sendBuffer(*getUser(fd), "- MODE <User> <Mode>                                 -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+	sendBuffer(*getUser(fd), "- JOIN <Channel>                                     -\r\n");
+
 }
 
 void					Server::parse_buffer_command(string const & str)

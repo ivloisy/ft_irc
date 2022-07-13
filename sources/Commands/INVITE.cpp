@@ -40,7 +40,7 @@ void	invite_cmd(Server & srv, User & usr, vector<string> params)
 	//	srv.ft_error(&usr, ERR_NOSUCHNICK, params[1]);
 	//	return ;
 	//}
-	cout << "user nickname = " << params[1] << endl;
+	//cout << "user nickname = " << params[1] << endl;
 	User * user = srv.getUserInstance(params[1]);
 	if (!user)
 	{
