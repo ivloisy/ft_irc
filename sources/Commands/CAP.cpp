@@ -18,11 +18,14 @@ using namespace std;
 
 void	cap_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	cout << "*** Cap command called ***" << endl;
 	(void)srv;
+	if (params.size() < 2)
+		return ;
 	transform(params[1].begin(), params[1].end(), params[1].begin(), ::toupper);
 	if (params.size() != 2 || !(params[1] == "LS"))
 		return;
 	if (usr.getRdySend() == 0)
 		usr.setRdySend();
-	std::cout << "cap command called" << std::endl;
+	cout << "*** Cap command success ***" << endl;
 }

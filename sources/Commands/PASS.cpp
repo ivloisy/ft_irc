@@ -18,6 +18,7 @@ using namespace std;
 
 void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	cout << "*** Pass command called ***" << endl;
 	cout << params[1] << " : " << srv.getPassword() << endl;
 	if (params.size() == 2 )
 	{
@@ -29,4 +30,5 @@ void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	}
 	//usr.setToClose(1);
 	srv.ft_error(&usr, "464", params[1]);
+	return ;
 }

@@ -29,6 +29,7 @@ using namespace std;
 # define RPL_ENDOFNAMES "366"
 # define RPL_YOUREOPER "381"
 # define RPL_UMODEIS "221"
+# define RPL_INVITING "341"
 
 /* Error Replies */
 # define ERR_NOSUCHNICK "401"
@@ -86,19 +87,19 @@ using namespace std;
 # define ERR_UMODEUNKNOWNFLAG "501"
 # define ERR_USERSDONTMATCH "502"
 
-# define NTC_NICK(nickname) ("NICK :" + nickname)
-# define NTC_MODE(nickname, modestring) ("MODE " + nickname + " " + modestring)
-# define NTC_JOIN(channel)  ("JOIN :" + channel)
+# define NTC_NICK(nick) ("NICK :" + nick)
+# define NTC_MODE(nick, mode) ("MODE " + nick + " :" + mode)
+# define NTC_JOIN(channel) ("JOIN :" + channel)
 # define NTC_PART(channel) ("PART :" + channel)
 # define NTC_PART_MSG(channel, msg) ("PART " + channel + " :\"" + msg +"\"")
-# define NTC_PRIVMSG(nickname, msg) ("PRIVMSG " + nickname + " " + msg)
-# define NTC_NOTICE(nickname, msg) ("NOTICE " + nickname + " " + msg)
-# define NTC_QUIT(msg) (" QUIT :Quit: " + Msg)
+# define NTC_PRIVMSG(dest, msg) ("PRIVMSG " + dest + " " + msg)
+# define NTC_NOTICE(dest, msg) ("NOTICE " + dest + " " + msg)
+# define NTC_QUIT(msg) (" QUIT :Quit: " + msg)
 # define NTC_TOPIC(channel, topic) ("TOPIC " + channel + " :" + topic)
 # define NTC_CHANMODE(channel, mode) ("MODE " + channel + " :" + mode)
-# define NTC_KICK(channel, mode, arg) ("MODE " + channel + " " + mode + " :" + arg)
-# define NTC_INVITE(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
-# define NTC_CHANMODE_ARG(usr, channel) ("INVITE " + usr + " :" + channel)
+# define NTC_CHANMODE_ARG(channel, mode, arg) ("MODE " + channel + " " + mode + " :" + arg)
+# define NTC_KICK(channel, usr, reason) ("KICK " + channel  + " " + usr + " " + reason)
+# define NTC_INVITE(channel, usr) ("INVITE " + usr  + " :" + channel)
 
 string ft_RPL_WELCOME(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_YOURHOST(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
@@ -114,5 +115,6 @@ string ft_RPL_LISTEND(string arg1, string arg2, string arg3, string arg4, string
 string ft_RPL_YOUREOPER(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_TOPIC(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 string ft_RPL_UMODEIS(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
+string ft_RPL_INVITING(string arg1, string arg2, string arg3, string arg4, string arg5, string arg6, string arg7);
 
 #endif //FT_IRC_REPLY_HPP

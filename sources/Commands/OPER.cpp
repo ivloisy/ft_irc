@@ -19,22 +19,20 @@ using namespace std;
 
 void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
-	(void)usr;
-	(void)params;
-	cout << "oper cmd called" << endl;
+	cout << "*** Oper command called ***" << endl;
+	//cout << "oper cmd called" << endl;
 	if (!srv.check_command(&usr, 3, params))
 		return ;
 	else
 	{
 		//IRCOperator
-		cout << "oper cmd check" << endl;
+		//cout << "oper cmd check" << endl;
 		if (params[1] == OPER_NAME)
 		{
-			cout << "oper name ok" << endl;
+			//cout << "oper name ok" << endl;
 			if (params[2] == OPER_PASS)
 			{
-				cout << "oper pass ok" << endl;
+			//	cout << "oper pass ok" << endl;
 				//RPL_YOUREOPER
 				usr.setOperator(1);
 				srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "+o"));

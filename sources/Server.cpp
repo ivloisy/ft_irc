@@ -58,7 +58,11 @@ void 					Server::initServer()
 
 	int optval = 1;
 	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR,&optval, sizeof(optval)) < 0)
+	{
 		cout << "error setting socket option..." << endl;
+		return ;
+	}
+	fcntl(this->_fd, F_SETFL, O_NONBLOCK);
 	this->bindServer();
 	this->_size = sizeof(this->getServerAddr());
 	if (listen(this->_fd, this->getServerAddr().sin_port) < 0)
@@ -143,6 +147,7 @@ void					Server::initCommand()
 	map_cmd["TOPIC"] 	= 	topic_cmd;
 	map_cmd["WALLOPS"] 	= 	wallops_cmd;
 	map_cmd["WHOIS"] 	= 	whois_cmd;
+	map_cmd["INVITE"]	=	invite_cmd;
 }
 
 void 					Server::welcome(int const & fd)
@@ -164,7 +169,7 @@ void					Server::parse_buffer_command(string const & str)
 	string					s;
 	vector<string>			tmp;
 
-	cout << "entree parse" << endl;
+	//cout << "entree parse" << endl;
 	while (getline(ss, s, '\r'))
 	{
 		stringstream o(s);
@@ -225,6 +230,7 @@ void 				Server::execCommand(int const & fd)
 	test.push_back("PASS");
 	test.push_back("PING");
 	test.push_back("PRIVMSG");
+	test.push_back("INVITE");
 	test.push_back("QUIT");
 	test.push_back("USER");
 	test.push_back("TOPIC");
@@ -524,6 +530,7 @@ void 	Server::initReplyTree()
 	map_rep[RPL_YOUREOPER] = ft_RPL_YOUREOPER;
 	map_rep[RPL_TOPIC] = ft_RPL_TOPIC;
 	map_rep[RPL_UMODEIS] = ft_RPL_UMODEIS;
+	map_rep[RPL_INVITING] = ft_RPL_INVITING;
 }
 
 void	Server::initErrorTree()
@@ -596,7 +603,6 @@ void 	Server::ft_reply(User * from, string code, string arg1, string arg2, strin
 
 void	Server::ft_error(User * from, string code, string arg)
 {
-	cout << "hn" << endl;
 	string ret = ":";
 	ret += _serverName;
 	ret += " ";
@@ -607,7 +613,6 @@ void	Server::ft_error(User * from, string code, string arg)
 	ret += map_err.find(code)->second;
 	ret += "\r\n";
 	sendBuffer(from, ret);
-	cout << "sentttt" << endl;
 }
 
 void	Server::ft_notice(User * from, User * to, string notice)

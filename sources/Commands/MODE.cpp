@@ -52,6 +52,7 @@ char				isUnknown(string content)
 
 void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
+	cout << "*** Mode command called ***" << endl;
 	//cout << "mode before = " << usr.getMode() << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;

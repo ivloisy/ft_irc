@@ -2,16 +2,17 @@
 # define FT_IRC_HPP
 
 # include <algorithm>
+# include <arpa/inet.h>
 # include <bitset>
 # include <iostream>
 # include <string>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
-# include <arpa/inet.h>
 # include <stdlib.h>
 # include <map>
 # include <netinet/ip.h>
+# include <fcntl.h>
 # include <poll.h>
 # include <string.h>
 # include <sstream>
@@ -70,6 +71,7 @@ void	user_cmd(Server & srv, User & usr, vector<string> params);
 void	topic_cmd(Server & srv, User & usr, vector<string> params);
 void	wallops_cmd(Server & srv, User & usr, vector<string> params);
 void	whois_cmd(Server & srv, User & usr, vector<string> params);
+void	invite_cmd(Server & srv, User & usr, vector<string> params);
 
 string	isDouble(vector<string> str);
 

@@ -34,6 +34,7 @@ string		add_nick(vector<User *> & users)
 
 void		names_cmd(Server & srv, User & usr, vector<string> params)
 {
+	cout << "*** Names command called ***" << endl;
 	(void)usr;
 
 	vector<User *>	users;
@@ -79,5 +80,5 @@ void		names_cmd(Server & srv, User & usr, vector<string> params)
 		}
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, schan);
 	}
-	std::cout << "names command called" << std::endl;
+	//std::cout << "names command called" << std::endl;
 }
