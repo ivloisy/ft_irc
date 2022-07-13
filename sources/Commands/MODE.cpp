@@ -4,8 +4,6 @@
 
 #include "../../includes/ft_irc.hpp"
 
-#define OPERATOR	2
-#define INVISIBLE	1
 
 using namespace irc;
 using namespace std;
@@ -40,14 +38,25 @@ disabled
  */
 
 
-bitset<2>			chanMode(User & user, string mode)
+string			chanMode(Server & srv, User & usr, string mode)
 {
-	(void)user;
 	(void)mode;
+	(void)srv;
+	(void)usr;
+	//Channel * chan;
+	//if ((chan = srv.getChannelByName()))
+	//{
+		//ERR_USERNOTINCHANNEL
+		//RPL_CHANNELMODEIS
+		//RPL_BANLIST
+		//if ((usr->getChannlByName))
+		//bitset<2> chn_mode = chanMode(usr, params[2]);
+		//chan->setMode(chn_mode);
+	//}
 	return (0);
 }
 
-bool				isUnknown(string content)
+char				isUnknown(string content)
 {
 	if (content[0] != '+' && content[0] != '-')
 		return (true);
@@ -60,78 +69,66 @@ bool				isUnknown(string content)
 		for (string::iterator it = check.begin(); it != last; it++)
 		{
 			if (*it != *it_m)
-				return (true) ;
+				return (*it) ;
 		}
 	}
-	return (false);
+	return (0);
 }
 
-bitset<2>			setBitset(string mode)
+string	userMode(Server & srv, User & usr, string mode)
 {
-	bitset<2> bitset(string("00"));
-
-	for (string::iterator it = mode.begin() + 1; it != mode.end(); it++)
+	char c;
+	if ((c = isUnknown(mode)))
 	{
-		if (*it == 'o')
-			bitset |= OPERATOR;
-		if (*it == 'i')
-			bitset |= INVISIBLE;
-	}
-	return (bitset);
-}
-
-bitset<2>	userMode(User & usr, string mode)
-{
-	if (isUnknown(mode))
-	{
-		//ERR_UNKNOWNMODEFLAG
+		//ERR_UNKNOWNMODE
+		string ret(1, c);
+		srv.ft_error(&usr, ERR_UNKNOWNMODE, ret);
 		return (0);
 	}
-	bitset<2> usr_mode = usr.getMode();
-	bitset<2> bitset = setBitset(mode);
-	if (mode[0] == '-')
-		bitset.flip();
-	usr_mode |= bitset;
-	usr.setInvisible(usr_mode.test(2));
-	if (usr_mode.test(1))
+	if (mode[0] == '+')
 	{
-		;//dire au client qu'il n'a pas les droits necessaires
+
 	}
-	else
-		usr.setOper(usr_mode.test(1));
-	return (usr_mode);
+	//if (mode[0] == '-')
+	return ("usr_mode");
 }
 
 void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
-	(void)usr;
-	(void)params;
-	if (params.size() < 2)
+	cout << "mode before = " << usr.getMode() << endl;
+	if (params.size() < 3)
 	{
 		//ERR_NEEDMOREPARAMS
+		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
 		return ;
 	}
 	else
 	{
+		if (params[2].size() > 3 || (params[2][0] != '+' && params[2][0] != '-'))
+		{
+			srv.ft_error(&usr, ERR_UNKNOWNMODE, params[2]);
+			return ;
+		}
+		if (params[1][0] == '#')
+		{
+			string chan_mode = chanMode(srv, usr, params[2]);
+			Channel * chan = srv.getChannelByName(params[1]);
+			chan->setUserMode(&usr, chan_mode);
+		}
 		if (usr.getNickName() == params[1])
 		{
-			bitset<2> usr_mode = userMode(usr, params[2]);
+			string usr_mode = userMode(srv, usr, params[2]);
 			usr.setMode(usr_mode);
+			//srv.ft_reply(RPL_)
 			//USR MODE SET
-			return ;
 		}
-		Channel * chan;
-		if ((chan = srv.getChannelByName(params[1])))
+		else
 		{
-			//if ((usr->getChannlByName))
-			//bitset<2> chn_mode = chanMode(usr, params[2]);
-			//chan->setMode(chn_mode);
+			//ERR_USERDONTMATCH
+			srv.ft_error(&usr, ERR_USERSDONTMATCH, NULL);
 			return ;
 		}
-		//ERR_USERDONTMATCH
-		return ;
 
 	}
-
+	//cout << "mode after = " << usr.getModeString() << " " << usr.getModeBitset().test(0) << usr.getModeBitset().test(1) << endl;
 }

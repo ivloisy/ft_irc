@@ -22,7 +22,7 @@ string		add_nick(vector<User *> & users)
 
 	for (size_t i = 0; i < users.size(); i++)
 	{
-		if (!users[i]->getInvisible())
+		if (!users[i]->isInvisible())
 		{
 			ret += users[i]->getNickName();
 			if (i + 1 != users.size())
@@ -71,7 +71,10 @@ void		names_cmd(Server & srv, User & usr, vector<string> params)
 					srv.ft_reply(&usr, RPL_NAMREPLY, s, ret);
 				}
 				else
+				{
 					srv.ft_error(&usr, ERR_NOSUCHCHANNEL, s);
+					return ;
+				}
 			}
 		}
 		srv.ft_reply(&usr, RPL_ENDOFNAMES, schan);

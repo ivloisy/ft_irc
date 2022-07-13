@@ -12,11 +12,11 @@ using namespace std;
 Channel::Channel(string name) :
 	_maxUsers(10),
 	_user(),
-	_oper(),
-	_invite(),
-	_ban(),
+	//_oper(),
+	//_invite(),
+	//_ban(),
 	_inviteOnlyMode(0),
-	_key(),
+	//_key(),
 	_name(name)
 {
 
@@ -46,7 +46,7 @@ string 					Channel::getChannelName() const
 {
 	return (this->_name);
 }
-
+/*
 vector<User *>			Channel::getChannelOpers() const
 {
 	return (this->_oper);
@@ -98,7 +98,7 @@ User*					Channel::getBanned(string const & nickname)
 	return (NULL);
 }
 
-bitset<2> 				Channel::getMode() const
+string 					Channel::getMode() const
 {
 	return (this->_mode);
 }
@@ -112,17 +112,17 @@ bool					Channel::getInviteOnlyMode() const
 {
 	return (this->_inviteOnlyMode);
 }
-
-map<User *, bitset<3> >	Channel::getChannelUserMode() const
+*/
+map<User *, string>		Channel::getChannelUserMode() const
 {
 	return (this->_userMode);
 }
 
-bitset<3>				Channel::getUserMode(User * user)
+string 					Channel::getUserMode(User * user)
 {
 	//into try catch of beware to check is user exists before this function
-	map<User *, bitset<3> >::iterator lst = _userMode.end();
-	for (map<User *, bitset<3> >::iterator it = _userMode.begin(); it != lst; it++)
+	map<User *, string>::iterator lst = _userMode.end();
+	for (map<User *, string>::iterator it = _userMode.begin(); it != lst; it++)
 	{
 		if ((*it).first == user)
 		{
@@ -158,13 +158,47 @@ bool					Channel::isUserHere(User const * usr)
 	return (false);
 }
 
+bool					Channel::isOperator(User * user)
+{
+	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.end(); it++)
+	{
+		if ((*it).first->getNickName() == user->getNickName())
+		{
+			string mode = (*it).second;
+			for (size_t i = 0; i < mode.size(); i++)
+			{
+				if (i == 'o' || i == '0')
+					return (true);
+			}
+		}
+	}
+	return (false);
+}
+
+bool					Channel::isBanned(User * user)
+{
+	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.end(); it++)
+	{
+		if ((*it).first->getNickName() == user->getNickName())
+		{
+			string mode = (*it).second;
+			for (size_t i = 0; i < mode.size(); i++)
+			{
+				if (i == 'b')
+					return (true);
+			}
+		}
+	}
+	return (false);
+}
+
 /********************** SETTERS **************************/
 
-void					Channel::setUserMode(User * user, bitset<3> const & mode)
+void					Channel::setUserMode(User * user, string const & mode)
 {
 	//into try catch
-	map<User *, bitset<3> >::iterator lst = _userMode.end();
-	for (map<User *, bitset<3> >::iterator it = _userMode.begin(); it != lst; it++)
+	map<User *, string>::iterator lst = _userMode.end();
+	for (map<User *, string>::iterator it = _userMode.begin(); it != lst; it++)
 	{
 		if ((*it).first == user)
 		{
@@ -172,18 +206,18 @@ void					Channel::setUserMode(User * user, bitset<3> const & mode)
 		}
 	}
 }
-
+/*
 void					Channel::setInviteOnlyMode(bool const & set)
 {
 	this->_inviteOnlyMode = set;
 }
-
+*/
 void					Channel::setChannelName(string const & name)
 {
 	this->_name = name;
 }
-
-void					Channel::setMode(bitset<2> const & mode)
+/*
+void					Channel::setMode(string const & mode)
 {
 	this->_mode = mode;
 }
@@ -192,10 +226,10 @@ void					Channel::setKey(string const & key)
 {
 	this->_key = key;
 }
-
+*/
 /******************** FUNCTIONS **************************/
 
-void					Channel::addUserMode(User * user, bitset<3> const & mode)
+void					Channel::addUserMode(User * user, string const & mode)
 {
 	_userMode[user] = mode;
 }
@@ -204,7 +238,7 @@ void					Channel::addUser(User * user)
 {
 	this->_user.push_back(user);
 }
-
+/*
 void					Channel::addOper(User * user)
 {
 	this->_oper.push_back(user);
@@ -219,7 +253,7 @@ void					Channel::addBanned(User * user)
 {
 	this->_ban.push_back(user);
 }
-
+*/
 /******************* DELETE FUNCTIONS *************************/
 
 void					Channel::delUserMode(User * user)
@@ -237,7 +271,7 @@ void					Channel::delUser(User * user)
 			this->_user.erase(it);
 	}
 }
-
+/*
 void					Channel::delOper(User * user)
 {
 	//into try catch
@@ -270,7 +304,7 @@ void					Channel::delBanned(User * user)
 			this->_ban.erase(it);
 	}
 }
-
+*/
 string const 			Channel::printAllUsers()
 {
 	string result;

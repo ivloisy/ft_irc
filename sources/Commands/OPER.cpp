@@ -33,8 +33,8 @@ void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		{
 			if (params[2] == OPER_PASS)
 			{
-				usr.setOper(1);
 				//RPL_YOUREOPER
+				srv.ft_reply(&usr, RPL_YOUREOPER);
 				return ;
 			}
 			//ERR_PASSWDMISMATCH

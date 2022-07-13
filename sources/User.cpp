@@ -4,6 +4,9 @@
 
 #include "../includes/ft_irc.hpp"
 
+#define OPERATOR	2
+#define INVISIBLE	1
+
 using namespace irc;
 using namespace std;
 
@@ -21,9 +24,9 @@ User::User(int fd) :
 		_channel(),
 		_maxChan(10),
 		_currChan(NULL),
-		_mode(string("01")),
+		_mode("i"),
 		_acceptConnect(1),
-		_isOper(0),
+		//_isOper(0),
 		_toClose(0),
 		_welcome(0),
 		_rdySend(0)
@@ -78,6 +81,26 @@ bool					User::isMaxChannel()
 	return (nb >= _maxChan);
 }
 
+bool					User::isInvisible()
+{
+	for (size_t i = 0; i < _mode.size(); i++)
+	{
+		if (_mode[i] == 'i')
+			return (true);
+	}
+	return (false);
+}
+
+bool					User::isOperator()
+{
+	for (size_t i = 0; i < _mode.size(); i++)
+	{
+		if (_mode[i] == 'o')
+			return (true);
+	}
+	return (false);
+}
+
 bool					User::check_if_complete() const
 {
 	cout << this->_nickname << " " << this->_password << " " << this->_username << endl;
@@ -85,7 +108,6 @@ bool					User::check_if_complete() const
 		return (1);
 	return (0);
 }
-
 
 /********************* GETTERS ***********************/
 
@@ -153,27 +175,28 @@ bool					User::getAcceptConnect() const
 {
 	return (this->_acceptConnect);
 }
-
+/*
 bool					User::getOper() const
 {
 	return (this->_isOper);
 }
-
+*/
 int 					User::getRdySend() const
 {
 	return this->_rdySend;
 }
 
-bitset<2>				User::getMode() const
+
+string 					User::getMode()
 {
 	return (this->_mode);
 }
-
+/*
 bool					User::getInvisible() const
 {
 	return (this->_isInv);
 }
-
+*/
 Channel*				User::getCurrentChannel()
 {
 	return (this->_currChan);
@@ -205,22 +228,22 @@ void					User::setPrefix()
 {
 	this->_prefix = _nickname + "!" + _username + "@" + _hostname;
 }
-
+/*
 void					User::setInvisible(bool const & inv)
 {
 	this->_isInv = inv;
 }
-
-void					User::setMode(bitset<2> const & mode)
+*/
+void					User::setMode(string const & mode)
 {
 	this->_mode = mode;
 }
-
+/*
 void					User::setOper(bool const & op)
 {
 	this->_isOper = op;
 }
-
+*/
 void					User::setAcceptConnect(bool const & ac)
 {
 	this->_acceptConnect = ac;

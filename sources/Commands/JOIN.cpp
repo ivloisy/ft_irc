@@ -30,24 +30,24 @@ using namespace std;
  * check the symbol before the name of the channel for setting its mode
  */
 
-void	user_join_channel(Server & srv, User & usr, Channel & existing)
+bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 {
 	(void)srv;
-	if (existing.getInviteOnlyMode())
-	{
-		srv.ft_error(&usr, ERR_INVITEONLYCHAN, existing.getChannelName());
-		return ;
-	}
-	else if (existing.isMaxUsers())
+	//if (existing.getInviteOnlyMode())
+	//{
+	//	srv.ft_error(&usr, ERR_INVITEONLYCHAN, existing.getChannelName());
+	//	return (false);
+	//}
+	if (existing.isMaxUsers())
 	{
 		srv.ft_error(&usr, ERR_CHANNELISFULL, existing.getChannelName());
-		return ;
+		return (false);
 	}
-	else if (existing.getBanned(usr.getNickName()))
-	{
-		srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
-		return ;
-	}
+	//else if (existing.getBanned(usr.getNickName()))
+	//{
+	//	srv.ft_error(&usr, ERR_BANNEDFROMCHAN, existing.getChannelName());
+	//	return (false);
+	//}
 	//join channel
 	//bitset<3> dflt(string("101"));
 	//bitset<2> mode(string("10"));
@@ -58,6 +58,7 @@ void	user_join_channel(Server & srv, User & usr, Channel & existing)
 	usr.addChannel(&existing);
 	srv.ft_notice_chan(&usr, &existing, NTC_JOIN(existing.getChannelName()), true);
 	//usr.setCurrentChannel(&existing);
+	return (true);
 }
 
 Channel*	user_create_channel(Server &srv, User &usr, string &name)
@@ -108,10 +109,6 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
 	//need to implement key
-	for (size_t i = 0; i < params.size(); i++)
-	{
-		cout << "params " << i << " " << params[i] << endl;
-	}
 	if (params.size() < 1)
 	{
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
@@ -151,13 +148,16 @@ void	join_cmd(Server & srv, User & usr, vector<string> params)
 			Channel *existing;
 			if ((existing = srv.searchChannel(*it)))
 			{
-				user_join_channel(srv, usr, *existing);
+				if (!user_join_channel(srv, usr, *existing))
+					return ;
 				reply_channel_joined(srv, usr, *existing);
 			}
 			else
 			{
 				Channel * new_chan;
 				new_chan = user_create_channel(srv, usr, *it);
+				if (!new_chan)
+					return ;
 				srv.ft_notice(&usr, &usr, NTC_JOIN(new_chan->getChannelName()));
 				reply_channel_joined(srv, usr, *new_chan);
 			}
