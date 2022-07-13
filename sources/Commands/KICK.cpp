@@ -40,6 +40,11 @@ void	kick_cmd(Server & srv, User & usr, vector<string> params)
 		srv.ft_error(&usr, ERR_NOTONCHANNEL, chan->getChannelName());
 		return ;
 	}
+	if (&usr == user)
+	{
+		srv.ft_error(&usr, ERR_USERONCHANNEL);
+		return ;
+	}
 	string msg;
 	if (params.size() >= 3)
 	{
