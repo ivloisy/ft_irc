@@ -115,7 +115,7 @@ namespace irc
 		void											ft_notice(User * from, User * to, string notice);
 		void											ft_notice_chan(User * from, Channel * to, string notice, bool self);
 		void 											ft_reply(User * from, string code, string arg1 = "", string arg2 = "", string arg3 = "", string arg4 = "", string arg5 = "", string arg6 = "", string arg7 = "");
-		void											ft_error(User * from, string code, string arg);
+		void											ft_error(User * from, string code, string arg = "");
 	};
 }
 

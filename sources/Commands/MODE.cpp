@@ -40,38 +40,23 @@ disabled
 char				isUnknown(string content)
 {
 	if (content[0] != '+' && content[0] != '-')
-		return (true);
+		return (0);
 	content.erase(content.begin());
-	string check("io");
-	string::iterator last_m = content.end();
-	string::iterator last = check.end();
-	for (string::iterator it_m = content.begin(); it_m != last_m; it_m++)
+	for (size_t i = 0; i < content.size(); i++)
 	{
-		for (string::iterator it = check.begin(); it != last; it++)
-		{
-			if (*it != *it_m)
-				return (*it) ;
-		}
+		if (content[i] != 'i' && content[i] != 'o')
+			return (content[i]);
 	}
 	return (0);
 }
 
 void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	(void)srv;
-	(void)usr;
-	(void)params;
-	/*
-	cout << "mode before = " << usr.getMode() << endl;
-	if (params.size() < 2)
-	{
-		//ERR_NEEDMOREPARAMS
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+	//cout << "mode before = " << usr.getMode() << endl;
+	if (!srv.check_command(&usr, 2, params))
 		return ;
-	}
 	else
 	{
-
 		//char c;
 		//if ((c = isUnknown(params[2])))
 		//{
@@ -86,78 +71,21 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		//	return ;
 		//}
 
-
-
-
-		if (params[1][0] == '#')
-		{
-			Channel * chan;
-			if ((chan = srv.getChannelByName(params[1])))
-			{
-				if (params.size() > 3)
-				{
-					User * to;
-					if ((to = chan->getUser(params[3])))
-					{
-						if (!chan->isOperator(&usr))
-							;//ERR NO RIGHTS
-						bool set;
-						if (params[2][0] == '-') {
-							set = false;
-							if (params[2][1] == 'o')
-							{
-								chan->setUserOperator(to, set);
-								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + chan->getUserMode(to)));
-							}
-							if (params[2][1] == 'b')
-							{
-								chan->setUserBanned(to, set);
-								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + chan->getUserMode(to)));
-							}
-						}
-						if (params[2][0] == '+')
-						{
-							set = true;
-							if (params[2][1] == 'o')
-							{
-								chan->setUserOperator(to, set);
-								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + chan->getUserMode(to)));
-							}
-							if (params[2][1] == 'b')
-							{
-								chan->setUserBanned(to, set);
-								srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + chan->getUserMode(to)));
-							}
-						}
-					}
-					else
-					{
-						//ERR NO NICKNAME
-					}
-				}
-				else
-				{
-					//ERR NO NICKNAME
-				}
-			}
-			else
-			{
-				//ERR_NOSUCHCHANNEL
-				srv.ft_reply(&usr, ERR_NOSUCHCHANNEL, params[3]);
-				return ;
-			}
-		}
-
-
 		if (srv.isUserReal(params[1]))
 		{
 			if (params.size() < 3)
 			{
-				srv.ft_reply(&usr, RPL_UMODEIS, usr.getMode());
+				vector<User *>::iterator u;
+				if ((u = srv.getUser(params[1])) == srv.getUsers().end())
+				{
+					srv.ft_error(&usr, ERR_USERSDONTMATCH);
+					return ;
+				}
+				srv.ft_reply(&usr, RPL_UMODEIS, (*u)->getMode());
 				return ;
 			}
 			char c;
-			if ((c = isUnknown(params[2])))
+			if ((c = isUnknown(params[2])) != 0)
 			{
 				//ERR_UNKNOWNMODE
 				string ret(1, c);
@@ -176,12 +104,12 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 				if (params[2][1] == 'o')
 				{
 					usr.setOperator(set);
-					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + usr.getMode()));
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-o"));
 				}
 				if (params[2][1] == 'i')
 				{
 					usr.setInvisible(set);
-					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '-' + usr.getMode()));
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "-i"));
 				}
 			}
 			if (params[2][0] == '+')
@@ -190,27 +118,22 @@ void	mode_cmd(Server & srv, User & usr, std::vector<std::string> params)
 				if (params[2][1] == 'o')
 				{
 					usr.setOperator(set);
-					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + usr.getMode()));
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "+o"));
 				}
 				if (params[2][1] == 'i')
 				{
 					usr.setInvisible(set);
-					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), '+' + usr.getMode()));
-
+					srv.ft_notice(&usr, &usr, NTC_MODE(usr.getNickName(), "+i"));
 				}
 			}
-
-
-
 		}
 		else
 		{
 			//ERR_USERDONTMATCH
-			srv.ft_error(&usr, ERR_USERSDONTMATCH, NULL);
+			srv.ft_error(&usr, ERR_USERSDONTMATCH);
 			return ;
 		}
 
 	}
-	*/
 	//cout << "mode after = " << usr.getModeString() << " " << usr.getModeBitset().test(0) << usr.getModeBitset().test(1) << endl;
 }

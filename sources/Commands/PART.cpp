@@ -19,12 +19,12 @@ using namespace std;
 
 void	part_cmd(Server & srv, User & usr, vector<string> params)
 {
-	if (params.size() < 2)
-	{
-		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
-	}
-	else
-	{
+	//if (params.size() < 2)
+	//{
+	//	srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
+	//}
+	//else
+	//{
 		string msg = "";
 		if (params.size() >= 3)
 		{
@@ -79,6 +79,6 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 				srv.ft_error(&usr, ERR_NOSUCHCHANNEL, *it); //ERR NO SUCH CHANNEL
 			}
 		}
-	}
+	//}
 	std::cout << "part command end" << std::endl;
 }

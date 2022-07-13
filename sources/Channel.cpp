@@ -15,12 +15,13 @@ Channel::Channel(User * user, string name) :
 	//_oper(),
 	//_invite(),
 	//_ban(),
-	_inviteOnlyMode(0),
+	//_inviteOnlyMode(0),
 	//_key(),
 	_name(name),
-	_topic("no topic defined")
+	_topic("<no topic defined>")
 {
-	_userMode[user] = "0";
+	//_userMode[user] = "0";
+	(void)user;
 	return ;
 }
 
@@ -114,6 +115,8 @@ bool					Channel::getInviteOnlyMode() const
 	return (this->_inviteOnlyMode);
 }
 */
+
+/*
 map<User *, string>		Channel::getChannelUserMode() const
 {
 	return (this->_userMode);
@@ -132,10 +135,16 @@ string 					Channel::getUserMode(User * user)
 	}
 	return (0);
 }
+*/
 
 string					Channel::getTopic() const
 {
 	return this->_topic;
+}
+
+bool					Channel::getInvite() const
+{
+	return (this->_invite);
 }
 
 /******************* CHECKERS ****************************/
@@ -164,6 +173,7 @@ bool					Channel::isUserHere(User const * usr)
 	return (false);
 }
 
+/*
 bool					Channel::isOperator(User * user)
 {
 	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.end(); it++)
@@ -197,9 +207,11 @@ bool					Channel::isBanned(User * user)
 	}
 	return (false);
 }
+*/
 
 /********************** SETTERS **************************/
 
+/*
 void					Channel::setUserMode(User * user, string const & mode)
 {
 	//into try catch
@@ -212,18 +224,25 @@ void					Channel::setUserMode(User * user, string const & mode)
 		}
 	}
 }
+*/
+
 /*
 void					Channel::setInviteOnlyMode(bool const & set)
 {
 	this->_inviteOnlyMode = set;
 }
 */
+void					Channel::setInvite(bool const & set)
+{
+	this->_invite = set;
+}
 
 void					Channel::setChannelName(string const & name)
 {
 	this->_name = name;
 }
 
+/*
 void					Channel::setUserOperator(User * user, bool set)
 {
 	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.begin(); it++)
@@ -245,7 +264,9 @@ void					Channel::setUserOperator(User * user, bool set)
 		}
 	}
 }
+*/
 
+/*
 void					Channel::setUserBanned(User * user, bool set)
 {
 	for (map<User *, string>::iterator it = _userMode.begin(); it != _userMode.begin(); it++)
@@ -267,6 +288,7 @@ void					Channel::setUserBanned(User * user, bool set)
 		}
 	}
 }
+*/
 
 void					Channel::setTopic(string const & topic)
 {
@@ -274,16 +296,18 @@ void					Channel::setTopic(string const & topic)
 }
 
 /******************** FUNCTIONS **************************/
-
+/*
 void					Channel::addUserMode(User * user, string const & mode)
 {
 	_userMode[user] = mode;
 }
+*/
 
 void					Channel::addUser(User * user)
 {
 	this->_user.push_back(user);
 }
+
 /*
 void					Channel::addOper(User * user)
 {
@@ -301,12 +325,12 @@ void					Channel::addBanned(User * user)
 }
 */
 /******************* DELETE FUNCTIONS *************************/
-
+/*
 void					Channel::delUserMode(User * user)
 {
 	this->_userMode.erase(user);
 }
-
+*/
 void					Channel::delUser(User * user)
 {
 	//into try catch
