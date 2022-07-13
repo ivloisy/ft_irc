@@ -57,7 +57,8 @@ void		topic_cmd(Server & srv, User & usr, vector<string> params)
 					vector<User *> memb = test->getChannelUsers();
 					for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
 					{
-						srv.ft_notice(&usr, *it, NTC_TOPIC(test->getChannelName(), ret));
+						//if ((*it)->getNickName() != usr.getNickName())
+							srv.ft_notice(&usr, *it, NTC_TOPIC(test->getChannelName(), ret));
 					}
 					srv.ft_reply(&usr, RPL_TOPIC, test->getChannelName(), test->getTopic());
 					return ;

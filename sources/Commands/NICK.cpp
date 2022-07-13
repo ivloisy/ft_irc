@@ -54,6 +54,15 @@ void	nick_cmd(Server & srv, User & usr, vector<string> params)
 	//	return ;
 	//}
 	usr.setNickName(params[1]);
+	vector<Channel *> chans = srv.getChannels();
+	for (vector<Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
+	{
+		User * user = (*it)->getUser(usr.getNickName());
+		if (user)
+		{
+			user->setNickName(params[1]);
+		}
+	}
 	srv.ft_notice(&usr, &usr, NTC_NICK(usr.getNickName()));
 	if (usr.getRdySend() == 2)
 		usr.setRdySend();

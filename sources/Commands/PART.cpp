@@ -49,14 +49,18 @@ void	part_cmd(Server & srv, User & usr, vector<string> params)
 				vector<User *> memb = chan->getChannelUsers();
 				for (vector<User *>::iterator i = memb.begin(); i != memb.end();i++)
 				{
-					if (msg.empty())
-						srv.ft_notice(&usr, *i, NTC_PART(chan->getChannelName()));
-					else
+					if ((*i)->getNickName() != usr.getNickName())
 					{
-						if (msg[0] == ':')
-							msg.erase(0);
-						srv.ft_notice(&usr, *i, NTC_PART_MSG(chan->getChannelName(), msg));
+						if (msg.empty())
+							srv.ft_notice(&usr, *i, NTC_PART(chan->getChannelName()));
+						else
+						{
+							if (msg[0] == ':')
+								msg.erase(0);
+							srv.ft_notice(&usr, *i, NTC_PART_MSG(chan->getChannelName(), msg));
+						}
 					}
+
 
 				}
 				usr.quitChannel(chan);

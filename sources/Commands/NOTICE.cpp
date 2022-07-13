@@ -71,7 +71,8 @@ void	notice_cmd(Server & srv, User & usr, vector<string> params)
 						vector<User *> mbr = dstc->getChannelUsers();
 						for (vector<User *>::iterator it = mbr.begin(); it != mbr.end(); it++)
 						{
-							srv.ft_notice(&usr, *it, NTC_NOTICE(dstc->getChannelName(), msg));
+							if ((*it)->getNickName() != usr.getNickName())
+								srv.ft_notice(&usr, *it, NTC_NOTICE(dstc->getChannelName(), msg));
 						}
 					}
 					else

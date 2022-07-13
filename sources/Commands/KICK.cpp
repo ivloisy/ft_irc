@@ -58,7 +58,8 @@ void	kick_cmd(Server & srv, User & usr, vector<string> params)
 	vector<User *> memb = chan->getChannelUsers();
 	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
 	{
-		srv.ft_notice(&usr, *it, NTC_KICK(chan->getChannelName(), user->getNickName(), msg));
+		//if ((*it)->getNickName() != usr.getNickName())
+			srv.ft_notice(&usr, *it, NTC_KICK(chan->getChannelName(), user->getNickName(), msg));
 	}
 	chan->delUser(user);
 	user->quitChannel(chan);

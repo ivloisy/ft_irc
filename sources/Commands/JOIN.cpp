@@ -64,7 +64,8 @@ bool	user_join_channel(Server & srv, User & usr, Channel & existing)
 	vector<User *> memb = existing.getChannelUsers();
 	for (vector<User *>::iterator it = memb.begin(); it != memb.end(); it++)
 	{
-		srv.ft_notice(&usr, *it, NTC_JOIN(existing.getChannelName()));
+		if ((*it)->getNickName() != usr.getNickName())
+			srv.ft_notice(&usr, *it, NTC_JOIN(existing.getChannelName()));
 	}
 	//usr.setCurrentChannel(&existing);
 	return (true);

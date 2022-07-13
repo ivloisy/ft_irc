@@ -24,7 +24,7 @@ void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 	string msg;
 	if (params.size() >= 2)
 	{
-		for (vector<string>::iterator it = params.begin() + 2; it != params.end();it++)
+		for (vector<string>::iterator it = params.begin() + 1; it != params.end();it++)
 		{
 			for (size_t i = 0; i < (*it).size(); i++)
 				msg.push_back((*it)[i]);
@@ -35,7 +35,8 @@ void	wallops_cmd(Server & srv, User & usr, vector<string> params)
 	vector<User *> users = srv.getUsers();
 	for (vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 	{
-		srv.ft_notice(&usr, *it, NTC_WALLOPS((*it)->getNickName(), msg));
+		if ((*it)->getNickName() != usr.getNickName())
+			srv.ft_notice(&usr, *it, NTC_WALLOPS((*it)->getNickName(), msg));
 	}
 	//cout << "wallops command called" << cout;
 }
