@@ -188,11 +188,17 @@ void					Server::parse_buffer_command(string const & str)
 		while (getline(o, u, ' '))
 			if (u.length() && u != "\n")
 				tmp.push_back(u);
-		size_t x = tmp.size() - 1;
-		size_t y = tmp[x].size() - 1;
-		if (tmp[x][y] == '\n')
-			tmp[x].replace(y, 1, "\0");
-		this->_param.push_back(tmp);
+		if (tmp.size() > 0)
+		{
+			size_t x = tmp.size() - 1;
+			if (tmp[x].size() > 0)
+			{
+				size_t y = tmp[x].size() - 1;
+				if (tmp[x][y] == '\n')
+					tmp[x].replace(y, 1, "\0");
+				this->_param.push_back(tmp);
+			}
+		}
 		tmp.clear();
 		getline(ss, s, '\n');
 	}
