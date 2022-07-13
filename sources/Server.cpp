@@ -314,7 +314,7 @@ void				Server::sendBuffer(User * dest, string const & content)
 
 void				Server::sending(int fd, string toSend)
 {
-	cout << YELLOW << "Sending : " << toSend << RESET << endl;
+	cout << YELLOW << "Sending : " << toSend << RESET;
 	send(fd, toSend.c_str(), toSend.length(), 0);
 }
 

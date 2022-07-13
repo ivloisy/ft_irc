@@ -11,7 +11,7 @@ using namespace std;
 
 void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** User command called ***" << endl;
+	//cout << "*** User command called ***" << endl;
 	if (params.size() < 5)
 	{
 		srv.ft_error(&usr, ERR_NEEDMOREPARAMS, params[0]);
@@ -47,7 +47,8 @@ void	user_cmd(Server & srv, User & usr, std::vector<std::string> params)
 		}
 	}
 	usr.setRealName(real);
-
+	string msg("USER: " + usr.getUserName() + " " + usr.getHostname() + " " + usr.getServerName() + " " + usr.getRealName());
+	srv.ft_notice(&usr, &usr, msg);
 	if (usr.getRdySend() == 3)
 		usr.setRdySend();
 	usr.setPrefix();

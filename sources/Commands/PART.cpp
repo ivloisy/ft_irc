@@ -19,7 +19,7 @@ using namespace std;
 
 void	part_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Part command called ***" << endl;
+	//cout << "*** Part command called ***" << endl;
 	if (!srv.check_command(&usr, 1, params))
 		return ;
 	string msg = "";

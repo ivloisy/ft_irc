@@ -123,7 +123,7 @@ void	reply_channel_joined(Server & srv, User & usr, Channel & chan)
 
 void	join_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Join command called ***" << endl;
+	//cout << "*** Join command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
 	else

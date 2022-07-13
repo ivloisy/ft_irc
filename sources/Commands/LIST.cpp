@@ -20,7 +20,7 @@ using namespace std;
 
 void		list_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** List command called ***" << endl;
+	//cout << "*** List command called ***" << endl;
 	if (!srv.check_command(&usr, 1, params))
 		return ;
 	vector<Channel *> chans = srv.getChannels();

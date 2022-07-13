@@ -11,7 +11,7 @@ using namespace std;
 
 void	die_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** Die command called ***" << endl;
+	//cout << "*** Die command called ***" << endl;
 	(void)params;
 	if (!usr.isOperator())
 	{
@@ -20,5 +20,5 @@ void	die_cmd(Server & srv, User & usr, std::vector<std::string> params)
 	}
 	if (params.size() == 1 && usr.getWelcome())
 		srv.setState(0);
-	std::cout << "Server shutdown..." << std::endl;
+	//std::cout << "Server shutdown..." << std::endl;
 }

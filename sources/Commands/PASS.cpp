@@ -18,8 +18,8 @@ using namespace std;
 
 void	pass_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** Pass command called ***" << endl;
-	cout << params[1] << " : " << srv.getPassword() << endl;
+	//cout << "*** Pass command called ***" << endl;
+	//cout << params[1] << " : " << srv.getPassword() << endl;
 	//if (!srv.check_command(&usr, 2, params))
 	//	return ;
 	if (usr.getNickName() == "")

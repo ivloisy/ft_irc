@@ -5,7 +5,7 @@ using namespace std;
 
 void		topic_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Topic command called ***" << endl;
+	//cout << "*** Topic command called ***" << endl;
 	if (!srv.check_command(&usr, 2, params))
 		return ;
 	if (!usr.isOperator())

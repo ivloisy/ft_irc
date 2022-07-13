@@ -19,7 +19,7 @@ using namespace std;
 
 void	oper_cmd(Server & srv, User & usr, std::vector<std::string> params)
 {
-	cout << "*** Oper command called ***" << endl;
+	//cout << "*** Oper command called ***" << endl;
 	//cout << "oper cmd called" << endl;
 	if (!srv.check_command(&usr, 3, params))
 		return ;

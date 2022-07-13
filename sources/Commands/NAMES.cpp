@@ -34,7 +34,7 @@ string		add_nick(vector<User *> & users)
 
 void		names_cmd(Server & srv, User & usr, vector<string> params)
 {
-	cout << "*** Names command called ***" << endl;
+	//cout << "*** Names command called ***" << endl;
 	(void)usr;
 
 	vector<User *>	users;
