@@ -111,6 +111,8 @@ int main(int argc, char **argv)
 	if (argc == 3)
 	{
 		string password = argv[2];
+		if (password == "")
+			password += "pass";
 		if ((port = atoi(argv[1])) > 0)
 			ft_run(port, password);
 	}
